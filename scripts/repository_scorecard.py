@@ -30,15 +30,24 @@ REQUIRED_FILES = [
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
     "docs/assets/mbti-typing-hero.png",
+    "docs/assets/typing-journey-map.png",
     "docs/evaluation.md",
     "docs/experience-principles.md",
     "docs/github-ux.md",
+    "docs/visual-tour.md",
+    "docs/demo-session.md",
+    "docs/sample-report.md",
     "skill/mbti-typing/SKILL.md",
 ]
 
 
 README_REQUIRED_TERMS = [
     "docs/assets/mbti-typing-hero.png",
+    "docs/assets/typing-journey-map.png",
+    "One-Minute Demo",
+    "docs/visual-tour.md",
+    "docs/demo-session.md",
+    "docs/sample-report.md",
     "Visual System Map",
     "Adaptive Typing Loop",
     "Evidence Ledger Flow",
@@ -70,17 +79,25 @@ def check_required_files(root: Path) -> list[Check]:
 
 
 def check_hero(root: Path) -> list[Check]:
-    path = root / "docs/assets/mbti-typing-hero.png"
+    return check_png_asset(root, "docs/assets/mbti-typing-hero.png", "hero")
+
+
+def check_journey_map(root: Path) -> list[Check]:
+    return check_png_asset(root, "docs/assets/typing-journey-map.png", "journey")
+
+
+def check_png_asset(root: Path, rel: str, prefix: str) -> list[Check]:
+    path = root / rel
     checks: list[Check] = []
     try:
         width, height = png_size(path)
     except Exception as exc:
-        return [Check("hero:png", False, f"hero image is readable PNG: {exc}")]
+        return [Check(f"{prefix}:png", False, f"{rel} is readable PNG: {exc}")]
 
     ratio = width / height
-    checks.append(Check("hero:min_width", width >= 1200, f"width={width}"))
-    checks.append(Check("hero:min_height", height >= 650, f"height={height}"))
-    checks.append(Check("hero:wide_ratio", 1.55 <= ratio <= 1.95, f"ratio={ratio:.2f}"))
+    checks.append(Check(f"{prefix}:min_width", width >= 1200, f"width={width}"))
+    checks.append(Check(f"{prefix}:min_height", height >= 650, f"height={height}"))
+    checks.append(Check(f"{prefix}:wide_ratio", 1.55 <= ratio <= 1.95, f"ratio={ratio:.2f}"))
     return checks
 
 
@@ -90,8 +107,10 @@ def check_readme(root: Path) -> list[Check]:
     mermaid_count = len(re.findall(r"```mermaid", readme))
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
+        Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
+        Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -102,10 +121,16 @@ def check_docs(root: Path) -> list[Check]:
     ux = read_text(root / "docs/github-ux.md")
     evaluation = read_text(root / "docs/evaluation.md")
     experience = read_text(root / "docs/experience-principles.md")
+    visual = read_text(root / "docs/visual-tour.md")
+    demo = read_text(root / "docs/demo-session.md")
+    sample = read_text(root / "docs/sample-report.md")
     return [
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
+        Check("docs:visual_images", "typing-journey-map.png" in visual and "mbti-typing-hero.png" in visual, "Visual tour references both bitmap assets"),
+        Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
+        Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
     ]
 
 
@@ -113,6 +138,7 @@ def run(root: Path) -> int:
     checks: list[Check] = []
     checks.extend(check_required_files(root))
     checks.extend(check_hero(root))
+    checks.extend(check_journey_map(root))
     checks.extend(check_readme(root))
     checks.extend(check_docs(root))
 

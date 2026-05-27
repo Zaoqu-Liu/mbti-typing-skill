@@ -14,6 +14,7 @@ The README opens with:
 
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
+- A one-minute demo path that links to a visual tour, demo session, and sample report.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -63,8 +64,9 @@ The experience should never rely on:
 ## README Maintenance Rules
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
+- Keep a second journey-map visual in `docs/assets/`.
 - Keep at least four Mermaid diagrams in the English README.
+- Keep demo session and sample report links visible in the first half of the README.
 - Keep the Chinese README visually connected to the same hero.
 - Do not hide caveats at the bottom; safety boundaries should be visible.
 - Every major visual claim should map to a script, reference file, benchmark, or quality gate.
-

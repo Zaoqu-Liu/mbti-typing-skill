@@ -6,6 +6,18 @@
 
 > MBTI 可以作为自我理解语言，但不能用于临床诊断、招聘筛选、升学筛选、法律判断，不能决定一个人的价值或未来。
 
+## 先看一分钟 Demo
+
+![Typing journey map](docs/assets/typing-journey-map.png)
+
+如果你是第一次点进来，推荐按这个顺序看：
+
+- [Visual tour](docs/visual-tour.md)：这个仓库的视觉阅读路径。
+- [Demo session](docs/demo-session.md)：一次 ENTJ vs INTJ vs INFP 的短样例会话。
+- [Sample report](docs/sample-report.md)：最终报告应该长什么样。
+
+目标不是让用户被漂亮话哄住，而是让用户觉得：每一轮追问都真的接住了上一轮的矛盾。
+
 ## 它解决什么问题
 
 普通 MBTI 判型常见问题：
@@ -116,7 +128,7 @@ make test
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 35/35 (100.00%)
+Repository UX Score: 52/52 (100.00%)
 ```
 
 完整评估模型见 [docs/evaluation.md](docs/evaluation.md)，交互体验原则见 [docs/experience-principles.md](docs/experience-principles.md)。

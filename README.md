@@ -10,6 +10,18 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
+## One-Minute Demo
+
+![Typing journey map](docs/assets/typing-journey-map.png)
+
+Start here if you want to feel the product before reading the internals:
+
+- [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
+- [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
+- [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
+
+The experience target is simple: every round should make the user feel that the next question was chosen because of their previous answer, not because the system is walking through a generic quiz.
+
 ## Visual System Map
 
 ```mermaid
@@ -114,6 +126,10 @@ skill/mbti-typing/
   examples/
     benchmark-cases.json
     golden-reports.json
+  docs/
+    visual-tour.md
+    demo-session.md
+    sample-report.md
   scripts/
     bayes_update.py
     typing_session.py
@@ -192,7 +208,7 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 35/35 (100.00%)
+Repository UX Score: 52/52 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
