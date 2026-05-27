@@ -14,6 +14,7 @@ The README opens with:
 
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
+- A local-first Session Lab for visitors who want to paste their own evidence and get a usable next round immediately.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
 - A short promise that explains the core product difference.
@@ -66,6 +67,7 @@ The experience should never rely on:
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
+- Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup.
 - Keep `docs/playground.html` usable without a build step, external JavaScript, or network calls.
 - Keep at least four Mermaid diagrams in the English README.
 - Keep demo session and sample report links visible in the first half of the README.

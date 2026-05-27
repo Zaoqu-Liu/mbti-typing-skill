@@ -10,14 +10,16 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Interactive Playground
+## Session Lab and Playground
 
-Open the static playground when you want to try the reasoning loop before installing anything:
+Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
+- [GitHub Pages Session Lab](https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html)
+- [Local Session Lab file](docs/session-lab.html)
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-It shows candidate scores, evidence weights, adjacent-type duels, calibrated report language, and a copyable prompt for the real Codex skill.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, and session state export. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -128,6 +130,7 @@ sequenceDiagram
     visual-tour.md
     demo-session.md
     sample-report.md
+    session-lab.html
     playground.html
     assets/
       mbti-typing-hero.png
@@ -212,7 +215,7 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 76/76 (100.00%)
+Repository UX Score: 95/95 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

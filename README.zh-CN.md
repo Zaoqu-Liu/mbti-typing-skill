@@ -6,14 +6,16 @@
 
 > MBTI 可以作为自我理解语言，但不能用于临床诊断、招聘筛选、升学筛选、法律判断，不能决定一个人的价值或未来。
 
-## 交互式 Playground
+## Session Lab 和 Playground
 
-想先玩一下再安装，可以打开静态 playground：
+想先把自己的材料丢进去试一轮，可以打开本地优先的 Session Lab：
 
+- [GitHub Pages Session Lab](https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html)
+- [本地 Session Lab 文件](docs/session-lab.html)
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [本地 playground 文件](docs/playground.html)
 
-它会展示候选类型分数、证据权重、类型对决、校准报告语言，以及可复制到 Codex 的启动 prompt。
+Session Lab 会把一个判型主张和零散材料转换成启发式候选榜、证据账本、类型对决、下一轮问题、报告草稿、可复制 Codex prompt 和 session state export。Interactive Playground 保留为更快的视觉流程预览。
 
 ## 先看一分钟 Demo
 
@@ -138,7 +140,7 @@ make test
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 76/76 (100.00%)
+Repository UX Score: 95/95 (100.00%)
 ```
 
 完整评估模型见 [docs/evaluation.md](docs/evaluation.md)，交互体验原则见 [docs/experience-principles.md](docs/experience-principles.md)。

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 - 2026-05-28
+
+- Added a local-first Session Lab that converts user notes into candidate triage, evidence ledger items, focused duels, next-round questions, report drafts, Codex prompts, and exportable session state.
+- Updated GitHub Pages to open the Session Lab by default and expanded the repository UX scorecard.
+
 ## 0.1.3 - 2026-05-28
 
 - Added a buildless interactive playground and GitHub Pages deployment workflow.

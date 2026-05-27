@@ -27,6 +27,17 @@ The journey map shows the experience loop:
 6. The final report includes runner-up types, falsifiers, and revision triggers.
 7. The user leaves with observation prompts, so the result can improve over time.
 
+## Session Lab
+
+The fastest product path is now [Session Lab](session-lab.html):
+
+1. Paste a claim and messy notes.
+2. Run a local heuristic triage.
+3. Inspect the candidate board, evidence ledger, focused duels, and next questions.
+4. Copy the generated Codex prompt or export the session state JSON.
+
+The lab is intentionally local-first: no build step, no external runtime, no account, and no network call.
+
 ## Why These Visuals Matter
 
 Most personality tools make the result feel magical. This project should make the reasoning feel visible.
@@ -42,14 +53,14 @@ The visual system therefore emphasizes:
 
 ```mermaid
 flowchart TD
-    A[Hero image] --> B[One-minute demo]
-    B --> C[Visual system map]
-    C --> D[Demo session]
-    D --> E[Sample report]
-    E --> F[Evaluation model]
-    F --> G[Contribution guide]
-    G --> H[Benchmark cases]
+    A[Hero image] --> B[Session Lab]
+    B --> C[One-minute demo]
+    C --> D[Visual system map]
+    D --> E[Demo session]
+    E --> F[Sample report]
+    F --> G[Evaluation model]
+    G --> H[Contribution guide]
+    H --> I[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.
-

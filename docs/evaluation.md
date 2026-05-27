@@ -112,4 +112,4 @@ The activation gate validates that the sample session state can pass final-state
 make activation
 ```
 
-The repository UX scorecard also checks the static playground and GitHub Pages workflow. The playground must be buildless, local-first, and free of external runtime dependencies so the first experience is fast and inspectable.
+The repository UX scorecard also checks the Session Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.

@@ -42,6 +42,7 @@ REQUIRED_FILES = [
     "docs/visual-tour.md",
     "docs/demo-session.md",
     "docs/sample-report.md",
+    "docs/session-lab.html",
     "docs/playground.html",
     "docs/index.html",
     "skill/mbti-typing/SKILL.md",
@@ -51,6 +52,11 @@ REQUIRED_FILES = [
 README_REQUIRED_TERMS = [
     "docs/assets/mbti-typing-hero.png",
     "docs/assets/typing-journey-map.png",
+    "Session Lab",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html",
+    "docs/session-lab.html",
+    "local-first",
+    "session state export",
     "Interactive Playground",
     "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
     "docs/playground.html",
@@ -119,6 +125,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
+        Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
@@ -137,6 +144,7 @@ def check_docs(root: Path) -> list[Check]:
     visual = read_text(root / "docs/visual-tour.md")
     demo = read_text(root / "docs/demo-session.md")
     sample = read_text(root / "docs/sample-report.md")
+    session_lab = read_text(root / "docs/session-lab.html")
     playground = read_text(root / "docs/playground.html")
     index = read_text(root / "docs/index.html")
     pages = read_text(root / ".github/workflows/pages.yml")
@@ -147,13 +155,25 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:visual_images", "typing-journey-map.png" in visual and "mbti-typing-hero.png" in visual, "Visual tour references both bitmap assets"),
         Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
         Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
+        Check("session_lab:title", "MBTI Typing Skill Session Lab" in session_lab, "Session Lab has a clear product title"),
+        Check("session_lab:no_external_runtime", "https://" not in session_lab and "http://" not in session_lab and " src=" not in session_lab, "Session Lab has no external runtime dependency"),
+        Check("session_lab:interactive_regions", all(term in session_lab for term in ("claimInput", "evidenceInput", "candidateGrid", "ledgerTable", "duelGrid", "questionStack", "sessionStateOutput")), "Session Lab contains intake, candidate, ledger, duel, question, and state regions"),
+        Check("session_lab:all_16_types", all(type_code in session_lab for type_code in ("INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP")), "Session Lab keeps all 16 types in the candidate universe"),
+        Check("session_lab:mode_controls", session_lab.count("data-mode=") >= 4 and "modeSelector" in session_lab, "Session Lab exposes live, duel, transcript, and report modes"),
+        Check("session_lab:evidence_signals", all(term in session_lab for term in ("SIGNALS", "supports", "weakens", "nextProbe")), "Session Lab generates evidence-ledger signals"),
+        Check("session_lab:export_controls", "Copy Report" in session_lab and "Download JSON" in session_lab and "Copy Codex Prompt" in session_lab, "Session Lab exports report, prompt, and JSON"),
+        Check("session_lab:persistence", "localStorage.setItem" in session_lab and "mbti-session-lab-state" in session_lab, "Session Lab can persist local work"),
+        Check("session_lab:safety_boundary", "not a clinical instrument" in session_lab and "not a psychometric result" in session_lab, "Session Lab keeps safety and uncertainty boundaries visible"),
+        Check("session_lab:dom_safety", "textContent" in session_lab and "replaceChildren" in session_lab, "Session Lab avoids injecting user notes as HTML in core renderers"),
+        Check("session_lab:download_json", "new Blob" in session_lab and "application/json" in session_lab, "Session Lab downloads structured JSON"),
+        Check("session_lab:codex_prompt", "Use $mbti-typing" in session_lab and "generated_prompt" in session_lab, "Session Lab creates a reusable Codex prompt"),
         Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
         Check("playground:no_external_runtime", "https://" not in playground and "http://" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
         Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),
         Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
         Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
         Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
-        Check("pages:index_redirect", "playground.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to playground"),
+        Check("pages:index_redirect", "session-lab.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to Session Lab"),
         Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]
 
