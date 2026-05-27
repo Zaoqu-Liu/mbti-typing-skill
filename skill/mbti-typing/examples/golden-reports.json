@@ -1,0 +1,174 @@
+{
+  "version": "1.0",
+  "purpose": "Golden structured reports for regression testing benchmark_cases.py. Each good_report should pass benchmark grading and report audit; each bad_report should fail benchmark grading.",
+  "fixtures": [
+    {
+      "case_id": "bench-entj-intj-001",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ENTJ-like Te-Ni, with INTJ as the live runner-up.",
+        "leading_formulation": {"type": "ENTJ", "process": "Te-Ni", "confidence": "medium-high"},
+        "runner_up": {"type": "INTJ", "steelman": "Ni/Te and privacy remain plausible.", "why_it_loses": "Idle external optimization and command energy favor ENTJ."},
+        "claims": [{"claim": "External optimization appears default rather than role-only.", "evidence_ids": ["E1", "E2"], "caveat": "Leadership context may amplify Te."}],
+        "evidence_tags": ["idle_external_optimization", "command_energy", "delayed_fi_or_shame"],
+        "evidence": [
+          {"id": "E1", "observation": "Free mornings go to people, leverage, and execution order.", "context": "normal", "supports": ["ENTJ"], "contradicts": ["INFP"], "alternatives": ["work role"], "tags": ["idle_external_optimization"]},
+          {"id": "E2", "observation": "Directing high-stakes teams makes cognition feel alive.", "context": "work", "supports": ["ENTJ"], "contradicts": ["INTJ"], "alternatives": ["trained leadership"], "tags": ["command_energy"]},
+          {"id": "E3", "observation": "Facts externalize first; shame appears later.", "context": "stress", "supports": ["ENTJ"], "contradicts": [], "alternatives": ["neuroticism"], "tags": ["delayed_fi_or_shame"]}
+        ],
+        "alternatives": [{"type": "INTJ", "best_case": "Ni/Te privacy and testing history.", "hardest_problem": "Repeated command energy and idle external leverage."}],
+        "cross_framework_check": {"big_five": "Likely high conscientiousness and assertive dominance.", "other": "A/T not needed unless rumination is explored."},
+        "uncertainty": "Long-isolation data remains useful.",
+        "falsifiers": ["private model dominates idle time across repeated low-role contexts"],
+        "framework_boundaries": ["Function stack language is interpretive, not measured."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INTJ"}, "runner_up": {"type": "ENTJ"}, "evidence_tags": ["private_model_priority"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-intj-entj-002",
+      "good_report": {
+        "short_answer": "Best-supported formulation is INTJ-like Ni-Te, with ENTJ as runner-up.",
+        "leading_formulation": {"type": "INTJ", "process": "Ni-Te", "confidence": "medium-high"},
+        "runner_up": {"type": "ENTJ", "steelman": "The user can lead and execute.", "why_it_loses": "Leadership drains; private model priority is stronger."},
+        "claims": [{"claim": "Private modeling precedes execution.", "evidence_ids": ["E1", "E2"], "caveat": "Competence at leading may obscure introverted default."}],
+        "evidence_tags": ["private_model_priority", "leadership_cost", "pre_execution_modeling"],
+        "evidence": [
+          {"id": "E1", "observation": "Best thinking happens after people leave.", "context": "normal", "supports": ["INTJ"], "contradicts": ["ENTJ"], "alternatives": ["burnout"], "tags": ["private_model_priority"]},
+          {"id": "E2", "observation": "Leadership is possible but draining.", "context": "work", "supports": ["INTJ"], "contradicts": ["ENTJ"], "alternatives": ["team quality"], "tags": ["leadership_cost"]},
+          {"id": "E3", "observation": "Model must be clean before execution.", "context": "decision", "supports": ["INTJ"], "contradicts": [], "alternatives": ["perfectionism"], "tags": ["pre_execution_modeling"]}
+        ],
+        "alternatives": [{"type": "ENTJ", "best_case": "Execution ability and leadership competence.", "hardest_problem": "Sustained people orchestration is costly."}],
+        "cross_framework_check": {"big_five": "High conscientiousness may mimic J/Te across both candidates.", "other": "Role performance must be separated from energy source."},
+        "uncertainty": "Need stress data to refine inferior pattern.",
+        "falsifiers": ["live command repeatedly energizes cognition across low-burnout contexts"],
+        "framework_boundaries": ["No numeric certainty is claimed."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENTJ"}, "runner_up": {"type": "INTJ"}, "evidence_tags": ["command_energy"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-infp-infj-003",
+      "good_report": {
+        "short_answer": "Best-supported formulation is INFP-like Fi-Ne, with INFJ and ISFP as runner-ups.",
+        "leading_formulation": {"type": "INFP", "process": "Fi-Ne", "confidence": "medium-high"},
+        "runner_up": {"type": "INFJ", "steelman": "Depth and sensitivity can look Ni-Fe.", "why_it_loses": "Inner endorsement outranks relational pattern."},
+        "claims": [{"claim": "Inner congruence is the first decision axis.", "evidence_ids": ["E1", "E2"], "caveat": "Conflict examples should be checked across contexts."}],
+        "evidence_tags": ["fi_congruence", "ne_possibility", "harmony_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "First asks whether the action can be personally endorsed.", "context": "conflict", "supports": ["INFP"], "contradicts": ["INFJ"], "alternatives": ["moral training"], "tags": ["fi_congruence"]},
+          {"id": "E2", "observation": "Explores many meanings around identity fit.", "context": "normal", "supports": ["INFP"], "contradicts": [], "alternatives": ["reflective habit"], "tags": ["ne_possibility"]},
+          {"id": "E3", "observation": "Can break harmony when inner truth is violated.", "context": "relationship", "supports": ["INFP"], "contradicts": ["Fe-first"], "alternatives": ["assertiveness"], "tags": ["harmony_secondary"]}
+        ],
+        "alternatives": [{"type": "ISFP", "best_case": "Fi is clear.", "hardest_problem": "Possibility and meaning exploration are prominent."}],
+        "cross_framework_check": {"big_five": "High openness may support possibility exploration.", "other": "Sensitivity alone is not a type conclusion."},
+        "uncertainty": "Need embodied action vs abstract meaning evidence for ISFP exclusion.",
+        "falsifiers": ["relational pattern convergence outranks inner congruence in repeated conflicts"],
+        "framework_boundaries": ["Fi-Ne is an interpretive process label."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INFJ"}, "runner_up": {"type": "INFP"}, "evidence_tags": ["ni_convergence"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-infj-infp-004",
+      "good_report": {
+        "short_answer": "Best-supported formulation is INFJ-like Ni-Fe, with INFP as runner-up.",
+        "leading_formulation": {"type": "INFJ", "process": "Ni-Fe", "confidence": "medium-high"},
+        "runner_up": {"type": "INFP", "steelman": "Values and emotional depth remain visible.", "why_it_loses": "Relational pattern is read before personal congruence."},
+        "claims": [{"claim": "The mind converges on relational trajectory.", "evidence_ids": ["E1", "E2"], "caveat": "Need examples outside close relationships."}],
+        "evidence_tags": ["ni_convergence", "fe_relational_meaning", "future_relationship_pattern"],
+        "evidence": [
+          {"id": "E1", "observation": "Notices where relationships are heading before admission.", "context": "relationship", "supports": ["INFJ"], "contradicts": ["INFP"], "alternatives": ["experience"], "tags": ["future_relationship_pattern"]},
+          {"id": "E2", "observation": "Converges on one interpretation for the group.", "context": "social", "supports": ["INFJ"], "contradicts": ["Ne-first"], "alternatives": ["group role"], "tags": ["ni_convergence"]},
+          {"id": "E3", "observation": "Reads relational pattern before values.", "context": "normal", "supports": ["INFJ"], "contradicts": ["INFP"], "alternatives": ["conflict avoidance"], "tags": ["fe_relational_meaning"]}
+        ],
+        "alternatives": [{"type": "ENFJ", "best_case": "People focus is clear.", "hardest_problem": "Private convergence appears prior to outward alignment."}],
+        "cross_framework_check": {"big_five": "Agreeableness may elevate relational salience.", "other": "Fe evidence is not clinical empathy."},
+        "uncertainty": "E/I energy needs more evidence if ENFJ remains live.",
+        "falsifiers": ["personal value congruence overrides relational pattern under low social pressure"],
+        "framework_boundaries": ["MBTI is used as a structured interview language."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INFP"}, "runner_up": {"type": "INFJ"}, "evidence_tags": ["fi_congruence"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-estj-entj-005",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ESTJ-like Te-Si, with ENTJ as runner-up.",
+        "leading_formulation": {"type": "ESTJ", "process": "Te-Si", "confidence": "medium-high"},
+        "runner_up": {"type": "ENTJ", "steelman": "Te and leadership are strong.", "why_it_loses": "Trust in proven procedures and best practices favors Si."},
+        "claims": [{"claim": "Operational continuity is the trust source.", "evidence_ids": ["E1", "E2"], "caveat": "Organizational context may reward precedent."}],
+        "evidence_tags": ["te_order", "si_precedent", "operational_continuity"],
+        "evidence": [
+          {"id": "E1", "observation": "Trusts procedures that have proven reliable.", "context": "normal", "supports": ["ESTJ"], "contradicts": ["ENTJ"], "alternatives": ["regulated work"], "tags": ["si_precedent"]},
+          {"id": "E2", "observation": "Imposes standards, roles, deadlines, and accountability.", "context": "work", "supports": ["ESTJ", "ENTJ"], "contradicts": [], "alternatives": ["management role"], "tags": ["te_order"]},
+          {"id": "E3", "observation": "Improves through known best practices before radical redesign.", "context": "decision", "supports": ["ESTJ"], "contradicts": ["ENTJ"], "alternatives": ["risk level"], "tags": ["operational_continuity"]}
+        ],
+        "alternatives": [{"type": "ENTJ", "best_case": "Te leadership is strong.", "hardest_problem": "Future architecture is not the primary trust source."}],
+        "cross_framework_check": {"big_five": "High conscientiousness is likely but not type-specific.", "other": "Role and industry norms may inflate Te."},
+        "uncertainty": "Need response to obsolete but functional systems.",
+        "falsifiers": ["future architecture overrides precedent in repeated strategic decisions"],
+        "framework_boundaries": ["Te-Si is an interpretive process label, not a measured score."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENTJ"}, "runner_up": {"type": "ESTJ"}, "evidence_tags": ["future_architecture"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-entp-enfp-006",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ENTP-like Ne-Ti, with ENFP as runner-up.",
+        "leading_formulation": {"type": "ENTP", "process": "Ne-Ti", "confidence": "medium-high"},
+        "runner_up": {"type": "ENFP", "steelman": "Possibility and enthusiasm are present.", "why_it_loses": "Model play outranks personal meaning in the described moment."},
+        "claims": [{"claim": "Debate is used to sharpen impersonal models.", "evidence_ids": ["E1", "E2"], "caveat": "Need values-conflict examples to fully exclude ENFP."}],
+        "evidence_tags": ["ne_ti_model_play", "debate_energy", "values_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Debate sharpens the model.", "context": "normal", "supports": ["ENTP"], "contradicts": ["INFP"], "alternatives": ["debate training"], "tags": ["debate_energy"]},
+          {"id": "E2", "observation": "Will attack favorite idea if logic is weak.", "context": "conflict", "supports": ["ENTP"], "contradicts": ["ENFP"], "alternatives": ["academic norm"], "tags": ["ne_ti_model_play"]},
+          {"id": "E3", "observation": "Personal meaning is secondary in the moment.", "context": "normal", "supports": ["ENTP"], "contradicts": ["ENFP"], "alternatives": ["context-specific"], "tags": ["values_secondary"]}
+        ],
+        "alternatives": [{"type": "INTP", "best_case": "Ti is strong.", "hardest_problem": "Live debate appears energizing."}],
+        "cross_framework_check": {"big_five": "High openness likely; extraversion depends on debate energy vs social warmth.", "other": "Values secondary does not mean values absent."},
+        "uncertainty": "Need private-vs-live ideation energy data.",
+        "falsifiers": ["personal meaning outranks model play when stakes are real"],
+        "framework_boundaries": ["This is not a standardized questionnaire score."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENFP"}, "runner_up": {"type": "ENTP"}, "evidence_tags": ["fi_meaning"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-isfj-infj-007",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ISFJ-like Si-Fe, with INFJ as runner-up.",
+        "leading_formulation": {"type": "ISFJ", "process": "Si-Fe", "confidence": "medium-high"},
+        "runner_up": {"type": "INFJ", "steelman": "Private care and people awareness can look Ni-Fe.", "why_it_loses": "Known obligations and remembered support are central."},
+        "claims": [{"claim": "Care is organized through memory and reliable routines.", "evidence_ids": ["E1", "E2"], "caveat": "Need future-pattern examples to fully test INFJ."}],
+        "evidence_tags": ["si_memory", "fe_care", "known_obligations"],
+        "evidence": [
+          {"id": "E1", "observation": "Remembers what people need and what helped before.", "context": "relationship", "supports": ["ISFJ"], "contradicts": ["INFJ"], "alternatives": ["care role"], "tags": ["si_memory"]},
+          {"id": "E2", "observation": "Care is delivered through reliable routines and support.", "context": "normal", "supports": ["ISFJ"], "contradicts": [], "alternatives": ["family role"], "tags": ["fe_care"]},
+          {"id": "E3", "observation": "Future patterns matter less than not failing people now.", "context": "stress", "supports": ["ISFJ"], "contradicts": ["INFJ"], "alternatives": ["acute responsibility"], "tags": ["known_obligations"]}
+        ],
+        "alternatives": [{"type": "ESFJ", "best_case": "Fe care is visible.", "hardest_problem": "The prompt emphasizes private memory more than outward social orchestration."}],
+        "cross_framework_check": {"big_five": "High agreeableness/conscientiousness may be present.", "other": "Caregiving role can mimic Fe strength."},
+        "uncertainty": "Need energy data for ISFJ vs ESFJ.",
+        "falsifiers": ["future pattern interpretation overrides known obligations over repeated cases"],
+        "framework_boundaries": ["Si-Fe is used as a qualitative hypothesis."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INFJ"}, "runner_up": {"type": "ISFJ"}, "evidence_tags": ["ni_pattern"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-estp-entp-008",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ESTP-like Se-Ti, with ENTP as runner-up.",
+        "leading_formulation": {"type": "ESTP", "process": "Se-Ti", "confidence": "medium-high"},
+        "runner_up": {"type": "ENTP", "steelman": "Quickness, wit, and provocation overlap.", "why_it_loses": "Live tactical reality outranks abstract possibility."},
+        "claims": [{"claim": "Improvisation is anchored in live pressure and concrete action.", "evidence_ids": ["E1", "E2"], "caveat": "Need low-stimulation ideation data to fully exclude ENTP."}],
+        "evidence_tags": ["se_live_pressure", "ti_tactical_read", "concrete_action"],
+        "evidence": [
+          {"id": "E1", "observation": "Best improvisation happens in live pressure.", "context": "stress", "supports": ["ESTP"], "contradicts": ["ENTP"], "alternatives": ["sport/work training"], "tags": ["se_live_pressure"]},
+          {"id": "E2", "observation": "Real room and body language matter more than abstraction.", "context": "social", "supports": ["ESTP"], "contradicts": ["ENTP"], "alternatives": ["sales role"], "tags": ["ti_tactical_read"]},
+          {"id": "E3", "observation": "Enjoys winning the situation, not just the argument.", "context": "normal", "supports": ["ESTP"], "contradicts": ["ENTP"], "alternatives": ["competitive culture"], "tags": ["concrete_action"]}
+        ],
+        "alternatives": [{"type": "ESFP", "best_case": "Se and social presence are strong.", "hardest_problem": "Tactical read and winning the situation are more Ti/Se than Fi/Se expression."}],
+        "cross_framework_check": {"big_five": "High extraversion/stimulation seeking may be present.", "other": "Provocation alone is not ENTP evidence."},
+        "uncertainty": "Need values-expression vs tactical-control data for ESFP.",
+        "falsifiers": ["abstract conceptual play outranks live tactical action when no audience is present"],
+        "framework_boundaries": ["This is interview evidence, not psychometric measurement."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENTP"}, "runner_up": {"type": "ESTP"}, "evidence_tags": ["abstract_conceptual_play"], "evidence": [], "falsifiers": []}
+    }
+  ]
+}

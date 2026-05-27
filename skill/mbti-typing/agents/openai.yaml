@@ -1,0 +1,7 @@
+interface:
+  display_name: "MBTI 判型"
+  short_description: "用多轮证伪和证据账本完成严谨 MBTI 判型"
+  default_prompt: "Use $mbti-typing to run a rigorous multi-round MBTI typing interview with evidence tracking."
+
+policy:
+  allow_implicit_invocation: true

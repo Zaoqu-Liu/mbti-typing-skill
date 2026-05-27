@@ -1,0 +1,28 @@
+name: Bug report
+description: Report a reproducible issue with the skill, scripts, or validation suite.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the issue and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Commands, input, or report excerpt needed to reproduce.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation output
+      description: Paste `make test` or relevant script output.
+      render: text
+    validations:
+      required: false

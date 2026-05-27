@@ -1,0 +1,38 @@
+name: Benchmark case
+description: Propose a synthetic benchmark case or type-pair regression fixture.
+title: "[Benchmark]: "
+labels: ["benchmark"]
+body:
+  - type: input
+    id: pair
+    attributes:
+      label: Type pair or candidate set
+      placeholder: "ENTJ vs INTJ"
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Synthetic prompt
+      description: Do not include private or identifiable data.
+    validations:
+      required: true
+  - type: input
+    id: expected-leading
+    attributes:
+      label: Expected leading type
+    validations:
+      required: true
+  - type: input
+    id: expected-runner-up
+    attributes:
+      label: Expected runner-up type(s)
+    validations:
+      required: true
+  - type: textarea
+    id: trap
+    attributes:
+      label: Trap
+      description: What mistake should this case catch?
+    validations:
+      required: true
