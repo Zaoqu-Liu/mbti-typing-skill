@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5 - 2026-05-28
+
+- Added Session Lab share links, URL-hash recovery, editable JSON import, and a dedicated Session Lab audit gate.
+- Added three precise SVG product blueprints for GitHub visitor routing, the typing engine, and the trust loop.
+- Expanded `make test` and the repository UX scorecard to verify share/import/recovery behavior plus blueprint accessibility, labels, and dependency hygiene.
+
 ## 0.1.4 - 2026-05-28
 
 - Added a local-first Session Lab that converts user notes into candidate triage, evidence ledger items, focused duels, next-round questions, report drafts, Codex prompts, and exportable session state.

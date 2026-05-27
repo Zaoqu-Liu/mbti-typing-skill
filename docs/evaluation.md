@@ -106,10 +106,20 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
+The visual blueprint gate checks that the README and visual tour expose three exact-label SVG assets:
+
+- `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
+- `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
+- `docs/assets/trust-loop-dashboard.svg` for the feedback-to-benchmark-to-release trust loop.
+
+These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
+
 The activation gate validates that the sample session state can pass final-state checks and that the sample report passes the report audit:
 
 ```bash
 make activation
 ```
 
-The repository UX scorecard also checks the Session Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
+The repository UX scorecard also checks the Session Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
+
+The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.

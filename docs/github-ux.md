@@ -14,13 +14,16 @@ The README opens with:
 
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
-- A local-first Session Lab for visitors who want to paste their own evidence and get a usable next round immediately.
+- A local-first Session Lab for visitors who want to paste their own evidence, get a usable next round immediately, copy a share link, and recover work through imported JSON.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
+- Three SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, and `docs/assets/trust-loop-dashboard.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
 The hero is intentionally visual rather than text-heavy. Generated text inside images often looks broken, so the project image uses abstract panels, charts, nodes, and evidence flows instead of readable UI copy.
+
+The SVG blueprints carry precise labels because they are repository-native, reviewable, and stable under version control. Use generated bitmap images for atmosphere and product feel; use SVG for exact workflows, gates, and trust claims.
 
 ## Visitor Journey
 
@@ -40,10 +43,14 @@ flowchart TD
 ## Visual Hierarchy
 
 1. Hero image: emotional hook and product shape.
-2. System map: how inputs become calibrated outputs.
-3. Interview loop: why each round feels progressive.
-4. Evidence ledger: why the answer is not a black box.
-5. Quality gates: why the project is maintainable.
+2. Session Lab links: immediate proof that the repo is usable.
+3. GitHub Visitor Experience Map: how different visitors should move.
+4. Typing Engine Blueprint: why the reasoning loop is not a quiz.
+5. Trust Loop Dashboard: why accuracy work is repeatable.
+6. System map: how inputs become calibrated outputs.
+7. Interview loop: why each round feels progressive.
+8. Evidence ledger: why the answer is not a black box.
+9. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -67,7 +74,8 @@ The experience should never rely on:
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
-- Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup.
+- Keep the three precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, and `trust-loop-dashboard.svg`.
+- Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
 - Keep `docs/playground.html` usable without a build step, external JavaScript, or network calls.
 - Keep at least four Mermaid diagrams in the English README.
 - Keep demo session and sample report links visible in the first half of the README.

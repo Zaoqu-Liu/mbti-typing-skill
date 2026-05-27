@@ -19,7 +19,7 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, and session state export. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -33,6 +33,28 @@ Start here if you want to feel the product before reading the internals:
 - [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
 
 The experience target is simple: every round should make the user feel that the next question was chosen because of their previous answer, not because the system is walking through a generic quiz.
+
+## Product Experience Blueprints
+
+The repository is designed like a product surface: a visitor should know where to click, why the workflow is different, and what proof backs it before they install anything.
+
+### GitHub Visitor Experience Map
+
+![GitHub Visitor Experience Map](docs/assets/repository-experience-map.svg)
+
+This map explains the first-run GitHub path: visitor intent, Session Lab, copyable prompt, share link, install commands, and contribution routes.
+
+### Typing Engine Blueprint
+
+![Typing Engine Blueprint](docs/assets/typing-engine-blueprint.svg)
+
+The blueprint shows the core reasoning machine: all 16 types remain in the universe, the candidate set feeds an evidence ledger, adjacent-type duels attack the strongest conflict, and reports must pass falsifier and boundary gates.
+
+### Trust Loop Dashboard
+
+![Trust Loop Dashboard](docs/assets/trust-loop-dashboard.svg)
+
+The trust loop connects real user ambiguity to benchmark cases, scorecards, GitHub Pages, versioned releases, and safer first-run UX.
 
 ## Visual System Map
 
@@ -135,6 +157,9 @@ sequenceDiagram
     assets/
       mbti-typing-hero.png
       typing-journey-map.png
+      repository-experience-map.svg
+      typing-engine-blueprint.svg
+      trust-loop-dashboard.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
@@ -208,6 +233,10 @@ Equivalent direct commands:
 python3 -B skill/mbti-typing/scripts/benchmark_cases.py validate skill/mbti-typing/examples/benchmark-cases.json
 python3 -B skill/mbti-typing/scripts/benchmark_cases.py regression skill/mbti-typing/examples/benchmark-cases.json skill/mbti-typing/examples/golden-reports.json
 python3 -B skill/mbti-typing/scripts/skill_scorecard.py skill/mbti-typing
+python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session-state-example.json --final
+python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
+python3 -B scripts/session_lab_audit.py docs/session-lab.html
+python3 -B scripts/repository_scorecard.py .
 ```
 
 Expected result:
@@ -215,7 +244,8 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 95/95 (100.00%)
+Session Lab Audit: 60/60 (100.00%)
+Repository UX Score: 130/130 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

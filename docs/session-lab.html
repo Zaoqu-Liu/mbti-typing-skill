@@ -624,8 +624,8 @@
             <span>network calls or external runtime files</span>
           </div>
           <div class="proof">
-            <strong>JSON</strong>
-            <span>session state export for serious follow-up</span>
+            <strong>LINK</strong>
+            <span>shareable URL hash plus JSON recovery</span>
           </div>
         </div>
         <div class="status-strip" id="sessionStatus">Ready for a local-first triage run.</div>
@@ -725,6 +725,10 @@ Meaning and value matter, but I usually correct the system before exploring my f
         <div class="split">
           <button class="button primary" type="button" id="copyPrompt">Copy Codex Prompt</button>
           <button class="button" type="button" id="downloadJson">Download JSON</button>
+        </div>
+        <div class="split">
+          <button class="button" type="button" id="copyShareLink">Copy Share Link</button>
+          <button class="button" type="button" id="importJson">Import JSON</button>
         </div>
 
         <div class="panel-title" style="margin-top: 18px;">
@@ -904,6 +908,7 @@ Meaning and value matter, but I usually correct the system before exploring my f
     const matrixCandidates = document.getElementById("matrixCandidates");
     const matrixEvidence = document.getElementById("matrixEvidence");
     const matrixFalsifier = document.getElementById("matrixFalsifier");
+    const allowedModes = new Set(Object.keys(MODE_COPY));
 
     function textNode(tag, className, text) {
       const node = document.createElement(tag);
@@ -922,6 +927,11 @@ Meaning and value matter, but I usually correct the system before exploring my f
 
     function typePairKey(a, b) {
       return [a, b].sort().join("|");
+    }
+
+    function setActiveMode(mode) {
+      activeMode = allowedModes.has(mode) ? mode : "live";
+      document.querySelectorAll("[data-mode]").forEach((button) => button.classList.toggle("active", button.dataset.mode === activeMode));
     }
 
     function detectEvidence(claim, notes) {
@@ -1096,6 +1106,40 @@ Meaning and value matter, but I usually correct the system before exploring my f
       return state;
     }
 
+    function createSharePayload() {
+      return {
+        schema: "mbti-typing-session-lab/share/v1",
+        mode: activeMode,
+        claim: claimInput.value.trim(),
+        notes: evidenceInput.value.trim()
+      };
+    }
+
+    function encodeSharePayload(payload) {
+      const json = JSON.stringify(payload);
+      const bytes = new TextEncoder().encode(json);
+      let binary = "";
+      bytes.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+      });
+      return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    }
+
+    function decodeSharePayload(value) {
+      const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+      const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, "=");
+      const binary = atob(padded);
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function applySessionPayload(payload) {
+      setActiveMode(payload.mode);
+      claimInput.value = typeof payload.claim === "string" ? payload.claim : "";
+      evidenceInput.value = typeof payload.notes === "string" ? payload.notes : "";
+      runTriage();
+    }
+
     function renderCandidates(candidates) {
       candidateGrid.replaceChildren();
       candidates.forEach((candidate, index) => {
@@ -1216,11 +1260,40 @@ Meaning and value matter, but I usually correct the system before exploring my f
       toast.textContent = "Session JSON downloaded.";
     }
 
+    function copyShareLink() {
+      const url = new URL(window.location.href);
+      url.hash = `session=${encodeSharePayload(createSharePayload())}`;
+      copyText(url.toString(), "Share link copied.");
+    }
+
+    function importSessionJson() {
+      try {
+        const parsed = JSON.parse(sessionStateOutput.value);
+        applySessionPayload(parsed);
+        toast.textContent = "Session JSON imported.";
+      } catch {
+        toast.textContent = "Import failed. Paste valid Session Lab JSON first.";
+      }
+    }
+
+    function loadSessionFromHash() {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (!hash.startsWith("session=")) return false;
+      try {
+        const payload = decodeSharePayload(hash.slice("session=".length));
+        applySessionPayload(payload);
+        toast.textContent = "Session loaded from share link.";
+        return true;
+      } catch {
+        toast.textContent = "Share link could not be decoded.";
+        return false;
+      }
+    }
+
     document.getElementById("modeSelector").addEventListener("click", (event) => {
       const button = event.target.closest("[data-mode]");
       if (!button) return;
-      activeMode = button.dataset.mode;
-      document.querySelectorAll("[data-mode]").forEach((modeButton) => modeButton.classList.toggle("active", modeButton === button));
+      setActiveMode(button.dataset.mode);
       runTriage();
     });
 
@@ -1241,9 +1314,12 @@ Meaning and value matter, but I usually correct the system before exploring my f
     document.getElementById("copyReport").addEventListener("click", () => copyText(reportOutput.value, "Report copied."));
     document.getElementById("copyPrompt").addEventListener("click", () => copyText(lastState?.generated_prompt || "", "Codex prompt copied."));
     document.getElementById("downloadJson").addEventListener("click", downloadSessionJson);
+    document.getElementById("copyShareLink").addEventListener("click", copyShareLink);
+    document.getElementById("importJson").addEventListener("click", importSessionJson);
+    window.addEventListener("hashchange", loadSessionFromHash);
 
     document.getElementById("saveLocal").addEventListener("click", () => {
-      localStorage.setItem("mbti-session-lab-state", JSON.stringify({
+      localStorage.setItem("mbti-typing-session-lab-state", JSON.stringify({
         mode: activeMode,
         claim: claimInput.value,
         notes: evidenceInput.value
@@ -1251,20 +1327,22 @@ Meaning and value matter, but I usually correct the system before exploring my f
       toast.textContent = "Session saved in this browser.";
     });
 
-    const saved = localStorage.getItem("mbti-session-lab-state");
-    if (saved) {
+    const loadedFromHash = loadSessionFromHash();
+    const saved = localStorage.getItem("mbti-typing-session-lab-state");
+    if (!loadedFromHash && saved) {
       try {
         const parsed = JSON.parse(saved);
-        activeMode = parsed.mode || activeMode;
+        setActiveMode(parsed.mode);
         claimInput.value = parsed.claim || claimInput.value;
         evidenceInput.value = parsed.notes || evidenceInput.value;
-        document.querySelectorAll("[data-mode]").forEach((button) => button.classList.toggle("active", button.dataset.mode === activeMode));
       } catch {
-        localStorage.removeItem("mbti-session-lab-state");
+        localStorage.removeItem("mbti-typing-session-lab-state");
       }
     }
 
-    runTriage();
+    if (!loadedFromHash) {
+      runTriage();
+    }
   </script>
 </body>
 </html>

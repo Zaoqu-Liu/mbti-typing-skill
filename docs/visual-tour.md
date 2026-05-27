@@ -27,6 +27,42 @@ The journey map shows the experience loop:
 6. The final report includes runner-up types, falsifiers, and revision triggers.
 7. The user leaves with observation prompts, so the result can improve over time.
 
+## GitHub Visitor Experience Map
+
+![GitHub visitor experience map](assets/repository-experience-map.svg)
+
+This blueprint is for repository design, not personality theory. It shows how the GitHub page routes different first-time visitors:
+
+- Someone who wants to be typed can open Session Lab before installing anything.
+- Someone who wants proof can see tests, scorecards, caveats, and local-first behavior.
+- Someone ready to install can copy the commands without digging through internals.
+- Someone with a failure case can turn it into a benchmark contribution.
+
+The map keeps the most important UX promise visible: the fastest path is still evidence-based.
+
+## Typing Engine Blueprint
+
+![Typing engine blueprint](assets/typing-engine-blueprint.svg)
+
+This is the reasoning architecture behind the experience:
+
+- The full 16-type universe stays available.
+- The candidate set is a live hypothesis board, not a final answer.
+- Every useful observation must pass through the evidence ledger.
+- Adjacent-type duels are separate from generic trait questions.
+- Reports are not trusted until falsifiers and framework boundaries are visible.
+
+## Trust Loop Dashboard
+
+![Trust loop dashboard](assets/trust-loop-dashboard.svg)
+
+The dashboard explains why the repository can keep improving after release:
+
+- Real user ambiguity enters through Session Lab, transcripts, and failure reports.
+- Repeated failures become benchmark cases or golden fixtures.
+- `make test` ties the skill scorecard, Session Lab audit, report audit, and repository UX scorecard together.
+- GitHub Pages and releases expose the result back to first-time users.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -34,9 +70,9 @@ The fastest product path is now [Session Lab](session-lab.html):
 1. Paste a claim and messy notes.
 2. Run a local heuristic triage.
 3. Inspect the candidate board, evidence ledger, focused duels, and next questions.
-4. Copy the generated Codex prompt or export the session state JSON.
+4. Copy the generated Codex prompt, copy a share link, import edited JSON, or export the session state JSON.
 
-The lab is intentionally local-first: no build step, no external runtime, no account, and no network call.
+The lab is intentionally local-first: no build step, no external runtime, no account, and no network call. Share links use a URL hash so the browser can recover a session without sending the evidence to a server.
 
 ## Why These Visuals Matter
 
@@ -54,13 +90,15 @@ The visual system therefore emphasizes:
 ```mermaid
 flowchart TD
     A[Hero image] --> B[Session Lab]
-    B --> C[One-minute demo]
-    C --> D[Visual system map]
-    D --> E[Demo session]
-    E --> F[Sample report]
-    F --> G[Evaluation model]
-    G --> H[Contribution guide]
-    H --> I[Benchmark cases]
+    B --> C[GitHub visitor map]
+    C --> D[Typing engine blueprint]
+    D --> E[Trust loop dashboard]
+    E --> F[One-minute demo]
+    F --> G[Demo session]
+    G --> H[Sample report]
+    H --> I[Evaluation model]
+    I --> J[Contribution guide]
+    J --> K[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.
