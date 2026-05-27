@@ -96,3 +96,10 @@ find . -name '__pycache__' -print
 
 The first command must pass. The second command must print nothing.
 
+`make test` also runs the repository UX scorecard:
+
+```bash
+python3 -B scripts/repository_scorecard.py .
+```
+
+This verifies that the GitHub-facing project experience has the expected hero image, visual diagrams, bilingual README path, evaluation docs, and repository trust artifacts.

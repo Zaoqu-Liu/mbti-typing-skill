@@ -1,5 +1,7 @@
 # MBTI Typing Skill
 
+![MBTI Typing Skill hero](docs/assets/mbti-typing-hero.png)
+
 一个严肃的 Codex MBTI 判型 skill。它不靠“神判”和标签感，而是把每个类型当成可证伪假设，用多轮访谈、证据账本、runner-up、反证和回归测试来逼近更可靠的判型。
 
 > MBTI 可以作为自我理解语言，但不能用于临床诊断、招聘筛选、升学筛选、法律判断，不能决定一个人的价值或未来。
@@ -21,6 +23,22 @@
 - 保留 runner-up。
 - 每轮只攻击当前最关键的不确定性。
 - 最终必须写“什么证据会让我改判”。
+
+## 系统长什么样
+
+```mermaid
+flowchart LR
+    A[用户回答 / 对话记录 / 旧报告] --> B[候选集]
+    B --> C[证据账本]
+    C --> D{最大分歧}
+    D -->|相邻类型| E[类型对决]
+    D -->|矛盾材料| F[反证追问]
+    D -->|报告风险| G[质量审计]
+    E --> H[校准结论]
+    F --> H
+    G --> H
+    H --> I[runner-up + 反证条件]
+```
 
 ## 安装
 
@@ -98,6 +116,7 @@ make test
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
+Repository UX Score: 35/35 (100.00%)
 ```
 
 完整评估模型见 [docs/evaluation.md](docs/evaluation.md)，交互体验原则见 [docs/experience-principles.md](docs/experience-principles.md)。

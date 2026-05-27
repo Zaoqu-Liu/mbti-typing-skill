@@ -2,11 +2,33 @@
 
 [![CI](https://github.com/Zaoqu-Liu/mbti-typing-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/Zaoqu-Liu/mbti-typing-skill/actions/workflows/ci.yml)
 
+![MBTI Typing Skill hero](docs/assets/mbti-typing-hero.png)
+
 A rigorous Codex skill for MBTI-style personality typing that treats every type as a falsifiable hypothesis, not a label to be guessed.
 
 This project is built for people who want serious type reasoning: multi-round interviews, transcript audits, adjacent-type duels, evidence ledgers, structured uncertainty, report audits, and regression-tested benchmark cases.
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
+
+## Visual System Map
+
+```mermaid
+flowchart LR
+    U[User answers, exported chats, or prior report] --> I[Intake claim and prior sources]
+    I --> C[Candidate set: 3-6 live hypotheses]
+    C --> Q[Adaptive discriminator questions]
+    Q --> L[Evidence ledger]
+    L --> D{Top conflict}
+    D -->|Adjacent pair| P[Pair duel: killer discriminators]
+    D -->|Contradiction| X[Contradiction probe]
+    D -->|Overclaim risk| A[Report audit]
+    P --> B[Heuristic Bayesian update]
+    X --> B
+    A --> B
+    B --> R[Calibrated report]
+    R --> F[Falsifiers and revision triggers]
+    F --> Q
+```
 
 ## Why This Exists
 
@@ -30,6 +52,47 @@ This skill is designed to prevent those failures. It forces the agent to maintai
 - **Report audit**: catches missing runner-up, missing evidence, missing falsifiers, overclaiming, and framework mixing.
 - **Benchmark suite**: synthetic high-risk cases plus golden good/bad fixtures for regression testing.
 - **Self-scorecard**: the skill audits itself and must pass package-level checks.
+
+## Adaptive Typing Loop
+
+The user experience is designed to be sticky through precision, not manipulation. Every round should reveal why the next question exists.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Claim
+    Claim --> CandidateSet: capture prior type claims
+    CandidateSet --> RoundQuestions: choose current fork
+    RoundQuestions --> EvidenceLedger: collect concrete scenes
+    EvidenceLedger --> RankUpdate: support, contradict, or weaken candidates
+    RankUpdate --> ContradictionProbe: leader looks too easy
+    RankUpdate --> PairDuel: top two remain close
+    ContradictionProbe --> RoundQuestions: ask counterexample
+    PairDuel --> RoundQuestions: ask discriminator
+    RankUpdate --> FinalReport: enough independent evidence
+    FinalReport --> Falsifiers
+    Falsifiers --> [*]
+```
+
+## Evidence Ledger Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Interview as Adaptive interview
+    participant Ledger as Evidence ledger
+    participant Duel as Type duel
+    participant Audit as Report audit
+    participant Output as Final report
+
+    User->>Interview: Gives a concrete answer or transcript excerpt
+    Interview->>Ledger: Records observation, context, and source
+    Ledger->>Ledger: Splits normal, stress, recovery, public, relationship states
+    Ledger->>Duel: Sends top-vs-runner-up conflict
+    Duel->>Interview: Requests the next discriminator
+    Interview->>User: Asks 4-6 targeted questions
+    Ledger->>Audit: Checks for overclaiming and framework mixing
+    Audit->>Output: Allows calibrated conclusion only with falsifiers
+```
 
 ## Repository Layout
 
@@ -129,9 +192,26 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
+Repository UX Score: 35/35 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
+
+## Quality Gate Pipeline
+
+```mermaid
+flowchart TD
+    PR[Change or contribution] --> Compile[Python compile check]
+    Compile --> Cases[Benchmark case validation]
+    Cases --> Golden[Golden report regression]
+    Golden --> SkillScore[Skill package scorecard]
+    SkillScore --> UXScore[Repository UX scorecard]
+    UXScore --> Cache[No cache artifact check]
+    Cache --> Release{Release ready?}
+    Release -->|yes| Publish[Public GitHub release]
+    Release -->|no| Fix[Revise prompts, docs, cases, or scripts]
+    Fix --> Compile
+```
 
 ## Quality Model
 
@@ -145,6 +225,36 @@ A serious final typing must include:
 - Framework boundaries: what is MBTI, what is Big Five, what is A/T, and what is only an observation.
 
 For the interaction design principles behind the live typing experience, see [docs/experience-principles.md](docs/experience-principles.md).
+
+## Trust Architecture
+
+```mermaid
+flowchart LR
+    subgraph UX[User-facing experience]
+        Live[Live interview]
+        Transcript[Transcript audit]
+        Duel[Adjacent-type duel]
+        Review[Report review]
+    end
+
+    subgraph Reasoning[Reasoning controls]
+        Ledger[Evidence ledger]
+        RunnerUp[Runner-up preservation]
+        Falsifier[Falsifiers]
+        Boundaries[Framework boundaries]
+    end
+
+    subgraph Verification[Verification]
+        Bench[Benchmark cases]
+        Golden[Golden fixtures]
+        Audit[Report audit script]
+        Score[Scorecards]
+    end
+
+    UX --> Reasoning
+    Reasoning --> Verification
+    Verification --> UX
+```
 
 ## Safety Boundaries
 
