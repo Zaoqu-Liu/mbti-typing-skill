@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Playground</title>
+  <meta name="description" content="Interactive evidence-led MBTI typing playground for the mbti-typing Codex skill.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8f8;
+      --panel: #ffffff;
+      --ink: #172120;
+      --muted: #63706d;
+      --line: #d9dfdd;
+      --teal: #128c82;
+      --teal-soft: #e3f4f1;
+      --amber: #c87a16;
+      --amber-soft: #fff0d8;
+      --magenta: #c83264;
+      --magenta-soft: #fde7ef;
+      --graphite: #26302f;
+      --shadow: 0 18px 48px rgba(20, 29, 28, 0.10);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(18, 140, 130, 0.08), transparent 28%),
+        linear-gradient(240deg, rgba(200, 122, 22, 0.12), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(18, 140, 130, 0.45);
+      background: #fafeff;
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.92fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-copy,
+    .hero-visual,
+    .panel {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(217, 223, 221, 0.92);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: clamp(22px, 4vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      max-width: 850px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 760px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 82px;
+      background: #fbfdfc;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 8px;
+    }
+
+    .hero-visual {
+      padding: 14px;
+      min-height: 360px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    .mini-toolbar,
+    .mini-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+
+    .dot:nth-child(1) { background: var(--teal); }
+    .dot:nth-child(2) { background: var(--amber); }
+    .dot:nth-child(3) { background: var(--magenta); }
+
+    .mini-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .network {
+      position: relative;
+      min-height: 260px;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(18, 140, 130, 0.08), transparent 42%),
+        linear-gradient(180deg, rgba(38, 48, 47, 0.04), transparent);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .node {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 24px rgba(30, 42, 40, 0.10);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .node::after {
+      content: "";
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 7px solid var(--teal);
+      border-right-color: var(--amber);
+      border-bottom-color: var(--magenta);
+      opacity: 0.86;
+    }
+
+    .node.a { left: 8%; top: 18%; }
+    .node.b { right: 12%; top: 12%; }
+    .node.c { left: 36%; bottom: 12%; }
+    .node.d { right: 30%; bottom: 24%; }
+
+    .line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+      transform-origin: left center;
+      opacity: 0.75;
+    }
+
+    .line.l1 { width: 42%; left: 18%; top: 31%; transform: rotate(9deg); }
+    .line.l2 { width: 34%; left: 42%; top: 61%; transform: rotate(-16deg); }
+    .line.l3 { width: 28%; left: 23%; top: 66%; transform: rotate(-36deg); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .scenario-list,
+    .evidence-list,
+    .candidate-list,
+    .duel-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .scenario {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .scenario.active {
+      border-color: rgba(18, 140, 130, 0.75);
+      background: var(--teal-soft);
+    }
+
+    .scenario strong,
+    .candidate strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .scenario span,
+    .candidate span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .candidate {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .candidate-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .score {
+      font-weight: 900;
+      font-size: 22px;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: #edf0ef;
+      overflow: hidden;
+      margin: 8px 0 10px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--value);
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+      border-radius: inherit;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .token {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      font-weight: 900;
+      color: #fff;
+      background: var(--teal);
+      font-size: 12px;
+    }
+
+    .evidence[data-kind="stress"] .token { background: var(--magenta); }
+    .evidence[data-kind="duel"] .token { background: var(--amber); }
+
+    .evidence-title {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .evidence-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .weight {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--graphite);
+      white-space: nowrap;
+    }
+
+    .question-card,
+    .report {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .question-card {
+      display: grid;
+      gap: 9px;
+    }
+
+    .question-card button {
+      border: 1px solid var(--line);
+      background: #fbfdfc;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .question-card button.active {
+      border-color: rgba(200, 122, 22, 0.8);
+      background: var(--amber-soft);
+    }
+
+    .report {
+      margin-top: 12px;
+    }
+
+    .report h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .report p,
+    .report li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .report ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+
+    .prompt-box {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--ink);
+      background: #fbfdfc;
+    }
+
+    .toast {
+      min-height: 18px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1440px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .mini-toolbar,
+      .mini-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .panel {
+        padding: 14px;
+      }
+
+      .network {
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="topbar" aria-label="Repository links">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">M</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Playground</div>
+          <div class="brand-subtitle">Evidence-led typing without fake certainty</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="button" href="../README.md">README</a>
+        <a class="button" href="demo-session.md">Demo session</a>
+        <a class="button primary" href="../prompts/prompt-recipes.md">Prompt recipes</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Interactive reasoning preview</div>
+        <h1>Watch a type claim become a testable hypothesis.</h1>
+        <p>Pick a scenario, inspect the candidate set, add evidence, run a focused duel, then copy a prompt that starts the real Codex skill with the same rigor.</p>
+        <div class="hero-stats" aria-label="Project quality gates">
+          <div class="stat">
+            <strong>35/35</strong>
+            <span>Skill package scorecard</span>
+          </div>
+          <div class="stat">
+            <strong>76/76</strong>
+            <span>Repository UX scorecard</span>
+          </div>
+          <div class="stat">
+            <strong>8</strong>
+            <span>Golden regression fixtures</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Abstract evidence network">
+        <div class="mini-toolbar">
+          <div class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="mini-label">candidate network</div>
+        </div>
+        <div class="network">
+          <div class="line l1"></div>
+          <div class="line l2"></div>
+          <div class="line l3"></div>
+          <div class="node a"></div>
+          <div class="node b"></div>
+          <div class="node c"></div>
+          <div class="node d"></div>
+        </div>
+        <div class="mini-footer">
+          <div class="mini-label">candidate set → evidence ledger → pair duel → calibrated report</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Interactive playground">
+      <aside class="panel">
+        <div class="panel-title">
+          <h2>Scenario</h2>
+          <span class="hint">choose one</span>
+        </div>
+        <div class="scenario-list" id="scenarioList"></div>
+      </aside>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Evidence Board</h2>
+          <span class="hint">scores are illustrative, not psychometric</span>
+        </div>
+        <div class="candidate-list" id="candidateList"></div>
+        <div class="panel-title" style="margin-top: 18px;">
+          <h2>Evidence Ledger</h2>
+          <span class="hint">normal, stress, duel</span>
+        </div>
+        <div class="evidence-list" id="evidenceList"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-title">
+          <h2>Focused Duel</h2>
+          <span class="hint">click an answer</span>
+        </div>
+        <div class="duel-list" id="duelList"></div>
+        <div class="report" id="report"></div>
+        <div class="prompt-box">
+          <div class="panel-title" style="margin-bottom: 0;">
+            <h2>Copy Prompt</h2>
+            <button class="button" id="copyPrompt" type="button">Copy</button>
+          </div>
+          <textarea id="promptOutput" spellcheck="false"></textarea>
+          <div class="toast" id="toast" aria-live="polite"></div>
+        </div>
+      </aside>
+    </section>
+
+    <p class="footer-note">
+      This playground is a static preview of the reasoning workflow. It is not a clinical instrument, hiring tool, or deterministic label generator.
+    </p>
+  </main>
+
+  <script>
+    const scenarios = [
+      {
+        id: "entj-intj-infp",
+        title: "ENTJ vs INTJ vs INFP",
+        subtitle: "Structure, depth, meaning, and stress correction.",
+        candidates: [
+          { type: "ENTJ", score: 72, note: "Default ownership and corrective action remain strong." },
+          { type: "INTJ", score: 61, note: "Depth and model-quality sensitivity stay serious." },
+          { type: "INFP", score: 39, note: "Value language remains relevant but not leading." }
+        ],
+        evidence: [
+          { id: "E1", kind: "normal", title: "Organizes ambiguity without an audience", meta: "supports ENTJ, weakens compensatory-structure explanation", weight: 4 },
+          { id: "E2", kind: "stress", title: "Ineffective feedback triggers correction", meta: "stress/recovery clue, not final proof", weight: 3 },
+          { id: "E3", kind: "duel", title: "Shallow hurts more than ineffective", meta: "keeps INTJ and INFP alive", weight: 2 }
+        ],
+        duel: [
+          "When a project is messy, I first define ownership and measurable next actions.",
+          "I first isolate the hidden model error before coordinating anyone.",
+          "I first check whether the direction violates something personally meaningful."
+        ],
+        report: "ENTJ leads, INTJ remains the serious runner-up, INFP stays as a value-language alternative. The next fork is Te-dom versus Ni-dom, not social extroversion.",
+        prompt: "Use $mbti-typing. I want a rigorous ENTJ vs INTJ vs INFP typing interview. Keep all three candidates alive at first, ask 4-6 targeted questions per round, separate normal-state evidence from stress/recovery evidence, and end each round with the strongest falsifier."
+      },
+      {
+        id: "infp-infj",
+        title: "INFP vs INFJ",
+        subtitle: "Fi-Ne identity boundary versus Ni-Fe pattern reading.",
+        candidates: [
+          { type: "INFP", score: 66, note: "Authenticity boundary and value-first language lead." },
+          { type: "INFJ", score: 58, note: "Pattern reading and interpersonal forecasting remain plausible." },
+          { type: "ENFP", score: 34, note: "Exploration energy explains some surface behavior." }
+        ],
+        evidence: [
+          { id: "E1", kind: "normal", title: "Decision stalls until inner alignment is clear", meta: "supports Fi-first process", weight: 4 },
+          { id: "E2", kind: "duel", title: "Often predicts relational patterns before they unfold", meta: "keeps INFJ alive", weight: 3 },
+          { id: "E3", kind: "stress", title: "Stress creates rigid over-explanation", meta: "could be many types; needs follow-up", weight: 2 }
+        ],
+        duel: [
+          "I protect inner value integrity even when it makes the social path harder.",
+          "I track where the relationship pattern is going and adjust the field.",
+          "I generate many possible meanings and resist closing too early."
+        ],
+        report: "INFP leads, INFJ remains close. The next fork is whether values initiate the decision, or whether future-pattern reading and relational calibration come first.",
+        prompt: "Use $mbti-typing to distinguish INFP vs INFJ. Do not use empathy stereotypes. Test Fi-Ne versus Ni-Fe with concrete scenes, counterexamples, stress evidence, and falsifiers."
+      },
+      {
+        id: "report-audit",
+        title: "Report Audit",
+        subtitle: "Find overclaiming, missing runner-up, and weak evidence.",
+        candidates: [
+          { type: "Report quality", score: 81, note: "Evidence sections and caveats are visible." },
+          { type: "Overclaim risk", score: 44, note: "Certainty language still needs pressure testing." },
+          { type: "Differential diagnosis", score: 52, note: "Runner-up exists but needs a stronger steelman." }
+        ],
+        evidence: [
+          { id: "E1", kind: "normal", title: "Claims cite observations instead of adjectives", meta: "good structural sign", weight: 4 },
+          { id: "E2", kind: "stress", title: "Stress state is not separated from normal state", meta: "audit finding", weight: 3 },
+          { id: "E3", kind: "duel", title: "Runner-up lacks strongest possible case", meta: "revision target", weight: 3 }
+        ],
+        duel: [
+          "Keep the type but add falsifiers and runner-up evidence.",
+          "Downgrade confidence until stress and normal evidence split.",
+          "Rewrite as a working formulation instead of a final verdict."
+        ],
+        report: "The report is usable but not release-grade until it adds a serious runner-up, separates stress evidence, and states what would change the conclusion.",
+        prompt: "Use $mbti-typing to review this MBTI report. Findings first. Focus on unsupported certainty, missing runner-up, missing falsifiers, framework mixing, and whether each claim links to evidence."
+      }
+    ];
+
+    let activeScenario = scenarios[0];
+    let activeDuel = 0;
+
+    const scenarioList = document.getElementById("scenarioList");
+    const candidateList = document.getElementById("candidateList");
+    const evidenceList = document.getElementById("evidenceList");
+    const duelList = document.getElementById("duelList");
+    const report = document.getElementById("report");
+    const promptOutput = document.getElementById("promptOutput");
+    const toast = document.getElementById("toast");
+
+    function renderScenarios() {
+      scenarioList.innerHTML = "";
+      scenarios.forEach((scenario) => {
+        const button = document.createElement("button");
+        button.className = `scenario${scenario.id === activeScenario.id ? " active" : ""}`;
+        button.type = "button";
+        button.innerHTML = `<strong>${scenario.title}</strong><span>${scenario.subtitle}</span>`;
+        button.addEventListener("click", () => {
+          activeScenario = scenario;
+          activeDuel = 0;
+          renderAll();
+        });
+        scenarioList.appendChild(button);
+      });
+    }
+
+    function renderCandidates() {
+      candidateList.innerHTML = "";
+      activeScenario.candidates.forEach((candidate) => {
+        const card = document.createElement("article");
+        card.className = "candidate";
+        card.innerHTML = `
+          <div class="candidate-header">
+            <div><strong>${candidate.type}</strong><span>${candidate.note}</span></div>
+            <div class="score">${candidate.score}</div>
+          </div>
+          <div class="bar" aria-label="${candidate.type} support score">
+            <div class="bar-fill" style="--value:${candidate.score}%"></div>
+          </div>
+        `;
+        candidateList.appendChild(card);
+      });
+    }
+
+    function renderEvidence() {
+      evidenceList.innerHTML = "";
+      activeScenario.evidence.forEach((item) => {
+        const row = document.createElement("article");
+        row.className = "evidence";
+        row.dataset.kind = item.kind;
+        row.innerHTML = `
+          <div class="token">${item.id}</div>
+          <div>
+            <div class="evidence-title">${item.title}</div>
+            <div class="evidence-meta">${item.meta}</div>
+          </div>
+          <div class="weight">w${item.weight}</div>
+        `;
+        evidenceList.appendChild(row);
+      });
+    }
+
+    function renderDuel() {
+      duelList.innerHTML = "";
+      const card = document.createElement("div");
+      card.className = "question-card";
+      activeScenario.duel.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = index === activeDuel ? "active" : "";
+        button.textContent = answer;
+        button.addEventListener("click", () => {
+          activeDuel = index;
+          renderDuel();
+          renderReport();
+        });
+        card.appendChild(button);
+      });
+      duelList.appendChild(card);
+    }
+
+    function renderReport() {
+      const selected = activeScenario.duel[activeDuel];
+      report.innerHTML = `
+        <h3>Calibrated Snapshot</h3>
+        <p>${activeScenario.report}</p>
+        <ul>
+          <li>Selected clue: ${selected}</li>
+          <li>Keep the runner-up visible until two independent discriminators separate the pair.</li>
+          <li>Final wording should remain a working formulation, not a permanent verdict.</li>
+        </ul>
+      `;
+      promptOutput.value = activeScenario.prompt;
+    }
+
+    function renderAll() {
+      renderScenarios();
+      renderCandidates();
+      renderEvidence();
+      renderDuel();
+      renderReport();
+    }
+
+    document.getElementById("copyPrompt").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(promptOutput.value);
+        toast.textContent = "Prompt copied.";
+      } catch {
+        promptOutput.focus();
+        promptOutput.select();
+        toast.textContent = "Prompt selected. Copy it manually.";
+      }
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

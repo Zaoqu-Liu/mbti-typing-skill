@@ -111,3 +111,5 @@ The activation gate validates that the sample session state can pass final-state
 ```bash
 make activation
 ```
+
+The repository UX scorecard also checks the static playground and GitHub Pages workflow. The playground must be buildless, local-first, and free of external runtime dependencies so the first experience is fast and inspectable.

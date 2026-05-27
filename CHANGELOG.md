@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 - 2026-05-28
+
+- Added a buildless interactive playground and GitHub Pages deployment workflow.
+
 ## 0.1.2 - 2026-05-28
 
 - Added copy-paste prompt recipes, evidence-ledger example, final-session-state example, and activation validation.

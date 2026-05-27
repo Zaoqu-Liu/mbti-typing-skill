@@ -27,6 +27,7 @@ REQUIRED_FILES = [
     "CITATION.cff",
     "Makefile",
     ".github/workflows/ci.yml",
+    ".github/workflows/pages.yml",
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
@@ -41,6 +42,8 @@ REQUIRED_FILES = [
     "docs/visual-tour.md",
     "docs/demo-session.md",
     "docs/sample-report.md",
+    "docs/playground.html",
+    "docs/index.html",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -48,6 +51,9 @@ REQUIRED_FILES = [
 README_REQUIRED_TERMS = [
     "docs/assets/mbti-typing-hero.png",
     "docs/assets/typing-journey-map.png",
+    "Interactive Playground",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
+    "docs/playground.html",
     "One-Minute Demo",
     "docs/visual-tour.md",
     "docs/demo-session.md",
@@ -113,6 +119,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
+        Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
@@ -130,6 +137,9 @@ def check_docs(root: Path) -> list[Check]:
     visual = read_text(root / "docs/visual-tour.md")
     demo = read_text(root / "docs/demo-session.md")
     sample = read_text(root / "docs/sample-report.md")
+    playground = read_text(root / "docs/playground.html")
+    index = read_text(root / "docs/index.html")
+    pages = read_text(root / ".github/workflows/pages.yml")
     return [
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
@@ -137,6 +147,14 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:visual_images", "typing-journey-map.png" in visual and "mbti-typing-hero.png" in visual, "Visual tour references both bitmap assets"),
         Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
         Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
+        Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
+        Check("playground:no_external_runtime", "https://" not in playground and "http://" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
+        Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),
+        Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
+        Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
+        Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
+        Check("pages:index_redirect", "playground.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to playground"),
+        Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]
 
 

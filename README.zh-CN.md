@@ -6,6 +6,15 @@
 
 > MBTI 可以作为自我理解语言，但不能用于临床诊断、招聘筛选、升学筛选、法律判断，不能决定一个人的价值或未来。
 
+## 交互式 Playground
+
+想先玩一下再安装，可以打开静态 playground：
+
+- [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
+- [本地 playground 文件](docs/playground.html)
+
+它会展示候选类型分数、证据权重、类型对决、校准报告语言，以及可复制到 Codex 的启动 prompt。
+
 ## 先看一分钟 Demo
 
 ![Typing journey map](docs/assets/typing-journey-map.png)
@@ -129,7 +138,7 @@ make test
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 61/61 (100.00%)
+Repository UX Score: 76/76 (100.00%)
 ```
 
 完整评估模型见 [docs/evaluation.md](docs/evaluation.md)，交互体验原则见 [docs/experience-principles.md](docs/experience-principles.md)。
