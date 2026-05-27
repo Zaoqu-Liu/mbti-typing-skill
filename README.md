@@ -19,6 +19,7 @@ Start here if you want to feel the product before reading the internals:
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
 - [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
+- [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
 
 The experience target is simple: every round should make the user feel that the next question was chosen because of their previous answer, not because the system is walking through a generic quiz.
 
@@ -109,33 +110,26 @@ sequenceDiagram
 ## Repository Layout
 
 ```text
-skill/mbti-typing/
-  SKILL.md
-  agents/openai.yaml
-  references/
-    playbooks.md
-    methodology.md
-    type-map.md
-    pair-duels.md
-    question-bank.md
-    session-state.md
-    zh-output-style.md
-    quality-gates.md
-    research-boundaries.md
-    evidence-ledger-template.md
-  examples/
-    benchmark-cases.json
-    golden-reports.json
+.
+  README.md
+  README.zh-CN.md
+  prompts/
+    prompt-recipes.md
   docs/
     visual-tour.md
     demo-session.md
     sample-report.md
-  scripts/
-    bayes_update.py
-    typing_session.py
-    report_audit.py
-    benchmark_cases.py
-    skill_scorecard.py
+    assets/
+      mbti-typing-hero.png
+      typing-journey-map.png
+  examples/
+    session-state-example.json
+    evidence-ledger-example.md
+  skill/mbti-typing/
+    SKILL.md
+    references/
+    examples/
+    scripts/
 ```
 
 ## Install
@@ -208,7 +202,7 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 52/52 (100.00%)
+Repository UX Score: 61/61 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

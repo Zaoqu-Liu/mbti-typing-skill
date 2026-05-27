@@ -43,6 +43,24 @@ INFP would rise if:
 - External structure appears mainly under stress.
 - The person repeatedly chooses authenticity preservation over strategic leverage.
 
+## Big Five Cross-Check
+
+This cross-check is not treated as MBTI proof.
+
+| Trait | Likely direction | How it affects the formulation |
+|---|---|---|
+| Openness | High | Explains depth and meaning language without deciding between INTJ and INFP by itself |
+| Conscientiousness | Medium-high to high | Makes ENTJ and INTJ more plausible than a pure values-first explanation |
+| Extraversion | Unclear | Social energy is not the deciding evidence here |
+| Agreeableness | Context-dependent | Direct conflict style may be role-shaped, so it should not be overread |
+| Neuroticism | Unknown | A/T-like stability language should not be imported without evidence |
+
+## Uncertainty
+
+The main uncertainty is whether external structure is the default engine or the visible output of a private model that converges first.
+
+The second uncertainty is whether value language initiates decisions or mainly gives meaning to decisions after a strategic direction is already forming.
+
 ## Falsifiers
 
 This formulation should change if new evidence shows:
@@ -61,4 +79,3 @@ For the next two weeks, track three moments:
 3. After a conflict, do you recover by clarifying the system, refining the model, restoring value integrity, or repairing emotional connection?
 
 The result becomes more reliable when repeated normal-state observations beat one dramatic anecdote.
-

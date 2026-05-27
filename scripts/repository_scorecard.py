@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import re
 import struct
 import sys
@@ -29,6 +30,9 @@ REQUIRED_FILES = [
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
+    "prompts/prompt-recipes.md",
+    "examples/session-state-example.json",
+    "examples/evidence-ledger-example.md",
     "docs/assets/mbti-typing-hero.png",
     "docs/assets/typing-journey-map.png",
     "docs/evaluation.md",
@@ -48,6 +52,7 @@ README_REQUIRED_TERMS = [
     "docs/visual-tour.md",
     "docs/demo-session.md",
     "docs/sample-report.md",
+    "prompts/prompt-recipes.md",
     "Visual System Map",
     "Adaptive Typing Loop",
     "Evidence Ledger Flow",
@@ -108,6 +113,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
+        Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
@@ -134,6 +140,18 @@ def check_docs(root: Path) -> list[Check]:
     ]
 
 
+def check_activation_assets(root: Path) -> list[Check]:
+    prompts = read_text(root / "prompts/prompt-recipes.md")
+    ledger = read_text(root / "examples/evidence-ledger-example.md")
+    state = json.loads(read_text(root / "examples/session-state-example.json"))
+    return [
+        Check("activation:prompt_count", prompts.count("Use $mbti-typing") >= 6, "Prompt recipes include at least six copy-paste starts"),
+        Check("activation:ledger_sections", "Candidate Set" in ledger and "Contradiction Gate" in ledger, "Evidence ledger example includes candidate and contradiction sections"),
+        Check("activation:state_candidates", len(state.get("candidate_set", [])) >= 3, "Session state example starts from at least three candidates"),
+        Check("activation:state_falsifiers", bool(state.get("falsifiers")), "Session state example includes falsifiers"),
+    ]
+
+
 def run(root: Path) -> int:
     checks: list[Check] = []
     checks.extend(check_required_files(root))
@@ -141,6 +159,7 @@ def run(root: Path) -> int:
     checks.extend(check_journey_map(root))
     checks.extend(check_readme(root))
     checks.extend(check_docs(root))
+    checks.extend(check_activation_assets(root))
 
     passed = sum(1 for check in checks if check.passed)
     total = len(checks)

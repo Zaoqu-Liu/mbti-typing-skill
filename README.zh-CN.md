@@ -15,6 +15,7 @@
 - [Visual tour](docs/visual-tour.md)：这个仓库的视觉阅读路径。
 - [Demo session](docs/demo-session.md)：一次 ENTJ vs INTJ vs INFP 的短样例会话。
 - [Sample report](docs/sample-report.md)：最终报告应该长什么样。
+- [Copy-paste prompt recipes](prompts/prompt-recipes.md)：六个可直接复制的启动 prompt。
 
 目标不是让用户被漂亮话哄住，而是让用户觉得：每一轮追问都真的接住了上一轮的矛盾。
 
@@ -128,7 +129,7 @@ make test
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Repository UX Score: 52/52 (100.00%)
+Repository UX Score: 61/61 (100.00%)
 ```
 
 完整评估模型见 [docs/evaluation.md](docs/evaluation.md)，交互体验原则见 [docs/experience-principles.md](docs/experience-principles.md)。

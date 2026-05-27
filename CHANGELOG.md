@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 - 2026-05-28
+
+- Added copy-paste prompt recipes, evidence-ledger example, final-session-state example, and activation validation.
+
 ## 0.1.1 - 2026-05-28
 
 - Added a one-minute demo path, visual tour, sample live session, sample final report, and second journey-map image.

@@ -1,0 +1,147 @@
+{
+  "target_question": "Am I closer to ENTJ, INTJ, or INFP?",
+  "mode": "live_interview",
+  "candidate_set": [
+    {
+      "type": "ENTJ",
+      "status": "leading",
+      "why_included": "The subject reports default external structuring, ownership clarification, and corrective response to ineffective execution.",
+      "support": ["E1", "E2", "E4"],
+      "against": ["E3"]
+    },
+    {
+      "type": "INTJ",
+      "status": "runner_up",
+      "why_included": "The subject is strongly sensitive to shallow reasoning and may privately converge on a model before acting.",
+      "support": ["E3", "E5"],
+      "against": ["E1", "E2"]
+    },
+    {
+      "type": "INFP",
+      "status": "active_alternative",
+      "why_included": "The subject uses value and meaning language that could reflect Fi-led decision making.",
+      "support": ["E5"],
+      "against": ["E1", "E4"]
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "target": "Determine whether structure is default agency, private model expression, or stress compensation.",
+      "questions": [
+        "When nobody is watching, do you still organize ambiguous work into ownership and next actions?",
+        "Which feedback hurts more: ineffective, shallow, wrong, or uncaring?",
+        "When a plan fails, what irritates you first?"
+      ],
+      "answers": [
+        "The subject still creates systems without an audience.",
+        "Shallow hurts more at identity level; ineffective triggers immediate correction.",
+        "Unclear ownership and wasted motion irritate first."
+      ],
+      "movement": "ENTJ takes a slight lead; INTJ remains serious because depth sensitivity is strong; INFP weakens but remains possible.",
+      "new_contradictions": [
+        "The subject combines command-mode structure with identity-level concern for depth and meaning."
+      ],
+      "next_target": "Test Te-dom versus Ni-dom without relying on social extroversion."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "round": 1,
+      "observation": "When nobody is watching, the subject still turns ambiguity into ownership and next actions.",
+      "context": "normal",
+      "supports": ["ENTJ", "Te-Ni"],
+      "contradicts": ["INFP"],
+      "alternatives": ["work training", "achievement culture"],
+      "weight": 4,
+      "independence_group": "default-agency",
+      "follow_up": "Check whether this happens outside work roles."
+    },
+    {
+      "id": "E2",
+      "round": 1,
+      "observation": "In conflict, the subject first wants the decision path and ownership made explicit.",
+      "context": "conflict",
+      "supports": ["ENTJ"],
+      "contradicts": ["ENFJ", "INFP"],
+      "alternatives": ["current environment rewards clarity"],
+      "weight": 3,
+      "independence_group": "conflict-response",
+      "follow_up": "Ask what happens when emotional repair is the explicit goal."
+    },
+    {
+      "id": "E3",
+      "round": 1,
+      "observation": "Being called shallow hurts more than being called ineffective.",
+      "context": "normal",
+      "supports": ["INTJ", "INFP"],
+      "contradicts": ["ENTJ stereotype only"],
+      "alternatives": ["identity investment in competence and depth"],
+      "weight": 2,
+      "independence_group": "identity-threat",
+      "follow_up": "Separate depth-as-model-quality from depth-as-value-authenticity."
+    },
+    {
+      "id": "E4",
+      "round": 1,
+      "observation": "Ineffective feedback causes anger and immediate correction rather than withdrawal.",
+      "context": "recovery",
+      "supports": ["ENTJ"],
+      "contradicts": ["INFP"],
+      "alternatives": ["learned coping style"],
+      "weight": 3,
+      "independence_group": "feedback-recovery",
+      "follow_up": "Check whether correction is energizing or depleting."
+    },
+    {
+      "id": "E5",
+      "round": 1,
+      "observation": "Meaning and value concerns are described as central to life direction.",
+      "context": "long-term pattern",
+      "supports": ["INFP", "INTJ"],
+      "contradicts": [],
+      "alternatives": ["high openness", "life-stage reflection"],
+      "weight": 2,
+      "independence_group": "meaning-language",
+      "follow_up": "Ask whether values initiate decisions or refine already chosen goals."
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "C1",
+      "summary": "Command-mode structure coexists with strong depth and meaning sensitivity.",
+      "status": "open",
+      "next_probe": "Te-dom versus Ni-dom versus Fi-led structure compensation."
+    }
+  ],
+  "user_corrections": [
+    {
+      "round": 1,
+      "correction": "The subject rejects being typed from ambition alone."
+    }
+  ],
+  "framework_boundaries": [
+    "This is MBTI-style interview typing, not clinical diagnosis, hiring selection, or psychometric certification.",
+    "Big Five language is used only as a cross-check; it is not treated as identical to MBTI functions.",
+    "A/T labels are 16Personalities-style stability language, not official MBTI."
+  ],
+  "current_board": {
+    "leading": ["ENTJ"],
+    "runner_up": ["INTJ"],
+    "dropped": ["ENFJ"]
+  },
+  "next_round_target": "Run an ENTJ vs INTJ duel focused on whether Te or Ni is the default engine.",
+  "falsifiers": [
+    "INTJ should overtake if private model convergence consistently precedes external structuring.",
+    "INFP should rise if values initiate decisions and structure appears mainly under pressure.",
+    "ENFJ should re-enter if the subject regulates group emotion before defining goals, roles, or decisions."
+  ],
+  "final_formulation": {
+    "type": "ENTJ",
+    "confidence": "medium",
+    "runner_up": "INTJ",
+    "note": "Best-supported working formulation, not a permanent verdict."
+  }
+}
+
