@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6 - 2026-05-28
+
+- Added a buildless Benchmark Arena case gallery with filters, trap inspection, runner-up/falsifier visibility, copied benchmark prompts, and benchmark issue seeds.
+- Added a dedicated Case Gallery audit and wired it into `make test`.
+- Expanded repository UX gates to verify the public benchmark surface and raised the scorecard to 144/144.
+
 ## 0.1.5 - 2026-05-28
 
 - Added Session Lab share links, URL-hash recovery, editable JSON import, and a dedicated Session Lab audit gate.

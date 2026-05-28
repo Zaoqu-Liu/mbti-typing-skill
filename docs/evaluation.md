@@ -120,6 +120,8 @@ The activation gate validates that the sample session state can pass final-state
 make activation
 ```
 
-The repository UX scorecard also checks the Session Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
+The repository UX scorecard also checks the Session Lab, Benchmark Arena, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
 
 The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.
+
+The dedicated Case Gallery audit validates the public benchmark surface: all current benchmark cases, case filters, copied `Use $mbti-typing` prompts, benchmark issue seeds, visible runner-up/falsifier language, DOM-safe rendering, and no external runtime dependency.

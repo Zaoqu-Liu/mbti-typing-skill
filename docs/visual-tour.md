@@ -74,6 +74,17 @@ The fastest product path is now [Session Lab](session-lab.html):
 
 The lab is intentionally local-first: no build step, no external runtime, no account, and no network call. Share links use a URL hash so the browser can recover a session without sending the evidence to a server.
 
+## Benchmark Arena
+
+[Benchmark Arena](case-gallery.html) turns the regression suite into a product surface:
+
+- Visitors can scan eight adversarial cases before trusting the workflow.
+- Each case shows the leading type, serious runner-up, trap, required evidence tags, and strongest falsifier.
+- The page generates a reusable `Use $mbti-typing` benchmark prompt.
+- The issue seed makes a failed typing session easy to convert into a new synthetic benchmark.
+
+This is the retention loop that is allowed: users come back because the system makes mistakes inspectable and harder to repeat.
+
 ## Why These Visuals Matter
 
 Most personality tools make the result feel magical. This project should make the reasoning feel visible.
@@ -90,15 +101,16 @@ The visual system therefore emphasizes:
 ```mermaid
 flowchart TD
     A[Hero image] --> B[Session Lab]
-    B --> C[GitHub visitor map]
-    C --> D[Typing engine blueprint]
-    D --> E[Trust loop dashboard]
-    E --> F[One-minute demo]
-    F --> G[Demo session]
-    G --> H[Sample report]
-    H --> I[Evaluation model]
-    I --> J[Contribution guide]
-    J --> K[Benchmark cases]
+    B --> C[Benchmark Arena]
+    C --> D[GitHub visitor map]
+    D --> E[Typing engine blueprint]
+    E --> F[Trust loop dashboard]
+    F --> G[One-minute demo]
+    G --> H[Demo session]
+    H --> I[Sample report]
+    I --> J[Evaluation model]
+    J --> K[Contribution guide]
+    K --> L[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

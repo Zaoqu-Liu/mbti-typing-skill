@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation session-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation session-lab-audit case-gallery-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation session-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation session-lab-audit case-gallery-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -23,6 +23,9 @@ activation:
 
 session-lab-audit:
 	$(PYTHON) -B scripts/session_lab_audit.py docs/session-lab.html
+
+case-gallery-audit:
+	$(PYTHON) -B scripts/case_gallery_audit.py docs/case-gallery.html
 
 repo-scorecard:
 	$(PYTHON) -B scripts/repository_scorecard.py .

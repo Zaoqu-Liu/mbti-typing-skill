@@ -10,16 +10,18 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab and Playground
+## Session Lab, Benchmark Arena, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
 - [GitHub Pages Session Lab](https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html)
 - [Local Session Lab file](docs/session-lab.html)
+- [GitHub Pages Benchmark Arena](https://zaoqu-liu.github.io/mbti-typing-skill/case-gallery.html)
+- [Local case gallery file](docs/case-gallery.html)
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -28,6 +30,7 @@ The Session Lab turns a claim and notes into a heuristic candidate board, eviden
 Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
+- [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
 - [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
 - [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
 - [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
@@ -153,6 +156,7 @@ sequenceDiagram
     demo-session.md
     sample-report.md
     session-lab.html
+    case-gallery.html
     playground.html
     assets/
       mbti-typing-hero.png
@@ -236,6 +240,7 @@ python3 -B skill/mbti-typing/scripts/skill_scorecard.py skill/mbti-typing
 python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session-state-example.json --final
 python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
 python3 -B scripts/session_lab_audit.py docs/session-lab.html
+python3 -B scripts/case_gallery_audit.py docs/case-gallery.html
 python3 -B scripts/repository_scorecard.py .
 ```
 
@@ -245,7 +250,8 @@ Expected result:
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
 Session Lab Audit: 60/60 (100.00%)
-Repository UX Score: 130/130 (100.00%)
+Case Gallery Audit: 34/34 (100.00%)
+Repository UX Score: 144/144 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

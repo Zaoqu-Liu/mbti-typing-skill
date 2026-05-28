@@ -46,9 +46,11 @@ REQUIRED_FILES = [
     "docs/demo-session.md",
     "docs/sample-report.md",
     "docs/session-lab.html",
+    "docs/case-gallery.html",
     "docs/playground.html",
     "docs/index.html",
     "scripts/session_lab_audit.py",
+    "scripts/case_gallery_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -66,6 +68,9 @@ README_REQUIRED_TERMS = [
     "session state export",
     "share link",
     "Import JSON",
+    "Benchmark Arena",
+    "docs/case-gallery.html",
+    "case gallery",
     "Interactive Playground",
     "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
     "docs/playground.html",
@@ -204,11 +209,13 @@ def check_docs(root: Path) -> list[Check]:
     demo = read_text(root / "docs/demo-session.md")
     sample = read_text(root / "docs/sample-report.md")
     session_lab = read_text(root / "docs/session-lab.html")
+    case_gallery = read_text(root / "docs/case-gallery.html")
     playground = read_text(root / "docs/playground.html")
     index = read_text(root / "docs/index.html")
     pages = read_text(root / ".github/workflows/pages.yml")
     makefile = read_text(root / "Makefile")
     session_lab_audit = read_text(root / "scripts/session_lab_audit.py")
+    case_gallery_audit = read_text(root / "scripts/case_gallery_audit.py")
     return [
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
@@ -236,6 +243,15 @@ def check_docs(root: Path) -> list[Check]:
         Check("session_lab:codex_prompt", "Use $mbti-typing" in session_lab and "generated_prompt" in session_lab, "Session Lab creates a reusable Codex prompt"),
         Check("session_lab:audit_script", "Session Lab Audit" in session_lab_audit and "Copy Share Link" in session_lab_audit, "Session Lab has a dedicated audit script"),
         Check("session_lab:audit_make_target", "session-lab-audit" in makefile and "scripts/session_lab_audit.py" in makefile, "Makefile runs Session Lab audit"),
+        Check("case_gallery:title", "MBTI Typing Skill Benchmark Arena" in case_gallery, "Case Gallery has a clear product title"),
+        Check("case_gallery:no_external_runtime", "<script src" not in case_gallery and " src=" not in case_gallery, "Case Gallery has no external runtime dependency"),
+        Check("case_gallery:interactive_regions", all(term in case_gallery for term in ("filterRail", "caseGrid", "caseDetail", "promptOutput", "copyIssueSeed")), "Case Gallery contains filters, cases, detail, prompt, and issue seed regions"),
+        Check("case_gallery:benchmark_cases", all(case_id in case_gallery for case_id in ("bench-entj-intj-001", "bench-intj-entj-002", "bench-infp-infj-003", "bench-infj-infp-004", "bench-estj-entj-005", "bench-entp-enfp-006", "bench-isfj-infj-007", "bench-estp-entp-008")), "Case Gallery exposes all current benchmark cases"),
+        Check("case_gallery:safety_boundary", "Not psychometric ground truth" in case_gallery and "not clinical or hiring instruments" in case_gallery, "Case Gallery keeps safety boundary visible"),
+        Check("case_gallery:copy_prompt", "navigator.clipboard.writeText" in case_gallery and "Use $mbti-typing" in case_gallery, "Case Gallery can copy reusable prompts"),
+        Check("case_gallery:dom_safety", "textContent" in case_gallery and "replaceChildren" in case_gallery and "innerHTML" not in case_gallery, "Case Gallery renders data without HTML injection"),
+        Check("case_gallery:audit_script", "Case Gallery Audit" in case_gallery_audit and "Submit Benchmark Case" in case_gallery_audit, "Case Gallery has a dedicated audit script"),
+        Check("case_gallery:audit_make_target", "case-gallery-audit" in makefile and "scripts/case_gallery_audit.py" in makefile, "Makefile runs Case Gallery audit"),
         Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
         Check("playground:no_external_runtime", "https://" not in playground and "http://" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
         Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),

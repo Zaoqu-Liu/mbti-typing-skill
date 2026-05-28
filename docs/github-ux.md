@@ -15,6 +15,7 @@ The README opens with:
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
 - A local-first Session Lab for visitors who want to paste their own evidence, get a usable next round immediately, copy a share link, and recover work through imported JSON.
+- A Benchmark Arena case gallery for visitors who want to inspect traps, runner-ups, falsifiers, reusable prompts, and contribution seeds.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
 - Three SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, and `docs/assets/trust-loop-dashboard.svg`.
@@ -32,11 +33,11 @@ flowchart TD
     A[Visitor lands on README] --> B{What are they looking for?}
     B -->|Can this type me better?| C[See adaptive interview loop]
     B -->|Can I trust it?| D[See evidence ledger and safety boundaries]
-    B -->|Can I contribute?| E[See benchmark cases and contribution path]
+    B -->|Can I contribute?| E[Open Benchmark Arena]
     B -->|Can I install it fast?| F[Copy install command]
     C --> G[Try live typing prompt]
     D --> H[Read evaluation model]
-    E --> I[Open benchmark issue template]
+    E --> I[Copy issue seed]
     F --> J[Use skill in Codex]
 ```
 
@@ -44,13 +45,14 @@ flowchart TD
 
 1. Hero image: emotional hook and product shape.
 2. Session Lab links: immediate proof that the repo is usable.
-3. GitHub Visitor Experience Map: how different visitors should move.
-4. Typing Engine Blueprint: why the reasoning loop is not a quiz.
-5. Trust Loop Dashboard: why accuracy work is repeatable.
-6. System map: how inputs become calibrated outputs.
-7. Interview loop: why each round feels progressive.
-8. Evidence ledger: why the answer is not a black box.
-9. Quality gates: why the project is maintainable.
+3. Benchmark Arena: visible traps and contribution path.
+4. GitHub Visitor Experience Map: how different visitors should move.
+5. Typing Engine Blueprint: why the reasoning loop is not a quiz.
+6. Trust Loop Dashboard: why accuracy work is repeatable.
+7. System map: how inputs become calibrated outputs.
+8. Interview loop: why each round feels progressive.
+9. Evidence ledger: why the answer is not a black box.
+10. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -76,6 +78,7 @@ The experience should never rely on:
 - Keep a second journey-map visual in `docs/assets/`.
 - Keep the three precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, and `trust-loop-dashboard.svg`.
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
+- Keep `docs/case-gallery.html` usable without a build step or external runtime; preserve case filters, prompt copy, issue seed copy, all current benchmark cases, and safety boundaries.
 - Keep `docs/playground.html` usable without a build step, external JavaScript, or network calls.
 - Keep at least four Mermaid diagrams in the English README.
 - Keep demo session and sample report links visible in the first half of the README.
