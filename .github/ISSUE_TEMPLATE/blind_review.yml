@@ -1,0 +1,41 @@
+name: Blind review result
+description: Submit a sanitized blind review packet or aggregate blind review finding.
+title: "[Blind Review]: "
+labels: ["blind-review", "benchmark"]
+body:
+  - type: textarea
+    id: packet-summary
+    attributes:
+      label: Sanitized packet summary
+      description: Do not include private or identifiable data.
+      placeholder: "Synthetic or anonymized evidence packet, candidate set, and what reviewers saw."
+    validations:
+      required: true
+  - type: textarea
+    id: reviewer-outputs
+    attributes:
+      label: Reviewer outputs
+      description: Include leading type, runner-up, confidence, evidence tags, falsifier, boundary, and overclaim flags for each reviewer.
+    validations:
+      required: true
+  - type: textarea
+    id: aggregate-metrics
+    attributes:
+      label: Aggregate metrics
+      description: Paste top-1, top-2, runner-up preservation, evidence-tag, falsifier, boundary, and overclaim metrics.
+    validations:
+      required: true
+  - type: textarea
+    id: adjudication
+    attributes:
+      label: Adjudication notes
+      description: Explain why the reference formulation wins and what would change it.
+    validations:
+      required: true
+  - type: textarea
+    id: follow-up
+    attributes:
+      label: Proposed repository update
+      description: Should this become a benchmark case, golden fixture, pair-duel rule, question-bank item, or report-audit rule?
+    validations:
+      required: true

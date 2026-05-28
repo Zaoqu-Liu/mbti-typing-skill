@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="880" viewBox="0 0 1500 880" role="img" aria-labelledby="title desc">
+  <title id="title">Blind Review Arena</title>
+  <desc id="desc">A workflow diagram for sanitized MBTI blind review packets, independent reviewer outputs, aggregate metrics, adjudication, and repository feedback.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7f6; }
+      .panel { fill: #ffffff; stroke: #d8dfdc; stroke-width: 2; rx: 18; }
+      .soft { fill: #f9fbfa; stroke: #d8dfdc; stroke-width: 2; rx: 14; }
+      .title { font: 900 40px Inter, system-ui, sans-serif; fill: #172120; }
+      .subtitle { font: 650 16px Inter, system-ui, sans-serif; fill: #64716e; }
+      .label { font: 850 20px Inter, system-ui, sans-serif; fill: #172120; }
+      .small { font: 700 13px Inter, system-ui, sans-serif; fill: #64716e; }
+      .tiny { font: 750 11px Inter, system-ui, sans-serif; fill: #64716e; }
+      .metric { font: 900 28px Inter, system-ui, sans-serif; fill: #172120; }
+      .white { fill: #ffffff; }
+      .dark { fill: #24302e; }
+      .green { fill: #16836f; }
+      .greenSoft { fill: #e4f4ef; stroke: #8ecabc; stroke-width: 1.5; }
+      .blue { fill: #3266a8; }
+      .blueSoft { fill: #e7eef9; stroke: #a8c0e3; stroke-width: 1.5; }
+      .amber { fill: #b97312; }
+      .amberSoft { fill: #fff0d9; stroke: #ddb169; stroke-width: 1.5; }
+      .red { fill: #b93d5b; }
+      .redSoft { fill: #fde8ee; stroke: #e3a7b7; stroke-width: 1.5; }
+      .line { fill: none; stroke: #24302e; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+      .dash { fill: none; stroke: #87928f; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 7 8; }
+      .arrow { fill: #24302e; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1500" height="880"/>
+  <path d="M0 0 H1500 V250 C1260 210 1110 316 880 246 C640 174 470 280 0 198 Z" fill="#e4f4ef"/>
+  <path d="M1500 880 H0 V648 C250 694 430 570 690 642 C960 718 1140 604 1500 678 Z" fill="#e7eef9"/>
+
+  <rect x="54" y="46" width="1392" height="124" class="panel"/>
+  <text x="88" y="105" class="title">Blind Review Arena</text>
+  <text x="90" y="138" class="subtitle">Sanitized packets, hidden references, independent reviewers, visible aggregate metrics, and repository feedback.</text>
+  <rect x="1190" y="76" width="202" height="58" rx="12" class="dark"/>
+  <text x="1225" y="100" class="tiny white">QUALITY CLAIM</text>
+  <text x="1218" y="124" class="label white">blindable</text>
+
+  <rect x="70" y="232" width="246" height="166" class="panel"/>
+  <circle cx="116" cy="282" r="27" class="green"/>
+  <text x="107" y="290" class="label white">1</text>
+  <text x="154" y="274" class="label">Sanitized Packet</text>
+  <text x="154" y="300" class="small">No identifying data</text>
+  <rect x="102" y="330" width="182" height="34" rx="10" class="greenSoft"/>
+  <text x="124" y="352" class="small">3-6 candidates</text>
+  <text x="104" y="382" class="tiny">Reviewer sees evidence, not answer.</text>
+
+  <rect x="390" y="232" width="246" height="166" class="panel"/>
+  <circle cx="436" cy="282" r="27" class="blue"/>
+  <text x="427" y="290" class="label white">2</text>
+  <text x="474" y="274" class="label">Hidden Reference</text>
+  <text x="474" y="300" class="small">Leading + runner-up</text>
+  <rect x="422" y="330" width="182" height="34" rx="10" class="blueSoft"/>
+  <text x="452" y="352" class="small">adjudication notes</text>
+  <text x="424" y="382" class="tiny">Held back until scoring.</text>
+
+  <rect x="710" y="216" width="306" height="198" class="panel"/>
+  <circle cx="756" cy="266" r="27" class="amber"/>
+  <text x="747" y="274" class="label white">3</text>
+  <text x="794" y="258" class="label">Independent Reviewers</text>
+  <text x="794" y="284" class="small">Human, model, or prompt variant</text>
+  <g transform="translate(744 320)">
+    <rect x="0" y="0" width="80" height="34" rx="10" class="amberSoft"/>
+    <text x="24" y="22" class="small">A</text>
+    <rect x="98" y="0" width="80" height="34" rx="10" class="amberSoft"/>
+    <text x="122" y="22" class="small">B</text>
+    <rect x="196" y="0" width="80" height="34" rx="10" class="amberSoft"/>
+    <text x="220" y="22" class="small">C</text>
+    <text x="0" y="64" class="tiny">No reviewer sees other answers.</text>
+  </g>
+
+  <rect x="1090" y="232" width="340" height="166" class="panel"/>
+  <circle cx="1136" cy="282" r="27" class="red"/>
+  <text x="1127" y="290" class="label white">4</text>
+  <text x="1174" y="274" class="label">Aggregate Metrics</text>
+  <text x="1174" y="300" class="small">Top-1, top-2, runner-up, falsifier</text>
+  <g transform="translate(1122 330)">
+    <rect x="0" y="0" width="86" height="34" rx="10" class="redSoft"/>
+    <text x="18" y="23" class="small">top-1</text>
+    <rect x="100" y="0" width="86" height="34" rx="10" class="redSoft"/>
+    <text x="118" y="23" class="small">top-2</text>
+    <rect x="200" y="0" width="94" height="34" rx="10" class="redSoft"/>
+    <text x="216" y="23" class="small">boundary</text>
+  </g>
+
+  <path d="M316 315 H374" class="line"/>
+  <path d="M374 315 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M636 315 H694" class="line"/>
+  <path d="M694 315 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M1016 315 H1074" class="line"/>
+  <path d="M1074 315 l-13 -8 v16 Z" class="arrow"/>
+
+  <rect x="104" y="500" width="244" height="166" class="soft"/>
+  <text x="136" y="548" class="label">Top-2 Matters</text>
+  <text x="136" y="578" class="small">Do not reward lucky certainty</text>
+  <text x="136" y="620" class="metric">top2 ≥ top1</text>
+
+  <rect x="444" y="500" width="244" height="166" class="soft"/>
+  <text x="476" y="548" class="label">Runner-Up</text>
+  <text x="476" y="578" class="small">Serious alternative preserved</text>
+  <text x="476" y="620" class="metric">required</text>
+
+  <rect x="784" y="500" width="244" height="166" class="soft"/>
+  <text x="816" y="548" class="label">Falsifier</text>
+  <text x="816" y="578" class="small">What would change the call</text>
+  <text x="816" y="620" class="metric">visible</text>
+
+  <rect x="1124" y="500" width="244" height="166" class="soft"/>
+  <text x="1156" y="548" class="label">Feedback</text>
+  <text x="1156" y="578" class="small">Benchmark, fixture, or audit rule</text>
+  <text x="1156" y="620" class="metric">merged</text>
+
+  <path d="M1260 398 C1260 460 230 440 226 500" class="dash"/>
+  <path d="M226 500 l-10 -13 l16 4 Z" class="arrow"/>
+  <path d="M348 584 H428" class="line"/>
+  <path d="M428 584 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M688 584 H768" class="line"/>
+  <path d="M768 584 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M1028 584 H1108" class="line"/>
+  <path d="M1108 584 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M1246 500 C1225 454 1182 424 1140 398" class="dash"/>
+  <path d="M1140 398 l16 -1 l-9 13 Z" class="arrow"/>
+
+  <rect x="244" y="738" width="1012" height="64" rx="18" fill="#ffffff" stroke="#d8dfdc" stroke-width="2"/>
+  <text x="300" y="764" class="small">World-class accuracy claim</text>
+  <text x="300" y="786" class="label">A typing system earns trust when its mistakes can be blinded, measured, adjudicated, and converted into tests.</text>
+</svg>

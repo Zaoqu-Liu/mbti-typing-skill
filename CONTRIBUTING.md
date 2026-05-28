@@ -19,6 +19,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Improve pair-duel discriminators.
 - Add realistic bad reports that should fail audit.
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
+- Share sanitized blind review findings through the `blind_review.yml` issue template.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -35,6 +36,7 @@ Expected:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
+Blind Review Audit: 93/93 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
 ```
 
@@ -64,6 +66,19 @@ Before opening a calibration issue:
 - Include failed gates such as missing runner-up, missing falsifier, weak evidence tags, missing boundary, or overclaim trigger.
 - Explain the expected repair in one or two concrete sentences.
 
+## Blind Review Guidelines
+
+Blind review contributions are useful when a typing output looks good only because the expected answer was visible.
+
+Before opening a blind review issue:
+
+- Remove private or identifiable text.
+- Keep the expected answer hidden from reviewer outputs.
+- Include at least two independent reviewer outputs.
+- Include leading type, runner-up, confidence, evidence tags, falsifier, boundary statement, and overclaim flags.
+- Include aggregate top-1, top-2, runner-up preservation, falsifier, boundary, and no-overclaim metrics.
+- Explain whether the result should become a benchmark case, golden fixture, pair-duel rule, question-bank item, or report-audit rule.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
@@ -71,4 +86,5 @@ Before opening a calibration issue:
 - [ ] Any new type-pair guidance includes losing conditions for both sides.
 - [ ] Any new benchmark case includes a trap and falsifier theme.
 - [ ] Any new calibration result is sanitized and points to a specific failed gate.
+- [ ] Any new blind review result preserves blinding and includes aggregate metrics.
 - [ ] No clinical, hiring, or deterministic use case has been added.

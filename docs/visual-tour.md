@@ -98,6 +98,20 @@ The calibration map shows how a generated or human report becomes a repeatable i
 
 This is the allowed retention loop: people return because each miss produces a sharper next run.
 
+## Blind Review Arena
+
+![Blind Review Arena](assets/blind-review-arena.svg)
+
+The blind review arena is the accuracy layer after calibration:
+
+- A case packet is sanitized and stripped of expected type labels.
+- Independent reviewers or models produce leading type, runner-up, confidence, evidence tags, falsifier, boundary, and overclaim flags.
+- `examples/blind-review-matrix.json` stores the result.
+- `scripts/blind_review_audit.py` reports top-1, top-2, runner-up preservation, evidence-tag, falsifier, boundary, and no-overclaim metrics.
+- Repeated misses become benchmark cases, golden fixtures, pair-duel rules, or report-audit rules.
+
+The point is not to claim final psychometric truth. The point is to make accuracy claims blindable, inspectable, and improvable.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -152,12 +166,13 @@ flowchart TD
     F --> G[Benchmark Arena pipeline]
     G --> H[Type coverage matrix]
     H --> I[Calibration loop map]
-    I --> J[One-minute demo]
-    J --> K[Demo session]
-    K --> L[Sample report]
-    L --> M[Evaluation model]
-    M --> N[Contribution guide]
-    N --> O[Benchmark cases]
+    I --> J[Blind review arena]
+    J --> K[One-minute demo]
+    K --> L[Demo session]
+    L --> M[Sample report]
+    M --> N[Evaluation model]
+    N --> O[Contribution guide]
+    O --> P[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

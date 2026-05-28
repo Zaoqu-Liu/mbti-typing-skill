@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.11 - 2026-05-28
+
+- Added a Blind Review Protocol for sanitized multi-reviewer or multi-model evaluation without exposing the expected answer to reviewers.
+- Added `examples/blind-review-matrix.json`, `scripts/blind_review_audit.py`, and a `blind_review.yml` issue template to track top-1, top-2, runner-up, evidence-tag, falsifier, boundary, and overclaim metrics.
+- Added the Blind Review Arena SVG and expanded repository gates so blind-review claims are checked by `make test`, raising the Repository UX Score to 222/222.
+
 ## 0.1.10 - 2026-05-28
 
 - Added a local-first Calibration Lab that checks pasted typing reports against benchmark leading type, runner-up, evidence tags, falsifier theme, safety boundary, and overclaim gates.

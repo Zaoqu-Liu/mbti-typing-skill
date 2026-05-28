@@ -87,6 +87,28 @@ Bad signs:
 - It keeps asking repetitive questions to prolong the session.
 - It mixes MBTI, Big Five, Enneagram, attachment, and diagnosis without labels.
 
+### 6. Blind Review
+
+Blind review checks whether the workflow still behaves well when expected answers are hidden from reviewers or model variants.
+
+The blind review layer evaluates:
+
+- Top-1 hit rate.
+- Top-2 hit rate.
+- Runner-up preservation.
+- Evidence-tag coverage.
+- Falsifier coverage.
+- Boundary statement rate.
+- No-overclaim rate.
+
+Checked by:
+
+```bash
+python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
+```
+
+Top-1 alone is not enough. A report that guesses the leading type while dropping the serious runner-up or falsifier is not considered high quality.
+
 ## Release Gate
 
 Before release:
@@ -108,7 +130,7 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose six exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose seven exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -116,6 +138,7 @@ The visual blueprint gate checks that the README and visual tour expose six exac
 - `docs/assets/benchmark-arena-pipeline.svg` for the benchmark JSON to case gallery source-of-truth sync.
 - `docs/assets/type-coverage-matrix.svg` for the all-16-leading-types benchmark coverage proof.
 - `docs/assets/calibration-loop-map.svg` for the report paste to Calibration Receipt to repair prompt feedback loop.
+- `docs/assets/blind-review-arena.svg` for the sanitized packet to independent reviewer to aggregate metrics evaluation loop.
 
 These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
 
@@ -123,6 +146,12 @@ The activation gate validates that the sample session state can pass final-state
 
 ```bash
 make activation
+```
+
+The blind review gate validates that `examples/blind-review-matrix.json` follows the public protocol, includes at least three synthetic or sanitized cases, preserves hidden references, includes at least two reviewer outputs per case, and reports top-1, top-2, runner-up, falsifier, boundary, and overclaim metrics:
+
+```bash
+make blind-review-audit
 ```
 
 The repository UX scorecard also checks the Session Lab, Benchmark Arena, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.

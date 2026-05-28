@@ -1,0 +1,115 @@
+{
+  "schema_version": "blind-review/v1",
+  "protocol": "docs/blind-review-protocol.md",
+  "description": "Synthetic blinded review matrix for testing whether reviewers preserve runner-ups, falsifiers, evidence tags, and boundaries.",
+  "cases": [
+    {
+      "case_id": "blind-demo-entj-intj-001",
+      "source": "synthetic",
+      "privacy": "synthetic-no-identifying-data",
+      "prompt": "A person reports private long-range pattern modeling, repeated frustration when teams drift, high energy when turning ambiguity into executable plans, delayed awareness of personal hurt, and a prior INTJ test result.",
+      "candidate_set": ["ENTJ", "INTJ", "ESTJ", "INFP"],
+      "hidden_reference": {
+        "leading": "ENTJ",
+        "runner_up": ["INTJ"],
+        "minimum_evidence_tags": ["idle_external_optimization", "command_energy", "delayed_fi_or_shame"],
+        "falsifier": "private model dominates idle time",
+        "adjudication_notes": "ENTJ leads because command energy and external optimization repeatedly energize cognition; INTJ remains serious because private Ni modeling is prominent."
+      },
+      "reviewer_outputs": [
+        {
+          "reviewer_id": "reviewer-a",
+          "leading": "ENTJ",
+          "runner_up": ["INTJ"],
+          "confidence": "medium-high",
+          "evidence_tags": ["idle_external_optimization", "command_energy", "delayed_fi_or_shame"],
+          "falsifier": "If private model-building dominates idle time and live command drains rather than energizes, revise toward INTJ.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        },
+        {
+          "reviewer_id": "reviewer-b",
+          "leading": "INTJ",
+          "runner_up": ["ENTJ"],
+          "confidence": "medium",
+          "evidence_tags": ["private_model_priority", "command_energy", "delayed_fi_or_shame"],
+          "falsifier": "If repeated external execution is the natural resting state, ENTJ should overtake INTJ.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        }
+      ]
+    },
+    {
+      "case_id": "blind-demo-infp-infj-002",
+      "source": "synthetic",
+      "privacy": "synthetic-no-identifying-data",
+      "prompt": "A person describes a strong inner sense of congruence, many possible meanings for the same relationship conflict, difficulty accepting group harmony if it violates personal truth, and frequent confusion with INFJ because they can read emotional patterns.",
+      "candidate_set": ["INFP", "INFJ", "ENFP", "ISFP"],
+      "hidden_reference": {
+        "leading": "INFP",
+        "runner_up": ["INFJ"],
+        "minimum_evidence_tags": ["fi_congruence", "ne_possibility", "harmony_secondary"],
+        "falsifier": "relational pattern convergence outranks inner congruence",
+        "adjudication_notes": "INFP leads because inner congruence governs choices before relational pattern convergence; INFJ remains serious because emotional-pattern reading is real."
+      },
+      "reviewer_outputs": [
+        {
+          "reviewer_id": "reviewer-a",
+          "leading": "INFP",
+          "runner_up": ["INFJ"],
+          "confidence": "medium-high",
+          "evidence_tags": ["fi_congruence", "ne_possibility", "harmony_secondary"],
+          "falsifier": "If the person prioritizes convergent relational pattern maps over inner congruence, revise toward INFJ.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        },
+        {
+          "reviewer_id": "reviewer-b",
+          "leading": "INFP",
+          "runner_up": ["INFJ", "ENFP"],
+          "confidence": "medium",
+          "evidence_tags": ["fi_congruence", "ne_possibility"],
+          "falsifier": "Repeated preference for one convergent interpersonal read over personal-value branching would weaken INFP.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        }
+      ]
+    },
+    {
+      "case_id": "blind-demo-istp-intp-003",
+      "source": "synthetic",
+      "privacy": "synthetic-no-identifying-data",
+      "prompt": "A person becomes precise when tools fail under live constraints, distrusts abstractions until they contact the mechanism, improvises with real materials, but can sound theoretical when explaining the fix afterward.",
+      "candidate_set": ["ISTP", "INTP", "ESTP", "ISTJ"],
+      "hidden_reference": {
+        "leading": "ISTP",
+        "runner_up": ["INTP"],
+        "minimum_evidence_tags": ["live_mechanism_testing", "tool_feedback", "posthoc_theory"],
+        "falsifier": "conceptual model outranks tool contact",
+        "adjudication_notes": "ISTP leads because live mechanism feedback comes before theory; INTP remains serious because the person can give elegant posthoc explanations."
+      },
+      "reviewer_outputs": [
+        {
+          "reviewer_id": "reviewer-a",
+          "leading": "ISTP",
+          "runner_up": ["INTP"],
+          "confidence": "medium-high",
+          "evidence_tags": ["live_mechanism_testing", "tool_feedback", "posthoc_theory"],
+          "falsifier": "If conceptual modeling reliably precedes tool contact, revise toward INTP.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        },
+        {
+          "reviewer_id": "reviewer-b",
+          "leading": "ISTP",
+          "runner_up": ["ESTP", "INTP"],
+          "confidence": "medium",
+          "evidence_tags": ["live_mechanism_testing", "tool_feedback"],
+          "falsifier": "If the person seeks conceptual coherence before touching the system, ISTP weakens.",
+          "boundary_included": true,
+          "overclaim_flags": []
+        }
+      ]
+    }
+  ]
+}

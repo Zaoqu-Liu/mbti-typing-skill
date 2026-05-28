@@ -42,6 +42,17 @@ The sticky loop should be evidence repair:
 
 This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
 
+## Blind Improvement Loop
+
+The strongest retention loop is public falsifiability:
+
+1. Convert a confusing session into a sanitized blind packet.
+2. Hide the reference answer from reviewers or model variants.
+3. Compare top-1, top-2, runner-up, evidence tags, falsifiers, boundaries, and overclaim flags.
+4. Turn aggregate misses into benchmark cases, golden fixtures, pair-duel prompts, or audit checks.
+
+This gives advanced users a reason to return after the first report: they can watch the system become harder to fool.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:

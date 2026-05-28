@@ -34,6 +34,7 @@ Start here if you want to feel the product before reading the internals:
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
 - [Calibration Lab](docs/calibration-lab.html): blind calibration loop for checking reports against benchmark expectations.
+- [Blind Review Protocol](docs/blind-review-protocol.md): sanitized multi-reviewer evaluation for top-1, top-2, runner-up, falsifier, boundary, and overclaim metrics.
 - [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
 - [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
 - [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
@@ -79,6 +80,12 @@ The expanded benchmark suite now covers all 16 MBTI type codes as leading hypoth
 ![Calibration Loop Map](docs/assets/calibration-loop-map.svg)
 
 The Calibration Loop Map turns user-facing stickiness into an ethical verification loop: paste a report, run visible gates, get a Calibration Receipt, copy a repair prompt, and convert failures into a `calibration_result.yml` issue seed. Users come back because each miss becomes a sharper next run, not because the tool hides uncertainty.
+
+### Blind Review Arena
+
+![Blind Review Arena](docs/assets/blind-review-arena.svg)
+
+The Blind Review Arena is the accuracy layer after calibration. Sanitized packets hide the reference answer from independent reviewers, then `examples/blind-review-matrix.json` and `scripts/blind_review_audit.py` expose top-1, top-2, runner-up, evidence-tag, falsifier, boundary, and overclaim metrics. This is how the project can improve from misses without pretending synthetic benchmarks are psychometric truth.
 
 ## Visual System Map
 
@@ -174,6 +181,7 @@ sequenceDiagram
     prompt-recipes.md
   docs/
     visual-tour.md
+    blind-review-protocol.md
     demo-session.md
     sample-report.md
     session-lab.html
@@ -189,9 +197,11 @@ sequenceDiagram
       benchmark-arena-pipeline.svg
       type-coverage-matrix.svg
       calibration-loop-map.svg
+      blind-review-arena.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
+    blind-review-matrix.json
   skill/mbti-typing/
     SKILL.md
     references/
@@ -264,6 +274,7 @@ python3 -B skill/mbti-typing/scripts/benchmark_cases.py regression skill/mbti-ty
 python3 -B skill/mbti-typing/scripts/skill_scorecard.py skill/mbti-typing
 python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session-state-example.json --final
 python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
+python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 python3 -B scripts/session_lab_audit.py docs/session-lab.html
 python3 -B scripts/sync_case_gallery.py skill/mbti-typing/examples/benchmark-cases.json docs/case-gallery.html
 python3 -B scripts/case_gallery_audit.py docs/case-gallery.html skill/mbti-typing/examples/benchmark-cases.json
@@ -278,11 +289,13 @@ Expected result:
 Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Session Lab Audit: 61/61 (100.00%)
+Blind Review Audit: 93/93 (100.00%)
+Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Case Gallery Source Sync: PASS (16 cases match)
 Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
-Repository UX Score: 200/200 (100.00%)
+Repository UX Score: 222/222 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -294,7 +307,8 @@ flowchart TD
     PR[Change or contribution] --> Compile[Python compile check]
     Compile --> Cases[Benchmark case validation]
     Cases --> Golden[Golden report regression]
-    Golden --> SkillScore[Skill package scorecard]
+    Golden --> Blind[Blind review audit]
+    Blind --> SkillScore[Skill package scorecard]
     SkillScore --> UXScore[Repository UX scorecard]
     UXScore --> Cache[No cache artifact check]
     Cache --> Release{Release ready?}
