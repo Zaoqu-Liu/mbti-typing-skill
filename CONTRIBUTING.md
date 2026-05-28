@@ -20,6 +20,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Add realistic bad reports that should fail audit.
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
+- Share consented follow-up observations through the `consented_followup.yml` issue template.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -37,6 +38,7 @@ Expected:
 Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
+Consent Redaction Audit: 78/78 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
 ```
 
@@ -79,6 +81,21 @@ Before opening a blind review issue:
 - Include aggregate top-1, top-2, runner-up preservation, falsifier, boundary, and no-overclaim metrics.
 - Explain whether the result should become a benchmark case, golden fixture, pair-duel rule, question-bank item, or report-audit rule.
 
+## Consented Follow-Up Guidelines
+
+Consented follow-up contributions are useful when a person has lived with a typing report long enough to notice what held up and what did not.
+
+Before opening a consented follow-up issue:
+
+- Read `docs/consent-redaction-protocol.md`.
+- Confirm subject consent and public issue permission.
+- Do not include raw private chat logs, screenshots, names, handles, emails, phone numbers, exact dates, workplaces, schools, family identifiers, medical details, legal details, salary details, or identifiable third-party behavior.
+- Use redaction placeholders such as `[PERSON_A]`, `[RELATIONSHIP_CONTEXT]`, `[DATE_RANGE]`, `[PROJECT]`, or `[WORKPLACE]`.
+- Include a candidate set, leading type, runner-up, confidence, and falsifier.
+- Include delayed observations across at least three states such as normal, stress, conflict, recovery, reflection, or relationship.
+- Include what felt right, what felt wrong, and what should be observed next.
+- Expect maintainers to turn useful patterns into benchmark cases, golden fixtures, pair-duel discriminators, report-audit checks, or documentation updates.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
@@ -87,4 +104,5 @@ Before opening a blind review issue:
 - [ ] Any new benchmark case includes a trap and falsifier theme.
 - [ ] Any new calibration result is sanitized and points to a specific failed gate.
 - [ ] Any new blind review result preserves blinding and includes aggregate metrics.
+- [ ] Any new follow-up packet is consented, redacted, withdrawable, and passes `scripts/consent_redaction_audit.py`.
 - [ ] No clinical, hiring, or deterministic use case has been added.

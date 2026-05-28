@@ -109,6 +109,24 @@ python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 
 Top-1 alone is not enough. A report that guesses the leading type while dropping the serious runner-up or falsifier is not considered high quality.
 
+### 7. Consent, Redaction, and Follow-Up
+
+Real user feedback is useful only when it can enter the project without exposing private material. This layer checks that public follow-up packets are consented, redacted, minimized, withdrawable, and structured around delayed observations rather than raw chat logs.
+
+The consent and redaction layer evaluates:
+
+- Subject consent and public issue permission.
+- Absence of raw private chat, direct identifiers, third-party details, and high-stakes private contexts.
+- Redacted observations across normal, stress, conflict, recovery, reflection, or relationship states.
+- Candidate set, leading hypothesis, serious runner-up, confidence, and falsifier.
+- User feedback about what felt right, what felt wrong, and what should be observed next.
+
+Checked by:
+
+```bash
+python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
+```
+
 ## Release Gate
 
 Before release:
@@ -130,7 +148,7 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose seven exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose eight exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -139,6 +157,7 @@ The visual blueprint gate checks that the README and visual tour expose seven ex
 - `docs/assets/type-coverage-matrix.svg` for the all-16-leading-types benchmark coverage proof.
 - `docs/assets/calibration-loop-map.svg` for the report paste to Calibration Receipt to repair prompt feedback loop.
 - `docs/assets/blind-review-arena.svg` for the sanitized packet to independent reviewer to aggregate metrics evaluation loop.
+- `docs/assets/consent-feedback-loop.svg` for the consented follow-up to redaction to repository-action loop.
 
 These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
 
@@ -152,6 +171,12 @@ The blind review gate validates that `examples/blind-review-matrix.json` follows
 
 ```bash
 make blind-review-audit
+```
+
+The consent redaction gate validates that `examples/consented-followup-packet.json` follows the public protocol, includes consent and withdrawal language, removes private identifiers, uses redaction placeholders, preserves delayed observations across multiple states, and records user feedback:
+
+```bash
+make consent-redaction-audit
 ```
 
 The repository UX scorecard also checks the Session Lab, Benchmark Arena, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.

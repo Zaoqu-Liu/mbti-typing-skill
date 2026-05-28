@@ -53,6 +53,20 @@ The strongest retention loop is public falsifiability:
 
 This gives advanced users a reason to return after the first report: they can watch the system become harder to fool.
 
+## Consent-Based Return Loop
+
+The highest-risk source of improvement is real user follow-up. It is valuable because people notice what felt wrong only after living with a report, but it is unsafe if the repository accepts raw private logs.
+
+The allowed loop is:
+
+1. The user shares only consented, redacted, public-safe observations.
+2. The packet preserves state labels, candidate set, runner-up, confidence, and falsifier.
+3. The user states what felt right, what felt wrong, and what should be observed next.
+4. The audit blocks direct identifiers, raw private chat, third-party details, missing consent, and missing withdrawal language.
+5. Maintainers turn repeated feedback into benchmark cases, pair-duel questions, report-audit rules, or documentation changes.
+
+This lets users come back with corrections without turning personal material into repository content.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:

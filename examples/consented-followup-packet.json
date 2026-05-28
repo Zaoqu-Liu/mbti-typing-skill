@@ -1,0 +1,123 @@
+{
+  "schema_version": "consented-followup/v1",
+  "protocol": "docs/consent-redaction-protocol.md",
+  "description": "Synthetic public-safe examples showing how delayed user observations can enter the project without private data.",
+  "packets": [
+    {
+      "packet_id": "consent-demo-entj-intj-followup-001",
+      "source": "synthetic",
+      "consent": {
+        "subject_consent": true,
+        "public_issue_ok": true,
+        "third_party_consent": "not-needed-redacted",
+        "withdrawal_note": "Contributor can request removal or further redaction from public issues."
+      },
+      "privacy": {
+        "redaction_level": "public-safe-synthetic",
+        "direct_identifiers_removed": true,
+        "third_party_details_removed": true,
+        "data_minimized": true,
+        "contains_private_chat": false
+      },
+      "candidate_set": ["ENTJ", "INTJ", "ESTJ", "INFP"],
+      "current_formulation": {
+        "leading": "ENTJ",
+        "runner_up": ["INTJ"],
+        "confidence": "medium-high",
+        "falsifier": "private model-building dominates idle time and live execution repeatedly drains energy"
+      },
+      "follow_up_observations": [
+        {
+          "id": "obs-normal-001",
+          "state": "normal",
+          "summary": "During [PROJECT], the subject became more energized after turning an ambiguous plan into delegated next actions.",
+          "evidence_tags": ["idle_external_optimization", "command_energy"],
+          "supports": ["ENTJ"],
+          "weakens": ["INTJ"],
+          "privacy_note": "No names, workplace, dates, or raw chat text included."
+        },
+        {
+          "id": "obs-stress-001",
+          "state": "stress",
+          "summary": "During [RELATIONSHIP_CONTEXT] conflict, the subject first tried to fix the external process, then noticed personal hurt later.",
+          "evidence_tags": ["delayed_fi_or_shame", "external_repair_reflex"],
+          "supports": ["ENTJ"],
+          "weakens": ["INFP"],
+          "privacy_note": "Third-party behavior summarized and anonymized."
+        },
+        {
+          "id": "obs-recovery-001",
+          "state": "recovery",
+          "summary": "After rest in [DATE_RANGE], the subject recovered by rebuilding a concrete action map rather than privately refining a theory for its own sake.",
+          "evidence_tags": ["recovery_through_execution", "private_model_secondary"],
+          "supports": ["ENTJ"],
+          "weakens": ["INTJ"],
+          "privacy_note": "No exact dates or location included."
+        }
+      ],
+      "user_feedback": {
+        "felt_right": ["The runner-up explanation made the prior INTJ result feel respected."],
+        "felt_wrong": ["The first report understated how much private modeling happens before action."],
+        "next_observation_prompt": "For the next two weeks, track whether unstructured free time becomes private model refinement or external execution planning."
+      }
+    },
+    {
+      "packet_id": "consent-demo-infp-infj-followup-002",
+      "source": "synthetic",
+      "consent": {
+        "subject_consent": true,
+        "public_issue_ok": true,
+        "third_party_consent": "not-needed-redacted",
+        "withdrawal_note": "Contributor can request removal or further redaction from public issues."
+      },
+      "privacy": {
+        "redaction_level": "public-safe-synthetic",
+        "direct_identifiers_removed": true,
+        "third_party_details_removed": true,
+        "data_minimized": true,
+        "contains_private_chat": false
+      },
+      "candidate_set": ["INFP", "INFJ", "ENFP", "ISFP"],
+      "current_formulation": {
+        "leading": "INFP",
+        "runner_up": ["INFJ"],
+        "confidence": "medium",
+        "falsifier": "relational pattern convergence repeatedly outranks inner congruence"
+      },
+      "follow_up_observations": [
+        {
+          "id": "obs-normal-002",
+          "state": "normal",
+          "summary": "In [DATE_RANGE], the subject chose language that preserved personal congruence even when a smoother group explanation was available.",
+          "evidence_tags": ["fi_congruence", "harmony_secondary"],
+          "supports": ["INFP"],
+          "weakens": ["INFJ"],
+          "privacy_note": "Date range generalized and no group identifiers included."
+        },
+        {
+          "id": "obs-conflict-002",
+          "state": "conflict",
+          "summary": "During [RELATIONSHIP_CONTEXT], the subject generated multiple possible meanings before choosing one response, rather than converging on a single relational pattern immediately.",
+          "evidence_tags": ["ne_possibility", "relational_convergence_delayed"],
+          "supports": ["INFP"],
+          "weakens": ["INFJ"],
+          "privacy_note": "No raw dialogue or third-party details included."
+        },
+        {
+          "id": "obs-reflection-002",
+          "state": "reflection",
+          "summary": "After [RELATIONSHIP_CONTEXT], the subject reported that the INFJ runner-up felt useful as a contrast, but the decisive point was value congruence before harmony.",
+          "evidence_tags": ["runner_up_feedback", "fi_congruence"],
+          "supports": ["INFP"],
+          "weakens": ["INFJ"],
+          "privacy_note": "Self-report summarized without identifiable context."
+        }
+      ],
+      "user_feedback": {
+        "felt_right": ["Keeping INFJ as runner-up reduced defensiveness and made the report easier to test."],
+        "felt_wrong": ["The report initially sounded too certain about social pattern reading."],
+        "next_observation_prompt": "Track whether future conflict decisions start from inner congruence, relational pattern convergence, or possibility branching."
+      }
+    }
+  ]
+}

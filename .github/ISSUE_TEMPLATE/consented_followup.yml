@@ -1,0 +1,49 @@
+name: Consented follow-up packet
+description: Submit a sanitized delayed-observation packet for improving benchmark or interview behavior.
+title: "[Follow-up]: "
+labels: ["follow-up", "privacy", "consent", "benchmark"]
+body:
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent and safety
+      options:
+        - label: The subject consented to this public-safe summary.
+          required: true
+        - label: Direct identifiers, third-party identifiers, raw chat logs, and exact dates have been removed.
+          required: true
+        - label: The packet keeps only the minimum behavior summary needed for repository improvement.
+          required: true
+        - label: The contributor understands they can request removal or further redaction later.
+          required: true
+        - label: This is not for clinical, hiring, school admission, legal, or selection use.
+          required: true
+  - type: textarea
+    id: candidate-set
+    attributes:
+      label: Candidate set and current formulation
+      description: Include leading type, serious runner-up, confidence, and falsifier.
+      placeholder: "Leading: ENTJ; runner-up: INTJ; confidence: medium-high; falsifier: ..."
+    validations:
+      required: true
+  - type: textarea
+    id: follow-up-observations
+    attributes:
+      label: Redacted follow-up observations
+      description: Include normal, stress/conflict, and recovery or reflection observations. Use placeholders such as [PERSON_A], [WORKPLACE], [DATE_RANGE], and [PROJECT].
+    validations:
+      required: true
+  - type: textarea
+    id: user-feedback
+    attributes:
+      label: User feedback
+      description: What felt right, what felt wrong, and what should be observed next?
+    validations:
+      required: true
+  - type: textarea
+    id: repository-action
+    attributes:
+      label: Proposed repository action
+      description: Should this become a benchmark case, golden fixture, question-bank item, pair-duel rule, or report-audit rule?
+    validations:
+      required: true

@@ -33,10 +33,12 @@ REQUIRED_FILES = [
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
     ".github/ISSUE_TEMPLATE/calibration_result.yml",
     ".github/ISSUE_TEMPLATE/blind_review.yml",
+    ".github/ISSUE_TEMPLATE/consented_followup.yml",
     "prompts/prompt-recipes.md",
     "examples/session-state-example.json",
     "examples/evidence-ledger-example.md",
     "examples/blind-review-matrix.json",
+    "examples/consented-followup-packet.json",
     "docs/assets/mbti-typing-hero.png",
     "docs/assets/typing-journey-map.png",
     "docs/assets/repository-experience-map.svg",
@@ -46,11 +48,13 @@ REQUIRED_FILES = [
     "docs/assets/type-coverage-matrix.svg",
     "docs/assets/calibration-loop-map.svg",
     "docs/assets/blind-review-arena.svg",
+    "docs/assets/consent-feedback-loop.svg",
     "docs/evaluation.md",
     "docs/experience-principles.md",
     "docs/github-ux.md",
     "docs/visual-tour.md",
     "docs/blind-review-protocol.md",
+    "docs/consent-redaction-protocol.md",
     "docs/demo-session.md",
     "docs/sample-report.md",
     "docs/session-lab.html",
@@ -64,6 +68,7 @@ REQUIRED_FILES = [
     "scripts/sync_calibration_lab.py",
     "scripts/calibration_lab_audit.py",
     "scripts/blind_review_audit.py",
+    "scripts/consent_redaction_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -78,6 +83,7 @@ README_REQUIRED_TERMS = [
     "docs/assets/type-coverage-matrix.svg",
     "docs/assets/calibration-loop-map.svg",
     "docs/assets/blind-review-arena.svg",
+    "docs/assets/consent-feedback-loop.svg",
     "Session Lab",
     "https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html",
     "docs/session-lab.html",
@@ -95,6 +101,11 @@ README_REQUIRED_TERMS = [
     "docs/blind-review-protocol.md",
     "Blind Review Arena",
     "examples/blind-review-matrix.json",
+    "Consent Redaction Protocol",
+    "docs/consent-redaction-protocol.md",
+    "Consent Feedback Loop",
+    "examples/consented-followup-packet.json",
+    "scripts/consent_redaction_audit.py",
     "Interactive Playground",
     "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
     "docs/playground.html",
@@ -212,6 +223,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             ("Blind Review Arena", "Sanitized Packet", "Aggregate Metrics", "Top-2 Matters"),
         )
     )
+    checks.extend(
+        check_svg_asset(
+            root,
+            "docs/assets/consent-feedback-loop.svg",
+            "consent_feedback_loop",
+            ("Consent Feedback Loop", "Consent", "Redaction", "Consent Redaction Audit"),
+        )
+    )
     return checks
 
 
@@ -252,14 +271,14 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -272,6 +291,7 @@ def check_docs(root: Path) -> list[Check]:
     experience = read_text(root / "docs/experience-principles.md")
     visual = read_text(root / "docs/visual-tour.md")
     blind_review = read_text(root / "docs/blind-review-protocol.md")
+    consent_protocol = read_text(root / "docs/consent-redaction-protocol.md")
     demo = read_text(root / "docs/demo-session.md")
     sample = read_text(root / "docs/sample-report.md")
     session_lab = read_text(root / "docs/session-lab.html")
@@ -287,6 +307,7 @@ def check_docs(root: Path) -> list[Check]:
     sync_calibration_lab = read_text(root / "scripts/sync_calibration_lab.py")
     calibration_lab_audit = read_text(root / "scripts/calibration_lab_audit.py")
     blind_review_audit = read_text(root / "scripts/blind_review_audit.py")
+    consent_redaction_audit = read_text(root / "scripts/consent_redaction_audit.py")
     benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
     benchmark_cases = [case for case in benchmark_payload.get("cases", []) if isinstance(case, dict)]
     benchmark_ids = [str(case.get("id")) for case in benchmark_cases]
@@ -296,11 +317,13 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg")), "Visual tour references bitmap and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg")), "Visual tour references bitmap and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:blind_review_protocol", all(term in blind_review for term in ("Blind Review Protocol", "Case Packet Requirements", "Reviewer Output Requirements", "Top-1 hit", "Top-2 hit", "Acceptance Threshold")), "Blind Review Protocol defines packet, output, metrics, and acceptance rules"),
         Check("docs:blind_review_sources", all(term in blind_review for term in ("themyersbriggs.com", "10.1111/j.1467-6494.1989.tb00759.x", "10.1177/0013164410375112")), "Blind Review Protocol cites source-backed guardrails"),
+        Check("docs:consent_redaction_protocol", all(term in consent_protocol for term in ("Consent Redaction Protocol", "Packet Requirements", "Redaction Rules", "Acceptance Threshold", "[PERSON_A]")), "Consent Redaction Protocol defines packet, redaction, and acceptance rules"),
+        Check("docs:consent_redaction_boundary", all(term in consent_protocol for term in ("not a legal compliance certification", "Raw private chat logs", "withdrawal")), "Consent Redaction Protocol keeps legal and raw-data boundaries visible"),
         Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
         Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
         Check("session_lab:title", "MBTI Typing Skill Session Lab" in session_lab, "Session Lab has a clear product title"),
@@ -351,6 +374,8 @@ def check_docs(root: Path) -> list[Check]:
         Check("calibration_lab:audit_make_target", "calibration-lab-audit" in makefile and "scripts/calibration_lab_audit.py" in makefile, "Makefile runs Calibration Lab audit"),
         Check("blind_review:audit_script", "Blind Review Audit" in blind_review_audit and "Blind Review Metrics" in blind_review_audit, "Blind Review has a dedicated audit script"),
         Check("blind_review:audit_make_target", "blind-review-audit" in makefile and "scripts/blind_review_audit.py" in makefile, "Makefile runs Blind Review audit"),
+        Check("consent_redaction:audit_script", "Consent Redaction Audit" in consent_redaction_audit and "Consent Redaction Metrics" in consent_redaction_audit, "Consent Redaction has a dedicated audit script"),
+        Check("consent_redaction:audit_make_target", "consent-redaction-audit" in makefile and "scripts/consent_redaction_audit.py" in makefile, "Makefile runs Consent Redaction audit"),
         Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
         Check("playground:no_external_runtime", "<script src" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
         Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),
@@ -372,15 +397,40 @@ def check_activation_assets(root: Path) -> list[Check]:
     benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
     fixture_payload = json.loads(read_text(root / "skill/mbti-typing/examples/golden-reports.json"))
     blind_matrix = json.loads(read_text(root / "examples/blind-review-matrix.json"))
+    consent_followup = json.loads(read_text(root / "examples/consented-followup-packet.json"))
     benchmark_cases = benchmark_payload.get("cases", [])
     fixtures = fixture_payload.get("fixtures", [])
     blind_cases = blind_matrix.get("cases", [])
+    followup_packets = consent_followup.get("packets", [])
     reviewer_outputs = [
         output
         for case in blind_cases
         if isinstance(case, dict)
         for output in case.get("reviewer_outputs", [])
         if isinstance(output, dict)
+    ]
+    followup_observations = [
+        observation
+        for packet in followup_packets
+        if isinstance(packet, dict)
+        for observation in packet.get("follow_up_observations", [])
+        if isinstance(observation, dict)
+    ]
+    consented_packets = [
+        packet
+        for packet in followup_packets
+        if isinstance(packet, dict)
+        and packet.get("consent", {}).get("subject_consent") is True
+        and packet.get("consent", {}).get("public_issue_ok") is True
+    ]
+    privacy_safe_packets = [
+        packet
+        for packet in followup_packets
+        if isinstance(packet, dict)
+        and packet.get("privacy", {}).get("direct_identifiers_removed") is True
+        and packet.get("privacy", {}).get("third_party_details_removed") is True
+        and packet.get("privacy", {}).get("data_minimized") is True
+        and packet.get("privacy", {}).get("contains_private_chat") is False
     ]
     return [
         Check("activation:prompt_count", prompts.count("Use $mbti-typing") >= 6, "Prompt recipes include at least six copy-paste starts"),
@@ -390,6 +440,10 @@ def check_activation_assets(root: Path) -> list[Check]:
         Check("activation:fixture_coverage", isinstance(benchmark_cases, list) and isinstance(fixtures, list) and len(benchmark_cases) == len(fixtures) and len(fixtures) >= 16, "Golden fixtures cover every expanded benchmark case"),
         Check("activation:blind_review_cases", isinstance(blind_cases, list) and len(blind_cases) >= 3, "Blind review matrix includes at least three cases"),
         Check("activation:blind_review_outputs", len(reviewer_outputs) >= 6 and all(output.get("boundary_included") is True for output in reviewer_outputs), "Blind review matrix includes reviewer outputs with safety boundaries"),
+        Check("activation:followup_packets", isinstance(followup_packets, list) and len(followup_packets) >= 2, "Consented follow-up packet includes at least two cases"),
+        Check("activation:followup_observations", len(followup_observations) >= 6, "Consented follow-up packet includes delayed observations"),
+        Check("activation:followup_consent", len(consented_packets) == len(followup_packets), "Every follow-up packet has subject consent and public issue permission"),
+        Check("activation:followup_privacy", len(privacy_safe_packets) == len(followup_packets), "Every follow-up packet is marked privacy-safe"),
     ]
 
 

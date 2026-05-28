@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.12 - 2026-05-28
+
+- Added a Consent Redaction Protocol so real-world follow-up can enter the project only through consented, redacted, withdrawable, public-safe packets.
+- Added `examples/consented-followup-packet.json`, `scripts/consent_redaction_audit.py`, and a `consented_followup.yml` issue template to check privacy flags, redaction placeholders, delayed observations, user feedback, and withdrawal wording.
+- Added the Consent Feedback Loop SVG and expanded repository gates so consented follow-up claims are checked by `make test`, raising the Repository UX Score to 245/245.
+
 ## 0.1.11 - 2026-05-28
 
 - Added a Blind Review Protocol for sanitized multi-reviewer or multi-model evaluation without exposing the expected answer to reviewers.

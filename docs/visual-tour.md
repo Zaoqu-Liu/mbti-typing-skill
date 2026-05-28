@@ -112,6 +112,21 @@ The blind review arena is the accuracy layer after calibration:
 
 The point is not to claim final psychometric truth. The point is to make accuracy claims blindable, inspectable, and improvable.
 
+## Consent Feedback Loop
+
+![Consent Feedback Loop](assets/consent-feedback-loop.svg)
+
+The consent feedback loop is the bridge between real user usefulness and public repository safety:
+
+- A contributor must start from consent, not from a raw private transcript.
+- Redaction must remove direct identifiers, third-party details, exact dates, private chat text, and high-stakes contexts before anything becomes public.
+- Delayed observations are useful only when they preserve state labels such as normal, stress, conflict, recovery, or reflection.
+- `examples/consented-followup-packet.json` stores the public-safe packet shape.
+- `scripts/consent_redaction_audit.py` checks consent, redaction, privacy flags, follow-up observations, user feedback, and withdrawal wording before release.
+- `.github/ISSUE_TEMPLATE/consented_followup.yml` gives users a structured way to contribute without exposing the material that made the case private.
+
+This is the allowed real-user learning loop: the project can become more useful from lived feedback without making the public issue tracker a place for raw personal data.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -167,12 +182,13 @@ flowchart TD
     G --> H[Type coverage matrix]
     H --> I[Calibration loop map]
     I --> J[Blind review arena]
-    J --> K[One-minute demo]
-    K --> L[Demo session]
-    L --> M[Sample report]
-    M --> N[Evaluation model]
-    N --> O[Contribution guide]
-    O --> P[Benchmark cases]
+    J --> K[Consent feedback loop]
+    K --> L[One-minute demo]
+    L --> M[Demo session]
+    M --> N[Sample report]
+    N --> O[Evaluation model]
+    O --> P[Contribution guide]
+    P --> Q[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.
