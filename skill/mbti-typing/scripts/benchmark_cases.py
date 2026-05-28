@@ -11,6 +11,14 @@ from typing import Any
 from report_audit import audit_structured_report
 
 
+REQUIRED_TYPES = {
+    "INTJ", "INTP", "ENTJ", "ENTP",
+    "INFJ", "INFP", "ENFJ", "ENFP",
+    "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+    "ISTP", "ISFP", "ESTP", "ESFP",
+}
+
+
 @dataclass(frozen=True)
 class Finding:
     severity: str
@@ -32,6 +40,7 @@ def validate_cases(payload: dict[str, Any]) -> list[Finding]:
         return [Finding("high", "cases_missing", "Benchmark payload needs a non-empty cases list.")]
 
     seen_ids: set[str] = set()
+    leading_types: set[str] = set()
     for index, case in enumerate(cases):
         if not isinstance(case, dict):
             findings.append(Finding("high", "case_type", f"cases[{index}] must be an object."))
@@ -45,6 +54,8 @@ def validate_cases(payload: dict[str, Any]) -> list[Finding]:
         for key in ("prompt", "expected_leading", "expected_runner_up", "required_evidence_tags", "trap", "required_falsifier_theme"):
             if key not in case:
                 findings.append(Finding("medium", "case_incomplete", f"{case_id or index} missing {key}."))
+        if isinstance(case.get("expected_leading"), str):
+            leading_types.add(str(case["expected_leading"]))
         if not isinstance(case.get("expected_runner_up", []), list) or not case.get("expected_runner_up"):
             findings.append(Finding("medium", "case_runner_up", f"{case_id or index} needs at least one expected runner-up."))
         if not isinstance(case.get("required_evidence_tags", []), list) or len(case.get("required_evidence_tags", [])) < 2:
@@ -52,6 +63,9 @@ def validate_cases(payload: dict[str, Any]) -> list[Finding]:
 
     if len(cases) < 8:
         findings.append(Finding("medium", "case_count", "Benchmark should include at least 8 cases."))
+    missing_leading = sorted(REQUIRED_TYPES - leading_types)
+    if missing_leading:
+        findings.append(Finding("medium", "case_leading_coverage", f"Benchmark should include every type as expected_leading at least once. Missing: {', '.join(missing_leading)}."))
 
     if not findings:
         findings.append(Finding("info", "pass", f"Benchmark case set is valid with {len(cases)} cases."))

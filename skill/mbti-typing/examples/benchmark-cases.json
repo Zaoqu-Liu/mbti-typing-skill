@@ -89,6 +89,94 @@
       "required_evidence_tags": ["se_live_pressure", "ti_tactical_read", "concrete_action"],
       "trap": "Do not type ENTP from quickness, wit, and provocation alone.",
       "required_falsifier_theme": "abstract conceptual play outranks live tactical action"
+    },
+    {
+      "id": "bench-enfj-esfj-009",
+      "cluster": "Care",
+      "display_title": "People development before social duty",
+      "prompt": "User says: I naturally read what a group could become and steer people toward that future. I organize warmth and feedback around growth, not just keeping everyone comfortable. Traditions matter only if they serve the shared direction.",
+      "expected_leading": "ENFJ",
+      "expected_runner_up": ["ESFJ", "INFJ"],
+      "required_evidence_tags": ["fe_group_direction", "ni_people_future", "comfort_secondary"],
+      "trap": "Do not type ESFJ just because social warmth and caretaking are visible.",
+      "required_falsifier_theme": "known social duty outranks future people-development"
+    },
+    {
+      "id": "bench-esfj-enfj-010",
+      "cluster": "Care",
+      "display_title": "Social continuity before future vision",
+      "prompt": "User says: I track birthdays, obligations, family expectations, and what keeps the group functioning. I can inspire people, but I trust what has kept relationships stable before. Abstract future growth is less urgent than not letting anyone fall through the cracks now.",
+      "expected_leading": "ESFJ",
+      "expected_runner_up": ["ENFJ", "ISFJ"],
+      "required_evidence_tags": ["fe_social_duty", "si_relationship_continuity", "future_growth_secondary"],
+      "trap": "Do not type ENFJ from warmth, encouragement, and people leadership alone.",
+      "required_falsifier_theme": "future people-development overrides known social obligations"
+    },
+    {
+      "id": "bench-istp-intp-011",
+      "cluster": "Tactics",
+      "display_title": "Tool logic under live constraints",
+      "prompt": "User says: I understand systems best by taking them apart, testing the mechanism, and seeing what fails in the real object. Theory is useful when it improves the fix. If the model cannot survive contact with the tool, I stop trusting it.",
+      "expected_leading": "ISTP",
+      "expected_runner_up": ["INTP", "ESTP"],
+      "required_evidence_tags": ["ti_mechanism", "se_tool_testing", "theory_secondary"],
+      "trap": "Do not type INTP from detached analysis and systems language alone.",
+      "required_falsifier_theme": "abstract model exploration outranks tool contact"
+    },
+    {
+      "id": "bench-intp-istp-012",
+      "cluster": "Exploration",
+      "display_title": "Conceptual model before tool contact",
+      "prompt": "User says: I keep refining the internal model even when no one needs an immediate fix. I enjoy alternate definitions, edge cases, and whether the explanation is logically clean. Physical tinkering is fine, but it is not where the real fascination starts.",
+      "expected_leading": "INTP",
+      "expected_runner_up": ["ISTP", "ENTP"],
+      "required_evidence_tags": ["ti_model_purity", "ne_edge_cases", "tool_contact_secondary"],
+      "trap": "Do not type ISTP just because the user is analytical, calm, and technically competent.",
+      "required_falsifier_theme": "tool contact and live mechanism testing outrank conceptual exploration"
+    },
+    {
+      "id": "bench-isfp-infp-013",
+      "cluster": "Values",
+      "display_title": "Embodied values before possibility language",
+      "prompt": "User says: I know what feels true when I am making, moving, choosing colors, or responding to the immediate scene. I do not need many possible meanings first. If something violates my taste or inner line, my body knows before I can explain it.",
+      "expected_leading": "ISFP",
+      "expected_runner_up": ["INFP", "ESFP"],
+      "required_evidence_tags": ["fi_embodied_line", "se_aesthetic_response", "ne_meaning_secondary"],
+      "trap": "Do not type INFP from private values and sensitivity alone.",
+      "required_falsifier_theme": "abstract possibility exploration outranks embodied aesthetic response"
+    },
+    {
+      "id": "bench-esfp-estp-014",
+      "cluster": "Tactics",
+      "display_title": "Live impact with Fi signal",
+      "prompt": "User says: I come alive in the room, but I track whether the moment feels real to me and whether people are emotionally moved. I can be tactical, yet the win feels empty if it kills the vibe or betrays what I value.",
+      "expected_leading": "ESFP",
+      "expected_runner_up": ["ESTP", "ENFP"],
+      "required_evidence_tags": ["se_room_energy", "fi_live_authenticity", "tactics_secondary"],
+      "trap": "Do not type ESTP from social boldness, improvisation, and real-time action alone.",
+      "required_falsifier_theme": "impersonal tactical leverage outranks live authenticity"
+    },
+    {
+      "id": "bench-istj-intj-015",
+      "cluster": "Operations",
+      "display_title": "Known detail before strategic abstraction",
+      "prompt": "User says: I trust the record: what happened, what was promised, what worked, and which detail breaks the process. I can think strategically, but I first want the facts, the timeline, and the proven procedure to be accurate.",
+      "expected_leading": "ISTJ",
+      "expected_runner_up": ["INTJ", "ESTJ"],
+      "required_evidence_tags": ["si_record_accuracy", "te_procedure_check", "strategy_secondary"],
+      "trap": "Do not type INTJ from competence, reserve, and long-range seriousness alone.",
+      "required_falsifier_theme": "future strategic abstraction outranks record accuracy"
+    },
+    {
+      "id": "bench-enfp-entp-016",
+      "cluster": "Exploration",
+      "display_title": "Possibility through personal meaning",
+      "prompt": "User says: I chase possibilities because one of them might unlock who I am becoming or what matters. I enjoy arguments, but if the debate strips meaning out of people, I lose interest. The idea has to stay connected to a human value.",
+      "expected_leading": "ENFP",
+      "expected_runner_up": ["ENTP", "INFP"],
+      "required_evidence_tags": ["ne_identity_possibility", "fi_human_value", "debate_secondary"],
+      "trap": "Do not type ENTP from speed, novelty, and verbal play alone.",
+      "required_falsifier_theme": "impersonal model play outranks personal meaning"
     }
   ]
 }

@@ -40,6 +40,7 @@ REQUIRED_FILES = [
     "docs/assets/typing-engine-blueprint.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
+    "docs/assets/type-coverage-matrix.svg",
     "docs/evaluation.md",
     "docs/experience-principles.md",
     "docs/github-ux.md",
@@ -64,6 +65,7 @@ README_REQUIRED_TERMS = [
     "docs/assets/typing-engine-blueprint.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
+    "docs/assets/type-coverage-matrix.svg",
     "Session Lab",
     "https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html",
     "docs/session-lab.html",
@@ -83,6 +85,8 @@ README_REQUIRED_TERMS = [
     "Typing Engine Blueprint",
     "Trust Loop Dashboard",
     "Benchmark Arena Pipeline",
+    "Benchmark Type Coverage Matrix",
+    "16 / 16 covered",
     "source-of-truth sync",
     "scripts/sync_case_gallery.py",
     "docs/visual-tour.md",
@@ -161,6 +165,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             ("Benchmark Arena Pipeline", "benchmark-cases.json", "sync_case_gallery.py", "case-gallery.html"),
         )
     )
+    checks.extend(
+        check_svg_asset(
+            root,
+            "docs/assets/type-coverage-matrix.svg",
+            "type_coverage_matrix",
+            ("Benchmark Type Coverage Matrix", "16 / 16 covered", "bench-enfp-entp-016", "bench-istp-intp-011"),
+        )
+    )
     return checks
 
 
@@ -201,14 +213,14 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -231,12 +243,17 @@ def check_docs(root: Path) -> list[Check]:
     session_lab_audit = read_text(root / "scripts/session_lab_audit.py")
     sync_case_gallery = read_text(root / "scripts/sync_case_gallery.py")
     case_gallery_audit = read_text(root / "scripts/case_gallery_audit.py")
+    benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
+    benchmark_cases = [case for case in benchmark_payload.get("cases", []) if isinstance(case, dict)]
+    benchmark_ids = [str(case.get("id")) for case in benchmark_cases]
+    leading_types = {str(case.get("expected_leading")) for case in benchmark_cases}
+    required_types = {"ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP", "INTJ", "INFJ", "ENTJ", "ENFJ", "INTP", "INFP", "ENTP", "ENFP"}
     return [
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg")), "Visual tour references bitmap and blueprint assets"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "Visual tour references bitmap and blueprint assets"),
         Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "benchmark-arena-pipeline.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
         Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
@@ -261,7 +278,8 @@ def check_docs(root: Path) -> list[Check]:
         Check("case_gallery:title", "MBTI Typing Skill Benchmark Arena" in case_gallery, "Case Gallery has a clear product title"),
         Check("case_gallery:no_external_runtime", "<script src" not in case_gallery and " src=" not in case_gallery, "Case Gallery has no external runtime dependency"),
         Check("case_gallery:interactive_regions", all(term in case_gallery for term in ("filterRail", "caseGrid", "caseDetail", "promptOutput", "copyIssueSeed")), "Case Gallery contains filters, cases, detail, prompt, and issue seed regions"),
-        Check("case_gallery:benchmark_cases", all(case_id in case_gallery for case_id in ("bench-entj-intj-001", "bench-intj-entj-002", "bench-infp-infj-003", "bench-infj-infp-004", "bench-estj-entj-005", "bench-entp-enfp-006", "bench-isfj-infj-007", "bench-estp-entp-008")), "Case Gallery exposes all current benchmark cases"),
+        Check("case_gallery:benchmark_cases", len(benchmark_cases) >= 16 and all(case_id in case_gallery for case_id in benchmark_ids), "Case Gallery exposes all current benchmark cases"),
+        Check("case_gallery:all_16_leading_types", required_types <= leading_types, f"{len(leading_types & required_types)} leading types covered"),
         Check("case_gallery:source_markers", "BEGIN GENERATED BENCHMARK CASES" in case_gallery and "END GENERATED BENCHMARK CASES" in case_gallery, "Case Gallery marks generated benchmark data"),
         Check("case_gallery:source_sync_script", "Case Gallery Source Sync" in sync_case_gallery and "make_gallery_cases" in sync_case_gallery, "Case Gallery has a JSON source-of-truth sync script"),
         Check("case_gallery:source_sync_audit", "source:json_match" in case_gallery_audit and "make_gallery_cases" in case_gallery_audit, "Case Gallery audit compares embedded cases with canonical JSON"),
@@ -289,11 +307,16 @@ def check_activation_assets(root: Path) -> list[Check]:
     prompts = read_text(root / "prompts/prompt-recipes.md")
     ledger = read_text(root / "examples/evidence-ledger-example.md")
     state = json.loads(read_text(root / "examples/session-state-example.json"))
+    benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
+    fixture_payload = json.loads(read_text(root / "skill/mbti-typing/examples/golden-reports.json"))
+    benchmark_cases = benchmark_payload.get("cases", [])
+    fixtures = fixture_payload.get("fixtures", [])
     return [
         Check("activation:prompt_count", prompts.count("Use $mbti-typing") >= 6, "Prompt recipes include at least six copy-paste starts"),
         Check("activation:ledger_sections", "Candidate Set" in ledger and "Contradiction Gate" in ledger, "Evidence ledger example includes candidate and contradiction sections"),
         Check("activation:state_candidates", len(state.get("candidate_set", [])) >= 3, "Session state example starts from at least three candidates"),
         Check("activation:state_falsifiers", bool(state.get("falsifiers")), "Session state example includes falsifiers"),
+        Check("activation:fixture_coverage", isinstance(benchmark_cases, list) and isinstance(fixtures, list) and len(benchmark_cases) == len(fixtures) and len(fixtures) >= 16, "Golden fixtures cover every expanded benchmark case"),
     ]
 
 

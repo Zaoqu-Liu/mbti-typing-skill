@@ -59,6 +59,8 @@ def read_text(path: Path) -> str:
 def run(path: Path, cases_path: Path) -> int:
     html = read_text(path)
     source_cases = make_gallery_cases(load_cases(cases_path))
+    leading_types = {str(item["leading"]) for item in source_cases}
+    required_types = {"ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP", "INTJ", "INFJ", "ENTJ", "ENFJ", "INTP", "INFP", "ENTP", "ENFP"}
     try:
         embedded_cases = extract_embedded_cases(html)
         source_sync_error = ""
@@ -71,15 +73,16 @@ def run(path: Path, cases_path: Path) -> int:
         Check("html:single_script", len(re.findall(r"<script>", html)) == 1, "one inline script block is present"),
         Check("html:no_external_runtime", all(term not in html for term in FORBIDDEN_TERMS), "page stays local and avoids unsafe HTML injection"),
         Check("html:repo_readme_link", "https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in html, "public page links to the GitHub README"),
-        Check("js:case_count", html.count("bench-") >= 8, "benchmark case ids are embedded"),
+        Check("js:case_count", html.count("bench-") >= 16, "benchmark case ids are embedded"),
         Check("js:dom_safety", "textContent" in html and "replaceChildren" in html and "document.createElement" in html, "rendering uses DOM nodes"),
         Check("js:clipboard", "navigator.clipboard.writeText" in html, "copy actions use clipboard with fallback"),
         Check("js:filters", "filterRail" in html and "activeFilter" in html and "getVisibleCases" in html, "case filters are implemented"),
         Check("js:issue_seed", "buildIssueSeed" in html and "benchmark_case.yml" in html, "issue seed and benchmark issue link exist"),
         Check("source:generated_markers", "BEGIN GENERATED BENCHMARK CASES" in html and "END GENERATED BENCHMARK CASES" in html, "generated case block is marked"),
         Check("source:json_match", embedded_cases == source_cases, source_sync_error or "embedded cases match canonical benchmark JSON"),
-        Check("source:case_count", len(embedded_cases) == len(source_cases) and len(source_cases) >= 8, f"{len(embedded_cases)} embedded / {len(source_cases)} source cases"),
+        Check("source:case_count", len(embedded_cases) == len(source_cases) and len(source_cases) >= 16, f"{len(embedded_cases)} embedded / {len(source_cases)} source cases"),
         Check("source:display_metadata", all(item.get("cluster") and item.get("title") for item in source_cases), "source cases include gallery cluster and display title"),
+        Check("source:all_16_leading", required_types <= leading_types, f"{len(leading_types & required_types)} leading types covered"),
     ]
 
     checks.extend(Check(f"id:{item}", f'id="{item}"' in html, "required interactive element id exists") for item in REQUIRED_IDS)

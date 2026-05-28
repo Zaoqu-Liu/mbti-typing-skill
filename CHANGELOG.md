@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.9 - 2026-05-28
+
+- Expanded the benchmark suite from 8 to 16 adversarial cases so every MBTI type appears as an expected leading hypothesis at least once.
+- Added matching golden good/bad fixtures for all 16 cases and tightened benchmark validation to require all-16 leading-type coverage.
+- Added the Benchmark Type Coverage Matrix SVG and expanded repository UX gates to verify the new coverage proof, Case Gallery Audit 48/48, and Repository UX Score 171/171.
+
 ## 0.1.8 - 2026-05-28
 
 - Fixed GitHub Pages navigation so README and prompt recipe buttons resolve to the public GitHub repository instead of parent-directory paths that 404 after deploy.

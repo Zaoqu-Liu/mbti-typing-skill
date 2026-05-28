@@ -65,6 +65,12 @@ The trust loop connects real user ambiguity to benchmark cases, scorecards, GitH
 
 The Benchmark Arena Pipeline makes the case gallery auditable: `skill/mbti-typing/examples/benchmark-cases.json` is the canonical source, `scripts/sync_case_gallery.py` performs source-of-truth sync into `docs/case-gallery.html`, and the release gate checks that the public page cannot drift from the benchmark suite.
 
+### Benchmark Type Coverage Matrix
+
+![Benchmark Type Coverage Matrix](docs/assets/type-coverage-matrix.svg)
+
+The expanded benchmark suite now covers all 16 MBTI type codes as leading hypotheses at least once. 16 / 16 covered does not claim psychometric truth; it means the regression suite can challenge every type with a visible runner-up, trap, evidence tag set, and falsifier theme.
+
 ## Visual System Map
 
 ```mermaid
@@ -171,6 +177,7 @@ sequenceDiagram
       typing-engine-blueprint.svg
       trust-loop-dashboard.svg
       benchmark-arena-pipeline.svg
+      type-coverage-matrix.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
@@ -256,11 +263,11 @@ Expected result:
 
 ```text
 Score: 35/35 (100.00%)
-Regression passed for 8 golden fixtures.
+Regression passed for 16 golden fixtures.
 Session Lab Audit: 61/61 (100.00%)
-Case Gallery Source Sync: PASS (8 cases match)
-Case Gallery Audit: 39/39 (100.00%)
-Repository UX Score: 161/161 (100.00%)
+Case Gallery Source Sync: PASS (16 cases match)
+Case Gallery Audit: 48/48 (100.00%)
+Repository UX Score: 171/171 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

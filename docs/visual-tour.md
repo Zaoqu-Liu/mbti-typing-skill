@@ -74,6 +74,16 @@ The pipeline explains why the public case gallery can stay trustworthy as the be
 - The Case Gallery audit compares the embedded page data back against the JSON before release.
 - Issue seed feedback returns new failures to the benchmark source instead of leaving them as anecdotes.
 
+## Benchmark Type Coverage Matrix
+
+![Benchmark Type Coverage Matrix](assets/type-coverage-matrix.svg)
+
+The matrix makes coverage visible instead of implicit:
+
+- All 16 MBTI type codes appear as leading hypotheses.
+- Every tile maps to a benchmark case id, not a decorative label.
+- Coverage is paired with traps and falsifiers, so the matrix does not become a type-collection trophy.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -117,12 +127,13 @@ flowchart TD
     D --> E[Typing engine blueprint]
     E --> F[Trust loop dashboard]
     F --> G[Benchmark Arena pipeline]
-    G --> H[One-minute demo]
-    H --> I[Demo session]
-    I --> J[Sample report]
-    J --> K[Evaluation model]
-    K --> L[Contribution guide]
-    L --> M[Benchmark cases]
+    G --> H[Type coverage matrix]
+    H --> I[One-minute demo]
+    I --> J[Demo session]
+    J --> K[Sample report]
+    K --> L[Evaluation model]
+    L --> M[Contribution guide]
+    M --> N[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

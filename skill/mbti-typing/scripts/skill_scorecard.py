@@ -85,11 +85,13 @@ def run_checks(root: Path) -> list[Check]:
         try:
             benchmark = json.loads(benchmark_path.read_text(encoding="utf-8"))
             cases = benchmark.get("cases", [])
-            valid_cases = isinstance(cases, list) and len(cases) >= 8
+            leading_types = {str(case.get("expected_leading")) for case in cases if isinstance(case, dict)}
+            expected_types = {"ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP", "INTJ", "INFJ", "ENTJ", "ENFJ", "INTP", "INFP", "ENTP", "ENFP"}
+            valid_cases = isinstance(cases, list) and len(cases) >= 16 and expected_types <= leading_types
         except json.JSONDecodeError as exc:
             checks.append(Check("benchmark_cases", False, f"invalid JSON: {exc}"))
         else:
-            checks.append(Check("benchmark_cases", valid_cases, f"{len(cases) if isinstance(cases, list) else 0} benchmark cases found"))
+            checks.append(Check("benchmark_cases", valid_cases, f"{len(cases) if isinstance(cases, list) else 0} benchmark cases found; {len(leading_types & expected_types)} leading types covered"))
     else:
         checks.append(Check("benchmark_cases", False, "benchmark-cases.json missing"))
 

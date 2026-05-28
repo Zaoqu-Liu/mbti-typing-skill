@@ -169,6 +169,174 @@
         "framework_boundaries": ["This is interview evidence, not psychometric measurement."]
       },
       "bad_report": {"leading_formulation": {"type": "ENTP"}, "runner_up": {"type": "ESTP"}, "evidence_tags": ["abstract_conceptual_play"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-enfj-esfj-009",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ENFJ-like Fe-Ni, with ESFJ as runner-up.",
+        "leading_formulation": {"type": "ENFJ", "process": "Fe-Ni", "confidence": "medium-high"},
+        "runner_up": {"type": "ESFJ", "steelman": "Warmth and caretaking can look Fe-Si.", "why_it_loses": "Group direction and people-development future are more central than comfort maintenance."},
+        "claims": [{"claim": "The user's social energy is organized around future group development.", "evidence_ids": ["E1", "E2"], "caveat": "A community role could amplify outward guidance."}],
+        "evidence_tags": ["fe_group_direction", "ni_people_future", "comfort_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Reads what a group could become and steers people toward that future.", "context": "normal", "supports": ["ENFJ"], "contradicts": ["ESFJ"], "alternatives": ["leadership role"], "tags": ["ni_people_future"]},
+          {"id": "E2", "observation": "Warmth and feedback are organized around growth.", "context": "social", "supports": ["ENFJ"], "contradicts": [], "alternatives": ["coaching habit"], "tags": ["fe_group_direction"]},
+          {"id": "E3", "observation": "Comfort and tradition are secondary to shared direction.", "context": "decision", "supports": ["ENFJ"], "contradicts": ["ESFJ"], "alternatives": ["current project demands"], "tags": ["comfort_secondary"]}
+        ],
+        "alternatives": [{"type": "INFJ", "best_case": "Future people-patterns are visible.", "hardest_problem": "The described stance is openly steering the group rather than privately converging first."}],
+        "cross_framework_check": {"big_five": "High agreeableness and social confidence could be present.", "other": "Social skill is not enough to separate Fe-Ni from Fe-Si."},
+        "uncertainty": "Need low-role evidence for whether future guidance remains the default.",
+        "falsifiers": ["known social duty outranks future people-development across repeated group choices"],
+        "framework_boundaries": ["Fe-Ni is a qualitative hypothesis, not a measured score."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ESFJ"}, "runner_up": {"type": "ENFJ"}, "evidence_tags": ["fe_social_duty"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-esfj-enfj-010",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ESFJ-like Fe-Si, with ENFJ as runner-up.",
+        "leading_formulation": {"type": "ESFJ", "process": "Fe-Si", "confidence": "medium-high"},
+        "runner_up": {"type": "ENFJ", "steelman": "Encouragement and people leadership are visible.", "why_it_loses": "Relationship continuity and known obligations are the trust source."},
+        "claims": [{"claim": "Care is anchored in social continuity and remembered obligations.", "evidence_ids": ["E1", "E2"], "caveat": "Family or team context may increase obligation language."}],
+        "evidence_tags": ["fe_social_duty", "si_relationship_continuity", "future_growth_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Tracks birthdays, obligations, expectations, and group functioning.", "context": "relationship", "supports": ["ESFJ"], "contradicts": ["ENFJ"], "alternatives": ["family role"], "tags": ["fe_social_duty"]},
+          {"id": "E2", "observation": "Trusts what has kept relationships stable before.", "context": "normal", "supports": ["ESFJ"], "contradicts": ["ENFJ"], "alternatives": ["community norm"], "tags": ["si_relationship_continuity"]},
+          {"id": "E3", "observation": "Future growth is less urgent than preventing present social failure.", "context": "stress", "supports": ["ESFJ"], "contradicts": ["ENFJ"], "alternatives": ["acute responsibility"], "tags": ["future_growth_secondary"]}
+        ],
+        "alternatives": [{"type": "ISFJ", "best_case": "Obligation and continuity are strong.", "hardest_problem": "The prompt emphasizes outward group tracking more than private support memory."}],
+        "cross_framework_check": {"big_five": "High agreeableness and conscientiousness may explain some stability focus.", "other": "Fe-Si should be tested outside family or duty-heavy settings."},
+        "uncertainty": "Need examples where tradition conflicts with future group development.",
+        "falsifiers": ["future people-development overrides known social obligations when both are available"],
+        "framework_boundaries": ["This is structured interview reasoning, not a standardized instrument."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENFJ"}, "runner_up": {"type": "ESFJ"}, "evidence_tags": ["ni_people_future"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-istp-intp-011",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ISTP-like Ti-Se, with INTP as runner-up.",
+        "leading_formulation": {"type": "ISTP", "process": "Ti-Se", "confidence": "medium-high"},
+        "runner_up": {"type": "INTP", "steelman": "Detached analysis and systems language are present.", "why_it_loses": "Trust is earned through mechanism testing and real tool contact."},
+        "claims": [{"claim": "The analytic process is validated by live mechanism testing.", "evidence_ids": ["E1", "E2"], "caveat": "Technical work can pull many types toward tool language."}],
+        "evidence_tags": ["ti_mechanism", "se_tool_testing", "theory_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Understands systems by taking them apart and testing the mechanism.", "context": "normal", "supports": ["ISTP"], "contradicts": ["INTP"], "alternatives": ["engineering training"], "tags": ["ti_mechanism"]},
+          {"id": "E2", "observation": "Real object failure determines trust.", "context": "work", "supports": ["ISTP"], "contradicts": ["INTP"], "alternatives": ["repair context"], "tags": ["se_tool_testing"]},
+          {"id": "E3", "observation": "Theory is useful when it improves the fix.", "context": "decision", "supports": ["ISTP"], "contradicts": [], "alternatives": ["pragmatic culture"], "tags": ["theory_secondary"]}
+        ],
+        "alternatives": [{"type": "ESTP", "best_case": "Live constraints matter.", "hardest_problem": "The prompt foregrounds detached mechanism logic more than social/live tactical dominance."}],
+        "cross_framework_check": {"big_five": "Low verbal expressiveness would not by itself prove ISTP.", "other": "Technical competence is a role confound."},
+        "uncertainty": "Need evidence about private theorizing when no tool is present.",
+        "falsifiers": ["abstract model exploration outranks tool contact in repeated low-pressure contexts"],
+        "framework_boundaries": ["Ti-Se is an interpretive process label."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INTP"}, "runner_up": {"type": "ISTP"}, "evidence_tags": ["ti_model_purity"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-intp-istp-012",
+      "good_report": {
+        "short_answer": "Best-supported formulation is INTP-like Ti-Ne, with ISTP as runner-up.",
+        "leading_formulation": {"type": "INTP", "process": "Ti-Ne", "confidence": "medium-high"},
+        "runner_up": {"type": "ISTP", "steelman": "Technical calm and analysis overlap.", "why_it_loses": "The fascination begins in conceptual refinement before tool contact."},
+        "claims": [{"claim": "The default reward is a clean internal model and edge-case exploration.", "evidence_ids": ["E1", "E2"], "caveat": "Academic setting could inflate conceptual language."}],
+        "evidence_tags": ["ti_model_purity", "ne_edge_cases", "tool_contact_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Keeps refining the internal model without immediate external need.", "context": "normal", "supports": ["INTP"], "contradicts": ["ISTP"], "alternatives": ["research role"], "tags": ["ti_model_purity"]},
+          {"id": "E2", "observation": "Enjoys alternate definitions and edge cases.", "context": "thinking", "supports": ["INTP"], "contradicts": [], "alternatives": ["academic habit"], "tags": ["ne_edge_cases"]},
+          {"id": "E3", "observation": "Physical tinkering is not where fascination starts.", "context": "preference", "supports": ["INTP"], "contradicts": ["ISTP"], "alternatives": ["lack of tools"], "tags": ["tool_contact_secondary"]}
+        ],
+        "alternatives": [{"type": "ENTP", "best_case": "Ne and debate may be visible.", "hardest_problem": "The prompt emphasizes private model purity more than live exchange energy."}],
+        "cross_framework_check": {"big_five": "High openness may support abstraction.", "other": "Technical skill should not be confused with S/N by itself."},
+        "uncertainty": "Need live debate vs private modeling energy data for ENTP.",
+        "falsifiers": ["tool contact and live mechanism testing outrank conceptual exploration when both are available"],
+        "framework_boundaries": ["This is qualitative differential typing."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ISTP"}, "runner_up": {"type": "INTP"}, "evidence_tags": ["se_tool_testing"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-isfp-infp-013",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ISFP-like Fi-Se, with INFP as runner-up.",
+        "leading_formulation": {"type": "ISFP", "process": "Fi-Se", "confidence": "medium-high"},
+        "runner_up": {"type": "INFP", "steelman": "Private values and sensitivity are strong.", "why_it_loses": "Value recognition is immediate, embodied, and aesthetic before possibility exploration."},
+        "claims": [{"claim": "The value signal appears through embodied response rather than abstract meanings first.", "evidence_ids": ["E1", "E2"], "caveat": "Artistic context can make Se language more visible."}],
+        "evidence_tags": ["fi_embodied_line", "se_aesthetic_response", "ne_meaning_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Knows what feels true while making, moving, choosing colors, or responding to the scene.", "context": "normal", "supports": ["ISFP"], "contradicts": ["INFP"], "alternatives": ["creative training"], "tags": ["fi_embodied_line"]},
+          {"id": "E2", "observation": "Taste and immediate aesthetic response are decisive.", "context": "decision", "supports": ["ISFP"], "contradicts": [], "alternatives": ["design role"], "tags": ["se_aesthetic_response"]},
+          {"id": "E3", "observation": "Many possible meanings are not needed before the value line appears.", "context": "reflection", "supports": ["ISFP"], "contradicts": ["INFP"], "alternatives": ["low verbalization"], "tags": ["ne_meaning_secondary"]}
+        ],
+        "alternatives": [{"type": "ESFP", "best_case": "Se is visible.", "hardest_problem": "The prompt centers private value alignment more than outward room energy."}],
+        "cross_framework_check": {"big_five": "High openness may appear through aesthetics.", "other": "Private values are not enough to choose INFP over ISFP."},
+        "uncertainty": "Need evidence about group energy and public performance to test ESFP.",
+        "falsifiers": ["abstract possibility exploration outranks embodied aesthetic response under low-performance conditions"],
+        "framework_boundaries": ["Fi-Se is a working hypothesis."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INFP"}, "runner_up": {"type": "ISFP"}, "evidence_tags": ["ne_possibility"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-esfp-estp-014",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ESFP-like Se-Fi, with ESTP as runner-up.",
+        "leading_formulation": {"type": "ESFP", "process": "Se-Fi", "confidence": "medium-high"},
+        "runner_up": {"type": "ESTP", "steelman": "Bold improvisation and tactical action are visible.", "why_it_loses": "Live authenticity and emotional impact constrain the tactic."},
+        "claims": [{"claim": "The live-room energy is filtered through a personal value and authenticity signal.", "evidence_ids": ["E1", "E2"], "caveat": "Performance contexts can make Se look stronger than it is."}],
+        "evidence_tags": ["se_room_energy", "fi_live_authenticity", "tactics_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Comes alive in the room and tracks emotional movement.", "context": "social", "supports": ["ESFP"], "contradicts": [], "alternatives": ["performer role"], "tags": ["se_room_energy"]},
+          {"id": "E2", "observation": "The moment has to feel real to the user.", "context": "normal", "supports": ["ESFP"], "contradicts": ["ESTP"], "alternatives": ["values language"], "tags": ["fi_live_authenticity"]},
+          {"id": "E3", "observation": "Tactical wins feel empty when they kill the vibe or betray values.", "context": "decision", "supports": ["ESFP"], "contradicts": ["ESTP"], "alternatives": ["social preference"], "tags": ["tactics_secondary"]}
+        ],
+        "alternatives": [{"type": "ENFP", "best_case": "Value and possibility may be visible.", "hardest_problem": "The prompt anchors energy in the immediate room rather than abstract futures."}],
+        "cross_framework_check": {"big_five": "High extraversion and openness may both be present.", "other": "Boldness alone cannot separate ESFP from ESTP."},
+        "uncertainty": "Need examples when emotional authenticity conflicts with immediate stimulation.",
+        "falsifiers": ["impersonal tactical leverage outranks live authenticity when stakes rise"],
+        "framework_boundaries": ["This is evidence-led interview typing."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ESTP"}, "runner_up": {"type": "ESFP"}, "evidence_tags": ["ti_tactical_read"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-istj-intj-015",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ISTJ-like Si-Te, with INTJ as runner-up.",
+        "leading_formulation": {"type": "ISTJ", "process": "Si-Te", "confidence": "medium-high"},
+        "runner_up": {"type": "INTJ", "steelman": "Reserve and long-range seriousness can look Ni-Te.", "why_it_loses": "Record accuracy and proven procedure are checked before strategic abstraction."},
+        "claims": [{"claim": "The trust anchor is verified precedent and procedural accuracy.", "evidence_ids": ["E1", "E2"], "caveat": "Compliance-heavy environments can amplify record language."}],
+        "evidence_tags": ["si_record_accuracy", "te_procedure_check", "strategy_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Trusts what happened, what was promised, and what worked.", "context": "normal", "supports": ["ISTJ"], "contradicts": ["INTJ"], "alternatives": ["audit role"], "tags": ["si_record_accuracy"]},
+          {"id": "E2", "observation": "Checks details that break the process.", "context": "work", "supports": ["ISTJ"], "contradicts": [], "alternatives": ["quality-control role"], "tags": ["te_procedure_check"]},
+          {"id": "E3", "observation": "Strategy comes after facts, timeline, and procedure accuracy.", "context": "decision", "supports": ["ISTJ"], "contradicts": ["INTJ"], "alternatives": ["risk management"], "tags": ["strategy_secondary"]}
+        ],
+        "alternatives": [{"type": "ESTJ", "best_case": "Te procedure enforcement is visible.", "hardest_problem": "The prompt emphasizes record accuracy before external command."}],
+        "cross_framework_check": {"big_five": "High conscientiousness may mimic both ISTJ and INTJ.", "other": "Reserved seriousness is not sufficient Ni evidence."},
+        "uncertainty": "Need examples where precedent conflicts with an elegant future model.",
+        "falsifiers": ["future strategic abstraction outranks record accuracy in repeated decisions"],
+        "framework_boundaries": ["Si-Te is a qualitative formulation."]
+      },
+      "bad_report": {"leading_formulation": {"type": "INTJ"}, "runner_up": {"type": "ISTJ"}, "evidence_tags": ["future_architecture"], "evidence": [], "falsifiers": []}
+    },
+    {
+      "case_id": "bench-enfp-entp-016",
+      "good_report": {
+        "short_answer": "Best-supported formulation is ENFP-like Ne-Fi, with ENTP as runner-up.",
+        "leading_formulation": {"type": "ENFP", "process": "Ne-Fi", "confidence": "medium-high"},
+        "runner_up": {"type": "ENTP", "steelman": "Speed, novelty, and verbal play overlap.", "why_it_loses": "Possibility stays connected to identity and human value."},
+        "claims": [{"claim": "Exploration is motivated by personal meaning rather than impersonal model play first.", "evidence_ids": ["E1", "E2"], "caveat": "Social context may amplify warmth and values language."}],
+        "evidence_tags": ["ne_identity_possibility", "fi_human_value", "debate_secondary"],
+        "evidence": [
+          {"id": "E1", "observation": "Chases possibilities because one might unlock becoming or what matters.", "context": "normal", "supports": ["ENFP"], "contradicts": ["ENTP"], "alternatives": ["life-stage exploration"], "tags": ["ne_identity_possibility"]},
+          {"id": "E2", "observation": "Ideas must stay connected to human value.", "context": "decision", "supports": ["ENFP"], "contradicts": ["ENTP"], "alternatives": ["ethical training"], "tags": ["fi_human_value"]},
+          {"id": "E3", "observation": "Debate loses appeal when it strips meaning out of people.", "context": "conflict", "supports": ["ENFP"], "contradicts": ["ENTP"], "alternatives": ["conflict fatigue"], "tags": ["debate_secondary"]}
+        ],
+        "alternatives": [{"type": "INFP", "best_case": "Fi meaning is strong.", "hardest_problem": "The prompt emphasizes outward novelty chasing and possibility momentum."}],
+        "cross_framework_check": {"big_five": "High openness and social energy may both be visible.", "other": "Novelty seeking alone does not prove Ne-Fi."},
+        "uncertainty": "Need evidence under low social approval pressure.",
+        "falsifiers": ["impersonal model play outranks personal meaning when the argument gets serious"],
+        "framework_boundaries": ["Ne-Fi is a working interpretation, not a measured score."]
+      },
+      "bad_report": {"leading_formulation": {"type": "ENTP"}, "runner_up": {"type": "ENFP"}, "evidence_tags": ["ne_ti_model_play"], "evidence": [], "falsifiers": []}
     }
   ]
 }
