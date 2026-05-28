@@ -10,12 +10,14 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Benchmark Arena, Calibration Lab, Follow-Up Lab, and Playground
+## Session Lab, Type Duel Lab, Benchmark Arena, Calibration Lab, Follow-Up Lab, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
 - [GitHub Pages Session Lab](https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html)
 - [Local Session Lab file](docs/session-lab.html)
+- [GitHub Pages Type Duel Lab](https://zaoqu-liu.github.io/mbti-typing-skill/type-duel-lab.html)
+- [Local Type Duel Lab file](docs/type-duel-lab.html)
 - [GitHub Pages Benchmark Arena](https://zaoqu-liu.github.io/mbti-typing-skill/case-gallery.html)
 - [Local case gallery file](docs/case-gallery.html)
 - [GitHub Pages Calibration Lab](https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html)
@@ -25,7 +27,7 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -34,6 +36,7 @@ The Session Lab turns a claim and notes into a heuristic candidate board, eviden
 Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
+- [Type Duel Lab](docs/type-duel-lab.html): searchable adjacent-type duel matrix sourced from `pair-duels.md`.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
 - [Calibration Lab](docs/calibration-lab.html): blind calibration loop for checking reports against benchmark expectations.
 - [Follow-Up Lab](docs/follow-up-lab.html): local-first consent packet builder for delayed observations, privacy gates, JSON export, and issue seeds.
@@ -96,6 +99,12 @@ The Blind Review Arena is the accuracy layer after calibration. Sanitized packet
 ![Consent Feedback Loop](docs/assets/consent-feedback-loop.svg)
 
 The Consent Feedback Loop is the safety layer for real-world learning. `docs/consent-redaction-protocol.md`, `examples/consented-followup-packet.json`, `.github/ISSUE_TEMPLATE/consented_followup.yml`, and `scripts/consent_redaction_audit.py` define how delayed user observations can be contributed without raw private chat logs, direct identifiers, third-party details, or irreversible public exposure. This lets the project learn from follow-up corrections while keeping consent, redaction, withdrawal, and data minimization visible.
+
+### Type Duel Decision Map
+
+![Type Duel Decision Map](docs/assets/type-duel-decision-map.svg)
+
+The Type Duel Decision Map shows how `skill/mbti-typing/references/pair-duels.md` becomes a product surface: `scripts/sync_type_duel_lab.py` parses the Markdown source into `docs/type-duel-lab.html`, users copy focused `$mbti-typing` duel prompts or `type_duel_improvement.yml` issue seeds, and `scripts/type_duel_lab_audit.py` blocks drift before release.
 
 ## Visual System Map
 
@@ -290,6 +299,8 @@ python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session
 python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
 python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
+python3 -B scripts/sync_type_duel_lab.py skill/mbti-typing/references/pair-duels.md docs/type-duel-lab.html
+python3 -B scripts/type_duel_lab_audit.py docs/type-duel-lab.html skill/mbti-typing/references/pair-duels.md
 python3 -B scripts/session_lab_audit.py docs/session-lab.html
 python3 -B scripts/sync_case_gallery.py skill/mbti-typing/examples/benchmark-cases.json docs/case-gallery.html
 python3 -B scripts/case_gallery_audit.py docs/case-gallery.html skill/mbti-typing/examples/benchmark-cases.json
@@ -309,12 +320,14 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
+Type Duel Lab Source Sync: PASS (20 duels match)
+Type Duel Lab Audit: 68/68 (100.00%)
 Case Gallery Source Sync: PASS (16 cases match)
 Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 262/262 (100.00%)
+Repository UX Score: 294/294 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -328,7 +341,8 @@ flowchart TD
     Cases --> Golden[Golden report regression]
     Golden --> Blind[Blind review audit]
     Blind --> Consent[Consent redaction audit]
-    Consent --> FollowUp[Follow-Up Lab audit]
+    Consent --> TypeDuel[Type Duel Lab audit]
+    TypeDuel --> FollowUp[Follow-Up Lab audit]
     FollowUp --> SkillScore[Skill package scorecard]
     SkillScore --> UXScore[Repository UX scorecard]
     UXScore --> Cache[No cache artifact check]

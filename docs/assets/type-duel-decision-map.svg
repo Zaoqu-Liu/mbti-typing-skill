@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1280 760">
+  <title>Type Duel Decision Map</title>
+  <desc>A repository-native blueprint showing how pair-duels.md becomes a searchable Type Duel Lab, copyable prompt, issue seed, and test gate.</desc>
+  <defs>
+    <linearGradient id="tealBlue" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#11867d"/>
+      <stop offset="1" stop-color="#3d66a6"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#17201f" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f5f6f3; }
+      .panel { fill: #ffffff; stroke: #d9dfda; stroke-width: 2; filter: url(#softShadow); }
+      .soft { fill: #fbfcfa; stroke: #d9dfda; stroke-width: 2; }
+      .ink { fill: #17201f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #65716d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { font-size: 34px; font-weight: 900; letter-spacing: 0; }
+      .section { font-size: 20px; font-weight: 900; letter-spacing: 0; }
+      .label { font-size: 15px; font-weight: 800; letter-spacing: 0; }
+      .small { font-size: 13px; letter-spacing: 0; }
+      .micro { font-size: 11px; letter-spacing: 0; }
+      .pill { fill: #e0f2ef; stroke: #a9d8d3; stroke-width: 1.5; }
+      .amber { fill: #fff1d8; stroke: #e0b265; }
+      .rose { fill: #fde8ef; stroke: #e5a6ba; }
+      .blue { fill: #e7edf8; stroke: #afbfdd; }
+      .green { fill: #e5f3e9; stroke: #a9d6b9; }
+      .line { fill: none; stroke: #9aaba5; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .flow { fill: none; stroke: url(#tealBlue); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+      .dot { fill: #11867d; }
+      .warn { fill: #c23a62; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2d6f91"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1280" height="760"/>
+  <text class="ink title" x="58" y="72">Type Duel Decision Map</text>
+  <text class="muted small" x="58" y="100">Adjacent-type ambiguity becomes searchable questions, losing conditions, prompts, issue seeds, and release gates.</text>
+
+  <rect class="panel" x="52" y="132" width="250" height="178" rx="8"/>
+  <text class="ink section" x="76" y="168">Source of truth</text>
+  <rect class="pill" x="76" y="190" width="184" height="32" rx="16"/>
+  <text class="ink label" x="93" y="211">pair-duels.md</text>
+  <text class="muted small" x="76" y="246">Shared surface</text>
+  <text class="muted small" x="76" y="270">Killer Questions</text>
+  <text class="muted small" x="76" y="294">Losing Conditions</text>
+
+  <rect class="panel" x="365" y="120" width="292" height="218" rx="8"/>
+  <text class="ink section" x="390" y="158">Source sync</text>
+  <rect class="blue" x="390" y="181" width="220" height="32" rx="16"/>
+  <text class="ink label" x="407" y="202">sync_type_duel_lab.py</text>
+  <path class="line" d="M414 236 H609"/>
+  <circle class="dot" cx="414" cy="236" r="6"/>
+  <circle class="dot" cx="511" cy="236" r="6"/>
+  <circle class="dot" cx="609" cy="236" r="6"/>
+  <text class="muted micro" x="390" y="264">parse headings</text>
+  <text class="muted micro" x="488" y="264">normalize JSON</text>
+  <text class="muted micro" x="576" y="264">embed block</text>
+  <text class="muted small" x="390" y="304">Generated data cannot drift silently.</text>
+
+  <rect class="panel" x="720" y="102" width="500" height="258" rx="8"/>
+  <text class="ink section" x="746" y="140">Type Duel Lab</text>
+  <text class="muted small" x="746" y="165">docs/type-duel-lab.html</text>
+  <rect class="soft" x="746" y="190" width="132" height="74" rx="8"/>
+  <text class="ink label" x="765" y="219">Pair Finder</text>
+  <text class="muted micro" x="765" y="242">search + cluster</text>
+  <rect class="soft" x="895" y="190" width="132" height="74" rx="8"/>
+  <text class="ink label" x="915" y="219">Duel Detail</text>
+  <text class="muted micro" x="915" y="242">surface + fork</text>
+  <rect class="soft" x="1044" y="190" width="132" height="74" rx="8"/>
+  <text class="ink label" x="1066" y="219">Outputs</text>
+  <text class="muted micro" x="1066" y="242">prompt + issue</text>
+  <path class="flow" marker-end="url(#arrow)" d="M878 227 H895"/>
+  <path class="flow" marker-end="url(#arrow)" d="M1027 227 H1044"/>
+  <rect class="green" x="746" y="288" width="160" height="34" rx="17"/>
+  <text class="ink small" x="766" y="310">local-first</text>
+  <rect class="amber" x="920" y="288" width="166" height="34" rx="17"/>
+  <text class="ink small" x="941" y="310">no external runtime</text>
+  <rect class="rose" x="1100" y="288" width="76" height="34" rx="17"/>
+  <text class="ink small" x="1120" y="310">safety</text>
+
+  <path class="flow" marker-end="url(#arrow)" d="M302 221 C326 221 339 221 365 221"/>
+  <path class="flow" marker-end="url(#arrow)" d="M657 229 C682 229 693 229 720 229"/>
+
+  <rect class="panel" x="64" y="396" width="346" height="256" rx="8"/>
+  <text class="ink section" x="90" y="434">What each duel must preserve</text>
+  <rect class="soft" x="90" y="462" width="292" height="38" rx="8"/>
+  <text class="ink label" x="110" y="487">Runner-up remains live</text>
+  <rect class="soft" x="90" y="516" width="292" height="38" rx="8"/>
+  <text class="ink label" x="110" y="541">Falsifier is explicit</text>
+  <rect class="soft" x="90" y="570" width="292" height="38" rx="8"/>
+  <text class="ink label" x="110" y="595">Both sides can lose</text>
+  <text class="muted small" x="90" y="630">This is the anti-overclaim layer.</text>
+
+  <rect class="panel" x="464" y="420" width="350" height="206" rx="8"/>
+  <text class="ink section" x="490" y="458">Contribution loop</text>
+  <rect class="blue" x="490" y="482" width="244" height="32" rx="16"/>
+  <text class="ink label" x="508" y="503">type_duel_improvement.yml</text>
+  <text class="muted small" x="490" y="542">A weak discriminator becomes a structured issue:</text>
+  <text class="muted small" x="490" y="570">pair, limitation, proposed question, losing</text>
+  <text class="muted small" x="490" y="594">conditions, sanitized evidence, safety checks.</text>
+
+  <rect class="panel" x="868" y="404" width="340" height="244" rx="8"/>
+  <text class="ink section" x="894" y="442">Release gate</text>
+  <rect class="green" x="894" y="466" width="230" height="32" rx="16"/>
+  <text class="ink label" x="912" y="487">type_duel_lab_audit.py</text>
+  <path class="line" d="M912 528 H1156"/>
+  <circle class="dot" cx="912" cy="528" r="6"/>
+  <circle class="dot" cx="994" cy="528" r="6"/>
+  <circle class="dot" cx="1076" cy="528" r="6"/>
+  <circle class="dot" cx="1156" cy="528" r="6"/>
+  <text class="muted micro" x="894" y="555">all pairs</text>
+  <text class="muted micro" x="970" y="555">16 types</text>
+  <text class="muted micro" x="1041" y="555">DOM-safe</text>
+  <text class="muted micro" x="1118" y="555">no drift</text>
+  <text class="muted small" x="894" y="604">make test blocks stale or unsafe pages.</text>
+
+  <path class="flow" marker-end="url(#arrow)" d="M1012 360 C1012 382 1012 389 1012 404"/>
+  <path class="flow" marker-end="url(#arrow)" d="M966 360 C834 400 803 414 734 482"/>
+  <path class="flow" marker-end="url(#arrow)" d="M746 312 C580 365 486 404 382 462"/>
+  <path class="flow" marker-end="url(#arrow)" d="M814 525 C836 525 846 525 868 525"/>
+
+  <rect class="soft" x="58" y="690" width="1160" height="34" rx="8"/>
+  <text class="muted small" x="78" y="712">Design rule: exact workflow diagrams stay as SVG so labels, gates, and source links remain reviewable in GitHub diffs.</text>
+</svg>

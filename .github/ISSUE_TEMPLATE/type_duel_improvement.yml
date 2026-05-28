@@ -1,0 +1,55 @@
+name: Type duel improvement
+description: Propose a sharper adjacent-type discriminator or losing condition.
+title: "[Type Duel]: "
+labels: ["type-duel", "benchmark"]
+body:
+  - type: input
+    id: pair
+    attributes:
+      label: Type pair
+      placeholder: "ENTJ vs INTJ"
+    validations:
+      required: true
+  - type: textarea
+    id: current-limitation
+    attributes:
+      label: Current limitation
+      description: Which ambiguity, benchmark miss, or repeated user correction does the current duel fail to separate?
+      placeholder: "The current questions separate execution from modeling, but miss role-only leadership energy."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-discriminator
+    attributes:
+      label: Proposed discriminator
+      description: Add one focused question or rule. Avoid broad self-labels.
+      placeholder: "When nobody needs you to lead, does your idle mind still optimize people/resources or retreat into a private model?"
+    validations:
+      required: true
+  - type: textarea
+    id: losing-conditions
+    attributes:
+      label: Losing conditions for both sides
+      description: Each side must be able to lose.
+      placeholder: "ENTJ loses if... / INTJ loses if..."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence-context
+    attributes:
+      label: Evidence context
+      description: Use synthetic or sanitized examples only. Do not include private transcripts or identifiers.
+      placeholder: "Observed across normal-state work planning and stress recovery in a sanitized case."
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety checks
+      options:
+        - label: This does not add clinical, hiring, legal, school, or deterministic use.
+          required: true
+        - label: This preserves runner-up and falsifier language.
+          required: true
+        - label: This contains no private or identifiable data.
+          required: true

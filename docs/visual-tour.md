@@ -60,7 +60,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Session Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Session Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -127,6 +127,20 @@ The consent feedback loop is the bridge between real user usefulness and public 
 
 This is the allowed real-user learning loop: the project can become more useful from lived feedback without making the public issue tracker a place for raw personal data.
 
+## Type Duel Decision Map
+
+![Type Duel Decision Map](assets/type-duel-decision-map.svg)
+
+The Type Duel Decision Map makes adjacent-type judgment visible:
+
+- `skill/mbti-typing/references/pair-duels.md` remains the source of truth.
+- `scripts/sync_type_duel_lab.py` parses the Markdown into generated page data.
+- [Type Duel Lab](type-duel-lab.html) lets users search ENTJ vs INTJ, INFP vs INFJ, ENTP vs ESTP, and every current source duel.
+- Each duel shows shared surface, Killer Questions, Losing Conditions, copyable `$mbti-typing` prompts, and `type_duel_improvement.yml` issue seeds.
+- `scripts/type_duel_lab_audit.py` checks source sync, all 16 type codes, DOM-safe rendering, copy outputs, and no external runtime before release.
+
+This is the high-retention precision layer: users return because each close pair has a sharper fork, not because the tool pretends a weak signal is certainty.
+
 ## Follow-Up Lab
 
 [Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
@@ -170,11 +184,22 @@ This is the retention loop that is allowed: users come back because the system m
 - It generates a repair prompt, calibration JSON, and failure issue seed without sending user text to a server.
 - It is intentionally lexical and inspectable; failed gates are repair targets, not psychometric truth.
 
+## Type Duel Lab
+
+[Type Duel Lab](type-duel-lab.html) turns `pair-duels.md` into a usable product surface:
+
+- Visitors can search by type code, cluster, or discriminator keyword.
+- Every card is source-synced from the skill reference file.
+- The selected duel preserves shared surface, runner-up discipline, falsifier focus, Killer Questions, and Losing Conditions.
+- The page generates a focused `Use $mbti-typing` duel prompt and a structured issue seed for improving a weak pair.
+- Local persistence remembers the selected pair without sending anything to a server.
+
 ## Public Page Stack
 
-The four buildless product pages now cover the full user loop:
+The five buildless product pages now cover the full user loop:
 
 - [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
+- [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
@@ -204,13 +229,15 @@ flowchart TD
     H --> I[Calibration loop map]
     I --> J[Blind review arena]
     J --> K[Consent feedback loop]
-    K --> L[Follow-Up Lab]
-    L --> M[One-minute demo]
-    M --> N[Demo session]
-    N --> O[Sample report]
-    O --> P[Evaluation model]
-    P --> Q[Contribution guide]
-    Q --> R[Benchmark cases]
+    K --> L[Type Duel Decision Map]
+    L --> M[Type Duel Lab]
+    M --> N[Follow-Up Lab]
+    N --> O[One-minute demo]
+    O --> P[Demo session]
+    P --> Q[Sample report]
+    Q --> R[Evaluation model]
+    R --> S[Contribution guide]
+    S --> T[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

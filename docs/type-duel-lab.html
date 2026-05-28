@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Type Duel Lab</title>
+  <meta name="description" content="Local-first MBTI adjacent-type duel lab for killer questions, losing conditions, copyable prompts, and issue seeds.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f6f3;
+      --panel: #ffffff;
+      --panel-soft: #fbfcfa;
+      --ink: #171f1d;
+      --muted: #65716d;
+      --line: #d9dfda;
+      --line-strong: #b9c5bf;
+      --teal: #11867d;
+      --teal-soft: #e0f2ef;
+      --amber: #c57a17;
+      --amber-soft: #fff1d8;
+      --rose: #c23a62;
+      --rose-soft: #fde8ef;
+      --blue: #3d66a6;
+      --blue-soft: #e7edf8;
+      --green: #277b4e;
+      --green-soft: #e5f3e9;
+      --graphite: #25302e;
+      --shadow: 0 16px 38px rgba(24, 32, 30, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(17, 134, 125, 0.08), transparent 34%),
+        linear-gradient(250deg, rgba(61, 102, 166, 0.08), transparent 32%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 46px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      letter-spacing: 0;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      background: #fafeff;
+      border-color: rgba(17, 134, 125, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      border-color: var(--graphite);
+      color: #fff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.58fr);
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .panel,
+    .hero-copy,
+    .hero-map {
+      border: 1px solid rgba(217, 223, 218, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: clamp(22px, 4vw, 38px);
+      display: grid;
+      align-content: center;
+      min-height: 292px;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.98;
+      max-width: 980px;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 900px;
+    }
+
+    .hero-map {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+      min-height: 82px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 6px;
+    }
+
+    .map-lanes {
+      display: grid;
+      gap: 8px;
+    }
+
+    .lane {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lane-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .lane-track {
+      height: 12px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .lane-fill {
+      height: 100%;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+    }
+
+    .type-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .type-chip,
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 30px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .chip.teal {
+      border-color: rgba(17, 134, 125, 0.35);
+      background: var(--teal-soft);
+      color: #0a5e58;
+    }
+
+    .chip.amber {
+      border-color: rgba(197, 122, 23, 0.35);
+      background: var(--amber-soft);
+      color: #7c4a08;
+    }
+
+    .chip.blue {
+      border-color: rgba(61, 102, 166, 0.35);
+      background: var(--blue-soft);
+      color: #274a7c;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr) minmax(320px, 0.5fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-header p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: rgba(17, 134, 125, 0.72);
+      box-shadow: 0 0 0 3px rgba(17, 134, 125, 0.12);
+    }
+
+    .pair-list {
+      display: grid;
+      gap: 8px;
+      max-height: 720px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .pair-button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      color: var(--ink);
+      padding: 11px;
+      cursor: pointer;
+      text-align: left;
+      display: grid;
+      gap: 8px;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .pair-button:hover,
+    .pair-button.active {
+      background: #fafeff;
+      border-color: rgba(17, 134, 125, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .pair-title {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .pair-summary {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+    }
+
+    .detail-layout {
+      display: grid;
+      gap: 14px;
+    }
+
+    .duel-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .shared {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 7px 0 0;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .matrix-cell {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel-soft);
+      min-height: 112px;
+    }
+
+    .matrix-cell strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .matrix-cell p,
+    .note-list li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .question-list,
+    .condition-list,
+    .note-list {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .question-list li,
+    .condition-list li {
+      margin: 8px 0;
+      line-height: 1.48;
+    }
+
+    .condition-list strong {
+      color: var(--rose);
+    }
+
+    .output-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .textarea {
+      min-height: 210px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .note {
+      border: 1px solid rgba(61, 102, 166, 0.22);
+      border-radius: 8px;
+      background: var(--blue-soft);
+      color: #28456d;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-top: 18px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      border: 1px solid rgba(17, 134, 125, 0.35);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pair-list {
+        max-height: 380px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .duel-title-row,
+      .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .matrix,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">TD</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Type Duel Lab</div>
+          <div class="brand-subtitle">Pair-duel discriminators from pair-duels.md</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Product navigation">
+        <a class="button primary" href="session-lab.html">Session Lab</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="calibration-lab.html">Calibration Lab</a>
+        <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
+        <a class="button" href="playground.html">Playground</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Pair Duel Matrix</div>
+        <h1>Stop guessing adjacent types. Attack the exact fork.</h1>
+        <p>
+          Choose ENTJ vs INTJ, INFP vs INFJ, ENTP vs ESTP, or another close pair.
+          The lab exposes shared surface, killer questions, losing conditions, and a copyable
+          $mbti-typing duel prompt that preserves runner-up and falsifier discipline.
+        </p>
+      </div>
+      <aside class="hero-map" aria-label="Type Duel Lab metrics">
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="metricPairs">20</strong>
+            <span>source-synced duel cards</span>
+          </div>
+          <div class="metric">
+            <strong>16</strong>
+            <span>visible type codes</span>
+          </div>
+          <div class="metric">
+            <strong id="metricQuestions">57</strong>
+            <span>Killer Questions</span>
+          </div>
+          <div class="metric">
+            <strong id="metricConditions">38</strong>
+            <span>Losing Conditions</span>
+          </div>
+        </div>
+        <div class="map-lanes" aria-label="Duel cluster map">
+          <div class="lane">
+            <div class="lane-label">NT/NF</div>
+            <div class="lane-track"><div class="lane-fill" style="--w: 72%"></div></div>
+          </div>
+          <div class="lane">
+            <div class="lane-label">SJ/SP</div>
+            <div class="lane-track"><div class="lane-fill" style="--w: 54%"></div></div>
+          </div>
+          <div class="lane">
+            <div class="lane-label">Cross</div>
+            <div class="lane-track"><div class="lane-fill" style="--w: 62%"></div></div>
+          </div>
+        </div>
+        <div class="note">Local-first page. No account, no server call, no external runtime. Copy the prompt into Codex when the top two hypotheses are too close.</div>
+      </aside>
+    </section>
+
+    <div class="type-strip" aria-label="All 16 MBTI type codes">
+      <span class="type-chip">INTJ</span>
+      <span class="type-chip">INTP</span>
+      <span class="type-chip">ENTJ</span>
+      <span class="type-chip">ENTP</span>
+      <span class="type-chip">INFJ</span>
+      <span class="type-chip">INFP</span>
+      <span class="type-chip">ENFJ</span>
+      <span class="type-chip">ENFP</span>
+      <span class="type-chip">ISTJ</span>
+      <span class="type-chip">ISFJ</span>
+      <span class="type-chip">ESTJ</span>
+      <span class="type-chip">ESFJ</span>
+      <span class="type-chip">ISTP</span>
+      <span class="type-chip">ISFP</span>
+      <span class="type-chip">ESTP</span>
+      <span class="type-chip">ESFP</span>
+    </div>
+
+    <section class="grid">
+      <aside class="panel" aria-label="Duel picker">
+        <div class="panel-header">
+          <div>
+            <h2>Pair Finder</h2>
+            <p><span id="visiblePairCount">20</span> visible duels. Filter by type code, cluster, or keyword.</p>
+          </div>
+        </div>
+        <div class="controls">
+          <input class="input" id="pairSearch" type="search" placeholder="Search ENTJ, INFJ, execution, values">
+          <select class="select" id="clusterFilter" aria-label="Filter by duel cluster">
+            <option value="All">All clusters</option>
+            <option value="NT/NF">NT/NF</option>
+            <option value="SJ/SP">SJ/SP</option>
+            <option value="Cross-temperament">Cross-temperament</option>
+          </select>
+          <button class="button" id="resetFilters" type="button">Reset Filters</button>
+        </div>
+        <div class="pair-list" id="pairList" aria-live="polite"></div>
+      </aside>
+
+      <section class="panel detail-layout" aria-label="Selected duel detail">
+        <div class="duel-title-row">
+          <div>
+            <div class="eyebrow">Selected Duel</div>
+            <h2 id="selectedPairTitle">ENTJ vs INTJ</h2>
+            <p class="shared" id="sharedSurface">Shared surface appears here.</p>
+          </div>
+          <div id="selectedChips" class="type-strip"></div>
+        </div>
+
+        <div class="matrix" id="duelDetail"></div>
+
+        <div>
+          <div class="panel-header">
+            <div>
+              <h3>Killer Questions</h3>
+              <p>Ask 2-4. Do not run every question like a quiz; choose the one that attacks the current uncertainty.</p>
+            </div>
+          </div>
+          <ol class="question-list" id="questionList"></ol>
+        </div>
+
+        <div>
+          <div class="panel-header">
+            <div>
+              <h3>Losing Conditions</h3>
+              <p>Each side must be allowed to lose. This is how the runner-up stays serious.</p>
+            </div>
+          </div>
+          <ul class="condition-list" id="losingConditions"></ul>
+        </div>
+      </section>
+
+      <aside class="panel output-stack" aria-label="Copy outputs">
+        <div class="panel-header">
+          <div>
+            <h2>Prompt Builder</h2>
+            <p>Copy a focused prompt or a public issue seed for better pair-duel rules.</p>
+          </div>
+        </div>
+        <label for="duelPromptOutput"><strong>Copyable $mbti-typing prompt</strong></label>
+        <textarea class="textarea" id="duelPromptOutput" readonly></textarea>
+        <div class="output-actions">
+          <button class="button primary" id="copyDuelPrompt" type="button">Copy Duel Prompt</button>
+          <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill/issues/new?template=type_duel_improvement.yml">Open Issue Template</a>
+        </div>
+        <label for="issueSeedOutput"><strong>Copyable issue seed</strong></label>
+        <textarea class="textarea" id="issueSeedOutput" readonly></textarea>
+        <div class="output-actions">
+          <button class="button" id="copyIssueSeed" type="button">Copy Issue Seed</button>
+        </div>
+        <div class="note">
+          This lab is not a clinical instrument, hiring tool, or deterministic label generator.
+          It is a local-first discriminator surface for MBTI-style self-reflection and report review.
+        </div>
+      </aside>
+    </section>
+
+    <p class="footer-note">
+      Data source: <code>skill/mbti-typing/references/pair-duels.md</code>. The generated block is checked by
+      <code>scripts/sync_type_duel_lab.py</code> and <code>scripts/type_duel_lab_audit.py</code> so the public page cannot drift from the skill.
+    </p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <script>
+    const TYPE_CODES = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
+    const STORAGE_KEY = "mbti-typing-type-duel-lab-state";
+
+    // BEGIN GENERATED TYPE DUELS
+    const TYPE_DUELS = [
+          {
+                "id": "entj-vs-intj",
+                "pair": "ENTJ vs INTJ",
+                "types": [
+                      "ENTJ",
+                      "INTJ"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### ENTJ vs INTJ",
+                "sharedSurface": "strategic, future-focused, Te/Ni, high standards.",
+                "killerQuestions": [
+                      "When free and alone, does your mind naturally optimize external systems or refine a private future model?",
+                      "Does commanding capable people make you sharper, or is it a necessary cost of implementation?",
+                      "In conflict, do you externalize logic immediately or withdraw until the model is clean?"
+                ],
+                "losingConditions": {
+                      "ENTJ": "leadership energy is mostly costly, external organization is role-only, private modeling dominates idle time.",
+                      "INTJ": "live command reliably energizes cognition, idle time becomes people/resource optimization, decisions externalize before private model completion."
+                },
+                "notes": []
+          },
+          {
+                "id": "entj-vs-estj",
+                "pair": "ENTJ vs ESTJ",
+                "types": [
+                      "ENTJ",
+                      "ESTJ"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### ENTJ vs ESTJ",
+                "sharedSurface": "Te, command, standards, decisiveness.",
+                "killerQuestions": [
+                      "Do you trust proven operating rules until they fail, or replace them when they block the future architecture?",
+                      "When data is incomplete, do you compare with precedent or jump to a strategic model?",
+                      "What irritates you more: inconsistency with standards or lack of future leverage?"
+                ],
+                "losingConditions": {
+                      "ENTJ": "precedent and continuity are the core trust source.",
+                      "ESTJ": "stable legacy systems are intolerable when they conflict with a future architecture."
+                },
+                "notes": []
+          },
+          {
+                "id": "entp-vs-enfp",
+                "pair": "ENTP vs ENFP",
+                "types": [
+                      "ENTP",
+                      "ENFP"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### ENTP vs ENFP",
+                "sharedSurface": "novelty, speed, talk, possibility.",
+                "killerQuestions": [
+                      "When exploring ideas, are you protecting personal meaning or stress-testing an impersonal model?",
+                      "In debate, do you feel guilty for violating values, or excited by sharper logic?",
+                      "Which betrayal hurts more: someone attacks your values, or someone refuses to think clearly?"
+                ],
+                "losingConditions": {
+                      "ENTP": "value congruence repeatedly outranks model elegance.",
+                      "ENFP": "personal meaning is secondary to conceptual play and adversarial testing."
+                },
+                "notes": []
+          },
+          {
+                "id": "intp-vs-entp",
+                "pair": "INTP vs ENTP",
+                "types": [
+                      "INTP",
+                      "ENTP"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### INTP vs ENTP",
+                "sharedSurface": "Ti/Ne, concepts, argument, independence.",
+                "killerQuestions": [
+                      "Does live debate generate your best thinking or mostly expose what your private model needs?",
+                      "After a stimulating argument, are you charged to keep engaging or eager to retreat and refine?",
+                      "Do people primarily experience you as outwardly provocative or privately exacting?"
+                ],
+                "losingConditions": {
+                      "INTP": "external argument is the default engine of thought.",
+                      "ENTP": "live debate is optional and private precision is the true center."
+                },
+                "notes": []
+          },
+          {
+                "id": "intj-vs-infj",
+                "pair": "INTJ vs INFJ",
+                "types": [
+                      "INTJ",
+                      "INFJ"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### INTJ vs INFJ",
+                "sharedSurface": "Ni, privacy, intensity, future patterns.",
+                "killerQuestions": [
+                      "When your prediction is ignored, is the offense mainly inefficiency/stupidity or relational/moral consequence?",
+                      "Do you naturally move from insight to systems, or from insight to people/meaning alignment?",
+                      "Under stress, do you become more bodily impulsive or more socially overwhelmed by others' needs?"
+                ],
+                "losingConditions": {
+                      "INTJ": "relational meaning and interpersonal alignment are the default axis.",
+                      "INFJ": "external systems and impersonal execution dominate after insight."
+                },
+                "notes": []
+          },
+          {
+                "id": "infp-vs-infj",
+                "pair": "INFP vs INFJ",
+                "types": [
+                      "INFP",
+                      "INFJ"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### INFP vs INFJ",
+                "sharedSurface": "depth, sensitivity, ideals, private intensity.",
+                "killerQuestions": [
+                      "Is your first compass inner congruence or the hidden pattern in people and relationships?",
+                      "Do possibilities branch around what feels personally true, or converge into one likely meaning?",
+                      "In conflict, do you feel 'I cannot endorse this' or 'I see what this relationship is becoming'?"
+                ],
+                "losingConditions": {
+                      "INFP": "convergence and relational patterning dominate personal congruence.",
+                      "INFJ": "personal value authenticity remains central even when social meaning points elsewhere."
+                },
+                "notes": []
+          },
+          {
+                "id": "infp-vs-enfp",
+                "pair": "INFP vs ENFP",
+                "types": [
+                      "INFP",
+                      "ENFP"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### INFP vs ENFP",
+                "sharedSurface": "Fi-Ne, values, imagination, identity.",
+                "killerQuestions": [
+                      "Does contact with people generate possibilities, or do people interrupt private value processing?",
+                      "When excited by an idea, do you first tell others or privately test whether it is yours?",
+                      "After social inspiration, do you expand outward or need to return inward to locate yourself?"
+                ],
+                "losingConditions": {
+                      "INFP": "external possibility exchange is the default generator.",
+                      "ENFP": "private congruence checking precedes outward exploration."
+                },
+                "notes": []
+          },
+          {
+                "id": "enfj-vs-entj",
+                "pair": "ENFJ vs ENTJ",
+                "types": [
+                      "ENFJ",
+                      "ENTJ"
+                ],
+                "cluster": "NT/NF",
+                "sourceHeading": "### ENFJ vs ENTJ",
+                "sharedSurface": "leadership, vision, influence.",
+                "killerQuestions": [
+                      "Are people the medium of the work, or the variable that must align for execution?",
+                      "What feels more urgent: emotional buy-in or objective leverage?",
+                      "When the team is hurt but the plan is right, what do you repair first?"
+                ],
+                "losingConditions": {
+                      "ENFJ": "people alignment is consistently subordinate to execution.",
+                      "ENTJ": "emotional field management is the natural first lever, not a cost."
+                },
+                "notes": [
+                      "## SJ And SP Duels"
+                ]
+          },
+          {
+                "id": "istj-vs-isfj",
+                "pair": "ISTJ vs ISFJ",
+                "types": [
+                      "ISTJ",
+                      "ISFJ"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ISTJ vs ISFJ",
+                "sharedSurface": "duty, memory, reliability, continuity.",
+                "killerQuestions": [
+                      "When a responsibility is unclear, do you first define the standard or protect the person affected?",
+                      "Is your memory organized around facts/procedures or people/obligations?",
+                      "What bothers you more: unreliable execution or social neglect?"
+                ],
+                "losingConditions": {
+                      "ISTJ": "social obligation organizes the memory and action system.",
+                      "ISFJ": "impersonal standards and procedure integrity dominate care."
+                },
+                "notes": []
+          },
+          {
+                "id": "estj-vs-esfj",
+                "pair": "ESTJ vs ESFJ",
+                "types": [
+                      "ESTJ",
+                      "ESFJ"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ESTJ vs ESFJ",
+                "sharedSurface": "order, community standards, responsibility.",
+                "killerQuestions": [
+                      "Do you enforce norms because they make systems work or because they preserve the social fabric?",
+                      "When someone fails, do you first correct performance or restore belonging?",
+                      "Which is harder to tolerate: incompetence or visible disregard for people?"
+                ],
+                "losingConditions": {
+                      "ESTJ": "harmony and belonging are the core organizing principle.",
+                      "ESFJ": "performance standards override relational repair by default."
+                },
+                "notes": []
+          },
+          {
+                "id": "isfp-vs-istp",
+                "pair": "ISFP vs ISTP",
+                "types": [
+                      "ISFP",
+                      "ISTP"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ISFP vs ISTP",
+                "sharedSurface": "quiet, concrete, independent, action-oriented.",
+                "killerQuestions": [
+                      "When acting, are you protecting personal value/aesthetic truth or solving the mechanics?",
+                      "Do you trust what feels right or what works cleanly?",
+                      "When criticized, does it hit identity/taste or competence/logic?"
+                ],
+                "losingConditions": {
+                      "ISFP": "mechanical precision is the core satisfaction.",
+                      "ISTP": "private value expression drives action even when less efficient."
+                },
+                "notes": []
+          },
+          {
+                "id": "estp-vs-esfp",
+                "pair": "ESTP vs ESFP",
+                "types": [
+                      "ESTP",
+                      "ESFP"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ESTP vs ESFP",
+                "sharedSurface": "Se, action, social presence, immediacy.",
+                "killerQuestions": [
+                      "In the moment, are you optimizing the tactic or expressing the experience?",
+                      "Do you read people to maneuver effectively or to connect/energize authentically?",
+                      "What feels more alive: winning the live problem or fully inhabiting the moment?"
+                ],
+                "losingConditions": {
+                      "ESTP": "personal expression and emotional presence dominate tactical control.",
+                      "ESFP": "tactical advantage and impersonal leverage dominate expression."
+                },
+                "notes": []
+          },
+          {
+                "id": "istp-vs-estp",
+                "pair": "ISTP vs ESTP",
+                "types": [
+                      "ISTP",
+                      "ESTP"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ISTP vs ESTP",
+                "sharedSurface": "Ti-Se, practical troubleshooting, calm under pressure.",
+                "killerQuestions": [
+                      "Does pressure from people sharpen you or annoy you?",
+                      "Do you seek the live arena or prefer the system/problem without social heat?",
+                      "After action, do you want more stimulation or private decompression?"
+                ],
+                "losingConditions": {
+                      "ISTP": "public live pressure reliably generates energy.",
+                      "ESTP": "social arena is optional and private troubleshooting is preferred."
+                },
+                "notes": []
+          },
+          {
+                "id": "isfp-vs-esfp",
+                "pair": "ISFP vs ESFP",
+                "types": [
+                      "ISFP",
+                      "ESFP"
+                ],
+                "cluster": "SJ/SP",
+                "sourceHeading": "### ISFP vs ESFP",
+                "sharedSurface": "Fi-Se, aesthetics, personal expression, direct experience.",
+                "killerQuestions": [
+                      "Do you express values privately through selected action, or publicly through presence?",
+                      "Does attention energize expression or distort it?",
+                      "When moved, do you first protect the feeling or share the experience?"
+                ],
+                "losingConditions": {
+                      "ISFP": "public experiential expression is naturally energizing.",
+                      "ESFP": "visibility often contaminates private authenticity."
+                },
+                "notes": [
+                      "## Cross-Temperament Mistypes"
+                ]
+          },
+          {
+                "id": "infp-vs-intp",
+                "pair": "INFP vs INTP",
+                "types": [
+                      "INFP",
+                      "INTP"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### INFP vs INTP",
+                "sharedSurface": "private, abstract, outsider, internally driven.",
+                "killerQuestions": [
+                      "When something is wrong, is it wrong because it violates inner values or because the model is incoherent?",
+                      "Do you defend your identity or your logical precision first?",
+                      "What is more painful: being morally misunderstood or intellectually misrepresented?"
+                ],
+                "losingConditions": {
+                      "INFP": "logical coherence is protected even against personal values.",
+                      "INTP": "personal congruence repeatedly outranks analytic elegance."
+                },
+                "notes": []
+          },
+          {
+                "id": "infj-vs-intj",
+                "pair": "INFJ vs INTJ",
+                "types": [
+                      "INFJ",
+                      "INTJ"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### INFJ vs INTJ",
+                "sharedSurface": "",
+                "killerQuestions": [],
+                "losingConditions": {},
+                "notes": [
+                      "Use the NT/NF duel above. Add: \"Do you naturally translate insight into care language or execution architecture?\""
+                ]
+          },
+          {
+                "id": "enfp-vs-esfp",
+                "pair": "ENFP vs ESFP",
+                "types": [
+                      "ENFP",
+                      "ESFP"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### ENFP vs ESFP",
+                "sharedSurface": "energetic, expressive, novelty-seeking.",
+                "killerQuestions": [
+                      "Does novelty become meanings and possibilities, or stay embodied and immediate?",
+                      "Do you chase the idea behind the experience or the experience itself?",
+                      "When bored, do you need conceptual possibility or sensory/social stimulation?"
+                ],
+                "losingConditions": {
+                      "ENFP": "experience itself is the center.",
+                      "ESFP": "the experience mainly serves possibility and meaning."
+                },
+                "notes": []
+          },
+          {
+                "id": "entp-vs-estp",
+                "pair": "ENTP vs ESTP",
+                "types": [
+                      "ENTP",
+                      "ESTP"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### ENTP vs ESTP",
+                "sharedSurface": "quick, bold, improvisational, provocative.",
+                "killerQuestions": [
+                      "Do you improvise with concepts or with live reality?",
+                      "Would you rather win the argument or win the room/problem?",
+                      "When constraints appear, do they become tactical terrain or conceptual material?"
+                ],
+                "losingConditions": {
+                      "ENTP": "live tactical adaptation dominates conceptual play.",
+                      "ESTP": "abstract possibility is more energizing than real-time action."
+                },
+                "notes": []
+          },
+          {
+                "id": "infj-vs-isfj",
+                "pair": "INFJ vs ISFJ",
+                "types": [
+                      "INFJ",
+                      "ISFJ"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### INFJ vs ISFJ",
+                "sharedSurface": "private care, responsibility, people-awareness.",
+                "killerQuestions": [
+                      "Do you trust what has consistently mattered, or what the pattern predicts will matter?",
+                      "Is care expressed through known obligations or future developmental meaning?",
+                      "When someone changes, do you compare to their history or see a new trajectory?"
+                ],
+                "losingConditions": {
+                      "INFJ": "concrete continuity and remembered obligations dominate.",
+                      "ISFJ": "future-pattern interpretation overrides precedent."
+                },
+                "notes": []
+          },
+          {
+                "id": "intj-vs-intp",
+                "pair": "INTJ vs INTP",
+                "types": [
+                      "INTJ",
+                      "INTP"
+                ],
+                "cluster": "Cross-temperament",
+                "sourceHeading": "### INTJ vs INTP",
+                "sharedSurface": "private, analytical, independent, abstract.",
+                "killerQuestions": [
+                      "Do you want a working strategic conclusion or a clean model?",
+                      "Does closure help you move, or does it feel like premature simplification?",
+                      "When the model is imperfect but usable, do you execute or keep refining?"
+                ],
+                "losingConditions": {
+                      "INTJ": "precision outranks strategic closure by default.",
+                      "INTP": "imperfect strategic closure is acceptable once it moves the future."
+                },
+                "notes": []
+          }
+    ];
+    // END GENERATED TYPE DUELS
+
+    const state = {
+      search: "",
+      cluster: "All",
+      selectedId: TYPE_DUELS[0] ? TYPE_DUELS[0].id : "",
+    };
+
+    const els = {
+      pairSearch: document.getElementById("pairSearch"),
+      clusterFilter: document.getElementById("clusterFilter"),
+      pairList: document.getElementById("pairList"),
+      visiblePairCount: document.getElementById("visiblePairCount"),
+      selectedPairTitle: document.getElementById("selectedPairTitle"),
+      sharedSurface: document.getElementById("sharedSurface"),
+      selectedChips: document.getElementById("selectedChips"),
+      duelDetail: document.getElementById("duelDetail"),
+      questionList: document.getElementById("questionList"),
+      losingConditions: document.getElementById("losingConditions"),
+      duelPromptOutput: document.getElementById("duelPromptOutput"),
+      issueSeedOutput: document.getElementById("issueSeedOutput"),
+      copyDuelPrompt: document.getElementById("copyDuelPrompt"),
+      copyIssueSeed: document.getElementById("copyIssueSeed"),
+      resetFilters: document.getElementById("resetFilters"),
+      toast: document.getElementById("toast"),
+      metricPairs: document.getElementById("metricPairs"),
+      metricQuestions: document.getElementById("metricQuestions"),
+      metricConditions: document.getElementById("metricConditions"),
+    };
+
+    function makeNode(tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) {
+        element.className = className;
+      }
+      if (text !== undefined) {
+        element.textContent = text;
+      }
+      return element;
+    }
+
+    function normalize(value) {
+      return String(value || "").toLowerCase();
+    }
+
+    function searchableText(duel) {
+      return [
+        duel.pair,
+        duel.cluster,
+        duel.sharedSurface,
+        ...duel.types,
+        ...duel.killerQuestions,
+        ...Object.values(duel.losingConditions),
+        ...duel.notes,
+      ].join(" ");
+    }
+
+    function filteredDuels() {
+      const query = normalize(state.search);
+      return TYPE_DUELS.filter((duel) => {
+        const clusterOk = state.cluster === "All" || duel.cluster === state.cluster;
+        const queryOk = !query || normalize(searchableText(duel)).includes(query);
+        return clusterOk && queryOk;
+      });
+    }
+
+    function selectedDuel() {
+      return TYPE_DUELS.find((duel) => duel.id === state.selectedId) || TYPE_DUELS[0];
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          search: state.search,
+          cluster: state.cluster,
+          selectedId: state.selectedId,
+        }));
+      } catch (error) {
+        return error;
+      }
+      return null;
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        if (typeof parsed.search === "string") {
+          state.search = parsed.search;
+        }
+        if (typeof parsed.cluster === "string") {
+          state.cluster = parsed.cluster;
+        }
+        if (typeof parsed.selectedId === "string" && TYPE_DUELS.some((duel) => duel.id === parsed.selectedId)) {
+          state.selectedId = parsed.selectedId;
+        }
+      } catch (error) {
+        return;
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      window.setTimeout(() => els.toast.classList.remove("show"), 1400);
+    }
+
+    function copyText(text, message) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => fallbackCopy(text, message));
+        return;
+      }
+      fallbackCopy(text, message);
+    }
+
+    function fallbackCopy(text, message) {
+      const scratch = document.createElement("textarea");
+      scratch.value = text;
+      scratch.setAttribute("readonly", "true");
+      scratch.style.position = "fixed";
+      scratch.style.left = "-1000px";
+      document.body.appendChild(scratch);
+      scratch.select();
+      document.execCommand("copy");
+      scratch.remove();
+      showToast(message);
+    }
+
+    function renderMetrics() {
+      const questionCount = TYPE_DUELS.reduce((sum, duel) => sum + duel.killerQuestions.length, 0);
+      const losingCount = TYPE_DUELS.reduce((sum, duel) => sum + Object.keys(duel.losingConditions).length, 0);
+      els.metricPairs.textContent = String(TYPE_DUELS.length);
+      els.metricQuestions.textContent = String(questionCount);
+      els.metricConditions.textContent = String(losingCount);
+    }
+
+    function renderPairList() {
+      const visible = filteredDuels();
+      els.visiblePairCount.textContent = String(visible.length);
+      const nodes = visible.map((duel) => {
+        const button = makeNode("button", `pair-button${duel.id === state.selectedId ? " active" : ""}`);
+        button.type = "button";
+        button.dataset.pairId = duel.id;
+        const title = makeNode("div", "pair-title", duel.pair);
+        const summary = makeNode("div", "pair-summary", duel.sharedSurface || duel.notes.join(" "));
+        const meta = makeNode("div", "type-strip");
+        meta.append(makeNode("span", "chip teal", duel.cluster));
+        meta.append(makeNode("span", "chip blue", `${duel.killerQuestions.length} questions`));
+        meta.append(makeNode("span", "chip amber", `${Object.keys(duel.losingConditions).length} loses`));
+        button.append(title, summary, meta);
+        button.addEventListener("click", () => {
+          state.selectedId = duel.id;
+          saveState();
+          render();
+        });
+        return button;
+      });
+      if (!nodes.length) {
+        nodes.push(makeNode("div", "note", "No duel matches the current filters."));
+      }
+      els.pairList.replaceChildren(...nodes);
+    }
+
+    function renderChips(duel) {
+      const chips = [
+        makeNode("span", "chip teal", duel.cluster),
+        makeNode("span", "chip blue", duel.types.join(" / ")),
+        makeNode("span", "chip amber", `${duel.killerQuestions.length} Killer Questions`),
+      ];
+      els.selectedChips.replaceChildren(...chips);
+    }
+
+    function renderDetail(duel) {
+      els.selectedPairTitle.textContent = duel.pair;
+      els.sharedSurface.textContent = duel.sharedSurface || "This duel references another source duel and adds a targeted discriminator.";
+      renderChips(duel);
+
+      const cells = [];
+      const sharedCell = makeNode("div", "matrix-cell");
+      sharedCell.append(makeNode("strong", "", "Shared surface"));
+      sharedCell.append(makeNode("p", "", duel.sharedSurface || "Use the referenced duel, then add the note below."));
+      cells.push(sharedCell);
+
+      const runnerCell = makeNode("div", "matrix-cell");
+      runnerCell.append(makeNode("strong", "", "Runner-up discipline"));
+      runnerCell.append(makeNode("p", "", `Keep both ${duel.types[0]} and ${duel.types[1]} live until at least two independent discriminators move.`));
+      cells.push(runnerCell);
+
+      const falsifierCell = makeNode("div", "matrix-cell");
+      falsifierCell.append(makeNode("strong", "", "Falsifier focus"));
+      falsifierCell.append(makeNode("p", "", "Ask what would make the current leader lose, not what makes the favorite sound right."));
+      cells.push(falsifierCell);
+
+      if (duel.notes.length) {
+        const noteCell = makeNode("div", "matrix-cell");
+        noteCell.append(makeNode("strong", "", "Source note"));
+        const list = makeNode("ul", "note-list");
+        duel.notes.forEach((note) => list.append(makeNode("li", "", note)));
+        noteCell.append(list);
+        cells.push(noteCell);
+      }
+      els.duelDetail.replaceChildren(...cells);
+
+      const questionNodes = duel.killerQuestions.map((question) => makeNode("li", "", question));
+      if (!questionNodes.length) {
+        questionNodes.push(makeNode("li", "", "Use the referenced duel first, then ask the source note as the extra discriminator."));
+      }
+      els.questionList.replaceChildren(...questionNodes);
+
+      const conditionNodes = Object.entries(duel.losingConditions).map(([typeCode, condition]) => {
+        const item = makeNode("li");
+        const strong = makeNode("strong", "", `${typeCode} loses if: `);
+        const span = makeNode("span", "", condition);
+        item.append(strong, span);
+        return item;
+      });
+      if (!conditionNodes.length) {
+        conditionNodes.push(makeNode("li", "", "Use losing conditions from the referenced source duel and treat this heading as an added probe."));
+      }
+      els.losingConditions.replaceChildren(...conditionNodes);
+    }
+
+    function buildDuelPrompt(duel) {
+      const losingLines = Object.entries(duel.losingConditions).map(([typeCode, condition]) => `- ${typeCode} loses if: ${condition}`);
+      const noteLines = duel.notes.map((note) => `- Source note: ${note}`);
+      return [
+        "Use $mbti-typing.",
+        "Mode: Adjacent-type duel.",
+        `Target pair: ${duel.pair}.`,
+        `Shared surface: ${duel.sharedSurface || "Referenced source duel; keep both hypotheses live."}`,
+        "",
+        "Ask 2-4 of these Killer Questions only if they attack the actual uncertainty:",
+        ...duel.killerQuestions.map((question, index) => `${index + 1}. ${question}`),
+        ...noteLines,
+        "",
+        "Losing Conditions:",
+        ...losingLines,
+        "",
+        "Output requirements:",
+        "- Keep a serious runner-up.",
+        "- Record what would falsify the leading type.",
+        "- Separate normal state, stress state, and role behavior.",
+        "- Do not claim psychometric certainty or use this for clinical, hiring, or high-stakes decisions.",
+      ].join("\n");
+    }
+
+    function buildIssueSeed(duel) {
+      return [
+        "# Type Duel Improvement Seed",
+        "",
+        `Template: type_duel_improvement.yml`,
+        `Pair: ${duel.pair}`,
+        `Cluster: ${duel.cluster}`,
+        "",
+        "## Current shared surface",
+        duel.sharedSurface || "Referenced source duel.",
+        "",
+        "## Current killer questions",
+        ...duel.killerQuestions.map((question, index) => `${index + 1}. ${question}`),
+        ...duel.notes.map((note) => `- Source note: ${note}`),
+        "",
+        "## Current losing conditions",
+        ...Object.entries(duel.losingConditions).map(([typeCode, condition]) => `- ${typeCode} loses if: ${condition}`),
+        "",
+        "## Proposed change",
+        "- Add, remove, or sharpen one discriminator.",
+        "- Explain which repeated ambiguity or benchmark miss it addresses.",
+        "- Preserve runner-up, falsifier, and safety-boundary language.",
+      ].join("\n");
+    }
+
+    function renderOutputs(duel) {
+      els.duelPromptOutput.value = buildDuelPrompt(duel);
+      els.issueSeedOutput.value = buildIssueSeed(duel);
+    }
+
+    function render() {
+      if (!TYPE_DUELS.length) {
+        els.pairList.replaceChildren(makeNode("div", "note", "No source duels are embedded yet."));
+        return;
+      }
+      if (!TYPE_DUELS.some((duel) => duel.id === state.selectedId)) {
+        state.selectedId = TYPE_DUELS[0].id;
+      }
+      els.pairSearch.value = state.search;
+      els.clusterFilter.value = state.cluster;
+      const duel = selectedDuel();
+      renderMetrics();
+      renderPairList();
+      renderDetail(duel);
+      renderOutputs(duel);
+    }
+
+    els.pairSearch.addEventListener("input", (event) => {
+      state.search = event.target.value;
+      saveState();
+      renderPairList();
+    });
+
+    els.clusterFilter.addEventListener("change", (event) => {
+      state.cluster = event.target.value;
+      saveState();
+      renderPairList();
+    });
+
+    els.resetFilters.addEventListener("click", () => {
+      state.search = "";
+      state.cluster = "All";
+      saveState();
+      render();
+    });
+
+    els.copyDuelPrompt.addEventListener("click", () => {
+      copyText(els.duelPromptOutput.value, "Duel prompt copied");
+    });
+
+    els.copyIssueSeed.addEventListener("click", () => {
+      copyText(els.issueSeedOutput.value, "Issue seed copied");
+    });
+
+    loadState();
+    render();
+  </script>
+</body>
+</html>

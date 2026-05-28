@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.14 - 2026-05-28
+
+- Added a buildless Type Duel Lab that turns `pair-duels.md` into a searchable adjacent-type matrix with Killer Questions, Losing Conditions, copyable `$mbti-typing` duel prompts, and `type_duel_improvement.yml` issue seeds.
+- Added `scripts/sync_type_duel_lab.py`, `scripts/type_duel_lab_audit.py`, and the Type Duel Decision Map SVG so pair-duel source drift, page safety, and GitHub UX claims are release-gated.
+- Expanded the public product loop with a precision layer for close forks such as ENTJ vs INTJ, INFP vs INFJ, ENTP vs ESTP, and all current source duels, raising the Repository UX Score to 294/294.
+
 ## 0.1.13 - 2026-05-28
 
 - Added a buildless Follow-Up Lab that turns delayed observations into consented, redacted, public-safe JSON packets and `consented_followup.yml` issue seeds.

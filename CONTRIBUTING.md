@@ -17,6 +17,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 
 - Add benchmark cases for under-covered type pairs.
 - Improve pair-duel discriminators.
+- Share weak adjacent-type forks through `docs/type-duel-lab.html` and the `type_duel_improvement.yml` issue template.
 - Add realistic bad reports that should fail audit.
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
@@ -39,6 +40,7 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
+Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
 ```
@@ -68,6 +70,20 @@ Before opening a calibration issue:
 - Include the Calibration Lab score.
 - Include failed gates such as missing runner-up, missing falsifier, weak evidence tags, missing boundary, or overclaim trigger.
 - Explain the expected repair in one or two concrete sentences.
+
+## Type Duel Improvement Guidelines
+
+Type duel improvements are useful when two adjacent types remain plausible after a normal interview round.
+
+Before opening a type-duel issue:
+
+- Start with `docs/type-duel-lab.html` when possible.
+- Identify one pair, not a broad type family.
+- Explain the current limitation with a synthetic or sanitized example.
+- Propose one focused discriminator, not a generic self-label question.
+- Include losing conditions for both sides.
+- Preserve runner-up, falsifier, and safety-boundary language.
+- Do not include private transcripts, direct identifiers, third-party details, clinical claims, hiring use cases, or deterministic claims about people.
 
 ## Blind Review Guidelines
 
@@ -103,6 +119,7 @@ Before opening a consented follow-up issue:
 - [ ] `make test` passes.
 - [ ] Any new claim has a caveat or evidence standard.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.
+- [ ] Any new type-duel improvement is source-synced through `scripts/sync_type_duel_lab.py` and passes `scripts/type_duel_lab_audit.py`.
 - [ ] Any new benchmark case includes a trap and falsifier theme.
 - [ ] Any new calibration result is sanitized and points to a specific failed gate.
 - [ ] Any new blind review result preserves blinding and includes aggregate metrics.

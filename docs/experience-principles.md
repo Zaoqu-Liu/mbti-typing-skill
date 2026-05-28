@@ -42,6 +42,20 @@ The sticky loop should be evidence repair:
 
 This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
 
+## Adjacent-Type Precision Loop
+
+The highest-value moment for many users is not the first label. It is the point where two nearby explanations both sound plausible.
+
+The allowed loop is:
+
+1. The user reaches a close fork such as ENTJ vs INTJ, INFP vs INFJ, or ENTP vs ESTP.
+2. Type Duel Lab exposes the shared surface, Killer Questions, Losing Conditions, runner-up discipline, and falsifier focus from `pair-duels.md`.
+3. The user copies a focused `$mbti-typing` duel prompt instead of restarting a generic quiz.
+4. If a discriminator is weak, the user copies a `type_duel_improvement.yml` issue seed with the pair, limitation, proposed question, losing conditions, and sanitized evidence context.
+5. Maintainers turn repeated pair misses into reference updates, benchmark cases, golden fixtures, or audit checks.
+
+This creates stickiness through precision: the user sees exactly which fork is being tested and exactly what would make each side lose.
+
 ## Blind Improvement Loop
 
 The strongest retention loop is public falsifiability:
