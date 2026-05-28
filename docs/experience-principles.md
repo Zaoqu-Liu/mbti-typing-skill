@@ -96,6 +96,20 @@ The allowed loop is:
 
 This lets users come back with corrections without turning personal material into repository content.
 
+## Cross-Agent Portability Loop
+
+The workflow should survive tool switching. A user may start in Codex, share a repository with a Claude Code user, continue in Cursor, and later run opencode in a terminal. That should not create four subtly different typing protocols.
+
+The allowed loop is:
+
+1. `skill/mbti-typing/SKILL.md` remains the canonical reasoning source.
+2. `AGENTS.md` keeps a concise project-level contract for agents that read repository instructions.
+3. Claude Code, Cursor, and opencode adapters only describe discovery, invocation, and install shape.
+4. `agent-adapters/manifest.json` records the supported entrypoints.
+5. `scripts/agent_adapter_audit.py` checks that adapters preserve candidate set, runner-up, evidence ledger, falsifier, source references, and safety boundaries.
+
+This creates distribution stickiness: people can keep using the same MBTI Typing Skill even when their preferred agent runtime changes.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:

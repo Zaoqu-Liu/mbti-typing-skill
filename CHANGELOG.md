@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.16 - 2026-05-28
+
+- Added a cross-agent adapter layer for Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents without forking the canonical MBTI typing protocol.
+- Added `AGENTS.md`, `opencode.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and the Agent Adapter Matrix SVG.
+- Added `scripts/agent_adapter_audit.py` and wired it into `make test` and repository UX gates, raising the Repository UX Score to 361/361.
+
 ## 0.1.15 - 2026-05-28
 
 - Added a buildless Question Lab that turns `question-bank.md` into a searchable Round Builder with concrete probes, forced-choice options, 4-6 question templates, copyable `$mbti-typing` round prompts, and `question_improvement.yml` issue seeds.

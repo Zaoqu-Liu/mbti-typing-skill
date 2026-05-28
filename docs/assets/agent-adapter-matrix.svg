@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1400 980">
+  <title>Agent Adapter Matrix</title>
+  <desc>Architecture diagram showing one canonical MBTI Typing Skill protocol mapped into Codex, Claude Code, Cursor, and opencode adapters with shared verification gates.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f4ee; }
+      .panel { fill: #fffdf8; stroke: #252a2e; stroke-width: 2; rx: 8; }
+      .core { fill: #17324d; }
+      .coreText { fill: #ffffff; font: 700 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { fill: #14212b; font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .subtitle { fill: #47515a; font: 500 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .h2 { fill: #17212b; font: 800 19px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #34424d; font: 600 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #53616a; font: 500 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .path { fill: none; stroke: #26323b; stroke-width: 2.2; marker-end: url(#arrow); }
+      .softPath { fill: none; stroke: #697782; stroke-width: 1.7; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .codex { fill: #e7f0ec; stroke: #2c6653; }
+      .claude { fill: #f0e7d7; stroke: #8a5b25; }
+      .cursor { fill: #e8ecf7; stroke: #455c98; }
+      .opencode { fill: #edf2dc; stroke: #687a2c; }
+      .verify { fill: #f5e4e6; stroke: #a33c4c; }
+      .chip { fill: #ffffff; stroke: #aeb8bf; stroke-width: 1.2; rx: 6; }
+      .number { fill: #14212b; font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#26323b"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="980"/>
+  <text class="title" x="70" y="70">Agent Adapter Matrix</text>
+  <text class="subtitle" x="70" y="102">One canonical MBTI Typing Skill, thin adapters for mainstream coding agents, and release gates that block protocol drift.</text>
+
+  <rect class="panel" x="70" y="150" width="1260" height="165"/>
+  <text class="h2" x="100" y="190">Canonical Skill</text>
+  <rect class="core" x="100" y="210" width="365" height="54" rx="8"/>
+  <text class="coreText" x="124" y="245">skill/mbti-typing/SKILL.md</text>
+  <rect class="chip" x="500" y="204" width="148" height="34"/>
+  <text class="small" x="520" y="227">runner-up</text>
+  <rect class="chip" x="668" y="204" width="148" height="34"/>
+  <text class="small" x="691" y="227">falsifier</text>
+  <rect class="chip" x="836" y="204" width="166" height="34"/>
+  <text class="small" x="855" y="227">evidence ledger</text>
+  <rect class="chip" x="500" y="250" width="178" height="34"/>
+  <text class="small" x="519" y="273">question-bank.md</text>
+  <rect class="chip" x="698" y="250" width="178" height="34"/>
+  <text class="small" x="724" y="273">pair-duels.md</text>
+  <rect class="chip" x="896" y="250" width="186" height="34"/>
+  <text class="small" x="917" y="273">safety boundary</text>
+  <text class="tiny" x="500" y="302">Adapters keep the same hypothesis discipline, not tool-specific MBTI forks.</text>
+
+  <rect class="panel" x="70" y="350" width="1260" height="360"/>
+  <text class="h2" x="100" y="390">Tool Entry Points</text>
+
+  <rect class="panel codex" x="100" y="420" width="270" height="230"/>
+  <text class="h2" x="125" y="458">Codex</text>
+  <text class="small" x="125" y="492">Primary discovery</text>
+  <text class="tiny" x="125" y="518">skill/mbti-typing/SKILL.md</text>
+  <text class="tiny" x="125" y="540">skill/mbti-typing/agents/openai.yaml</text>
+  <text class="small" x="125" y="578">Project context</text>
+  <text class="tiny" x="125" y="604">AGENTS.md</text>
+
+  <rect class="panel claude" x="405" y="420" width="270" height="230"/>
+  <text class="h2" x="430" y="458">Claude Code</text>
+  <text class="small" x="430" y="492">Skill adapter</text>
+  <text class="tiny" x="430" y="518">.claude/skills/mbti-typing/SKILL.md</text>
+  <text class="small" x="430" y="554">Slash fallback</text>
+  <text class="tiny" x="430" y="580">.claude/commands/mbti-type.md</text>
+  <text class="tiny" x="430" y="610">/mbti-typing or /mbti-type</text>
+
+  <rect class="panel cursor" x="710" y="420" width="270" height="230"/>
+  <text class="h2" x="735" y="458">Cursor</text>
+  <text class="small" x="735" y="492">Rule adapter</text>
+  <text class="tiny" x="735" y="518">.cursor/rules/mbti-typing.mdc</text>
+  <text class="small" x="735" y="554">Instruction fallback</text>
+  <text class="tiny" x="735" y="580">AGENTS.md</text>
+  <text class="tiny" x="735" y="610">@mbti-typing or natural request</text>
+
+  <rect class="panel opencode" x="1015" y="420" width="270" height="230"/>
+  <text class="h2" x="1040" y="458">opencode</text>
+  <text class="small" x="1040" y="492">Project rules</text>
+  <text class="tiny" x="1040" y="518">AGENTS.md</text>
+  <text class="small" x="1040" y="554">Instruction aggregation</text>
+  <text class="tiny" x="1040" y="580">opencode.json</text>
+  <text class="tiny" x="1040" y="610">opencode run "Use the skill..."</text>
+
+  <path class="path" d="M 282 315 L 235 410"/>
+  <path class="path" d="M 550 315 L 540 410"/>
+  <path class="path" d="M 820 315 L 845 410"/>
+  <path class="path" d="M 1085 315 L 1150 410"/>
+
+  <rect class="panel" x="70" y="760" width="590" height="145"/>
+  <text class="h2" x="100" y="800">Shared Contract</text>
+  <text class="small" x="100" y="832">AGENTS.md keeps concise cross-agent behavior.</text>
+  <text class="tiny" x="100" y="860">Candidate set + serious runner-up + evidence ledger + falsifier + safety boundary.</text>
+  <text class="tiny" x="100" y="884">No clinical, hiring, legal, medical, financial, or deterministic use.</text>
+
+  <rect class="panel verify" x="740" y="760" width="590" height="145"/>
+  <text class="h2" x="770" y="800">Release Verification</text>
+  <text class="small" x="770" y="832">agent_adapter_audit.py</text>
+  <text class="tiny" x="770" y="858">Checks files, manifest targets, safety terms, source references, and SVG labels.</text>
+  <text class="small" x="770" y="888">make test</text>
+
+  <path class="softPath" d="M 235 650 L 230 750"/>
+  <path class="softPath" d="M 540 650 L 370 750"/>
+  <path class="softPath" d="M 845 650 L 940 750"/>
+  <path class="softPath" d="M 1150 650 L 1035 750"/>
+
+  <rect class="chip" x="620" y="328" width="160" height="34"/>
+  <text class="number" x="641" y="351">4 targets, 1 protocol</text>
+</svg>

@@ -60,7 +60,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -155,6 +155,21 @@ The Type Duel Decision Map makes adjacent-type judgment visible:
 
 This is the high-retention precision layer: users return because each close pair has a sharper fork, not because the tool pretends a weak signal is certainty.
 
+## Agent Adapter Matrix
+
+![Agent Adapter Matrix](assets/agent-adapter-matrix.svg)
+
+The Agent Adapter Matrix makes portability visible:
+
+- `skill/mbti-typing/SKILL.md` remains the canonical protocol.
+- `AGENTS.md` gives Codex, Cursor, opencode, and other project-instruction readers a concise shared contract.
+- `.claude/skills/mbti-typing/SKILL.md` and `.claude/commands/mbti-type.md` expose the same workflow to Claude Code.
+- `.cursor/rules/mbti-typing.mdc` exposes the protocol through Cursor project rules.
+- `opencode.json` aggregates the root contract, adapter README, and canonical skill for opencode.
+- `scripts/agent_adapter_audit.py` checks targets, entrypoints, source references, runner-up language, falsifiers, safety boundaries, and this SVG before release.
+
+This is the distribution layer: users should not have to abandon the workflow because their agent tool changed.
+
 ## Follow-Up Lab
 
 [Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
@@ -231,6 +246,7 @@ The six buildless product pages now cover the full user loop:
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
+- [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, and AGENTS.md portability.
 
 ## Why These Visuals Matter
 
@@ -261,13 +277,15 @@ flowchart TD
     L --> M[Question Lab]
     M --> N[Type Duel Decision Map]
     N --> O[Type Duel Lab]
-    O --> P[Follow-Up Lab]
-    P --> Q[One-minute demo]
-    Q --> R[Demo session]
-    R --> S[Sample report]
-    S --> T[Evaluation model]
-    T --> U[Contribution guide]
-    U --> V[Benchmark cases]
+    O --> P[Agent Adapter Matrix]
+    P --> Q[Agent adapters]
+    Q --> R[Follow-Up Lab]
+    R --> S[One-minute demo]
+    S --> T[Demo session]
+    T --> U[Sample report]
+    U --> V[Evaluation model]
+    V --> W[Contribution guide]
+    W --> X[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

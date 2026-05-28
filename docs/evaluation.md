@@ -154,7 +154,7 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose ten exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose eleven exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -166,6 +166,7 @@ The visual blueprint gate checks that the README and visual tour expose ten exac
 - `docs/assets/consent-feedback-loop.svg` for the consented follow-up to redaction to repository-action loop.
 - `docs/assets/adaptive-question-loop.svg` for the question-bank Markdown to Question Lab to audit-gate loop.
 - `docs/assets/type-duel-decision-map.svg` for the pair-duels Markdown to Type Duel Lab to audit-gate loop.
+- `docs/assets/agent-adapter-matrix.svg` for the canonical skill to Codex, Claude Code, Cursor, opencode, and audit-gate portability loop.
 
 These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
 
@@ -187,6 +188,12 @@ The consent redaction gate validates that `examples/consented-followup-packet.js
 make consent-redaction-audit
 ```
 
+The Agent Adapter Audit validates that every supported agent entrypoint points back to one canonical protocol and preserves runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary discipline:
+
+```bash
+python3 -B scripts/agent_adapter_audit.py .
+```
+
 The repository UX scorecard also checks the Session Lab, Question Lab, Type Duel Lab, Benchmark Arena, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
 
 The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.
@@ -200,5 +207,7 @@ The dedicated Question Lab audit validates the public next-round surface: every 
 The dedicated Type Duel Lab audit validates the public adjacent-type surface: every current pair in `skill/mbti-typing/references/pair-duels.md`, all 16 type codes, Markdown source sync through `scripts/sync_type_duel_lab.py`, search and cluster filters, Killer Questions, Losing Conditions, copied duel prompts, `type_duel_improvement.yml` issue seeds, local persistence, DOM-safe rendering, and no external runtime dependency.
 
 The dedicated Follow-Up Lab audit validates the public return surface: all 16 type codes, consent checkboxes, redaction placeholders, local privacy scanner, `consented-followup/v1` packet builder, copied issue seed, copied or downloaded JSON, local persistence, DOM-safe rendering, and no external runtime dependency.
+
+The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md`, `opencode.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `docs/assets/agent-adapter-matrix.svg` must stay aligned with the canonical skill and the current tool conventions checked on 2026-05-28.
 
 The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.

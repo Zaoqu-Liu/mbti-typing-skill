@@ -1,0 +1,39 @@
+---
+description: Rigorous MBTI typing protocol for adaptive interviews, adjacent-type duels, transcript audits, and report reviews.
+globs:
+  - "**/*"
+alwaysApply: false
+---
+
+# MBTI Typing Skill
+
+Use this rule when the user asks to determine, verify, disprove, compare, audit, or improve MBTI typing.
+
+Canonical source in this repository: `skill/mbti-typing/SKILL.md`.
+
+## Required Workflow
+
+- Treat each type as a hypothesis, not a guessed identity label.
+- Keep a candidate set with a serious runner-up.
+- Ask 4-6 concrete questions per round.
+- Prefer scenes, forced choices, rankings, and counterexamples over self-label questions.
+- Track evidence in a ledger: observation, support, contradiction, alternative non-type explanations, and next question.
+- Use `skill/mbti-typing/references/question-bank.md` for adaptive questions.
+- Use `skill/mbti-typing/references/pair-duels.md` for adjacent-type duels.
+- Use `skill/mbti-typing/references/research-boundaries.md` before citing validity, reliability, Big Five, A/T, or psychometric claims.
+- Before concluding, name falsifiers and explain what would change the result.
+
+## Safety Boundary
+
+Do not use MBTI for clinical diagnosis, hiring, school admission, legal decisions, medical decisions, financial decisions, or deterministic claims about worth or future.
+
+Make the experience compelling through precision and visible progress, not fake certainty, flattery, fear, or endless questioning.
+
+## Repository Verification
+
+After changing this adapter or related typing behavior, run:
+
+```bash
+make test
+python3 -B scripts/agent_adapter_audit.py .
+```

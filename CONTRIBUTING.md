@@ -23,6 +23,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
 - Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
+- Improve agent adapters for Codex, Claude Code, Cursor, opencode, or AGENTS.md-aware tools without forking the protocol.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -41,6 +42,7 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
+Agent Adapter Audit: 70/70 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
@@ -130,9 +132,24 @@ Before opening a consented follow-up issue:
 - Include what felt right, what felt wrong, and what should be observed next.
 - Expect maintainers to turn useful patterns into benchmark cases, golden fixtures, pair-duel discriminators, report-audit checks, or documentation updates.
 
+## Agent Adapter Guidelines
+
+Agent adapter contributions are useful when a mainstream agent tool changes discovery rules, install shape, or project-instruction conventions.
+
+Before opening an adapter change:
+
+- Keep `skill/mbti-typing/SKILL.md` as the canonical protocol.
+- Update `AGENTS.md` only for concise cross-agent behavior, not tool-specific detail.
+- Keep `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, and `opencode.json` thin.
+- Update `agent-adapters/manifest.json` if a target, entrypoint, install command, or invocation changes.
+- Update `docs/agent-adapters.md` with source links and the date checked when tool conventions change.
+- Run `python3 -B scripts/agent_adapter_audit.py .` before claiming compatibility.
+- Preserve runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary language in every adapter.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
+- [ ] Any agent adapter change passes `scripts/agent_adapter_audit.py` and keeps `agent-adapters/manifest.json` aligned.
 - [ ] Any new claim has a caveat or evidence standard.
 - [ ] Any new question-bank improvement is source-synced through `scripts/sync_question_lab.py` and passes `scripts/question_lab_audit.py`.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.

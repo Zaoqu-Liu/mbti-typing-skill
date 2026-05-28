@@ -1,0 +1,63 @@
+{
+  "schema": "mbti-typing-agent-adapters/v1",
+  "canonical_skill": "skill/mbti-typing/SKILL.md",
+  "canonical_contract": "AGENTS.md",
+  "adapter_audit": "scripts/agent_adapter_audit.py",
+  "shared_references": [
+    "skill/mbti-typing/references/playbooks.md",
+    "skill/mbti-typing/references/question-bank.md",
+    "skill/mbti-typing/references/pair-duels.md",
+    "skill/mbti-typing/references/type-map.md",
+    "skill/mbti-typing/references/research-boundaries.md",
+    "skill/mbti-typing/references/evidence-ledger-template.md",
+    "skill/mbti-typing/references/quality-gates.md"
+  ],
+  "targets": [
+    {
+      "id": "codex",
+      "display": "OpenAI Codex",
+      "entrypoints": [
+        "skill/mbti-typing/SKILL.md",
+        "skill/mbti-typing/agents/openai.yaml",
+        "AGENTS.md"
+      ],
+      "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
+      "install": "cp -R skill/mbti-typing ~/.codex/skills/",
+      "contract": "Codex skill plus repository AGENTS.md contract."
+    },
+    {
+      "id": "claude-code",
+      "display": "Claude Code",
+      "entrypoints": [
+        ".claude/skills/mbti-typing/SKILL.md",
+        ".claude/commands/mbti-type.md",
+        "AGENTS.md"
+      ],
+      "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
+      "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
+      "contract": "Project skill and slash-command fallback for Claude Code."
+    },
+    {
+      "id": "cursor",
+      "display": "Cursor",
+      "entrypoints": [
+        ".cursor/rules/mbti-typing.mdc",
+        "AGENTS.md"
+      ],
+      "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
+      "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
+      "contract": "Project rule in MDC format plus AGENTS.md fallback."
+    },
+    {
+      "id": "opencode",
+      "display": "opencode",
+      "entrypoints": [
+        "AGENTS.md",
+        "opencode.json"
+      ],
+      "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
+      "install": "Keep AGENTS.md and opencode.json committed in the project root.",
+      "contract": "AGENTS.md project rules with opencode.json instructions aggregation."
+    }
+  ]
+}

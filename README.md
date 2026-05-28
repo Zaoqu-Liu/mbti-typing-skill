@@ -4,7 +4,7 @@
 
 ![MBTI Typing Skill hero](docs/assets/mbti-typing-hero.png)
 
-A rigorous Codex skill for MBTI-style personality typing that treats every type as a falsifiable hypothesis, not a label to be guessed.
+A rigorous cross-agent skill for MBTI-style personality typing that treats every type as a falsifiable hypothesis, not a label to be guessed.
 
 This project is built for people who want serious type reasoning: multi-round interviews, transcript audits, adjacent-type duels, evidence ledgers, structured uncertainty, report audits, and regression-tested benchmark cases.
 
@@ -38,6 +38,7 @@ The Session Lab turns a claim and notes into a heuristic candidate board, eviden
 Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
+- [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, Claude Code, Cursor, and opencode.
 - [Question Lab](docs/question-lab.html): source-synced Round Builder for the next 4-6 questions.
 - [Type Duel Lab](docs/type-duel-lab.html): searchable adjacent-type duel matrix sourced from `pair-duels.md`.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
@@ -114,6 +115,12 @@ The Type Duel Decision Map shows how `skill/mbti-typing/references/pair-duels.md
 ![Adaptive Question Loop](docs/assets/adaptive-question-loop.svg)
 
 The Adaptive Question Loop shows how `skill/mbti-typing/references/question-bank.md` becomes the next-round engine: `scripts/sync_question_lab.py` parses source probes into `docs/question-lab.html`, users copy focused `$mbti-typing` round prompts or `question_improvement.yml` issue seeds, and `scripts/question_lab_audit.py` blocks stale or generic question flows before release.
+
+### Agent Adapter Matrix
+
+![Agent Adapter Matrix](docs/assets/agent-adapter-matrix.svg)
+
+The Agent Adapter Matrix shows the portability layer: `AGENTS.md`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `opencode.json`, and `agent-adapters/manifest.json` all point back to the same canonical skill. `scripts/agent_adapter_audit.py` blocks tool-specific drift so Codex, Claude Code, Cursor, opencode, and general AGENTS.md-aware agents preserve runner-up, falsifier, evidence-ledger, and safety-boundary discipline.
 
 ## Visual System Map
 
@@ -205,10 +212,21 @@ sequenceDiagram
 .
   README.md
   README.zh-CN.md
+  AGENTS.md
+  opencode.json
+  agent-adapters/
+    README.md
+    manifest.json
+  .claude/
+    skills/mbti-typing/SKILL.md
+    commands/mbti-type.md
+  .cursor/
+    rules/mbti-typing.mdc
   prompts/
     prompt-recipes.md
   docs/
     visual-tour.md
+    agent-adapters.md
     blind-review-protocol.md
     consent-redaction-protocol.md
     demo-session.md
@@ -233,6 +251,7 @@ sequenceDiagram
       consent-feedback-loop.svg
       type-duel-decision-map.svg
       adaptive-question-loop.svg
+      agent-adapter-matrix.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
@@ -243,6 +262,8 @@ sequenceDiagram
     references/
     examples/
     scripts/
+  scripts/
+    agent_adapter_audit.py
 ```
 
 ## Install
@@ -259,6 +280,15 @@ Then invoke it in Codex:
 ```text
 Use $mbti-typing to run a rigorous multi-round MBTI typing interview.
 ```
+
+For other agent tools, keep the adapter files with the target repository:
+
+- Codex: `skill/mbti-typing/SKILL.md`, `skill/mbti-typing/agents/openai.yaml`, and `AGENTS.md`.
+- Claude Code: `.claude/skills/mbti-typing/SKILL.md` plus `.claude/commands/mbti-type.md`.
+- Cursor: `.cursor/rules/mbti-typing.mdc` plus `AGENTS.md`.
+- opencode: `AGENTS.md` plus `opencode.json`.
+
+The cross-agent contract is documented in [docs/agent-adapters.md](docs/agent-adapters.md) and indexed by [agent-adapters/manifest.json](agent-adapters/manifest.json).
 
 ## Quick Start
 
@@ -312,6 +342,7 @@ python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session
 python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
 python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
+python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/sync_question_lab.py skill/mbti-typing/references/question-bank.md docs/question-lab.html
 python3 -B scripts/question_lab_audit.py docs/question-lab.html skill/mbti-typing/references/question-bank.md
 python3 -B scripts/sync_type_duel_lab.py skill/mbti-typing/references/pair-duels.md docs/type-duel-lab.html
@@ -335,6 +366,7 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
+Agent Adapter Audit: 70/70 (100.00%)
 Question Lab Source Sync: PASS (21 cards match)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Source Sync: PASS (20 duels match)
@@ -344,7 +376,7 @@ Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 325/325 (100.00%)
+Repository UX Score: 361/361 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -358,7 +390,8 @@ flowchart TD
     Cases --> Golden[Golden report regression]
     Golden --> Blind[Blind review audit]
     Blind --> Consent[Consent redaction audit]
-    Consent --> QuestionLab[Question Lab audit]
+    Consent --> Adapter[Agent Adapter audit]
+    Adapter --> QuestionLab[Question Lab audit]
     QuestionLab --> TypeDuel[Type Duel Lab audit]
     TypeDuel --> FollowUp[Follow-Up Lab audit]
     FollowUp --> SkillScore[Skill package scorecard]
