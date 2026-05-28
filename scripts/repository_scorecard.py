@@ -60,6 +60,7 @@ REQUIRED_FILES = [
     "examples/evidence-ledger-example.md",
     "examples/blind-review-matrix.json",
     "examples/consented-followup-packet.json",
+    "examples/response-eval-cases.json",
     "docs/assets/mbti-typing-hero.png",
     "docs/assets/typing-journey-map.png",
     "docs/assets/repository-experience-map.svg",
@@ -75,6 +76,7 @@ REQUIRED_FILES = [
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/response-quality-radar.svg",
     "docs/evaluation.md",
     "docs/experience-principles.md",
     "docs/github-ux.md",
@@ -107,6 +109,7 @@ REQUIRED_FILES = [
     "scripts/agent_adapter_audit.py",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
+    "scripts/response_eval_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -127,9 +130,11 @@ README_REQUIRED_TERMS = [
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/response-quality-radar.svg",
     "Agent Adapter Matrix",
     "Agent Compatibility Grid",
     "Agent Pack Export Flow",
+    "Response Quality Radar",
     "docs/agent-adapters.md",
     "AGENTS.md",
     "CLAUDE.md",
@@ -161,9 +166,14 @@ README_REQUIRED_TERMS = [
     "scripts/agent_adapter_audit.py",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
+    "scripts/response_eval_audit.py",
     "AGENT_PACK_MANIFEST.json",
     "Agent Adapter Audit",
     "Agent Pack Export Audit",
+    "Response Eval Audit",
+    "examples/response-eval-cases.json",
+    "sticky precision",
+    "negative_blocked",
     "Session Lab",
     "https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html",
     "docs/session-lab.html",
@@ -369,6 +379,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo"),
         )
     )
+    checks.extend(
+        check_svg_asset(
+            root,
+            "docs/assets/response-quality-radar.svg",
+            "response_quality_radar",
+            ("Response Quality Radar", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "candidate set", "runner-up", "falsifier", "Anti-Flattery", "make test"),
+        )
+    )
     return checks
 
 
@@ -409,7 +427,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:question_lab_link", "GitHub Pages Question Lab" in readme and "docs/question-lab.html" in readme, "English README links hosted and local Question Lab"),
         Check("readme:type_duel_lab_link", "GitHub Pages Type Duel Lab" in readme and "docs/type-duel-lab.html" in readme, "English README links hosted and local Type Duel Lab"),
@@ -419,7 +437,7 @@ def check_readme(root: Path) -> list[Check]:
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -480,6 +498,8 @@ def check_docs(root: Path) -> list[Check]:
     agent_adapter_audit = read_text(root / "scripts/agent_adapter_audit.py")
     export_agent_pack = read_text(root / "scripts/export_agent_pack.py")
     agent_pack_export_audit = read_text(root / "scripts/agent_pack_export_audit.py")
+    response_eval_audit = read_text(root / "scripts/response_eval_audit.py")
+    response_eval_payload = json.loads(read_text(root / "examples/response-eval-cases.json"))
     question_bank = read_text(root / "skill/mbti-typing/references/question-bank.md")
     pair_duels = read_text(root / "skill/mbti-typing/references/pair-duels.md")
     benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
@@ -493,9 +513,11 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg")), "Visual tour references bitmap and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg")), "Visual tour references bitmap and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "response-quality-radar.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:evaluation_response_eval", all(term in evaluation for term in ("Response Eval Audit", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "sticky precision", "negative_blocked")), "Evaluation docs describe the response quality audit layer"),
+        Check("docs:experience_response_quality_loop", all(term in experience for term in ("Response Quality Loop", "response-eval-cases.json", "Response Eval Audit", "candidate set", "Anti-Flattery")), "Experience docs define the response quality loop"),
         Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "claude-code", "cline", "codex", "continue", "cursor", "gemini-cli", "generic-agents-md", "github-copilot", "opencode", "windsurf"], "Agent adapter manifest covers eleven mainstream target entrypoints"),
         Check("agent_adapters:manifest_pack_export", agent_manifest.get("pack_exporter") == "scripts/export_agent_pack.py" and agent_manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "Agent adapter manifest points to pack export gates"),
         Check("agent_adapters:root_contract", all(term in root_agents for term in ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifiers", "clinical", "hiring", "legal", "medical", "financial", "deterministic")), "Root AGENTS.md preserves the portable typing contract"),
@@ -514,6 +536,9 @@ def check_docs(root: Path) -> list[Check]:
         Check("agent_adapters:pack_exporter", all(term in export_agent_pack for term in ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "Agent pack exporter has schema, baseline, receipt, and write guard"),
         Check("agent_adapters:pack_audit_script", all(term in agent_pack_export_audit for term in ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "Agent pack export has a dedicated audit script"),
         Check("agent_adapters:pack_audit_make_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs Agent Pack Export audit"),
+        Check("response_eval:audit_script", all(term in response_eval_audit for term in ("Response Eval Audit", "sticky_precision", "negative_blocked", "OVERCLAIM_RE", "FLATTERY_RE")), "Response evaluation has a dedicated audit script"),
+        Check("response_eval:audit_cases", response_eval_payload.get("schema_version") == "response-eval/v1" and len(response_eval_payload.get("cases", [])) >= 4, "Response evaluation cases use schema v1 and cover at least four fixtures"),
+        Check("response_eval:audit_make_target", "response-eval-audit" in makefile and "scripts/response_eval_audit.py" in makefile, "Makefile runs Response Eval audit"),
         Check("docs:agent_adapter_docs", all(term in agent_adapters_doc + agent_adapters_readme for term in ("Codex", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "AGENTS.md", "agent_adapter_audit.py", "runner-up", "falsifier", "safety boundary")), "Agent adapter docs explain tools, contract, and release gate"),
         Check("docs:agent_pack_export_docs", all(term in agent_adapters_doc + agent_adapters_readme for term in ("scripts/export_agent_pack.py", "scripts/agent_pack_export_audit.py", "AGENT_PACK_MANIFEST.json", "Agent Pack Export Flow")), "Agent adapter docs explain pack export path"),
         Check("docs:blind_review_protocol", all(term in blind_review for term in ("Blind Review Protocol", "Case Packet Requirements", "Reviewer Output Requirements", "Top-1 hit", "Top-2 hit", "Acceptance Threshold")), "Blind Review Protocol defines packet, output, metrics, and acceptance rules"),
@@ -631,10 +656,12 @@ def check_activation_assets(root: Path) -> list[Check]:
     fixture_payload = json.loads(read_text(root / "skill/mbti-typing/examples/golden-reports.json"))
     blind_matrix = json.loads(read_text(root / "examples/blind-review-matrix.json"))
     consent_followup = json.loads(read_text(root / "examples/consented-followup-packet.json"))
+    response_eval = json.loads(read_text(root / "examples/response-eval-cases.json"))
     benchmark_cases = benchmark_payload.get("cases", [])
     fixtures = fixture_payload.get("fixtures", [])
     blind_cases = blind_matrix.get("cases", [])
     followup_packets = consent_followup.get("packets", [])
+    response_cases = response_eval.get("cases", [])
     reviewer_outputs = [
         output
         for case in blind_cases
@@ -665,6 +692,17 @@ def check_activation_assets(root: Path) -> list[Check]:
         and packet.get("privacy", {}).get("data_minimized") is True
         and packet.get("privacy", {}).get("contains_private_chat") is False
     ]
+    positive_response_cases = [
+        case
+        for case in response_cases
+        if isinstance(case, dict) and case.get("expected", {}).get("should_pass") is True
+    ]
+    negative_response_cases = [
+        case
+        for case in response_cases
+        if isinstance(case, dict) and case.get("expected", {}).get("should_pass") is False
+    ]
+    response_modes = {str(case.get("mode")) for case in response_cases if isinstance(case, dict)}
     return [
         Check("activation:prompt_count", prompts.count("Use $mbti-typing") >= 6, "Prompt recipes include at least six copy-paste starts"),
         Check("activation:ledger_sections", "Candidate Set" in ledger and "Contradiction Gate" in ledger, "Evidence ledger example includes candidate and contradiction sections"),
@@ -677,6 +715,9 @@ def check_activation_assets(root: Path) -> list[Check]:
         Check("activation:followup_observations", len(followup_observations) >= 6, "Consented follow-up packet includes delayed observations"),
         Check("activation:followup_consent", len(consented_packets) == len(followup_packets), "Every follow-up packet has subject consent and public issue permission"),
         Check("activation:followup_privacy", len(privacy_safe_packets) == len(followup_packets), "Every follow-up packet is marked privacy-safe"),
+        Check("activation:response_eval_cases", isinstance(response_cases, list) and len(response_cases) >= 4, "Response evaluation dataset includes at least four fixtures"),
+        Check("activation:response_eval_polarity", len(positive_response_cases) >= 3 and len(negative_response_cases) >= 1, "Response evaluation dataset includes positive fixtures and a blocked anti-pattern"),
+        Check("activation:response_eval_modes", {"live_round", "type_duel", "final_report", "anti_pattern"} <= response_modes, "Response evaluation covers live, duel, final, and anti-pattern modes"),
     ]
 
 

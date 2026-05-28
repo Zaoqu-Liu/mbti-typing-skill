@@ -25,6 +25,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
 - Improve agent adapters for Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware tools without forking the protocol.
 - Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
+- Add response-eval fixtures that catch shallow live-round, type-duel, final-report, or anti-pattern answers.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -45,6 +46,7 @@ Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Agent Adapter Audit: 201/201 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
+Response Eval Audit: 45/45 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
@@ -134,6 +136,19 @@ Before opening a consented follow-up issue:
 - Include what felt right, what felt wrong, and what should be observed next.
 - Expect maintainers to turn useful patterns into benchmark cases, golden fixtures, pair-duel discriminators, report-audit checks, or documentation updates.
 
+## Response Evaluation Guidelines
+
+Response evaluation contributions are useful when an answer looks polished but fails the actual user experience.
+
+Before opening a response-eval change:
+
+- Add or edit `examples/response-eval-cases.json`.
+- Cover one concrete mode: live round, type duel, final report, or anti-pattern.
+- Positive examples must preserve candidate set, runner-up, evidence movement, falsifier, safety boundary, and calibrated confidence.
+- Live-round and type-duel examples should ask 4-6 concrete scene questions selected for the current uncertainty.
+- Anti-pattern examples should make the failure explicit: 100% certainty, flattery, label lock, missing runner-up, missing falsifier, missing safety boundary, or missing next questions.
+- Run `python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json`.
+
 ## Agent Adapter Guidelines
 
 Agent adapter contributions are useful when a mainstream agent tool changes discovery rules, install shape, or project-instruction conventions.
@@ -154,6 +169,7 @@ Before opening an adapter change:
 - [ ] `make test` passes.
 - [ ] Any agent adapter change passes `scripts/agent_adapter_audit.py` and keeps `agent-adapters/manifest.json` aligned.
 - [ ] Any adapter packaging or manifest change passes `scripts/agent_pack_export_audit.py`.
+- [ ] Any response example or output-template change passes `scripts/response_eval_audit.py`.
 - [ ] Any new claim has a caveat or evidence standard.
 - [ ] Any new question-bank improvement is source-synced through `scripts/sync_question_lab.py` and passes `scripts/question_lab_audit.py`.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.

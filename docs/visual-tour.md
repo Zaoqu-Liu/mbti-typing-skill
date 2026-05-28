@@ -60,7 +60,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Response Eval Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -202,6 +202,19 @@ The Agent Pack Export Flow makes cross-agent adoption copyable:
 
 This is the portability product layer: a user can carry the skill into another repository without reconstructing which hidden files belong to which agent.
 
+## Response Quality Radar
+
+![Response Quality Radar](assets/response-quality-radar.svg)
+
+The Response Quality Radar makes answer-level trust visible:
+
+- `examples/response-eval-cases.json` stores positive live-round, type-duel, and final-report responses plus one anti-pattern response.
+- `scripts/response_eval_audit.py` checks candidate set, serious runner-up, evidence movement, next-round questions, falsifier, safety boundary, calibrated confidence, and Anti-Flattery language.
+- The blocked fixture proves that 100% certainty, flattery, label lock, missing runner-up, missing falsifier, and missing next questions are not acceptable examples.
+- The output reports `Response Eval Audit`, `positive_pass`, `negative_blocked`, `sticky_precision`, `next_round`, and `no_overclaim`.
+
+This is the answer-quality layer: users return because the response picked the next fork precisely, not because the tool inflated certainty.
+
 ## Follow-Up Lab
 
 [Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
@@ -270,7 +283,7 @@ This is the retention loop that is allowed: users come back because the system m
 
 ## Public Page Stack
 
-The six buildless product pages now cover the full user loop:
+The buildless product pages, adapter docs, and response audit now cover the full user loop:
 
 - [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
 - [Question Lab](question-lab.html): source-synced next-round question selection and question improvement seeds.
@@ -279,6 +292,7 @@ The six buildless product pages now cover the full user loop:
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
 - [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md portability.
+- [Response Eval fixtures](../examples/response-eval-cases.json): audited examples for live-round, type-duel, final-report, and anti-pattern response quality.
 
 ## Why These Visuals Matter
 
@@ -311,14 +325,16 @@ flowchart TD
     N --> O[Type Duel Lab]
     O --> P[Agent Adapter Matrix]
     P --> Q[Agent Compatibility Grid]
-    Q --> R[Agent adapters]
-    R --> S[Follow-Up Lab]
-    S --> T[One-minute demo]
-    T --> U[Demo session]
-    U --> V[Sample report]
-    V --> W[Evaluation model]
-    W --> X[Contribution guide]
-    X --> Y[Benchmark cases]
+    Q --> R[Agent Pack Export Flow]
+    R --> S[Response Quality Radar]
+    S --> T[Agent adapters]
+    T --> U[Follow-Up Lab]
+    U --> V[One-minute demo]
+    V --> W[Demo session]
+    W --> X[Sample report]
+    X --> Y[Evaluation model]
+    Y --> Z[Contribution guide]
+    Z --> AA[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

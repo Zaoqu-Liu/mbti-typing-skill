@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1500 1080">
+  <title>Response Quality Radar</title>
+  <desc>Audit blueprint showing how a generated MBTI response is checked for candidate set, runner-up, evidence movement, next questions, falsifiers, safety boundaries, and anti-flattery discipline.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7f6; }
+      .title { fill: #132220; font: 800 36px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .sub { fill: #586865; font: 600 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .panel { fill: #fffefd; stroke: #24302e; stroke-width: 2; rx: 8; }
+      .card { fill: #ffffff; stroke: #34413f; stroke-width: 1.7; rx: 8; }
+      .good { fill: #e6f3ef; stroke: #1e806d; }
+      .warn { fill: #fff0da; stroke: #af6e19; }
+      .bad { fill: #f8e6eb; stroke: #b33852; }
+      .blue { fill: #e7ecf8; stroke: #4b609e; }
+      .ink { fill: #17211f; font: 800 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #3e4d4a; font: 600 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #64716f; font: 500 11px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .gate { fill: #ffffff; stroke: #aeb9b7; stroke-width: 1.2; rx: 6; }
+      .pass { fill: #117663; font: 800 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .fail { fill: #a42f49; font: 800 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .line { fill: none; stroke: #293634; stroke-width: 2; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #6e7c79; stroke-width: 1.4; stroke-dasharray: 6 6; marker-end: url(#arrow); }
+      .grid { fill: none; stroke: #cbd3d1; stroke-width: 1; }
+      .poly { fill: rgba(18, 140, 130, 0.18); stroke: #128c82; stroke-width: 3; }
+      .poly2 { fill: rgba(196, 54, 89, 0.13); stroke: #c43659; stroke-width: 2.5; stroke-dasharray: 7 6; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#293634"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="1080"/>
+  <text class="title" x="64" y="70">Response Quality Radar</text>
+  <text class="sub" x="64" y="103">The answer is judged as a product moment: does it earn the next round through precision?</text>
+
+  <rect class="panel" x="64" y="138" width="418" height="774"/>
+  <text class="ink" x="96" y="178">Input Fixture</text>
+  <rect class="card blue" x="96" y="204" width="336" height="112"/>
+  <text class="ink" x="120" y="238">examples/response-eval-cases.json</text>
+  <text class="tiny" x="120" y="266">live_round, type_duel, final_report</text>
+  <text class="tiny" x="120" y="288">plus one anti_pattern fixture</text>
+
+  <rect class="card" x="96" y="350" width="336" height="188"/>
+  <text class="ink" x="120" y="384">Response Surface</text>
+  <rect class="gate" x="120" y="408" width="140" height="32"/>
+  <text class="small" x="136" y="429">candidate set</text>
+  <rect class="gate" x="272" y="408" width="136" height="32"/>
+  <text class="small" x="294" y="429">runner-up</text>
+  <rect class="gate" x="120" y="454" width="140" height="32"/>
+  <text class="small" x="141" y="475">movement</text>
+  <rect class="gate" x="272" y="454" width="136" height="32"/>
+  <text class="small" x="302" y="475">falsifier</text>
+  <rect class="gate" x="120" y="500" width="288" height="32"/>
+  <text class="small" x="154" y="521">safety boundary and uncertainty</text>
+
+  <rect class="card warn" x="96" y="574" width="336" height="118"/>
+  <text class="ink" x="120" y="608">Next-Round Contract</text>
+  <text class="tiny" x="120" y="634">4-6 concrete scene questions</text>
+  <text class="tiny" x="120" y="656">normal, stress, conflict, recovery</text>
+  <text class="tiny" x="120" y="678">selected because of the current fork</text>
+
+  <rect class="card bad" x="96" y="728" width="336" height="118"/>
+  <text class="ink" x="120" y="762">Blocked Pattern</text>
+  <text class="tiny" x="120" y="788">100%, absolute certainty, destiny</text>
+  <text class="tiny" x="120" y="810">flattery, superiority, label lock</text>
+  <text class="tiny" x="120" y="832">missing runner-up or falsifier</text>
+
+  <rect class="panel" x="542" y="138" width="416" height="774"/>
+  <text class="ink" x="574" y="178">Radar Gates</text>
+  <circle class="grid" cx="750" cy="424" r="52"/>
+  <circle class="grid" cx="750" cy="424" r="104"/>
+  <circle class="grid" cx="750" cy="424" r="156"/>
+  <line class="grid" x1="750" y1="248" x2="750" y2="600"/>
+  <line class="grid" x1="574" y1="424" x2="926" y2="424"/>
+  <line class="grid" x1="626" y1="300" x2="874" y2="548"/>
+  <line class="grid" x1="874" y1="300" x2="626" y2="548"/>
+  <polygon class="poly" points="750,266 884,333 906,424 854,548 750,572 628,546 598,424 626,304"/>
+  <polygon class="poly2" points="750,332 788,386 830,424 790,478 750,498 706,462 690,424 716,382"/>
+  <text class="small" x="708" y="237">Candidate Set</text>
+  <text class="small" x="884" y="315">Runner-Up</text>
+  <text class="small" x="922" y="429">Evidence Movement</text>
+  <text class="small" x="858" y="575">Next Questions</text>
+  <text class="small" x="694" y="617">Falsifier</text>
+  <text class="small" x="546" y="575">Safety Boundary</text>
+  <text class="small" x="510" y="429">Anti-Flattery</text>
+  <text class="small" x="548" y="315">Calibrated Confidence</text>
+
+  <rect class="card good" x="584" y="662" width="324" height="86"/>
+  <text class="ink" x="608" y="695">Positive Fixtures</text>
+  <text class="pass" x="608" y="722">PASS</text>
+  <text class="tiny" x="658" y="722">must satisfy every declared feature</text>
+
+  <rect class="card bad" x="584" y="772" width="324" height="86"/>
+  <text class="ink" x="608" y="805">Anti-Pattern Fixture</text>
+  <text class="fail" x="608" y="832">BLOCK</text>
+  <text class="tiny" x="668" y="832">must expose expected failure codes</text>
+
+  <rect class="panel" x="1018" y="138" width="418" height="774"/>
+  <text class="ink" x="1050" y="178">Audit Output</text>
+  <rect class="card blue" x="1050" y="204" width="336" height="118"/>
+  <text class="ink" x="1074" y="238">scripts/response_eval_audit.py</text>
+  <text class="tiny" x="1074" y="266">Response Eval Audit</text>
+  <text class="tiny" x="1074" y="288">Response Eval Metrics</text>
+  <text class="tiny" x="1074" y="310">make test release gate</text>
+
+  <rect class="card good" x="1050" y="360" width="336" height="188"/>
+  <text class="ink" x="1074" y="394">User-Experience Pass</text>
+  <text class="tiny" x="1074" y="424">The response names a live candidate set.</text>
+  <text class="tiny" x="1074" y="446">The runner-up has a real chance to win.</text>
+  <text class="tiny" x="1074" y="468">Evidence visibly moves or fails to move.</text>
+  <text class="tiny" x="1074" y="490">The next 4-6 questions target the fork.</text>
+  <text class="tiny" x="1074" y="512">Falsifiers and boundaries stay visible.</text>
+
+  <rect class="card bad" x="1050" y="586" width="336" height="188"/>
+  <text class="ink" x="1074" y="620">User-Experience Fail</text>
+  <text class="tiny" x="1074" y="650">Single label after one dramatic answer.</text>
+  <text class="tiny" x="1074" y="672">No runner-up, no falsifier, no state update.</text>
+  <text class="tiny" x="1074" y="694">100% certainty or destiny language.</text>
+  <text class="tiny" x="1074" y="716">Flattery used as retention.</text>
+  <text class="tiny" x="1074" y="738">Clinical, hiring, or deterministic drift.</text>
+
+  <path class="line" d="M 432 260 L 532 260"/>
+  <path class="line" d="M 958 260 L 1040 260"/>
+  <path class="soft" d="M 432 636 C 510 636 522 424 574 424"/>
+  <path class="soft" d="M 908 704 C 986 704 1000 454 1050 454"/>
+  <path class="line" d="M 908 814 L 1040 684"/>
+
+  <rect class="panel" x="64" y="948" width="1372" height="82"/>
+  <text class="ink" x="96" y="984">Release Meaning</text>
+  <text class="small" x="260" y="984">Sticky precision is tested as behavior: candidate movement, next-round relevance, falsifier discipline, and no manipulative certainty.</text>
+  <text class="tiny" x="260" y="1008">This gate does not claim psychometric truth. It blocks low-quality response shapes before they become examples, docs, or agent behavior.</text>
+</svg>

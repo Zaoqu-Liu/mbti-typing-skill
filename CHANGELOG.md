@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.19 - 2026-05-28
+
+- Added `examples/response-eval-cases.json` and `scripts/response_eval_audit.py` so live-round, type-duel, final-report, and anti-pattern answers are release-gated for candidate set, runner-up, evidence movement, next questions, falsifiers, safety boundaries, and Anti-Flattery discipline.
+- Added the Response Quality Radar SVG to make answer-level UX auditable for first-time GitHub visitors.
+- Wired the response quality gate into `make test`, README, evaluation docs, visual tour, contribution rules, and repository UX gates, raising the Repository UX Score to 445/445.
+
 ## 0.1.18 - 2026-05-28
 
 - Added `scripts/export_agent_pack.py` so `agent-adapters/manifest.json` can export a portable all-target or selective adapter pack instead of leaving users to hand-copy hidden agent files.

@@ -42,6 +42,21 @@ The sticky loop should be evidence repair:
 
 This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
 
+## Response Quality Loop
+
+The most visible product moment is the answer between rounds. It has to make the user feel tracked without using identity hooks.
+
+The allowed loop is:
+
+1. A response states the current candidate set and serious runner-up before any label lock.
+2. It shows evidence movement: what got stronger, what stayed weak, and what would reverse the order.
+3. It asks 4-6 concrete scene questions only when those questions target the current fork.
+4. It keeps falsifiers, safety boundaries, and calibrated confidence visible.
+5. `examples/response-eval-cases.json` stores positive live-round, type-duel, and final-report fixtures plus a blocked anti-pattern.
+6. `Response Eval Audit` checks sticky precision, next-round relevance, no-overclaim, negative blocking, and Anti-Flattery before release.
+
+This creates stickiness through answer quality. The user returns because the response remembered the uncertainty and selected the next fork, not because it used 100% certainty, flattery, superiority language, or a permanent identity lock.
+
 ## Adaptive Question Loop
 
 The highest-frequency retention moment is the next question. A user often knows the previous answer was not enough, but they do not know which fork should be tested next.
