@@ -43,6 +43,28 @@ Every adapter must preserve the same behavior:
 
 ## Installation Notes
 
+The safest way to move the adapter layer into another repository is to export a pack from the manifest instead of hand-copying files:
+
+```bash
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target all
+```
+
+Selective exports keep the pack lean:
+
+```bash
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-cursor-continue-pack --target cursor --target continue
+```
+
+The export includes the canonical `skill/mbti-typing/` directory, baseline project contracts, selected adapter entrypoints, prompt recipes, adapter docs, and an `AGENT_PACK_MANIFEST.json` receipt with selected targets, entrypoints, invocation examples, install notes, file groups, and safety contract. The exporter refuses to write into a non-empty destination unless `--force` is explicit.
+
+![Agent Pack Export Flow](../docs/assets/agent-pack-export-flow.svg)
+
+Run the dedicated Agent Pack Export Audit before publishing adapter changes:
+
+```bash
+python3 -B scripts/agent_pack_export_audit.py .
+```
+
 Codex:
 
 ```bash
@@ -120,6 +142,7 @@ Run:
 
 ```bash
 python3 -B scripts/agent_adapter_audit.py .
+python3 -B scripts/agent_pack_export_audit.py .
 make test
 ```
 

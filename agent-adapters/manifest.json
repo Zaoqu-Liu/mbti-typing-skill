@@ -3,6 +3,8 @@
   "canonical_skill": "skill/mbti-typing/SKILL.md",
   "canonical_contract": "AGENTS.md",
   "adapter_audit": "scripts/agent_adapter_audit.py",
+  "pack_exporter": "scripts/export_agent_pack.py",
+  "pack_audit": "scripts/agent_pack_export_audit.py",
   "checked_on": "2026-05-28",
   "shared_references": [
     "skill/mbti-typing/references/playbooks.md",

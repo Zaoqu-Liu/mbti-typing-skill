@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -30,6 +30,9 @@ consent-redaction-audit:
 
 agent-adapter-audit:
 	$(PYTHON) -B scripts/agent_adapter_audit.py .
+
+agent-pack-export-audit:
+	$(PYTHON) -B scripts/agent_pack_export_audit.py .
 
 question-lab-sync:
 	$(PYTHON) -B scripts/sync_question_lab.py $(SKILL_DIR)/references/question-bank.md docs/question-lab.html

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.18 - 2026-05-28
+
+- Added `scripts/export_agent_pack.py` so `agent-adapters/manifest.json` can export a portable all-target or selective adapter pack instead of leaving users to hand-copy hidden agent files.
+- Added `scripts/agent_pack_export_audit.py`, the Agent Pack Export Flow SVG, and manifest links for the pack exporter and pack audit.
+- Wired the pack export path into `make test`, adapter docs, README, visual tour, evaluation docs, and repository UX gates, raising the Agent Adapter Audit to 201/201 and the Repository UX Score to 423/423.
+
 ## 0.1.17 - 2026-05-28
 
 - Expanded the adapter layer from the four core targets to 11 entrypoints: Codex, generic AGENTS.md-aware agents, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider.

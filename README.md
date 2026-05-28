@@ -39,6 +39,7 @@ Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and generic AGENTS.md-aware agents.
+- [Agent pack export](agent-adapters/README.md): manifest-driven pack export for copying selected agent adapters into another repository without manual drift.
 - [Question Lab](docs/question-lab.html): source-synced Round Builder for the next 4-6 questions.
 - [Type Duel Lab](docs/type-duel-lab.html): searchable adjacent-type duel matrix sourced from `pair-duels.md`.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
@@ -127,6 +128,12 @@ The Agent Adapter Matrix shows the core portability layer: `AGENTS.md`, `.claude
 ![Agent Compatibility Grid](docs/assets/agent-compatibility-grid.svg)
 
 The Agent Compatibility Grid expands the adapter layer to 11 entrypoints without creating 11 protocols: Codex, generic AGENTS.md-aware agents, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider. The extra adapters add `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `.gemini/settings.json`, `.aider.conf.yml`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, and `.continue/rules/mbti-typing.md`. Every file is audited for the same candidate-set, runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary contract.
+
+### Agent Pack Export Flow
+
+![Agent Pack Export Flow](docs/assets/agent-pack-export-flow.svg)
+
+The Agent Pack Export Flow turns compatibility into something a user can actually move. `scripts/export_agent_pack.py` reads `agent-adapters/manifest.json`, exports `--target all` or a lean selected set such as `--target cursor --target cline`, includes the canonical `skill/mbti-typing/` directory, adapter docs, prompt recipes, selected entrypoints, and writes an `AGENT_PACK_MANIFEST.json` receipt. `scripts/agent_pack_export_audit.py` checks dry-run JSON, all-target export, selective export, non-empty destination protection, unknown-target failure, and required files. This makes cross-agent adoption copyable and auditable instead of a hand-maintained checklist.
 
 ## Visual System Map
 
@@ -288,6 +295,8 @@ sequenceDiagram
     examples/
     scripts/
   scripts/
+    export_agent_pack.py
+    agent_pack_export_audit.py
     agent_adapter_audit.py
 ```
 
@@ -375,6 +384,7 @@ python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sam
 python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
 python3 -B scripts/agent_adapter_audit.py .
+python3 -B scripts/agent_pack_export_audit.py .
 python3 -B scripts/sync_question_lab.py skill/mbti-typing/references/question-bank.md docs/question-lab.html
 python3 -B scripts/question_lab_audit.py docs/question-lab.html skill/mbti-typing/references/question-bank.md
 python3 -B scripts/sync_type_duel_lab.py skill/mbti-typing/references/pair-duels.md docs/type-duel-lab.html
@@ -398,7 +408,8 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
-Agent Adapter Audit: 189/189 (100.00%)
+Agent Adapter Audit: 201/201 (100.00%)
+Agent Pack Export Audit: 24/24 (100.00%)
 Question Lab Source Sync: PASS (21 cards match)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Source Sync: PASS (20 duels match)
@@ -408,7 +419,7 @@ Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 405/405 (100.00%)
+Repository UX Score: 423/423 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -423,7 +434,8 @@ flowchart TD
     Golden --> Blind[Blind review audit]
     Blind --> Consent[Consent redaction audit]
     Consent --> Adapter[Agent Adapter audit]
-    Adapter --> QuestionLab[Question Lab audit]
+    Adapter --> Pack[Agent Pack Export audit]
+    Pack --> QuestionLab[Question Lab audit]
     QuestionLab --> TypeDuel[Type Duel Lab audit]
     TypeDuel --> FollowUp[Follow-Up Lab audit]
     FollowUp --> SkillScore[Skill package scorecard]

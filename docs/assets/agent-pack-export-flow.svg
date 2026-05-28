@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1500 1080">
+  <title>Agent Pack Export Flow</title>
+  <desc>Workflow showing how the adapter manifest becomes a portable agent pack with selected target entrypoints, canonical skill files, safety guards, and export audits.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f4ef; }
+      .title { fill: #14212b; font: 800 36px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .sub { fill: #53616b; font: 600 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .panel { fill: #fffdf8; stroke: #232b31; stroke-width: 2; rx: 8; }
+      .card { fill: #ffffff; stroke: #2f3a43; stroke-width: 1.7; rx: 8; }
+      .manifest { fill: #e8f1ec; stroke: #2f7058; }
+      .exporter { fill: #e7ebf7; stroke: #475e9c; }
+      .pack { fill: #edf2dc; stroke: #667b2d; }
+      .guard { fill: #f5e7eb; stroke: #a33c4c; }
+      .audit { fill: #efe5d6; stroke: #835522; }
+      .h { fill: #17212b; font: 800 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #384650; font: 600 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #5a6872; font: 500 11px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .code { fill: #17324d; }
+      .codeText { fill: #fff; font: 800 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .chip { fill: #ffffff; stroke: #aeb8bf; stroke-width: 1.1; rx: 6; }
+      .line { fill: none; stroke: #26323b; stroke-width: 2; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #71808a; stroke-width: 1.4; stroke-dasharray: 6 6; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#26323b"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="1080"/>
+  <text class="title" x="64" y="70">Agent Pack Export Flow</text>
+  <text class="sub" x="64" y="103">Manifest-driven portability: one canonical skill, selected adapters, no copied-by-hand drift.</text>
+
+  <rect class="panel" x="64" y="138" width="1372" height="190"/>
+  <rect class="card manifest" x="96" y="172" width="300" height="116"/>
+  <text class="h" x="120" y="207">Adapter Manifest</text>
+  <text class="small" x="120" y="235">agent-adapters/manifest.json</text>
+  <text class="tiny" x="120" y="260">11 targets, source URLs, entrypoints</text>
+  <text class="tiny" x="120" y="281">canonical skill and shared contract</text>
+
+  <rect class="card exporter" x="448" y="172" width="310" height="116"/>
+  <text class="h" x="472" y="207">Pack Exporter</text>
+  <text class="small" x="472" y="235">scripts/export_agent_pack.py</text>
+  <text class="tiny" x="472" y="260">--target all or repeated target ids</text>
+  <text class="tiny" x="472" y="281">--dry-run emits the copy plan</text>
+
+  <rect class="card pack" x="810" y="172" width="270" height="116"/>
+  <text class="h" x="834" y="207">Target Selector</text>
+  <text class="small" x="834" y="235">all / codex / cursor / cline</text>
+  <text class="tiny" x="834" y="260">selective export keeps pack lean</text>
+  <text class="tiny" x="834" y="281">unknown targets fail clearly</text>
+
+  <rect class="card guard" x="1132" y="172" width="270" height="116"/>
+  <text class="h" x="1156" y="207">Write Guard</text>
+  <text class="small" x="1156" y="235">non-empty dest blocked</text>
+  <text class="tiny" x="1156" y="260">--force required to merge</text>
+  <text class="tiny" x="1156" y="281">paths cannot escape repo root</text>
+
+  <path class="line" d="M 396 230 L 438 230"/>
+  <path class="line" d="M 758 230 L 800 230"/>
+  <path class="line" d="M 1080 230 L 1122 230"/>
+
+  <rect class="panel" x="64" y="372" width="1372" height="368"/>
+  <text class="h" x="96" y="410">Exported Pack Contents</text>
+
+  <rect class="code" x="96" y="438" width="330" height="54" rx="8"/>
+  <text class="codeText" x="120" y="473">skill/mbti-typing/</text>
+  <text class="tiny" x="120" y="516">Canonical protocol, scripts, references.</text>
+  <text class="tiny" x="120" y="538">Benchmark examples and OpenAI metadata.</text>
+
+  <rect class="card" x="462" y="438" width="272" height="138"/>
+  <text class="h" x="486" y="470">Baseline Protocol</text>
+  <text class="tiny" x="486" y="498">AGENTS.md</text>
+  <text class="tiny" x="486" y="520">CONVENTIONS.md</text>
+  <text class="tiny" x="486" y="542">agent-adapters/README.md</text>
+  <text class="tiny" x="486" y="564">prompt-recipes.md</text>
+
+  <rect class="card" x="770" y="438" width="272" height="138"/>
+  <text class="h" x="794" y="470">Adapter Entrypoints</text>
+  <text class="tiny" x="794" y="498">.claude, .cursor, .gemini</text>
+  <text class="tiny" x="794" y="520">.github, .windsurf, .cline</text>
+  <text class="tiny" x="794" y="542">.continue, .aider, opencode</text>
+  <text class="tiny" x="794" y="564">only selected targets are copied</text>
+
+  <rect class="card pack" x="1078" y="438" width="292" height="138"/>
+  <text class="h" x="1102" y="470">Export Directory</text>
+  <text class="small" x="1102" y="498">AGENT_PACK_MANIFEST.json</text>
+  <text class="tiny" x="1102" y="520">selected_targets</text>
+  <text class="tiny" x="1102" y="542">entrypoints + invoke examples</text>
+  <text class="tiny" x="1102" y="564">safety contract snapshot</text>
+
+  <rect class="chip" x="168" y="612" width="190" height="34"/>
+  <text class="small" x="197" y="634">no protocol fork</text>
+  <rect class="chip" x="386" y="612" width="228" height="34"/>
+  <text class="small" x="413" y="634">runner-up preserved</text>
+  <rect class="chip" x="642" y="612" width="214" height="34"/>
+  <text class="small" x="670" y="634">falsifier required</text>
+  <rect class="chip" x="884" y="612" width="226" height="34"/>
+  <text class="small" x="912" y="634">evidence ledger kept</text>
+  <rect class="chip" x="1138" y="612" width="190" height="34"/>
+  <text class="small" x="1163" y="634">safety boundary</text>
+
+  <path class="soft" d="M 603 288 L 603 362"/>
+  <path class="line" d="M 603 362 L 261 428"/>
+  <path class="line" d="M 603 362 L 598 428"/>
+  <path class="line" d="M 603 362 L 906 428"/>
+  <path class="line" d="M 945 288 L 1224 428"/>
+
+  <rect class="panel" x="64" y="784" width="654" height="196"/>
+  <text class="h" x="96" y="823">Verification Gate</text>
+  <rect class="card audit" x="96" y="850" width="260" height="86"/>
+  <text class="h" x="120" y="882">Export Audit</text>
+  <text class="small" x="120" y="910">scripts/agent_pack_export_audit.py</text>
+  <rect class="card audit" x="386" y="850" width="282" height="86"/>
+  <text class="h" x="410" y="882">Release Gate</text>
+  <text class="small" x="410" y="910">make test</text>
+  <text class="tiny" x="410" y="930">checks dry-run, all export, selective export</text>
+
+  <rect class="panel" x="782" y="784" width="654" height="196"/>
+  <text class="h" x="814" y="823">User Outcome</text>
+  <rect class="card pack" x="814" y="850" width="260" height="86"/>
+  <text class="h" x="838" y="882">Target Repo</text>
+  <text class="small" x="838" y="910">copy exported files once</text>
+  <text class="tiny" x="838" y="930">then use the native agent entrypoint</text>
+  <rect class="card manifest" x="1104" y="850" width="282" height="86"/>
+  <text class="h" x="1128" y="882">Same Experience</text>
+  <text class="small" x="1128" y="910">Codex to aider, one protocol</text>
+  <text class="tiny" x="1128" y="930">sticky through portability, not lock-in</text>
+
+  <path class="line" d="M 1224 576 L 1224 686 L 527 686 L 527 840"/>
+  <path class="line" d="M 668 893 L 804 893"/>
+  <path class="line" d="M 1074 893 L 1094 893"/>
+</svg>

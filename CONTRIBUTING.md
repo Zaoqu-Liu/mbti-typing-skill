@@ -23,7 +23,8 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
 - Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
-- Improve agent adapters for Codex, Claude Code, Cursor, opencode, or AGENTS.md-aware tools without forking the protocol.
+- Improve agent adapters for Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware tools without forking the protocol.
+- Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -42,7 +43,8 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 189/189 (100.00%)
+Agent Adapter Audit: 201/201 (100.00%)
+Agent Pack Export Audit: 24/24 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
@@ -144,12 +146,14 @@ Before opening an adapter change:
 - Update `agent-adapters/manifest.json` if a target, entrypoint, install command, or invocation changes.
 - Update `docs/agent-adapters.md` with source links and the date checked when tool conventions change.
 - Run `python3 -B scripts/agent_adapter_audit.py .` before claiming compatibility.
+- Run `python3 -B scripts/agent_pack_export_audit.py .` if a manifest target, adapter file, pack exporter, install command, or portability claim changes.
 - Preserve runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary language in every adapter.
 
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
 - [ ] Any agent adapter change passes `scripts/agent_adapter_audit.py` and keeps `agent-adapters/manifest.json` aligned.
+- [ ] Any adapter packaging or manifest change passes `scripts/agent_pack_export_audit.py`.
 - [ ] Any new claim has a caveat or evidence standard.
 - [ ] Any new question-bank improvement is source-synced through `scripts/sync_question_lab.py` and passes `scripts/question_lab_audit.py`.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.

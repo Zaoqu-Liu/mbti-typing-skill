@@ -21,11 +21,12 @@ The README opens with:
 - A Calibration Lab for visitors who want to paste a report, see failed gates, copy a repair prompt, and turn misses into calibration issues.
 - A Follow-Up Lab for visitors who came back days later and need to turn delayed observations into a consented, redacted, public-safe packet.
 - Agent adapters for visitors who want the same protocol in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or another AGENTS.md-aware agent.
+- Agent pack export for visitors who want to copy selected adapters into another repository without hand-maintained file lists.
 - A Blind Review Protocol for visitors who want to see how multi-reviewer or multi-model outputs are evaluated without showing the expected answer up front.
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Twelve SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, and `docs/assets/agent-compatibility-grid.svg`.
+- Thirteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, and `docs/assets/agent-pack-export-flow.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -46,6 +47,7 @@ flowchart TD
     B -->|I have delayed observations| Q[Open Follow-Up Lab]
     B -->|I am stuck between two types| S[Open Type Duel Lab]
     B -->|Can my agent use this?| W[Read Agent Adapters]
+    B -->|Can I move it to another repo?| Y[Export Agent Pack]
     B -->|Can this be evaluated blind?| M[Read Blind Review Protocol]
     B -->|Can I safely share follow-up?| O[Read Consent Redaction Protocol]
     B -->|Can I install it fast?| F[Copy install command]
@@ -57,6 +59,7 @@ flowchart TD
     Q --> R[Copy follow-up packet]
     S --> T[Copy duel prompt]
     W --> X[Install Codex, Claude Code, Cursor, or opencode adapter]
+    Y --> Z[Copy selected adapter pack]
     M --> N[Inspect aggregate metrics]
     O --> P[Open consented follow-up issue]
     F --> J[Use skill in Codex]
@@ -83,10 +86,11 @@ flowchart TD
 17. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
 18. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
 19. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
-20. System map: how inputs become calibrated outputs.
-21. Interview loop: why each round feels progressive.
-22. Evidence ledger: why the answer is not a black box.
-23. Quality gates: why the project is maintainable.
+20. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
+21. System map: how inputs become calibrated outputs.
+22. Interview loop: why each round feels progressive.
+23. Evidence ledger: why the answer is not a black box.
+24. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -110,8 +114,9 @@ The experience should never rely on:
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
-- Keep the twelve precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, and `agent-compatibility-grid.svg`.
+- Keep the thirteen precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, `agent-compatibility-grid.svg`, and `agent-pack-export-flow.svg`.
 - Keep `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `scripts/agent_adapter_audit.py` aligned so adapter portability remains a tested feature, not a claim.
+- Keep `scripts/export_agent_pack.py`, `scripts/agent_pack_export_audit.py`, `agent-adapters/manifest.json`, and `docs/assets/agent-pack-export-flow.svg` aligned so adapter portability remains a copyable product path, not only a documentation claim.
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
 - Keep `docs/question-lab.html` usable without a build step, external runtime, network calls, or account setup; preserve source-of-truth sync from `skill/mbti-typing/references/question-bank.md`, search, category filters, all current question cards, copyable round prompts, issue seed copy, local persistence, and safety boundaries.
 - Keep `docs/type-duel-lab.html` usable without a build step, external runtime, network calls, or account setup; preserve source-of-truth sync from `skill/mbti-typing/references/pair-duels.md`, search, cluster filters, all current pair duels, copyable duel prompts, issue seed copy, local persistence, and safety boundaries.

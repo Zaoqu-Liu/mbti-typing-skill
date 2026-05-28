@@ -60,7 +60,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Agent Adapter audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -187,6 +187,20 @@ The Agent Compatibility Grid expands the portability proof from core adapters to
 - `scripts/agent_adapter_audit.py` checks that every entrypoint still preserves the same candidate set, runner-up, evidence ledger, falsifier, and safety-boundary contract.
 
 This is the larger compatibility layer: mainstream agent tools can discover the same MBTI Typing Skill without turning it into disconnected tool-specific lore.
+
+## Agent Pack Export Flow
+
+![Agent Pack Export Flow](assets/agent-pack-export-flow.svg)
+
+The Agent Pack Export Flow makes cross-agent adoption copyable:
+
+- `agent-adapters/manifest.json` remains the source for supported targets, entrypoints, install notes, and invocation examples.
+- `scripts/export_agent_pack.py` exports all targets or a selected set such as Cursor plus Continue.
+- The exported directory includes the canonical `skill/mbti-typing/` tree, baseline contracts, adapter docs, prompt recipes, selected entrypoints, and `AGENT_PACK_MANIFEST.json`.
+- The write guard blocks non-empty destinations unless `--force` is explicit.
+- `scripts/agent_pack_export_audit.py` checks dry-run JSON, all-target export, selective export, required files, unknown-target failure, and non-empty destination protection.
+
+This is the portability product layer: a user can carry the skill into another repository without reconstructing which hidden files belong to which agent.
 
 ## Follow-Up Lab
 

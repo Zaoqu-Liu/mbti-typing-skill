@@ -106,7 +106,9 @@ The allowed loop is:
 2. `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and `CONVENTIONS.md` keep concise project-level contracts for agents that read repository instructions.
 3. Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and generic AGENTS.md-aware adapters only describe discovery, invocation, and install shape.
 4. `agent-adapters/manifest.json` records the supported entrypoints.
-5. `scripts/agent_adapter_audit.py` checks that adapters preserve candidate set, runner-up, evidence ledger, falsifier, source references, and safety boundaries.
+5. `scripts/export_agent_pack.py` exports all or selected adapter entrypoints into a portable pack with an `AGENT_PACK_MANIFEST.json` receipt.
+6. `scripts/agent_adapter_audit.py` checks that adapters preserve candidate set, runner-up, evidence ledger, falsifier, source references, and safety boundaries.
+7. `scripts/agent_pack_export_audit.py` checks that the manifest can become a copyable pack without omitting the canonical skill or selected target files.
 
 This creates distribution stickiness: people can keep using the same MBTI Typing Skill even when their preferred agent runtime changes.
 

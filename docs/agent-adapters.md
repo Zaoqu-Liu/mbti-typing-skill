@@ -10,12 +10,16 @@ One canonical protocol, many thin adapters:
 - `AGENTS.md` is the short repository-level contract for tools that read project instructions.
 - Tool-specific files only explain discovery and invocation.
 - `scripts/agent_adapter_audit.py` blocks drift.
+- `scripts/export_agent_pack.py` turns the manifest into a portable pack so users do not hand-copy adapters.
+- `scripts/agent_pack_export_audit.py` proves the pack path, selective export, write guard, and generated receipt.
 
 ## Supported Tools
 
 ![Agent Adapter Matrix](assets/agent-adapter-matrix.svg)
 
 ![Agent Compatibility Grid](assets/agent-compatibility-grid.svg)
+
+![Agent Pack Export Flow](assets/agent-pack-export-flow.svg)
 
 | Tool | Files | Why this shape |
 |---|---|---|
@@ -43,6 +47,33 @@ Every adapter must preserve:
 - falsifiers and revision triggers
 - safety boundary against clinical, hiring, legal, medical, financial, or deterministic use
 
+## Agent Pack Export
+
+The compatibility layer is productized as an exportable pack. This is the recommended path when a user wants to bring the MBTI Typing Skill into another repository:
+
+```bash
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target all
+```
+
+For lean installs, export only the target tools needed in the destination repository:
+
+```bash
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-cursor-cline-pack --target cursor --target cline
+```
+
+The pack contains:
+
+- `skill/mbti-typing/` with the canonical protocol, references, scripts, examples, and `agents/openai.yaml`
+- baseline contracts such as `AGENTS.md`, `CONVENTIONS.md`, adapter docs, and prompt recipes
+- selected target entrypoints such as `.cursor/rules/mbti-typing.mdc`, `.cline/skills/mbti-typing/SKILL.md`, or `.continue/rules/mbti-typing.md`
+- `AGENT_PACK_MANIFEST.json` with selected targets, copied file groups, install notes, invocation examples, and the safety contract snapshot
+
+The exporter refuses to write into a non-empty destination unless `--force` is explicit. The audit gate checks dry-run JSON, all-target export, selective export, unknown-target failure, non-empty destination protection, and required file presence:
+
+```bash
+python3 -B scripts/agent_pack_export_audit.py .
+```
+
 ## Current Source Notes
 
 These conventions were checked on 2026-05-28:
@@ -62,7 +93,8 @@ These conventions were checked on 2026-05-28:
 
 ```bash
 python3 -B scripts/agent_adapter_audit.py .
+python3 -B scripts/agent_pack_export_audit.py .
 make test
 ```
 
-The adapter audit checks file presence, manifest targets, install commands, invocation strings, safety boundaries, and source references.
+The adapter audit checks file presence, manifest targets, install commands, invocation strings, safety boundaries, and source references. The pack export audit checks that the same manifest can produce a portable install bundle without silently omitting the canonical skill or selected target entrypoints.

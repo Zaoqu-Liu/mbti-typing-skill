@@ -38,6 +38,9 @@ REQUIRED_FILES = (
     "docs/agent-adapters.md",
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
+    "docs/assets/agent-pack-export-flow.svg",
+    "scripts/export_agent_pack.py",
+    "scripts/agent_pack_export_audit.py",
 )
 
 EXPECTED_TARGETS = (
@@ -125,6 +128,8 @@ def check_manifest(root: Path) -> list[Check]:
         Check("manifest:canonical_skill", manifest.get("canonical_skill") == "skill/mbti-typing/SKILL.md", "manifest points at canonical skill"),
         Check("manifest:canonical_contract", manifest.get("canonical_contract") == "AGENTS.md", "manifest points at root contract"),
         Check("manifest:adapter_audit", manifest.get("adapter_audit") == "scripts/agent_adapter_audit.py", "manifest points at adapter audit"),
+        Check("manifest:pack_exporter", manifest.get("pack_exporter") == "scripts/export_agent_pack.py", "manifest points at pack exporter"),
+        Check("manifest:pack_audit", manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "manifest points at pack export audit"),
         Check("manifest:checked_on", manifest.get("checked_on") == "2026-05-28", "manifest records convention check date"),
         Check("manifest:targets", sorted(target_ids) == sorted(EXPECTED_TARGETS), f"targets={target_ids}"),
     ]
@@ -222,16 +227,23 @@ def check_docs_and_visual(root: Path) -> list[Check]:
     docs = read_text(root / "docs/agent-adapters.md")
     svg = read_text(root / "docs/assets/agent-adapter-matrix.svg")
     compatibility_svg = read_text(root / "docs/assets/agent-compatibility-grid.svg")
+    pack_svg = read_text(root / "docs/assets/agent-pack-export-flow.svg")
     makefile = read_text(root / "Makefile")
-    dependency_scan = (svg + compatibility_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
+    exporter = read_text(root / "scripts/export_agent_pack.py")
+    pack_audit = read_text(root / "scripts/agent_pack_export_audit.py")
+    dependency_scan = (svg + compatibility_svg + pack_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
     required_tool_terms = ("Codex", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider")
     source_terms = ("docs.anthropic.com", "docs.cursor.com", "opencode.ai", "github.com/openai/codex", "google-gemini", "docs.github.com", "docs.windsurf.com", "docs.cline.bot", "docs.continue.dev", "aider.chat")
     return [
         Check("docs:adapter_readme_tools", contains_all(adapter_readme, required_tool_terms), "adapter README covers all target tools"),
         Check("docs:adapter_readme_contract", contains_all(adapter_readme, ("candidate set", "runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter README preserves universal contract"),
+        Check("docs:adapter_readme_pack_export", contains_all(adapter_readme, ("scripts/export_agent_pack.py", "AGENT_PACK_MANIFEST.json", "Agent Pack Export Audit")), "adapter README documents pack export"),
         Check("docs:agent_adapters_tools", contains_all(docs, required_tool_terms), "agent adapter docs cover all target tools"),
         Check("docs:agent_adapters_sources", contains_all(docs, source_terms), "agent adapter docs cite current source conventions"),
         Check("makefile:agent_adapter_target", "agent-adapter-audit" in makefile and "scripts/agent_adapter_audit.py" in makefile, "Makefile runs adapter audit"),
+        Check("makefile:agent_pack_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs pack export audit"),
+        Check("exporter:contract", contains_all(exporter, ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "pack exporter has schema, baseline, manifest, and write guard"),
+        Check("pack_audit:contract", contains_all(pack_audit, ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "pack export audit covers dry-run, all, selective, and unknown-target flows"),
         Check("svg:shape", "<svg" in svg and "viewBox=" in svg, "adapter matrix is an SVG with viewBox"),
         Check("svg:accessibility", 'role="img"' in svg and "<title" in svg and "<desc" in svg, "adapter matrix has accessibility metadata"),
         Check("svg:no_remote_or_script", "<script" not in dependency_scan and "http://" not in dependency_scan and "https://" not in dependency_scan, "adapter matrix has no script or remote dependency"),
@@ -239,6 +251,9 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("compat_svg:shape", "<svg" in compatibility_svg and "viewBox=" in compatibility_svg, "compatibility grid is an SVG with viewBox"),
         Check("compat_svg:accessibility", 'role="img"' in compatibility_svg and "<title" in compatibility_svg and "<desc" in compatibility_svg, "compatibility grid has accessibility metadata"),
         Check("compat_svg:labels", contains_all(compatibility_svg, required_tool_terms + ("11 adapters", "one protocol", "AGENTS.md", "agent_adapter_audit.py")), "compatibility grid contains expected labels"),
+        Check("pack_svg:shape", "<svg" in pack_svg and "viewBox=" in pack_svg, "pack export flow is an SVG with viewBox"),
+        Check("pack_svg:accessibility", 'role="img"' in pack_svg and "<title" in pack_svg and "<desc" in pack_svg, "pack export flow has accessibility metadata"),
+        Check("pack_svg:labels", contains_all(pack_svg, ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo")), "pack export flow contains expected labels"),
     ]
 
 
