@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.21 - 2026-05-28
+
+- Added a buildless Agent Adapter Lab so users can select Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware targets and copy a pack command, install checklist, adapter JSON receipt, and `agent_adapter_improvement.yml` issue seed.
+- Added `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, the Agent Adapter Lab Flow SVG, and the adapter improvement issue template so public adoption UX is source-synced from `agent-adapters/manifest.json`.
+- Expanded the agent pack baseline to carry the adoption lab and adapter audit scripts, and wired the new lab into `make test`, README, visual tour, evaluation docs, contribution rules, and repository UX gates, raising the Repository UX Score to 521/521.
+
 ## 0.1.20 - 2026-05-28
 
 - Added a buildless Response Eval Lab so users can paste any MBTI answer, inspect mode-aware quality gates, copy a repair prompt, export Eval JSON, and create a `response_eval_improvement.yml` issue seed.

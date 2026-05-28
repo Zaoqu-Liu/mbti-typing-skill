@@ -23,13 +23,14 @@ The README opens with:
 - A Follow-Up Lab for visitors who came back days later and need to turn delayed observations into a consented, redacted, public-safe packet.
 - Agent adapters for visitors who want the same protocol in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or another AGENTS.md-aware agent.
 - Agent pack export for visitors who want to copy selected adapters into another repository without hand-maintained file lists.
+- Agent Adapter Lab for visitors who want to choose exact agent targets and copy a pack command, install checklist, adapter JSON receipt, or `agent_adapter_improvement.yml` issue seed.
 - Response Eval Lab for visitors who want to paste any answer, see quality gates, copy a repair prompt, export JSON, and create a response eval issue seed.
 - Response Eval fixtures for visitors who want proof that answer quality is tested for candidate set, runner-up, evidence movement, next questions, falsifiers, safety boundaries, and Anti-Flattery discipline.
 - A Blind Review Protocol for visitors who want to see how multi-reviewer or multi-model outputs are evaluated without showing the expected answer up front.
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Fifteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
+- Sixteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -52,6 +53,7 @@ flowchart TD
     B -->|I am stuck between two types| S[Open Type Duel Lab]
     B -->|Can my agent use this?| W[Read Agent Adapters]
     B -->|Can I move it to another repo?| Y[Export Agent Pack]
+    B -->|Which adapters should I choose?| AC[Open Agent Adapter Lab]
     B -->|Can this be evaluated blind?| M[Read Blind Review Protocol]
     B -->|Can I safely share follow-up?| O[Read Consent Redaction Protocol]
     B -->|Can I install it fast?| F[Copy install command]
@@ -65,6 +67,7 @@ flowchart TD
     S --> T[Copy duel prompt]
     W --> X[Install Codex, Claude Code, Cursor, or opencode adapter]
     Y --> Z[Copy selected adapter pack]
+    AC --> AD[Copy pack command and adapter JSON]
     M --> N[Inspect aggregate metrics]
     O --> P[Open consented follow-up issue]
     F --> J[Use skill in Codex]
@@ -92,13 +95,14 @@ flowchart TD
 18. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
 19. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
 20. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
-21. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
-22. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
-23. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
-24. System map: how inputs become calibrated outputs.
-25. Interview loop: why each round feels progressive.
-26. Evidence ledger: why the answer is not a black box.
-27. Quality gates: why the project is maintainable.
+21. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
+22. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
+23. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
+24. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
+25. System map: how inputs become calibrated outputs.
+26. Interview loop: why each round feels progressive.
+27. Evidence ledger: why the answer is not a black box.
+28. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -124,9 +128,10 @@ The experience should never rely on:
 - Keep a second journey-map visual in `docs/assets/`.
 - Keep the GitHub social preview asset in `docs/assets/social-preview.jpg`.
 - Keep the Response Eval command-center bitmap in `docs/assets/response-eval-command-center.png`.
-- Keep the fifteen precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, `agent-compatibility-grid.svg`, `agent-pack-export-flow.svg`, `response-quality-radar.svg`, and `response-eval-lab-flow.svg`.
+- Keep the sixteen precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, `agent-compatibility-grid.svg`, `agent-pack-export-flow.svg`, `agent-adapter-lab-flow.svg`, `response-quality-radar.svg`, and `response-eval-lab-flow.svg`.
 - Keep `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `scripts/agent_adapter_audit.py` aligned so adapter portability remains a tested feature, not a claim.
 - Keep `scripts/export_agent_pack.py`, `scripts/agent_pack_export_audit.py`, `agent-adapters/manifest.json`, and `docs/assets/agent-pack-export-flow.svg` aligned so adapter portability remains a copyable product path, not only a documentation claim.
+- Keep `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` aligned so adapter selection remains a tested GitHub UX path, not only a manifest.
 - Keep `examples/response-eval-cases.json`, `scripts/response_eval_audit.py`, `docs/response-eval-lab.html`, `scripts/response_eval_lab_audit.py`, `.github/ISSUE_TEMPLATE/response_eval_improvement.yml`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg` aligned so answer-level quality remains a tested UX gate, not only a prose preference.
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
 - Keep `docs/question-lab.html` usable without a build step, external runtime, network calls, or account setup; preserve source-of-truth sync from `skill/mbti-typing/references/question-bank.md`, search, category filters, all current question cards, copyable round prompts, issue seed copy, local persistence, and safety boundaries.

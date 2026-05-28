@@ -8,6 +8,8 @@ This directory documents how the same MBTI Typing Skill is exposed to multiple a
 - Shared project contract: `AGENTS.md`
 - Adapter manifest: `agent-adapters/manifest.json`
 - Drift gate: `scripts/agent_adapter_audit.py`
+- Adoption lab sync: `scripts/sync_agent_adapter_lab.py`
+- Adoption lab audit: `scripts/agent_adapter_lab_audit.py`
 
 ## Adapter Matrix
 
@@ -59,10 +61,16 @@ The export includes the canonical `skill/mbti-typing/` directory, baseline proje
 
 ![Agent Pack Export Flow](../docs/assets/agent-pack-export-flow.svg)
 
+For first-run adoption, use the [Agent Adapter Lab](../docs/agent-adapter-lab.html). It reads the same manifest, lets a user choose Core Pack or Select All, copies the export command, shows the install checklist, emits an adapter JSON receipt, and prepares an `agent_adapter_improvement.yml` issue seed when an adapter is missing or stale.
+
+![Agent Adapter Lab Flow](../docs/assets/agent-adapter-lab-flow.svg)
+
 Run the dedicated Agent Pack Export Audit before publishing adapter changes:
 
 ```bash
 python3 -B scripts/agent_pack_export_audit.py .
+python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 ```
 
 Codex:
@@ -143,6 +151,8 @@ Run:
 ```bash
 python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
+python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 make test
 ```
 

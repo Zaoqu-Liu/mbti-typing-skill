@@ -18,9 +18,17 @@ BASELINE_PATHS = (
     "agent-adapters/README.md",
     "agent-adapters/manifest.json",
     "docs/agent-adapters.md",
+    "docs/agent-adapter-lab.html",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/agent-adapter-lab-flow.svg",
     "prompts/prompt-recipes.md",
+    ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml",
+    "scripts/export_agent_pack.py",
+    "scripts/agent_adapter_audit.py",
+    "scripts/agent_pack_export_audit.py",
+    "scripts/sync_agent_adapter_lab.py",
+    "scripts/agent_adapter_lab_audit.py",
 )
 IGNORE_NAMES = {"__pycache__", ".DS_Store"}
 

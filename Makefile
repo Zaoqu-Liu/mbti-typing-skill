@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -33,6 +33,12 @@ agent-adapter-audit:
 
 agent-pack-export-audit:
 	$(PYTHON) -B scripts/agent_pack_export_audit.py .
+
+agent-adapter-lab-sync:
+	$(PYTHON) -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+
+agent-adapter-lab-audit:
+	$(PYTHON) -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 
 response-eval-audit:
 	$(PYTHON) -B scripts/response_eval_audit.py examples/response-eval-cases.json

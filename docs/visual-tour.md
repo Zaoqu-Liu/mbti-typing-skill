@@ -70,7 +70,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Response Eval Audit, Response Eval Lab Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Agent Adapter Lab audit, Response Eval Audit, Response Eval Lab Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -212,6 +212,19 @@ The Agent Pack Export Flow makes cross-agent adoption copyable:
 
 This is the portability product layer: a user can carry the skill into another repository without reconstructing which hidden files belong to which agent.
 
+## Agent Adapter Lab Flow
+
+![Agent Adapter Lab Flow](assets/agent-adapter-lab-flow.svg)
+
+The Agent Adapter Lab Flow makes cross-agent adoption usable from GitHub Pages:
+
+- `agent-adapters/manifest.json` remains the source for target ids, support levels, source URLs, entrypoints, install notes, invocation examples, and contracts.
+- `scripts/sync_agent_adapter_lab.py` embeds the manifest and pack baseline paths into [Agent Adapter Lab](agent-adapter-lab.html).
+- The lab lets users search targets, filter support levels, choose Core Pack or Select All, copy a pack command, copy an install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed.
+- `scripts/agent_adapter_lab_audit.py` checks source sync, local-first rendering, DOM-safe rendering, copy outputs, issue seed, and safety-boundary language before release.
+
+This is the adoption UX layer: users do not need to infer which hidden files belong to their agent tool.
+
 ## Response Quality Radar
 
 ![Response Quality Radar](assets/response-quality-radar.svg)
@@ -322,6 +335,7 @@ The buildless product pages, adapter docs, and response audit now cover the full
 - [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
 - [Question Lab](question-lab.html): source-synced next-round question selection and question improvement seeds.
 - [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
+- [Agent Adapter Lab](agent-adapter-lab.html): target selector, pack command, install checklist, adapter JSON receipt, and adapter improvement seed.
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
@@ -361,18 +375,20 @@ flowchart TD
     O --> P[Agent Adapter Matrix]
     P --> Q[Agent Compatibility Grid]
     Q --> R[Agent Pack Export Flow]
-    R --> S[Response Quality Radar]
-    S --> T[Response Eval Command Center]
-    T --> U[Response Eval Lab Flow]
-    U --> V[Response Eval Lab]
-    V --> W[Agent adapters]
-    W --> X[Follow-Up Lab]
-    X --> Y[One-minute demo]
-    Y --> Z[Demo session]
-    Z --> AA[Sample report]
-    AA --> AB[Evaluation model]
-    AB --> AC[Contribution guide]
-    AC --> AD[Benchmark cases]
+    R --> S[Agent Adapter Lab Flow]
+    S --> T[Agent Adapter Lab]
+    T --> U[Response Quality Radar]
+    U --> V[Response Eval Command Center]
+    V --> W[Response Eval Lab Flow]
+    W --> X[Response Eval Lab]
+    X --> Y[Agent adapters]
+    Y --> Z[Follow-Up Lab]
+    Z --> AA[One-minute demo]
+    AA --> AB[Demo session]
+    AB --> AC[Sample report]
+    AC --> AD[Evaluation model]
+    AD --> AE[Contribution guide]
+    AE --> AF[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

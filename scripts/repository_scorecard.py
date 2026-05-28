@@ -56,6 +56,7 @@ REQUIRED_FILES = [
     ".github/ISSUE_TEMPLATE/type_duel_improvement.yml",
     ".github/ISSUE_TEMPLATE/question_improvement.yml",
     ".github/ISSUE_TEMPLATE/response_eval_improvement.yml",
+    ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml",
     "prompts/prompt-recipes.md",
     "examples/session-state-example.json",
     "examples/evidence-ledger-example.md",
@@ -79,6 +80,7 @@ REQUIRED_FILES = [
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/agent-adapter-lab-flow.svg",
     "docs/assets/response-quality-radar.svg",
     "docs/assets/response-eval-lab-flow.svg",
     "docs/evaluation.md",
@@ -95,6 +97,7 @@ REQUIRED_FILES = [
     "docs/calibration-lab.html",
     "docs/question-lab.html",
     "docs/type-duel-lab.html",
+    "docs/agent-adapter-lab.html",
     "docs/follow-up-lab.html",
     "docs/response-eval-lab.html",
     "docs/playground.html",
@@ -115,6 +118,8 @@ REQUIRED_FILES = [
     "scripts/agent_adapter_audit.py",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
+    "scripts/sync_agent_adapter_lab.py",
+    "scripts/agent_adapter_lab_audit.py",
     "scripts/response_eval_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
@@ -138,6 +143,7 @@ README_REQUIRED_TERMS = [
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/agent-adapter-lab-flow.svg",
     "docs/assets/response-quality-radar.svg",
     "docs/assets/response-eval-lab-flow.svg",
     "GitHub social preview",
@@ -145,6 +151,7 @@ README_REQUIRED_TERMS = [
     "Agent Adapter Matrix",
     "Agent Compatibility Grid",
     "Agent Pack Export Flow",
+    "Agent Adapter Lab Flow",
     "Response Quality Radar",
     "Response Eval Lab Flow",
     "docs/agent-adapters.md",
@@ -178,7 +185,14 @@ README_REQUIRED_TERMS = [
     "scripts/agent_adapter_audit.py",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
+    "scripts/sync_agent_adapter_lab.py",
+    "scripts/agent_adapter_lab_audit.py",
     "scripts/response_eval_audit.py",
+    "Agent Adapter Lab",
+    "Agent Adapter Lab Audit",
+    "docs/agent-adapter-lab.html",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html",
+    "agent_adapter_improvement.yml",
     "AGENT_PACK_MANIFEST.json",
     "Agent Adapter Audit",
     "Agent Pack Export Audit",
@@ -437,6 +451,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
     checks.extend(
         check_svg_asset(
             root,
+            "docs/assets/agent-adapter-lab-flow.svg",
+            "agent_adapter_lab_flow",
+            ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "11 adapters", "one protocol"),
+        )
+    )
+    checks.extend(
+        check_svg_asset(
+            root,
             "docs/assets/response-quality-radar.svg",
             "response_quality_radar",
             ("Response Quality Radar", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "candidate set", "runner-up", "falsifier", "Anti-Flattery", "make test"),
@@ -506,10 +528,11 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:question_lab_link", "GitHub Pages Question Lab" in readme and "docs/question-lab.html" in readme, "English README links hosted and local Question Lab"),
         Check("readme:type_duel_lab_link", "GitHub Pages Type Duel Lab" in readme and "docs/type-duel-lab.html" in readme, "English README links hosted and local Type Duel Lab"),
+        Check("readme:agent_adapter_lab_link", "GitHub Pages Agent Adapter Lab" in readme and "docs/agent-adapter-lab.html" in readme, "English README links hosted and local Agent Adapter Lab"),
         Check("readme:follow_up_lab_link", "GitHub Pages Follow-Up Lab" in readme and "docs/follow-up-lab.html" in readme, "English README links hosted and local Follow-Up Lab"),
         Check("readme:response_eval_lab_link", "GitHub Pages Response Eval Lab" in readme and "docs/response-eval-lab.html" in readme, "English README links hosted and local Response Eval Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
@@ -519,7 +542,7 @@ def check_readme(root: Path) -> list[Check]:
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
         Check("readme:zh_social_preview", "docs/assets/social-preview.jpg" in zh_readme, "Chinese README references social preview asset"),
         Check("readme:zh_response_eval_command_center", "docs/assets/response-eval-command-center.png" in zh_readme, "Chinese README references Response Eval command center"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -560,6 +583,7 @@ def check_docs(root: Path) -> list[Check]:
     calibration_lab = read_text(root / "docs/calibration-lab.html")
     question_lab = read_text(root / "docs/question-lab.html")
     type_duel_lab = read_text(root / "docs/type-duel-lab.html")
+    agent_adapter_lab = read_text(root / "docs/agent-adapter-lab.html")
     follow_up_lab = read_text(root / "docs/follow-up-lab.html")
     response_eval_lab = read_text(root / "docs/response-eval-lab.html")
     playground = read_text(root / "docs/playground.html")
@@ -575,6 +599,8 @@ def check_docs(root: Path) -> list[Check]:
     question_lab_audit = read_text(root / "scripts/question_lab_audit.py")
     sync_type_duel_lab = read_text(root / "scripts/sync_type_duel_lab.py")
     type_duel_lab_audit = read_text(root / "scripts/type_duel_lab_audit.py")
+    sync_agent_adapter_lab = read_text(root / "scripts/sync_agent_adapter_lab.py")
+    agent_adapter_lab_audit = read_text(root / "scripts/agent_adapter_lab_audit.py")
     blind_review_audit = read_text(root / "scripts/blind_review_audit.py")
     consent_redaction_audit = read_text(root / "scripts/consent_redaction_audit.py")
     follow_up_lab_audit = read_text(root / "scripts/follow_up_lab_audit.py")
@@ -582,6 +608,7 @@ def check_docs(root: Path) -> list[Check]:
     agent_adapter_audit = read_text(root / "scripts/agent_adapter_audit.py")
     export_agent_pack = read_text(root / "scripts/export_agent_pack.py")
     agent_pack_export_audit = read_text(root / "scripts/agent_pack_export_audit.py")
+    agent_adapter_issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml")
     response_eval_audit = read_text(root / "scripts/response_eval_audit.py")
     response_eval_payload = json.loads(read_text(root / "examples/response-eval-cases.json"))
     question_bank = read_text(root / "skill/mbti-typing/references/question-bank.md")
@@ -597,10 +624,10 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
         Check("docs:ux_social_preview", "GitHub social preview" in ux and "social-preview.jpg" in ux, "GitHub UX document keeps the social preview asset visible"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "agent-adapter-lab-flow.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:evaluation_response_eval", all(term in evaluation for term in ("Response Eval Audit", "Response Eval Lab Audit", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "scripts/response_eval_lab_audit.py", "sticky precision", "negative_blocked")), "Evaluation docs describe the response quality audit layer"),
         Check("docs:experience_response_quality_loop", all(term in experience for term in ("Response Quality Loop", "response-eval-cases.json", "Response Eval Audit", "candidate set", "Anti-Flattery")), "Experience docs define the response quality loop"),
         Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "claude-code", "cline", "codex", "continue", "cursor", "gemini-cli", "generic-agents-md", "github-copilot", "opencode", "windsurf"], "Agent adapter manifest covers eleven mainstream target entrypoints"),
@@ -621,6 +648,19 @@ def check_docs(root: Path) -> list[Check]:
         Check("agent_adapters:pack_exporter", all(term in export_agent_pack for term in ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "Agent pack exporter has schema, baseline, receipt, and write guard"),
         Check("agent_adapters:pack_audit_script", all(term in agent_pack_export_audit for term in ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "Agent pack export has a dedicated audit script"),
         Check("agent_adapters:pack_audit_make_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs Agent Pack Export audit"),
+        Check("agent_adapter_lab:title", "MBTI Typing Skill Agent Adapter Lab" in agent_adapter_lab, "Agent Adapter Lab has a clear product title"),
+        Check("agent_adapter_lab:no_external_runtime", "<script src" not in agent_adapter_lab and " src=" not in agent_adapter_lab, "Agent Adapter Lab has no external runtime dependency"),
+        Check("agent_adapter_lab:interactive_regions", all(term in agent_adapter_lab for term in ("targetSearch", "supportFilter", "targetList", "packCommandOutput", "installChecklistOutput", "adapterReceiptOutput", "issueSeedOutput")), "Agent Adapter Lab contains selector, command, checklist, receipt, and issue seed regions"),
+        Check("agent_adapter_lab:source_markers", "BEGIN GENERATED AGENT ADAPTER MANIFEST" in agent_adapter_lab and "END GENERATED AGENT ADAPTER MANIFEST" in agent_adapter_lab, "Agent Adapter Lab marks generated manifest data"),
+        Check("agent_adapter_lab:source_sync_script", "Agent Adapter Lab Source Sync" in sync_agent_adapter_lab and "build_lab_manifest" in sync_agent_adapter_lab, "Agent Adapter Lab has a manifest source-of-truth sync script"),
+        Check("agent_adapter_lab:source_sync_audit", "Agent Adapter Lab Audit" in agent_adapter_lab_audit and "extract_embedded_manifest" in agent_adapter_lab_audit, "Agent Adapter Lab audit compares embedded manifest with canonical JSON"),
+        Check("agent_adapter_lab:source_sync_make_target", "agent-adapter-lab-sync" in makefile and "scripts/sync_agent_adapter_lab.py" in makefile, "Makefile checks Agent Adapter Lab source sync"),
+        Check("agent_adapter_lab:audit_make_target", "agent-adapter-lab-audit" in makefile and "scripts/agent_adapter_lab_audit.py" in makefile, "Makefile runs Agent Adapter Lab audit"),
+        Check("agent_adapter_lab:copy_outputs", "Copy Pack Command" in agent_adapter_lab and "Copy Install Checklist" in agent_adapter_lab and "Copy Adapter JSON" in agent_adapter_lab and "Copy Issue Seed" in agent_adapter_lab, "Agent Adapter Lab can copy command, checklist, JSON, and issue outputs"),
+        Check("agent_adapter_lab:dom_safety", "textContent" in agent_adapter_lab and "replaceChildren" in agent_adapter_lab and "innerHTML" not in agent_adapter_lab, "Agent Adapter Lab renders data without HTML injection"),
+        Check("agent_adapter_lab:safety_boundary", "not a promise" in agent_adapter_lab and "local-first" in agent_adapter_lab, "Agent Adapter Lab keeps safety boundary visible"),
+        Check("agent_adapter_lab:issue_template", all(term in agent_adapter_issue_template for term in ("Agent adapter improvement", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "Agent Adapter Lab has a dedicated issue template"),
+        Check("agent_adapter_lab:flow_docs", all(term in visual + evaluation + ux for term in ("agent-adapter-lab-flow.svg", "Agent Adapter Lab Flow", "agent_adapter_improvement.yml")), "Agent Adapter Lab flow is documented across UX, visual tour, and evaluation docs"),
         Check("response_eval:audit_script", all(term in response_eval_audit for term in ("Response Eval Audit", "sticky_precision", "negative_blocked", "OVERCLAIM_RE", "FLATTERY_RE")), "Response evaluation has a dedicated audit script"),
         Check("response_eval:audit_cases", response_eval_payload.get("schema_version") == "response-eval/v1" and len(response_eval_payload.get("cases", [])) >= 4, "Response evaluation cases use schema v1 and cover at least four fixtures"),
         Check("response_eval:audit_make_target", "response-eval-audit" in makefile and "scripts/response_eval_audit.py" in makefile, "Makefile runs Response Eval audit"),
@@ -735,9 +775,10 @@ def check_docs(root: Path) -> list[Check]:
         Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
         Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
         Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
-        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, question_lab, type_duel_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
+        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, question_lab, type_duel_lab, agent_adapter_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
+        Check("pages:agent_lab_nav", all("agent-adapter-lab.html" in page for page in (session_lab, case_gallery, calibration_lab, question_lab, type_duel_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link to Agent Adapter Lab"),
         Check("pages:github_prompt_links", "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in session_lab and "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in playground, "Public prompt recipe links resolve on GitHub Pages"),
-        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + question_lab + type_duel_lab + follow_up_lab + response_eval_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
+        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + question_lab + type_duel_lab + agent_adapter_lab + follow_up_lab + response_eval_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
         Check("pages:index_redirect", "session-lab.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to Session Lab"),
         Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]

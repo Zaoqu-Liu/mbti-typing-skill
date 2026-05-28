@@ -1,0 +1,1348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Agent Adapter Lab</title>
+  <meta name="description" content="Local-first Agent Adoption Lab for selecting MBTI Typing Skill agent adapters, copying export commands, installation checklists, receipts, and issue seeds.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f4;
+      --panel: #ffffff;
+      --panel-soft: #fbfcfa;
+      --ink: #16211e;
+      --muted: #66726f;
+      --line: #d8dfda;
+      --line-strong: #b8c4be;
+      --green: #14806d;
+      --green-soft: #e1f2ed;
+      --blue: #4167a7;
+      --blue-soft: #e7edf8;
+      --amber: #b97817;
+      --amber-soft: #fff1d9;
+      --rose: #bd3f61;
+      --rose-soft: #fbe7ef;
+      --graphite: #23302d;
+      --shadow: 0 16px 38px rgba(22, 32, 29, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(115deg, rgba(20, 128, 109, 0.08), transparent 33%),
+        linear-gradient(250deg, rgba(65, 103, 167, 0.09), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1540px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 46px;
+    }
+
+    .topbar,
+    .brand,
+    .nav-actions,
+    .panel-title,
+    .action-row,
+    .metric-row,
+    .target-head,
+    .target-meta,
+    .flow-step,
+    .receipt-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-actions {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      background: #fafeff;
+      border-color: rgba(20, 128, 109, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.76fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-proof,
+    .panel {
+      border: 1px solid rgba(216, 223, 218, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 300px;
+      padding: clamp(22px, 4vw, 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.99;
+      max-width: 980px;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 890px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .proof-grid,
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .proof,
+    .metric,
+    .flow-step,
+    .target-card,
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+    }
+
+    .proof {
+      min-height: 86px;
+      padding: 12px;
+    }
+
+    .proof strong,
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .proof span,
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .status-strip {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--green-soft), #fff, var(--blue-soft));
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.95fr) minmax(0, 1.08fr) minmax(360px, 0.95fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .panel-title h2 {
+      font-size: 19px;
+      line-height: 1.15;
+    }
+
+    .panel-title span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(20, 128, 109, 0.62);
+      box-shadow: 0 0 0 3px rgba(20, 128, 109, 0.12);
+    }
+
+    .action-row {
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .metric-grid {
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      padding: 12px;
+      min-height: 84px;
+    }
+
+    .selector-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .target-list {
+      display: grid;
+      gap: 10px;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .target-card {
+      padding: 12px;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .target-card.selected {
+      border-color: rgba(20, 128, 109, 0.62);
+      background: var(--green-soft);
+    }
+
+    .target-card:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+    }
+
+    .target-head {
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .target-title {
+      min-width: 0;
+    }
+
+    .target-title strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .target-title span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .target-card input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      accent-color: var(--green);
+    }
+
+    .target-meta {
+      flex-wrap: wrap;
+      margin-top: 9px;
+      gap: 7px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .target-body {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .target-body code,
+    pre,
+    .mono {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    .flow-map {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .flow-step {
+      padding: 12px;
+      align-items: flex-start;
+      gap: 10px;
+      background: #fff;
+    }
+
+    .step-index {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--graphite);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .flow-step strong {
+      display: block;
+      line-height: 1.2;
+    }
+
+    .flow-step span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .mini-card {
+      padding: 12px;
+      min-height: 94px;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    pre {
+      min-height: 112px;
+      max-height: 300px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111a18;
+      color: #eff8f4;
+      padding: 12px;
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .receipt-row {
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .receipt-row strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .receipt-row span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .empty {
+      border: 1px dashed var(--line-strong);
+      border-radius: 8px;
+      color: var(--muted);
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translate(-50%, 12px);
+      border-radius: 999px;
+      background: var(--graphite);
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .target-list {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 22px, 1540px);
+        padding-top: 16px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .proof-grid,
+      .metric-grid,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">A</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Agent Adapter Lab</div>
+          <div class="brand-subtitle">Local-first Agent Adoption Lab</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Product navigation">
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button" href="question-lab.html">Question Lab</a>
+        <a class="button" href="type-duel-lab.html">Type Duel Lab</a>
+        <a class="button primary" href="agent-adapter-lab.html">Agent Lab</a>
+        <a class="button" href="calibration-lab.html">Calibration Lab</a>
+        <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="response-eval-lab.html">Response Eval</a>
+        <a class="button" href="playground.html">Playground</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Agent Adoption Lab</div>
+        <h1>Select an agent stack and leave with a copyable installation path.</h1>
+        <p>This page turns the adapter manifest into a usable surface: choose Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md agents, then copy the exact pack command, install checklist, JSON receipt, and contribution issue seed. It stays local-first and preserves the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary across tools.</p>
+      </div>
+      <aside class="hero-proof" aria-label="Agent Adapter Lab proof">
+        <div class="proof-grid">
+          <div class="proof">
+            <strong id="metricTargets">11</strong>
+            <span>Adapter targets from agent-adapters/manifest.json</span>
+          </div>
+          <div class="proof">
+            <strong id="metricEntrypoints">19</strong>
+            <span>Distinct entrypoints available for selected toolchains</span>
+          </div>
+          <div class="proof">
+            <strong id="metricBaseline">17</strong>
+            <span>Baseline files included by scripts/export_agent_pack.py</span>
+          </div>
+          <div class="proof">
+            <strong>1</strong>
+            <span>Portable protocol guarded by scripts/agent_adapter_audit.py</span>
+          </div>
+        </div>
+        <div class="status-strip">
+          Checked on <span id="checkedOn">2026-05-28</span>. This is an adoption and source-sync lab, not a promise that any MBTI answer is psychometric ground truth.
+        </div>
+      </aside>
+    </section>
+
+    <section class="workspace" aria-label="Agent adapter workspace">
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Targets</h2>
+          <span><strong id="visibleTargetCount">0</strong> visible</span>
+        </div>
+        <div class="selector-grid">
+          <div>
+            <label for="targetSearch">Search</label>
+            <input id="targetSearch" type="search" autocomplete="off" placeholder="Search Codex, Cursor, AGENTS.md, slash command, rule...">
+          </div>
+          <div>
+            <label for="supportFilter">Support level</label>
+            <select id="supportFilter">
+              <option value="all">All support levels</option>
+            </select>
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="button primary" id="selectCoreTargets" type="button">Core Pack</button>
+          <button class="button" id="selectAllTargets" type="button">Select All</button>
+          <button class="button" id="clearTargets" type="button">Clear</button>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="selectedTargetCount">0</strong>
+            <span>Selected agent targets</span>
+          </div>
+          <div class="metric">
+            <strong id="fileGroupCount">0</strong>
+            <span>Estimated exported file groups</span>
+          </div>
+        </div>
+        <div id="targetList" class="target-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Export Path</h2>
+          <span>Copyable route</span>
+        </div>
+        <div class="flow-map" aria-label="Agent adapter flow">
+          <div class="flow-step">
+            <div class="step-index">1</div>
+            <div>
+              <strong>Manifest source</strong>
+              <span>agent-adapters/manifest.json records source URLs, install notes, entrypoints, and the shared adapter contract.</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-index">2</div>
+            <div>
+              <strong>Pack export</strong>
+              <span>scripts/export_agent_pack.py copies selected adapters plus the canonical skill and writes AGENT_PACK_MANIFEST.json.</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-index">3</div>
+            <div>
+              <strong>Audit loop</strong>
+              <span>scripts/agent_adapter_audit.py, scripts/agent_pack_export_audit.py, and scripts/agent_adapter_lab_audit.py keep the public surface aligned.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong>source-of-truth sync</strong>
+            <span>Generated data must match the manifest exactly before release.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Safety boundary</strong>
+            <span>No clinical, hiring, legal, medical, financial, or deterministic use.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Sticky precision</strong>
+            <span>Adoption is anchored in falsifiable typing, not flattery or label lock.</span>
+          </div>
+        </div>
+
+        <label for="packCommandOutput">Pack export command</label>
+        <pre id="packCommandOutput"></pre>
+        <label for="installChecklistOutput">Install checklist</label>
+        <pre id="installChecklistOutput"></pre>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Receipt</h2>
+          <span>Adapter proof</span>
+        </div>
+        <div id="selectedTargetSummary" aria-live="polite"></div>
+        <label for="adapterReceiptOutput">Adapter JSON receipt</label>
+        <pre id="adapterReceiptOutput"></pre>
+        <label for="issueSeedOutput">Issue seed</label>
+        <pre id="issueSeedOutput"></pre>
+        <div class="action-row">
+          <button class="button primary" id="copyPackCommand" type="button">Copy Pack Command</button>
+          <button class="button" id="copyInstallChecklist" type="button">Copy Install Checklist</button>
+          <button class="button" id="copyAdapterJson" type="button">Copy Adapter JSON</button>
+          <button class="button" id="downloadAdapterJson" type="button">Download JSON</button>
+          <button class="button" id="copyIssueSeed" type="button">Copy Issue Seed</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // BEGIN GENERATED AGENT ADAPTER MANIFEST
+    const AGENT_ADAPTER_MANIFEST = {
+          "schema": "mbti-typing-agent-adapters/v1",
+          "canonical_skill": "skill/mbti-typing/SKILL.md",
+          "canonical_contract": "AGENTS.md",
+          "adapter_audit": "scripts/agent_adapter_audit.py",
+          "pack_exporter": "scripts/export_agent_pack.py",
+          "pack_audit": "scripts/agent_pack_export_audit.py",
+          "checked_on": "2026-05-28",
+          "baseline_paths": [
+                "skill/mbti-typing",
+                "AGENTS.md",
+                "CONVENTIONS.md",
+                "agent-adapters/README.md",
+                "agent-adapters/manifest.json",
+                "docs/agent-adapters.md",
+                "docs/agent-adapter-lab.html",
+                "docs/assets/agent-compatibility-grid.svg",
+                "docs/assets/agent-pack-export-flow.svg",
+                "docs/assets/agent-adapter-lab-flow.svg",
+                "prompts/prompt-recipes.md",
+                ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml",
+                "scripts/export_agent_pack.py",
+                "scripts/agent_adapter_audit.py",
+                "scripts/agent_pack_export_audit.py",
+                "scripts/sync_agent_adapter_lab.py",
+                "scripts/agent_adapter_lab_audit.py"
+          ],
+          "shared_references": [
+                "skill/mbti-typing/references/playbooks.md",
+                "skill/mbti-typing/references/question-bank.md",
+                "skill/mbti-typing/references/pair-duels.md",
+                "skill/mbti-typing/references/type-map.md",
+                "skill/mbti-typing/references/research-boundaries.md",
+                "skill/mbti-typing/references/evidence-ledger-template.md",
+                "skill/mbti-typing/references/quality-gates.md"
+          ],
+          "targets": [
+                {
+                      "id": "codex",
+                      "display": "OpenAI Codex",
+                      "support_level": "native-skill",
+                      "source_url": "https://github.com/openai/codex",
+                      "entrypoints": [
+                            "skill/mbti-typing/SKILL.md",
+                            "skill/mbti-typing/agents/openai.yaml",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
+                      "install": "cp -R skill/mbti-typing ~/.codex/skills/",
+                      "contract": "Codex skill plus repository AGENTS.md contract."
+                },
+                {
+                      "id": "generic-agents-md",
+                      "display": "Generic AGENTS.md-aware agents",
+                      "support_level": "project-instructions",
+                      "source_url": "https://agents.md/",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "CONVENTIONS.md"
+                      ],
+                      "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
+                      "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
+                      "contract": "Portable project-level instruction contract."
+                },
+                {
+                      "id": "claude-code",
+                      "display": "Claude Code",
+                      "support_level": "project-skill-and-command",
+                      "source_url": "https://docs.anthropic.com/en/docs/claude-code/skills",
+                      "entrypoints": [
+                            ".claude/skills/mbti-typing/SKILL.md",
+                            ".claude/commands/mbti-type.md",
+                            "CLAUDE.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
+                      "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
+                      "contract": "Project skill and slash-command fallback for Claude Code."
+                },
+                {
+                      "id": "cursor",
+                      "display": "Cursor",
+                      "support_level": "project-rule",
+                      "source_url": "https://docs.cursor.com/en/context/rules",
+                      "entrypoints": [
+                            ".cursor/rules/mbti-typing.mdc",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
+                      "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
+                      "contract": "Project rule in MDC format plus AGENTS.md fallback."
+                },
+                {
+                      "id": "opencode",
+                      "display": "opencode",
+                      "support_level": "project-instructions",
+                      "source_url": "https://opencode.ai/docs/config/",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "opencode.json"
+                      ],
+                      "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
+                      "install": "Keep AGENTS.md and opencode.json committed in the project root.",
+                      "contract": "AGENTS.md project rules with opencode.json instructions aggregation."
+                },
+                {
+                      "id": "gemini-cli",
+                      "display": "Gemini CLI",
+                      "support_level": "context-file",
+                      "source_url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md",
+                      "entrypoints": [
+                            "GEMINI.md",
+                            ".gemini/settings.json",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "gemini \"Use the MBTI Typing Skill to run an ENTJ vs INTJ investigation\"",
+                      "install": "Copy GEMINI.md, AGENTS.md, and .gemini/settings.json into the target repository root.",
+                      "contract": "Gemini context file imports the shared contract and canonical skill."
+                },
+                {
+                      "id": "github-copilot",
+                      "display": "GitHub Copilot",
+                      "support_level": "repository-instructions-and-skill",
+                      "source_url": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions",
+                      "entrypoints": [
+                            ".github/copilot-instructions.md",
+                            ".github/instructions/mbti-typing.instructions.md",
+                            ".github/skills/mbti-typing/SKILL.md",
+                            "AGENTS.md",
+                            "CLAUDE.md",
+                            "GEMINI.md"
+                      ],
+                      "invoke": "Ask Copilot to use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
+                      "install": "Copy .github/copilot-instructions.md, .github/instructions/mbti-typing.instructions.md, and .github/skills/mbti-typing/SKILL.md into the target repository.",
+                      "contract": "Repository custom instructions plus project skill entrypoint."
+                },
+                {
+                      "id": "windsurf",
+                      "display": "Windsurf",
+                      "support_level": "workspace-rule",
+                      "source_url": "https://docs.windsurf.com/windsurf/cascade/rules",
+                      "entrypoints": [
+                            ".windsurf/rules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Windsurf to apply the MBTI Typing Skill rule to a type-me, duel, transcript audit, or adapter task.",
+                      "install": "Copy .windsurf/rules/mbti-typing.md and AGENTS.md into the target repository.",
+                      "contract": "Workspace rule points back to the canonical skill and shared contract."
+                },
+                {
+                      "id": "cline",
+                      "display": "Cline",
+                      "support_level": "project-skill-and-rule",
+                      "source_url": "https://docs.cline.bot/features/skills",
+                      "entrypoints": [
+                            ".cline/skills/mbti-typing/SKILL.md",
+                            ".clinerules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Cline to use the MBTI Typing Skill for the current typing task.",
+                      "install": "Copy .cline/skills/mbti-typing/SKILL.md, .clinerules/mbti-typing.md, and AGENTS.md into the target repository.",
+                      "contract": "Project skill and rule both preserve the canonical typing protocol."
+                },
+                {
+                      "id": "continue",
+                      "display": "Continue",
+                      "support_level": "local-rule",
+                      "source_url": "https://docs.continue.dev/customize/deep-dives/rules",
+                      "entrypoints": [
+                            ".continue/rules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Continue to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
+                      "install": "Copy .continue/rules/mbti-typing.md and AGENTS.md into the target repository.",
+                      "contract": "Continue local rule points back to the canonical skill and shared safety boundary."
+                },
+                {
+                      "id": "aider",
+                      "display": "aider",
+                      "support_level": "conventions-file",
+                      "source_url": "https://aider.chat/docs/usage/conventions.html",
+                      "entrypoints": [
+                            "CONVENTIONS.md",
+                            ".aider.conf.yml",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
+                      "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
+                      "contract": "Conventions file keeps the same protocol visible to aider sessions."
+                }
+          ]
+    };
+    // END GENERATED AGENT ADAPTER MANIFEST
+
+    const STORAGE_KEY = "mbti-typing-agent-adapter-lab-state";
+    const CORE_TARGETS = ["codex", "claude-code", "cursor", "opencode"];
+    const SAFETY_CONTRACT = [
+      "candidate set with serious runner-up",
+      "evidence ledger",
+      "falsifier and revision trigger",
+      "no clinical, hiring, legal, medical, financial, or deterministic use"
+    ];
+
+    const targetSearch = document.getElementById("targetSearch");
+    const supportFilter = document.getElementById("supportFilter");
+    const targetList = document.getElementById("targetList");
+    const selectedTargetCount = document.getElementById("selectedTargetCount");
+    const visibleTargetCount = document.getElementById("visibleTargetCount");
+    const fileGroupCount = document.getElementById("fileGroupCount");
+    const packCommandOutput = document.getElementById("packCommandOutput");
+    const installChecklistOutput = document.getElementById("installChecklistOutput");
+    const adapterReceiptOutput = document.getElementById("adapterReceiptOutput");
+    const issueSeedOutput = document.getElementById("issueSeedOutput");
+    const selectedTargetSummary = document.getElementById("selectedTargetSummary");
+    const toast = document.getElementById("toast");
+
+    let selectedIds = new Set(CORE_TARGETS);
+    let latestReceipt = null;
+
+    function normalizeSearch(value) {
+      return value.trim().toLowerCase();
+    }
+
+    function unique(values) {
+      return Array.from(new Set(values));
+    }
+
+    function targetSearchText(target) {
+      return [
+        target.id,
+        target.display,
+        target.support_level,
+        target.source_url,
+        target.invoke,
+        target.install,
+        target.contract,
+        ...(target.entrypoints || [])
+      ].join(" ").toLowerCase();
+    }
+
+    function selectedTargets() {
+      return AGENT_ADAPTER_MANIFEST.targets.filter((target) => selectedIds.has(target.id));
+    }
+
+    function visibleTargets() {
+      const query = normalizeSearch(targetSearch.value);
+      const support = supportFilter.value;
+      return AGENT_ADAPTER_MANIFEST.targets.filter((target) => {
+        const matchesSupport = support === "all" || target.support_level === support;
+        const matchesQuery = !query || targetSearchText(target).includes(query);
+        return matchesSupport && matchesQuery;
+      });
+    }
+
+    function estimatedFileGroups(targets) {
+      const files = new Set(AGENT_ADAPTER_MANIFEST.baseline_paths || []);
+      targets.forEach((target) => {
+        (target.entrypoints || []).forEach((entrypoint) => files.add(entrypoint));
+      });
+      return files.size;
+    }
+
+    function buildPackCommand(targets) {
+      if (!targets.length) {
+        return "Select at least one target to generate a pack export command.";
+      }
+      const selectedAll = targets.length === AGENT_ADAPTER_MANIFEST.targets.length;
+      const targetArgs = selectedAll
+        ? ["--target", "all"]
+        : targets.flatMap((target) => ["--target", target.id]);
+      return [
+        "python3",
+        "-B",
+        AGENT_ADAPTER_MANIFEST.pack_exporter,
+        "--dest",
+        "/tmp/mbti-agent-pack",
+        ...targetArgs
+      ].join(" ");
+    }
+
+    function buildInstallChecklist(targets) {
+      if (!targets.length) {
+        return "No targets selected.";
+      }
+      const lines = [
+        "Agent Adapter Lab install checklist",
+        "",
+        "1. Export the selected adapter pack.",
+        "2. Inspect AGENT_PACK_MANIFEST.json before copying into a target repo.",
+        "3. Run make test, scripts/agent_adapter_audit.py, and scripts/agent_pack_export_audit.py after edits.",
+        "4. Preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language.",
+        "",
+        "Selected targets:"
+      ];
+      targets.forEach((target) => {
+        lines.push("");
+        lines.push(`- ${target.display} (${target.id})`);
+        lines.push(`  support: ${target.support_level}`);
+        lines.push(`  install: ${target.install}`);
+        lines.push(`  invoke: ${target.invoke}`);
+        lines.push(`  entrypoints: ${(target.entrypoints || []).join(", ")}`);
+      });
+      lines.push("");
+      lines.push("Baseline files:");
+      (AGENT_ADAPTER_MANIFEST.baseline_paths || []).forEach((path) => lines.push(`- ${path}`));
+      return lines.join("\n");
+    }
+
+    function buildReceipt(targets) {
+      const targetIds = targets.map((target) => target.id);
+      return {
+        schema_version: "agent-adapter-lab/v1",
+        manifest_schema: AGENT_ADAPTER_MANIFEST.schema,
+        checked_on: AGENT_ADAPTER_MANIFEST.checked_on,
+        selected_targets: targetIds,
+        selected_target_count: targets.length,
+        file_group_count: estimatedFileGroups(targets),
+        canonical_skill: AGENT_ADAPTER_MANIFEST.canonical_skill,
+        canonical_contract: AGENT_ADAPTER_MANIFEST.canonical_contract,
+        adapter_audit: AGENT_ADAPTER_MANIFEST.adapter_audit,
+        pack_exporter: AGENT_ADAPTER_MANIFEST.pack_exporter,
+        pack_audit: AGENT_ADAPTER_MANIFEST.pack_audit,
+        lab_sync: "scripts/sync_agent_adapter_lab.py",
+        lab_audit: "scripts/agent_adapter_lab_audit.py",
+        issue_template: "agent_adapter_improvement.yml",
+        pack_command: buildPackCommand(targets),
+        safety_contract: SAFETY_CONTRACT,
+        shared_references: AGENT_ADAPTER_MANIFEST.shared_references,
+        targets: targets.map((target) => ({
+          id: target.id,
+          display: target.display,
+          support_level: target.support_level,
+          source_url: target.source_url,
+          entrypoints: target.entrypoints,
+          install: target.install,
+          invoke: target.invoke,
+          contract: target.contract
+        }))
+      };
+    }
+
+    function buildIssueSeed(receipt) {
+      const ids = receipt.selected_targets.length ? receipt.selected_targets.join(", ") : "[none selected]";
+      return [
+        "title: Agent adapter improvement - <tool or workflow>",
+        "template: agent_adapter_improvement.yml",
+        "selected_targets: " + ids,
+        "manifest_schema: " + receipt.manifest_schema,
+        "expected_behavior:",
+        "  - adapter should preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary",
+        "  - exported pack should include canonical skill, target entrypoints, and AGENT_PACK_MANIFEST.json",
+        "reproduction:",
+        "  - command: " + receipt.pack_command,
+        "  - audits: make test; python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json",
+        "evidence:",
+        "  - paste sanitized adapter output or missing entrypoint here",
+        "privacy:",
+        "  - do not include raw private chat logs, API keys, or account-specific data"
+      ].join("\n");
+    }
+
+    function createPill(text) {
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.textContent = text;
+      return pill;
+    }
+
+    function createTargetCard(target) {
+      const card = document.createElement("article");
+      card.className = "target-card" + (selectedIds.has(target.id) ? " selected" : "");
+
+      const head = document.createElement("div");
+      head.className = "target-head";
+      const title = document.createElement("div");
+      title.className = "target-title";
+      const name = document.createElement("strong");
+      name.textContent = target.display;
+      const subtitle = document.createElement("span");
+      subtitle.textContent = target.contract;
+      title.append(name, subtitle);
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = selectedIds.has(target.id);
+      checkbox.setAttribute("aria-label", `Select ${target.display}`);
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          selectedIds.add(target.id);
+        } else {
+          selectedIds.delete(target.id);
+        }
+        render();
+      });
+      head.append(title, checkbox);
+
+      const meta = document.createElement("div");
+      meta.className = "target-meta";
+      meta.append(createPill(target.id), createPill(target.support_level), createPill(`${(target.entrypoints || []).length} entrypoints`));
+
+      const body = document.createElement("div");
+      body.className = "target-body";
+      const invoke = document.createElement("div");
+      invoke.textContent = `Invoke: ${target.invoke}`;
+      const install = document.createElement("div");
+      install.textContent = `Install: ${target.install}`;
+      body.append(invoke, install);
+
+      card.append(head, meta, body);
+      card.addEventListener("click", (event) => {
+        if (event.target === checkbox) {
+          return;
+        }
+        if (selectedIds.has(target.id)) {
+          selectedIds.delete(target.id);
+        } else {
+          selectedIds.add(target.id);
+        }
+        render();
+      });
+      return card;
+    }
+
+    function renderSupportFilter() {
+      const current = supportFilter.value || "all";
+      const options = [document.createElement("option")];
+      options[0].value = "all";
+      options[0].textContent = "All support levels";
+      unique(AGENT_ADAPTER_MANIFEST.targets.map((target) => target.support_level)).sort().forEach((level) => {
+        const option = document.createElement("option");
+        option.value = level;
+        option.textContent = level;
+        options.push(option);
+      });
+      supportFilter.replaceChildren(...options);
+      supportFilter.value = Array.from(supportFilter.options).some((option) => option.value === current) ? current : "all";
+    }
+
+    function renderTargets(targets) {
+      if (!targets.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No adapter targets match this filter.";
+        targetList.replaceChildren(empty);
+        return;
+      }
+      targetList.replaceChildren(...targets.map((target) => createTargetCard(target)));
+    }
+
+    function renderSummary(targets) {
+      if (!targets.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Select a target to create a receipt.";
+        selectedTargetSummary.replaceChildren(empty);
+        return;
+      }
+      const rows = targets.slice(0, 5).map((target) => {
+        const row = document.createElement("div");
+        row.className = "receipt-row";
+        const text = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = target.display;
+        const detail = document.createElement("span");
+        detail.textContent = `${target.support_level} · ${(target.entrypoints || []).join(", ")}`;
+        text.append(title, detail);
+        row.append(text, createPill(target.id));
+        return row;
+      });
+      if (targets.length > 5) {
+        const more = document.createElement("div");
+        more.className = "receipt-row";
+        const text = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = `${targets.length - 5} more selected`;
+        const detail = document.createElement("span");
+        detail.textContent = targets.slice(5).map((target) => target.display).join(", ");
+        text.append(title, detail);
+        more.append(text, createPill("more"));
+        rows.push(more);
+      }
+      selectedTargetSummary.replaceChildren(...rows);
+    }
+
+    function renderOutputs(targets) {
+      const receipt = buildReceipt(targets);
+      latestReceipt = receipt;
+      selectedTargetCount.textContent = String(targets.length);
+      fileGroupCount.textContent = String(receipt.file_group_count);
+      packCommandOutput.textContent = receipt.pack_command;
+      installChecklistOutput.textContent = buildInstallChecklist(targets);
+      adapterReceiptOutput.textContent = JSON.stringify(receipt, null, 2);
+      issueSeedOutput.textContent = buildIssueSeed(receipt);
+      renderSummary(targets);
+      saveState();
+    }
+
+    function render() {
+      const filteredTargets = visibleTargets();
+      const chosenTargets = selectedTargets();
+      visibleTargetCount.textContent = String(filteredTargets.length);
+      renderTargets(filteredTargets);
+      renderOutputs(chosenTargets);
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1400);
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(`${label} copied`);
+      } catch {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        document.body.append(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+        showToast(`${label} copied`);
+      }
+    }
+
+    function downloadAdapterJson() {
+      if (!latestReceipt) {
+        latestReceipt = buildReceipt(selectedTargets());
+      }
+      const payload = JSON.stringify(latestReceipt, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "agent-adapter-receipt.json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("Adapter JSON downloaded");
+    }
+
+    function saveState() {
+      const state = {
+        selectedIds: Array.from(selectedIds),
+        search: targetSearch.value,
+        support: supportFilter.value
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function restoreState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return;
+        }
+        const state = JSON.parse(raw);
+        if (Array.isArray(state.selectedIds)) {
+          selectedIds = new Set(state.selectedIds.filter((id) => AGENT_ADAPTER_MANIFEST.targets.some((target) => target.id === id)));
+        }
+        targetSearch.value = typeof state.search === "string" ? state.search : "";
+        if (typeof state.support === "string") {
+          supportFilter.value = state.support;
+        }
+      } catch {
+        selectedIds = new Set(CORE_TARGETS);
+      }
+    }
+
+    document.getElementById("selectAllTargets").addEventListener("click", () => {
+      selectedIds = new Set(AGENT_ADAPTER_MANIFEST.targets.map((target) => target.id));
+      render();
+    });
+    document.getElementById("selectCoreTargets").addEventListener("click", () => {
+      selectedIds = new Set(CORE_TARGETS);
+      render();
+    });
+    document.getElementById("clearTargets").addEventListener("click", () => {
+      selectedIds = new Set();
+      render();
+    });
+    document.getElementById("copyPackCommand").addEventListener("click", () => copyText(packCommandOutput.textContent, "Pack command"));
+    document.getElementById("copyInstallChecklist").addEventListener("click", () => copyText(installChecklistOutput.textContent, "Install checklist"));
+    document.getElementById("copyAdapterJson").addEventListener("click", () => copyText(adapterReceiptOutput.textContent, "Adapter JSON"));
+    document.getElementById("downloadAdapterJson").addEventListener("click", downloadAdapterJson);
+    document.getElementById("copyIssueSeed").addEventListener("click", () => copyText(issueSeedOutput.textContent, "Issue seed"));
+    targetSearch.addEventListener("input", render);
+    supportFilter.addEventListener("change", render);
+
+    document.getElementById("metricTargets").textContent = String(AGENT_ADAPTER_MANIFEST.targets.length);
+    document.getElementById("metricEntrypoints").textContent = String(unique(AGENT_ADAPTER_MANIFEST.targets.flatMap((target) => target.entrypoints || [])).length);
+    document.getElementById("metricBaseline").textContent = String((AGENT_ADAPTER_MANIFEST.baseline_paths || []).length);
+    document.getElementById("checkedOn").textContent = AGENT_ADAPTER_MANIFEST.checked_on || "unknown";
+    renderSupportFilter();
+    restoreState();
+    render();
+  </script>
+</body>
+</html>

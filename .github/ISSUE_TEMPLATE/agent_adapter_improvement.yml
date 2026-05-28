@@ -1,0 +1,57 @@
+name: Agent adapter improvement
+description: Report a missing, stale, or weak MBTI Typing Skill agent adapter.
+title: "[Agent Adapter]: "
+labels: ["agent-adapter", "compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when an adapter, export pack, or Agent Adapter Lab path fails to preserve the canonical MBTI Typing Skill protocol.
+
+  - type: input
+    id: target
+    attributes:
+      label: Agent target
+      description: Name the affected tool or workflow.
+      placeholder: "Cursor, Claude Code, opencode, AGENTS.md-aware agent..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected adapter behavior
+      description: Describe the desired install, invocation, or export behavior.
+      placeholder: "The adapter should preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language."
+    validations:
+      required: true
+
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed problem
+      description: Explain what is missing, stale, confusing, or hard to use.
+      placeholder: "The exported pack omits ... / the lab command should include ... / the rule does not mention ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction path
+      description: Include sanitized commands, target ids, or copied Agent Adapter Lab receipt snippets.
+      placeholder: |
+        python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target cursor
+        python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety and privacy
+      options:
+        - label: I removed private chat logs, API keys, account ids, and personally identifying information.
+          required: true
+        - label: This request does not ask the project to provide clinical, hiring, legal, medical, financial, or deterministic personality claims.
+          required: true

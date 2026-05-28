@@ -36,11 +36,16 @@ REQUIRED_FILES = (
     "agent-adapters/manifest.json",
     "agent-adapters/README.md",
     "docs/agent-adapters.md",
+    "docs/agent-adapter-lab.html",
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
+    "docs/assets/agent-adapter-lab-flow.svg",
+    ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
+    "scripts/sync_agent_adapter_lab.py",
+    "scripts/agent_adapter_lab_audit.py",
 )
 
 EXPECTED_TARGETS = (
@@ -91,6 +96,23 @@ SVG_TERMS = (
     "make test",
     "runner-up",
     "falsifier",
+)
+
+LAB_TERMS = (
+    "MBTI Typing Skill Agent Adapter Lab",
+    "Agent Adoption Lab",
+    "AGENT_PACK_MANIFEST.json",
+    "scripts/export_agent_pack.py",
+    "scripts/agent_adapter_audit.py",
+    "scripts/agent_pack_export_audit.py",
+    "scripts/agent_adapter_lab_audit.py",
+    "agent_adapter_improvement.yml",
+    "candidate set",
+    "serious runner-up",
+    "evidence ledger",
+    "falsifier",
+    "safety boundary",
+    "local-first",
 )
 
 
@@ -225,13 +247,17 @@ def check_tool_adapters(root: Path) -> list[Check]:
 def check_docs_and_visual(root: Path) -> list[Check]:
     adapter_readme = read_text(root / "agent-adapters/README.md")
     docs = read_text(root / "docs/agent-adapters.md")
+    lab = read_text(root / "docs/agent-adapter-lab.html")
     svg = read_text(root / "docs/assets/agent-adapter-matrix.svg")
     compatibility_svg = read_text(root / "docs/assets/agent-compatibility-grid.svg")
     pack_svg = read_text(root / "docs/assets/agent-pack-export-flow.svg")
+    lab_svg = read_text(root / "docs/assets/agent-adapter-lab-flow.svg")
     makefile = read_text(root / "Makefile")
     exporter = read_text(root / "scripts/export_agent_pack.py")
     pack_audit = read_text(root / "scripts/agent_pack_export_audit.py")
-    dependency_scan = (svg + compatibility_svg + pack_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
+    lab_audit = read_text(root / "scripts/agent_adapter_lab_audit.py")
+    issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml")
+    dependency_scan = (svg + compatibility_svg + pack_svg + lab_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
     required_tool_terms = ("Codex", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider")
     source_terms = ("docs.anthropic.com", "docs.cursor.com", "opencode.ai", "github.com/openai/codex", "google-gemini", "docs.github.com", "docs.windsurf.com", "docs.cline.bot", "docs.continue.dev", "aider.chat")
     return [
@@ -240,10 +266,14 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("docs:adapter_readme_pack_export", contains_all(adapter_readme, ("scripts/export_agent_pack.py", "AGENT_PACK_MANIFEST.json", "Agent Pack Export Audit")), "adapter README documents pack export"),
         Check("docs:agent_adapters_tools", contains_all(docs, required_tool_terms), "agent adapter docs cover all target tools"),
         Check("docs:agent_adapters_sources", contains_all(docs, source_terms), "agent adapter docs cite current source conventions"),
+        Check("docs:agent_adapter_lab", contains_all(lab, LAB_TERMS + required_tool_terms), "Agent Adapter Lab covers targets, export path, issue seed, and protocol terms"),
+        Check("docs:agent_adapter_issue_template", contains_all(issue_template, ("Agent adapter improvement", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter issue template preserves protocol terms"),
         Check("makefile:agent_adapter_target", "agent-adapter-audit" in makefile and "scripts/agent_adapter_audit.py" in makefile, "Makefile runs adapter audit"),
         Check("makefile:agent_pack_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs pack export audit"),
+        Check("makefile:agent_adapter_lab_targets", "agent-adapter-lab-sync" in makefile and "scripts/sync_agent_adapter_lab.py" in makefile and "agent-adapter-lab-audit" in makefile and "scripts/agent_adapter_lab_audit.py" in makefile, "Makefile runs Agent Adapter Lab sync and audit"),
         Check("exporter:contract", contains_all(exporter, ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "pack exporter has schema, baseline, manifest, and write guard"),
         Check("pack_audit:contract", contains_all(pack_audit, ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "pack export audit covers dry-run, all, selective, and unknown-target flows"),
+        Check("lab_audit:contract", contains_all(lab_audit, ("Agent Adapter Lab Audit", "build_lab_manifest", "extract_embedded_manifest", "agent-adapter-lab/v1")), "Agent Adapter Lab has a source-sync audit"),
         Check("svg:shape", "<svg" in svg and "viewBox=" in svg, "adapter matrix is an SVG with viewBox"),
         Check("svg:accessibility", 'role="img"' in svg and "<title" in svg and "<desc" in svg, "adapter matrix has accessibility metadata"),
         Check("svg:no_remote_or_script", "<script" not in dependency_scan and "http://" not in dependency_scan and "https://" not in dependency_scan, "adapter matrix has no script or remote dependency"),
@@ -254,6 +284,9 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("pack_svg:shape", "<svg" in pack_svg and "viewBox=" in pack_svg, "pack export flow is an SVG with viewBox"),
         Check("pack_svg:accessibility", 'role="img"' in pack_svg and "<title" in pack_svg and "<desc" in pack_svg, "pack export flow has accessibility metadata"),
         Check("pack_svg:labels", contains_all(pack_svg, ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo")), "pack export flow contains expected labels"),
+        Check("lab_svg:shape", "<svg" in lab_svg and "viewBox=" in lab_svg, "Agent Adapter Lab flow is an SVG with viewBox"),
+        Check("lab_svg:accessibility", 'role="img"' in lab_svg and "<title" in lab_svg and "<desc" in lab_svg, "Agent Adapter Lab flow has accessibility metadata"),
+        Check("lab_svg:labels", contains_all(lab_svg, ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "11 adapters", "one protocol")), "Agent Adapter Lab flow contains expected labels"),
     ]
 
 

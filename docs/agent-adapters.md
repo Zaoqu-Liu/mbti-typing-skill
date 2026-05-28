@@ -12,6 +12,8 @@ One canonical protocol, many thin adapters:
 - `scripts/agent_adapter_audit.py` blocks drift.
 - `scripts/export_agent_pack.py` turns the manifest into a portable pack so users do not hand-copy adapters.
 - `scripts/agent_pack_export_audit.py` proves the pack path, selective export, write guard, and generated receipt.
+- `docs/agent-adapter-lab.html` turns the same manifest into a local-first selector with copyable pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds.
+- `scripts/sync_agent_adapter_lab.py` and `scripts/agent_adapter_lab_audit.py` block public-page drift.
 
 ## Supported Tools
 
@@ -20,6 +22,8 @@ One canonical protocol, many thin adapters:
 ![Agent Compatibility Grid](assets/agent-compatibility-grid.svg)
 
 ![Agent Pack Export Flow](assets/agent-pack-export-flow.svg)
+
+![Agent Adapter Lab Flow](assets/agent-adapter-lab-flow.svg)
 
 | Tool | Files | Why this shape |
 |---|---|---|
@@ -74,6 +78,20 @@ The exporter refuses to write into a non-empty destination unless `--force` is e
 python3 -B scripts/agent_pack_export_audit.py .
 ```
 
+## Agent Adapter Lab
+
+For first-run adoption, open the buildless local page instead of reading the manifest manually:
+
+- [Agent Adapter Lab](agent-adapter-lab.html)
+- [Hosted Agent Adapter Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html)
+
+The lab lets users search the 11 targets, filter support levels, choose a Core Pack or Select All, copy the `scripts/export_agent_pack.py` command, inspect the install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed. It preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language in the adoption path.
+
+```bash
+python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+```
+
 ## Current Source Notes
 
 These conventions were checked on 2026-05-28:
@@ -94,7 +112,9 @@ These conventions were checked on 2026-05-28:
 ```bash
 python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
+python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 make test
 ```
 
-The adapter audit checks file presence, manifest targets, install commands, invocation strings, safety boundaries, and source references. The pack export audit checks that the same manifest can produce a portable install bundle without silently omitting the canonical skill or selected target entrypoints.
+The adapter audit checks file presence, manifest targets, install commands, invocation strings, safety boundaries, and source references. The pack export audit checks that the same manifest can produce a portable install bundle without silently omitting the canonical skill or selected target entrypoints. The Agent Adapter Lab audit checks that the user-facing target selector, pack command, checklist, JSON receipt, and issue seed cannot drift from `agent-adapters/manifest.json`.

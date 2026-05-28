@@ -25,6 +25,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
 - Improve agent adapters for Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware tools without forking the protocol.
 - Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
+- Improve adapter adoption through `docs/agent-adapter-lab.html` and the `agent_adapter_improvement.yml` issue template.
 - Add response-eval fixtures that catch shallow live-round, type-duel, final-report, or anti-pattern answers.
 - Share weak answers through `docs/response-eval-lab.html` and the `response_eval_improvement.yml` issue template.
 - Tighten Chinese or English output templates.
@@ -45,8 +46,9 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 201/201 (100.00%)
+Agent Adapter Audit: 213/213 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
+Agent Adapter Lab Audit: 84/84 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
@@ -164,8 +166,11 @@ Before opening an adapter change:
 - Keep `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `opencode.json`, `.gemini/settings.json`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `.aider.conf.yml`, and tool-specific files thin.
 - Update `agent-adapters/manifest.json` if a target, entrypoint, install command, or invocation changes.
 - Update `docs/agent-adapters.md` with source links and the date checked when tool conventions change.
+- Start with `docs/agent-adapter-lab.html` when possible, so the target set, generated pack command, install checklist, adapter JSON receipt, and `agent_adapter_improvement.yml` issue seed are visible before editing files.
 - Run `python3 -B scripts/agent_adapter_audit.py .` before claiming compatibility.
 - Run `python3 -B scripts/agent_pack_export_audit.py .` if a manifest target, adapter file, pack exporter, install command, or portability claim changes.
+- Run `python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html`.
+- Run `python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json` if the manifest, pack baseline, public adoption lab, issue seed, or adapter UX wording changed.
 - Preserve runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary language in every adapter.
 
 ## Pull Request Checklist

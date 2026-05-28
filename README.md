@@ -12,7 +12,7 @@ The GitHub social preview asset is stored at [docs/assets/social-preview.jpg](do
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Question Lab, Type Duel Lab, Benchmark Arena, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
+## Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Benchmark Arena, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
@@ -22,6 +22,8 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [Local Question Lab file](docs/question-lab.html)
 - [GitHub Pages Type Duel Lab](https://zaoqu-liu.github.io/mbti-typing-skill/type-duel-lab.html)
 - [Local Type Duel Lab file](docs/type-duel-lab.html)
+- [GitHub Pages Agent Adapter Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html)
+- [Local Agent Adapter Lab file](docs/agent-adapter-lab.html)
 - [GitHub Pages Benchmark Arena](https://zaoqu-liu.github.io/mbti-typing-skill/case-gallery.html)
 - [Local case gallery file](docs/case-gallery.html)
 - [GitHub Pages Calibration Lab](https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html)
@@ -33,7 +35,7 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -44,6 +46,7 @@ Start here if you want to feel the product before reading the internals:
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and generic AGENTS.md-aware agents.
 - [Agent pack export](agent-adapters/README.md): manifest-driven pack export for copying selected agent adapters into another repository without manual drift.
+- [Agent Adapter Lab](docs/agent-adapter-lab.html): local-first target selector for pack commands, installation checklists, adapter JSON receipts, and adapter issue seeds.
 - [Response evaluation fixtures](examples/response-eval-cases.json): sticky precision cases that audit live-round, duel, final-report, and anti-pattern responses.
 - [Response Eval Lab](docs/response-eval-lab.html): local-first answer quality radar with copyable repair prompts and response eval issue seeds.
 - [Question Lab](docs/question-lab.html): source-synced Round Builder for the next 4-6 questions.
@@ -140,6 +143,12 @@ The Agent Compatibility Grid expands the adapter layer to 11 entrypoints without
 ![Agent Pack Export Flow](docs/assets/agent-pack-export-flow.svg)
 
 The Agent Pack Export Flow turns compatibility into something a user can actually move. `scripts/export_agent_pack.py` reads `agent-adapters/manifest.json`, exports `--target all` or a lean selected set such as `--target cursor --target cline`, includes the canonical `skill/mbti-typing/` directory, adapter docs, prompt recipes, selected entrypoints, and writes an `AGENT_PACK_MANIFEST.json` receipt. `scripts/agent_pack_export_audit.py` checks dry-run JSON, all-target export, selective export, non-empty destination protection, unknown-target failure, and required files. This makes cross-agent adoption copyable and auditable instead of a hand-maintained checklist.
+
+### Agent Adapter Lab Flow
+
+![Agent Adapter Lab Flow](docs/assets/agent-adapter-lab-flow.svg)
+
+The Agent Adapter Lab Flow turns compatibility into a first-run UX: select a tool stack, copy a pack command, inspect the generated install checklist, export an adapter JSON receipt, and open an `agent_adapter_improvement.yml` issue seed if any target is missing or stale. `scripts/sync_agent_adapter_lab.py` keeps `docs/agent-adapter-lab.html` generated from `agent-adapters/manifest.json`, while `scripts/agent_adapter_lab_audit.py` blocks manifest drift, unsafe HTML injection, missing copy outputs, and missing safety-boundary language before release.
 
 ### Response Quality Radar
 
@@ -269,6 +278,7 @@ sequenceDiagram
     copilot-instructions.md
     instructions/mbti-typing.instructions.md
     skills/mbti-typing/SKILL.md
+    ISSUE_TEMPLATE/agent_adapter_improvement.yml
   .windsurf/
     rules/mbti-typing.md
   .cline/
@@ -291,6 +301,7 @@ sequenceDiagram
     case-gallery.html
     calibration-lab.html
     type-duel-lab.html
+    agent-adapter-lab.html
     follow-up-lab.html
     response-eval-lab.html
     playground.html
@@ -312,6 +323,7 @@ sequenceDiagram
       agent-adapter-matrix.svg
       agent-compatibility-grid.svg
       agent-pack-export-flow.svg
+      agent-adapter-lab-flow.svg
       response-quality-radar.svg
       response-eval-lab-flow.svg
   examples/
@@ -329,6 +341,8 @@ sequenceDiagram
     export_agent_pack.py
     agent_pack_export_audit.py
     agent_adapter_audit.py
+    sync_agent_adapter_lab.py
+    agent_adapter_lab_audit.py
     response_eval_audit.py
     response_eval_lab_audit.py
 ```
@@ -418,6 +432,8 @@ python3 -B scripts/blind_review_audit.py examples/blind-review-matrix.json
 python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
 python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
+python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
+python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json
 python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 python3 -B scripts/sync_question_lab.py skill/mbti-typing/references/question-bank.md docs/question-lab.html
@@ -443,8 +459,10 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
-Agent Adapter Audit: 201/201 (100.00%)
+Agent Adapter Audit: 213/213 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
+Agent Adapter Lab Source Sync: PASS (11 targets match)
+Agent Adapter Lab Audit: 84/84 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
@@ -457,7 +475,7 @@ Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 488/488 (100.00%)
+Repository UX Score: 521/521 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -473,7 +491,8 @@ flowchart TD
     Blind --> Consent[Consent redaction audit]
     Consent --> Adapter[Agent Adapter audit]
     Adapter --> Pack[Agent Pack Export audit]
-    Pack --> Response[Response Eval audit]
+    Pack --> AdapterLab[Agent Adapter Lab audit]
+    AdapterLab --> Response[Response Eval audit]
     Response --> ResponseLab[Response Eval Lab audit]
     ResponseLab --> QuestionLab[Question Lab audit]
     QuestionLab --> TypeDuel[Type Duel Lab audit]
