@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.10 - 2026-05-28
+
+- Added a local-first Calibration Lab that checks pasted typing reports against benchmark leading type, runner-up, evidence tags, falsifier theme, safety boundary, and overclaim gates.
+- Added source-of-truth sync and audit scripts for `docs/calibration-lab.html`, plus a `calibration_result.yml` issue template so failed reports can become reusable contribution artifacts.
+- Added the Calibration Loop Map SVG and expanded repository UX gates to verify the new repair loop, Calibration Lab Audit 53/53, and Repository UX Score 200/200.
+
 ## 0.1.9 - 2026-05-28
 
 - Expanded the benchmark suite from 8 to 16 adversarial cases so every MBTI type appears as an expected leading hypothesis at least once.

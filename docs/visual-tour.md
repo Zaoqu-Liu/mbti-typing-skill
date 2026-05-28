@@ -84,6 +84,20 @@ The matrix makes coverage visible instead of implicit:
 - Every tile maps to a benchmark case id, not a decorative label.
 - Coverage is paired with traps and falsifiers, so the matrix does not become a type-collection trophy.
 
+## Calibration Loop Map
+
+![Calibration Loop Map](assets/calibration-loop-map.svg)
+
+The calibration map shows how a generated or human report becomes a repeatable improvement loop:
+
+- Paste a report against a selected benchmark case.
+- Check visible gates for leading hypothesis, runner-up, evidence tags, falsifier theme, boundary statement, and overclaim risk.
+- Copy a repair prompt that tells `$mbti-typing` exactly what failed.
+- Convert the miss into a `calibration_result.yml` issue seed.
+- Feed repeated misses back into benchmark cases, fixtures, or audit rules.
+
+This is the allowed retention loop: people return because each miss produces a sharper next run.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -99,12 +113,21 @@ The lab is intentionally local-first: no build step, no external runtime, no acc
 
 [Benchmark Arena](case-gallery.html) turns the regression suite into a product surface:
 
-- Visitors can scan eight adversarial cases before trusting the workflow.
+- Visitors can scan sixteen adversarial cases before trusting the workflow.
 - Each case shows the leading type, serious runner-up, trap, required evidence tags, and strongest falsifier.
 - The page generates a reusable `Use $mbti-typing` benchmark prompt.
 - The issue seed makes a failed typing session easy to convert into a new synthetic benchmark.
 
 This is the retention loop that is allowed: users come back because the system makes mistakes inspectable and harder to repeat.
+
+## Calibration Lab
+
+[Calibration Lab](calibration-lab.html) turns a candidate report into a visible receipt:
+
+- It uses the same canonical benchmark JSON as the case gallery.
+- It scores whether the report named the leading type, preserved a serious runner-up, covered evidence tags, included a falsifier, included a safety boundary, and avoided overclaiming.
+- It generates a repair prompt, calibration JSON, and failure issue seed without sending user text to a server.
+- It is intentionally lexical and inspectable; failed gates are repair targets, not psychometric truth.
 
 ## Why These Visuals Matter
 
@@ -128,12 +151,13 @@ flowchart TD
     E --> F[Trust loop dashboard]
     F --> G[Benchmark Arena pipeline]
     G --> H[Type coverage matrix]
-    H --> I[One-minute demo]
-    I --> J[Demo session]
-    J --> K[Sample report]
-    K --> L[Evaluation model]
-    L --> M[Contribution guide]
-    M --> N[Benchmark cases]
+    H --> I[Calibration loop map]
+    I --> J[One-minute demo]
+    J --> K[Demo session]
+    K --> L[Sample report]
+    L --> M[Evaluation model]
+    M --> N[Contribution guide]
+    N --> O[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

@@ -18,6 +18,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Add benchmark cases for under-covered type pairs.
 - Improve pair-duel discriminators.
 - Add realistic bad reports that should fail audit.
+- Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -33,7 +34,8 @@ Expected:
 
 ```text
 Score: 35/35 (100.00%)
-Regression passed for 8 golden fixtures.
+Regression passed for 16 golden fixtures.
+Calibration Lab Audit: 53/53 (100.00%)
 ```
 
 ## Benchmark Case Guidelines
@@ -50,10 +52,23 @@ Each benchmark case must include:
 
 Each case should test a real differential-diagnosis problem, not a stereotype.
 
+## Calibration Result Guidelines
+
+Calibration reports are useful when a model output looks plausible but fails a specific benchmark gate.
+
+Before opening a calibration issue:
+
+- Remove private or identifiable text.
+- Include the benchmark case id.
+- Include the Calibration Lab score.
+- Include failed gates such as missing runner-up, missing falsifier, weak evidence tags, missing boundary, or overclaim trigger.
+- Explain the expected repair in one or two concrete sentences.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
 - [ ] Any new claim has a caveat or evidence standard.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.
 - [ ] Any new benchmark case includes a trap and falsifier theme.
+- [ ] Any new calibration result is sanitized and points to a specific failed gate.
 - [ ] No clinical, hiring, or deterministic use case has been added.

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840" role="img" aria-labelledby="title desc">
+  <title id="title">Calibration Loop Map</title>
+  <desc id="desc">A workflow diagram showing how pasted MBTI typing reports move through benchmark cases, calibration gates, repair prompts, and GitHub issue seeds.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7f6; }
+      .panel { fill: #ffffff; stroke: #d8dfdc; stroke-width: 2; rx: 18; }
+      .panelSoft { fill: #f9fbfa; stroke: #d8dfdc; stroke-width: 2; rx: 14; }
+      .title { font: 900 38px Inter, system-ui, sans-serif; fill: #172120; }
+      .subtitle { font: 600 16px Inter, system-ui, sans-serif; fill: #64716e; }
+      .label { font: 850 19px Inter, system-ui, sans-serif; fill: #172120; }
+      .small { font: 700 13px Inter, system-ui, sans-serif; fill: #64716e; }
+      .tiny { font: 750 11px Inter, system-ui, sans-serif; fill: #64716e; }
+      .gateText { font: 850 14px Inter, system-ui, sans-serif; fill: #172120; }
+      .green { fill: #16836f; }
+      .greenSoft { fill: #e4f4ef; stroke: #8ecabc; stroke-width: 1.5; }
+      .blue { fill: #3266a8; }
+      .blueSoft { fill: #e7eef9; stroke: #a8c0e3; stroke-width: 1.5; }
+      .amber { fill: #b97312; }
+      .amberSoft { fill: #fff0d9; stroke: #ddb169; stroke-width: 1.5; }
+      .red { fill: #b93d5b; }
+      .redSoft { fill: #fde8ee; stroke: #e3a7b7; stroke-width: 1.5; }
+      .dark { fill: #24302e; }
+      .white { fill: #ffffff; }
+      .line { fill: none; stroke: #24302e; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+      .dash { fill: none; stroke: #8b9693; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 6 7; }
+      .arrow { fill: #24302e; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1400" height="840"/>
+  <path d="M0 0 H1400 V250 C1160 210 1030 310 820 248 C592 181 460 276 0 190 Z" fill="#e4f4ef"/>
+  <path d="M1400 840 H0 V615 C220 654 403 548 617 614 C874 693 1049 582 1400 642 Z" fill="#e7eef9"/>
+
+  <rect x="54" y="48" width="1292" height="118" class="panel"/>
+  <text x="86" y="104" class="title">Calibration Loop Map</text>
+  <text x="88" y="135" class="subtitle">Blind Calibration Loop: paste a report, expose missing runner-up/falsifier evidence, repair the prompt, and feed failures back into benchmarks.</text>
+  <rect x="1102" y="75" width="190" height="54" rx="12" class="dark"/>
+  <text x="1141" y="97" class="tiny white">PUBLIC GATE</text>
+  <text x="1126" y="119" class="label white">local-first</text>
+
+  <rect x="72" y="220" width="250" height="180" class="panel"/>
+  <circle cx="122" cy="274" r="28" class="green"/>
+  <text x="113" y="282" class="label white">1</text>
+  <text x="166" y="266" class="label">Report Paste</text>
+  <text x="166" y="292" class="small">Model output or human report</text>
+  <rect x="104" y="322" width="184" height="34" rx="10" class="greenSoft"/>
+  <text x="122" y="344" class="gateText">raw reasoning text</text>
+  <text x="104" y="378" class="tiny">No network call. Draft stays in browser.</text>
+
+  <rect x="402" y="220" width="250" height="180" class="panel"/>
+  <circle cx="452" cy="274" r="28" class="blue"/>
+  <text x="443" y="282" class="label white">2</text>
+  <text x="496" y="266" class="label">Benchmark Case</text>
+  <text x="496" y="292" class="small">Canonical JSON source</text>
+  <rect x="432" y="322" width="188" height="34" rx="10" class="blueSoft"/>
+  <text x="453" y="344" class="gateText">16 type coverage</text>
+  <text x="434" y="378" class="tiny">Case id, leading type, runner-up, trap.</text>
+
+  <rect x="732" y="204" width="330" height="212" class="panel"/>
+  <circle cx="782" cy="258" r="28" class="amber"/>
+  <text x="773" y="266" class="label white">3</text>
+  <text x="826" y="250" class="label">Calibration Gates</text>
+  <text x="826" y="276" class="small">Six visible checks, not hidden scoring</text>
+  <g transform="translate(764 310)">
+    <rect x="0" y="0" width="132" height="30" rx="9" class="greenSoft"/>
+    <text x="16" y="20" class="gateText">leading</text>
+    <rect x="148" y="0" width="132" height="30" rx="9" class="greenSoft"/>
+    <text x="164" y="20" class="gateText">runner-up</text>
+    <rect x="0" y="42" width="132" height="30" rx="9" class="blueSoft"/>
+    <text x="16" y="62" class="gateText">evidence tags</text>
+    <rect x="148" y="42" width="132" height="30" rx="9" class="blueSoft"/>
+    <text x="164" y="62" class="gateText">falsifier</text>
+    <rect x="0" y="84" width="132" height="30" rx="9" class="amberSoft"/>
+    <text x="16" y="104" class="gateText">boundary</text>
+    <rect x="148" y="84" width="132" height="30" rx="9" class="redSoft"/>
+    <text x="164" y="104" class="gateText">overclaim</text>
+  </g>
+
+  <rect x="1142" y="220" width="214" height="180" class="panel"/>
+  <circle cx="1192" cy="274" r="28" class="red"/>
+  <text x="1183" y="282" class="label white">4</text>
+  <text x="1234" y="266" class="label">Receipt</text>
+  <text x="1234" y="292" class="small">PASS/FIX score</text>
+  <rect x="1174" y="322" width="146" height="34" rx="10" class="redSoft"/>
+  <text x="1205" y="344" class="gateText">0-100 score</text>
+  <text x="1175" y="378" class="tiny">Repair target, not truth certificate.</text>
+
+  <path d="M322 310 H386" class="line"/>
+  <path d="M386 310 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M652 310 H716" class="line"/>
+  <path d="M716 310 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M1062 310 H1126" class="line"/>
+  <path d="M1126 310 l-13 -8 v16 Z" class="arrow"/>
+
+  <rect x="118" y="502" width="286" height="174" class="panelSoft"/>
+  <text x="150" y="550" class="label">Repair Prompt</text>
+  <text x="150" y="580" class="small">Use $mbti-typing with failed gates</text>
+  <rect x="150" y="612" width="216" height="34" rx="10" class="greenSoft"/>
+  <text x="172" y="634" class="gateText">runner-up + falsifier fix</text>
+
+  <rect x="556" y="502" width="286" height="174" class="panelSoft"/>
+  <text x="588" y="550" class="label">Issue Seed</text>
+  <text x="588" y="580" class="small">calibration_result.yml contribution</text>
+  <rect x="588" y="612" width="216" height="34" rx="10" class="blueSoft"/>
+  <text x="617" y="634" class="gateText">failure becomes artifact</text>
+
+  <rect x="994" y="502" width="286" height="174" class="panelSoft"/>
+  <text x="1026" y="550" class="label">Benchmark Growth</text>
+  <text x="1026" y="580" class="small">real ambiguity returns to tests</text>
+  <rect x="1026" y="612" width="216" height="34" rx="10" class="amberSoft"/>
+  <text x="1051" y="634" class="gateText">harder to fool next time</text>
+
+  <path d="M1248 400 C1248 472 358 456 258 500" class="dash"/>
+  <path d="M258 500 l-15 -5 l10 13 Z" class="arrow"/>
+  <path d="M404 590 H540" class="line"/>
+  <path d="M540 590 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M842 590 H978" class="line"/>
+  <path d="M978 590 l-13 -8 v16 Z" class="arrow"/>
+  <path d="M1136 502 C1110 448 1030 426 990 414" class="dash"/>
+  <path d="M990 414 l12 -10 l-2 16 Z" class="arrow"/>
+
+  <rect x="254" y="722" width="892" height="62" rx="18" fill="#ffffff" stroke="#d8dfdc" stroke-width="2"/>
+  <text x="306" y="748" class="small">Allowed retention loop</text>
+  <text x="306" y="770" class="label">Users return because each failed report creates a sharper repair prompt and a reusable benchmark contribution.</text>
+</svg>

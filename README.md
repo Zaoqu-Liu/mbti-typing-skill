@@ -10,7 +10,7 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Benchmark Arena, and Playground
+## Session Lab, Benchmark Arena, Calibration Lab, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
@@ -18,10 +18,12 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [Local Session Lab file](docs/session-lab.html)
 - [GitHub Pages Benchmark Arena](https://zaoqu-liu.github.io/mbti-typing-skill/case-gallery.html)
 - [Local case gallery file](docs/case-gallery.html)
+- [GitHub Pages Calibration Lab](https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html)
+- [Local Calibration Lab file](docs/calibration-lab.html)
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -31,6 +33,7 @@ Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
+- [Calibration Lab](docs/calibration-lab.html): blind calibration loop for checking reports against benchmark expectations.
 - [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
 - [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
 - [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
@@ -70,6 +73,12 @@ The Benchmark Arena Pipeline makes the case gallery auditable: `skill/mbti-typin
 ![Benchmark Type Coverage Matrix](docs/assets/type-coverage-matrix.svg)
 
 The expanded benchmark suite now covers all 16 MBTI type codes as leading hypotheses at least once. 16 / 16 covered does not claim psychometric truth; it means the regression suite can challenge every type with a visible runner-up, trap, evidence tag set, and falsifier theme.
+
+### Calibration Loop Map
+
+![Calibration Loop Map](docs/assets/calibration-loop-map.svg)
+
+The Calibration Loop Map turns user-facing stickiness into an ethical verification loop: paste a report, run visible gates, get a Calibration Receipt, copy a repair prompt, and convert failures into a `calibration_result.yml` issue seed. Users come back because each miss becomes a sharper next run, not because the tool hides uncertainty.
 
 ## Visual System Map
 
@@ -169,6 +178,7 @@ sequenceDiagram
     sample-report.md
     session-lab.html
     case-gallery.html
+    calibration-lab.html
     playground.html
     assets/
       mbti-typing-hero.png
@@ -178,6 +188,7 @@ sequenceDiagram
       trust-loop-dashboard.svg
       benchmark-arena-pipeline.svg
       type-coverage-matrix.svg
+      calibration-loop-map.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
@@ -256,6 +267,8 @@ python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sam
 python3 -B scripts/session_lab_audit.py docs/session-lab.html
 python3 -B scripts/sync_case_gallery.py skill/mbti-typing/examples/benchmark-cases.json docs/case-gallery.html
 python3 -B scripts/case_gallery_audit.py docs/case-gallery.html skill/mbti-typing/examples/benchmark-cases.json
+python3 -B scripts/sync_calibration_lab.py skill/mbti-typing/examples/benchmark-cases.json docs/calibration-lab.html
+python3 -B scripts/calibration_lab_audit.py docs/calibration-lab.html skill/mbti-typing/examples/benchmark-cases.json
 python3 -B scripts/repository_scorecard.py .
 ```
 
@@ -267,7 +280,9 @@ Regression passed for 16 golden fixtures.
 Session Lab Audit: 61/61 (100.00%)
 Case Gallery Source Sync: PASS (16 cases match)
 Case Gallery Audit: 48/48 (100.00%)
-Repository UX Score: 171/171 (100.00%)
+Calibration Lab Source Sync: PASS (16 cases match)
+Calibration Lab Audit: 53/53 (100.00%)
+Repository UX Score: 200/200 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

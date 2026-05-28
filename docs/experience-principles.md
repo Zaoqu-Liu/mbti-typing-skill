@@ -31,6 +31,17 @@ Do not use:
 - Barnum statements that fit almost anyone.
 - Personality labels as identity locks.
 
+## Allowed Retention Loop
+
+The sticky loop should be evidence repair:
+
+1. A user runs a typing session or report.
+2. Calibration Lab checks the output against a benchmark case.
+3. Failed gates become a repair prompt, JSON receipt, or calibration issue seed.
+4. Repeated failures become benchmark cases, golden fixtures, or audit rules.
+
+This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:
@@ -72,4 +83,3 @@ A final report is successful when the user can answer these questions:
 - How should the user keep observing themselves?
 
 The report should end with a working formulation, not a permanent verdict.
-

@@ -1,0 +1,41 @@
+name: Calibration result
+description: Share a failed or surprising Calibration Lab result.
+title: "[Calibration]: "
+labels: ["calibration", "benchmark"]
+body:
+  - type: input
+    id: case
+    attributes:
+      label: Benchmark case id
+      placeholder: "bench-infp-infj-003"
+    validations:
+      required: true
+  - type: input
+    id: score
+    attributes:
+      label: Calibration score
+      placeholder: "72/100"
+    validations:
+      required: true
+  - type: textarea
+    id: failed-gates
+    attributes:
+      label: Failed gates
+      description: Paste the failed gates from Calibration Lab.
+      placeholder: "Runner-up missing; falsifier missing; overclaim trigger found."
+    validations:
+      required: true
+  - type: textarea
+    id: report-excerpt
+    attributes:
+      label: Sanitized report excerpt
+      description: Remove private or identifiable data before pasting.
+    validations:
+      required: false
+  - type: textarea
+    id: expected-repair
+    attributes:
+      label: Expected repair
+      description: What should the skill do differently next time?
+    validations:
+      required: true

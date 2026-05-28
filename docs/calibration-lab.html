@@ -1,0 +1,1161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Calibration Lab</title>
+  <meta name="description" content="Local-first calibration lab for checking MBTI typing reports against benchmark runner-ups, falsifiers, evidence tags, and overclaiming risks.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f4;
+      --panel: #ffffff;
+      --panel-soft: #f9fbfa;
+      --ink: #172120;
+      --muted: #64716e;
+      --line: #d8dfdc;
+      --green: #16836f;
+      --green-soft: #e4f4ef;
+      --blue: #3266a8;
+      --blue-soft: #e7eef9;
+      --amber: #b97312;
+      --amber-soft: #fff0d9;
+      --red: #b93d5b;
+      --red-soft: #fde8ee;
+      --graphite: #24302e;
+      --shadow: 0 16px 38px rgba(23, 32, 31, 0.09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(22, 131, 111, 0.09), transparent 34%),
+        linear-gradient(260deg, rgba(50, 102, 168, 0.10), transparent 36%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .topbar,
+    .brand,
+    .nav-actions,
+    .panel-title,
+    .action-row,
+    .score-row,
+    .tag-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-actions {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      background: #fafeff;
+      border-color: rgba(22, 131, 111, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.75fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-proof,
+    .panel {
+      border: 1px solid rgba(216, 223, 220, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.93);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 290px;
+      padding: clamp(22px, 4vw, 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.99;
+      max-width: 980px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 900px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .proof {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+      min-height: 86px;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .status-strip {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--green-soft), #fff, var(--blue-soft));
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.85fr) minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel-title span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 12px;
+    }
+
+    select {
+      font-weight: 800;
+      min-height: 46px;
+    }
+
+    textarea {
+      min-height: 420px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101817;
+      color: #e9f5f1;
+      padding: 14px;
+      min-height: 130px;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .case-meta,
+    .small-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .case-meta {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+    }
+
+    .action-row {
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .score-row {
+      justify-content: space-between;
+      align-items: end;
+    }
+
+    .score-value {
+      font-size: 46px;
+      line-height: 0.95;
+      font-weight: 950;
+    }
+
+    .score-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .check {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel);
+      min-height: 108px;
+    }
+
+    .check.good {
+      border-color: rgba(22, 131, 111, 0.35);
+      background: var(--green-soft);
+    }
+
+    .check.warn {
+      border-color: rgba(185, 61, 91, 0.35);
+      background: var(--red-soft);
+    }
+
+    .check-title {
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .check-detail {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .tag-row {
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .tag.good {
+      color: var(--green);
+      border-color: rgba(22, 131, 111, 0.32);
+      background: #f0faf6;
+    }
+
+    .tag.warn {
+      color: var(--red);
+      border-color: rgba(185, 61, 91, 0.28);
+      background: #fff5f7;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1180px) {
+      .workspace,
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .score-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .proof-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      textarea {
+        min-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">CL</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Calibration Lab</div>
+          <div class="brand-subtitle">Local-first blind calibration for benchmark reports</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Repository links">
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button primary" href="https://github.com/Zaoqu-Liu/mbti-typing-skill/issues/new?template=calibration_result.yml">Submit Calibration Result</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="hero-copy">
+        <div class="eyebrow">Blind Calibration Loop</div>
+        <h1 id="pageTitle">Paste a typing report. See exactly where it fails.</h1>
+        <p>The lab checks a report against benchmark expectations: leading hypothesis, serious runner-up, evidence tags, falsifier theme, safety boundary, and overclaim risk. It is sticky through sharper feedback, not fake certainty.</p>
+      </div>
+      <aside class="hero-proof" aria-label="Calibration proof">
+        <div class="proof-grid">
+          <div class="proof">
+            <strong>16</strong>
+            <span>Benchmark cases are loaded from the canonical JSON source.</span>
+          </div>
+          <div class="proof">
+            <strong>6</strong>
+            <span>Calibration gates: leading, runner-up, tags, falsifier, boundary, overclaim.</span>
+          </div>
+          <div class="proof">
+            <strong>0</strong>
+            <span>External runtime dependencies. Your pasted text stays in the browser.</span>
+          </div>
+          <div class="proof">
+            <strong id="scoreValue">0</strong>
+            <span>Current calibration score for the selected case.</span>
+          </div>
+        </div>
+        <div class="status-strip">Not psychometric ground truth. This is a local-first regression aid for improving MBTI-style reasoning, not a clinical, hiring, or deterministic instrument.</div>
+      </aside>
+    </section>
+
+    <section class="workspace" aria-label="Calibration workspace">
+      <section class="panel" aria-labelledby="caseTitle">
+        <div class="panel-title">
+          <h2 id="caseTitle">1. Select Benchmark Case</h2>
+          <span id="caseCount">16 cases</span>
+        </div>
+        <select id="caseSelect" aria-label="Benchmark case"></select>
+        <div class="case-meta" id="caseMeta"></div>
+        <div class="action-row">
+          <button class="button" id="loadStrongSample" type="button">Load Strong Sample</button>
+          <button class="button" id="loadRiskySample" type="button">Load Risky Sample</button>
+        </div>
+        <p class="footer-note">A strong benchmark response should not merely name the expected type. It should keep the runner-up alive, show the evidence tags, state the falsifier, and avoid absolute certainty.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="reportTitle">
+        <div class="panel-title">
+          <h2 id="reportTitle">2. Paste Candidate Report</h2>
+          <span>saved locally</span>
+        </div>
+        <textarea id="reportInput" spellcheck="true" placeholder="Paste a model output or human-written MBTI report here."></textarea>
+        <div class="action-row">
+          <button class="button primary" id="analyzeButton" type="button">Run Calibration</button>
+          <button class="button" id="clearButton" type="button">Clear Draft</button>
+        </div>
+        <p class="footer-note">This page uses simple lexical checks. It is deliberately transparent: failed gates are repair targets, not a claim that the benchmark answer is objectively true.</p>
+      </section>
+
+      <section class="panel stack" aria-labelledby="resultTitle">
+        <div class="panel-title">
+          <h2 id="resultTitle">3. Calibration Receipt</h2>
+          <span id="scoreLabel">waiting</span>
+        </div>
+        <div class="score-card">
+          <div class="score-row">
+            <div>
+              <div class="eyebrow">Calibration Receipt</div>
+              <div class="score-value" id="scoreMirror">0</div>
+            </div>
+            <div class="score-label">report readiness<br>for this case</div>
+          </div>
+        </div>
+        <div class="result-grid" id="resultGrid"></div>
+        <pre id="receiptOutput"></pre>
+        <div class="action-row">
+          <button class="button" id="copyCalibrationJson" type="button">Copy Calibration JSON</button>
+          <button class="button" id="copyIssueSeed" type="button">Copy Failure Issue Seed</button>
+        </div>
+        <pre id="issueSeedOutput"></pre>
+        <div class="panel-title">
+          <h2>Repair Prompt</h2>
+          <span>Codex-ready</span>
+        </div>
+        <pre id="repairPromptOutput"></pre>
+        <div class="action-row">
+          <button class="button primary" id="copyRepairPrompt" type="button">Copy Repair Prompt</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    // BEGIN GENERATED CALIBRATION CASES
+    const CALIBRATION_CASES = [
+          {
+                "id": "bench-entj-intj-001",
+                "cluster": "Command",
+                "title": "INTJ test result, ENTJ command energy",
+                "leading": "ENTJ",
+                "runnerUp": [
+                      "INTJ"
+                ],
+                "prompt": "User asks: I test INTJ but feel alive when directing high-stakes teams. Alone on free mornings I plan people, leverage, and execution order. Under criticism I immediately argue facts, then later feel shame. Type me.",
+                "trap": "Do not lock INTJ just because Ni/Te and privacy are present.",
+                "falsifier": "private model dominates idle time",
+                "tags": [
+                      "idle_external_optimization",
+                      "command_energy",
+                      "delayed_fi_or_shame"
+                ]
+          },
+          {
+                "id": "bench-intj-entj-002",
+                "cluster": "Command",
+                "title": "Competent leader, private model first",
+                "leading": "INTJ",
+                "runnerUp": [
+                      "ENTJ"
+                ],
+                "prompt": "User says: I can lead, but it drains me. My best thinking happens alone after people leave. I want the model clean before execution. I dislike managing people unless the system requires it.",
+                "trap": "Do not overtype ENTJ from competence in leadership roles.",
+                "falsifier": "live command repeatedly energizes cognition",
+                "tags": [
+                      "private_model_priority",
+                      "leadership_cost",
+                      "pre_execution_modeling"
+                ]
+          },
+          {
+                "id": "bench-infp-infj-003",
+                "cluster": "Values",
+                "title": "Depth and sensitivity, Fi first",
+                "leading": "INFP",
+                "runnerUp": [
+                      "INFJ",
+                      "ISFP"
+                ],
+                "prompt": "User says: In conflict I first ask whether I can personally endorse the action. I explore many possible meanings around whether it fits who I am. Social harmony matters, but I can break it if it violates inner truth.",
+                "trap": "Do not type INFJ merely from depth and sensitivity.",
+                "falsifier": "relational pattern convergence outranks inner congruence",
+                "tags": [
+                      "fi_congruence",
+                      "ne_possibility",
+                      "harmony_secondary"
+                ]
+          },
+          {
+                "id": "bench-infj-infp-004",
+                "cluster": "Values",
+                "title": "Relational trajectory, Ni-Fe first",
+                "leading": "INFJ",
+                "runnerUp": [
+                      "INFP",
+                      "ENFJ"
+                ],
+                "prompt": "User says: I notice where relationships are heading before people admit it. I converge on one interpretation of what an event means for the group. My values matter, but I first read the relational pattern.",
+                "trap": "Do not type INFP from emotional depth alone.",
+                "falsifier": "personal value congruence overrides relational pattern",
+                "tags": [
+                      "ni_convergence",
+                      "fe_relational_meaning",
+                      "future_relationship_pattern"
+                ]
+          },
+          {
+                "id": "bench-estj-entj-005",
+                "cluster": "Operations",
+                "title": "Strong Te with precedent trust",
+                "leading": "ESTJ",
+                "runnerUp": [
+                      "ENTJ",
+                      "ISTJ"
+                ],
+                "prompt": "User says: I trust procedures that have proven reliable. When a team is chaotic, I impose standards, roles, deadlines, and accountability. I prefer improving the system through known best practices before radical redesign.",
+                "trap": "Do not type ENTJ just because Te and leadership are strong.",
+                "falsifier": "future architecture overrides precedent",
+                "tags": [
+                      "te_order",
+                      "si_precedent",
+                      "operational_continuity"
+                ]
+          },
+          {
+                "id": "bench-entp-enfp-006",
+                "cluster": "Exploration",
+                "title": "Possibility seeking, model play first",
+                "leading": "ENTP",
+                "runnerUp": [
+                      "ENFP",
+                      "INTP"
+                ],
+                "prompt": "User says: I love debate because it sharpens the model. I will attack my own favorite idea if the logic is weak. Personal meaning is interesting, but clean conceptual play matters more in the moment.",
+                "trap": "Do not type ENFP from social enthusiasm and possibility seeking.",
+                "falsifier": "personal meaning outranks model play",
+                "tags": [
+                      "ne_ti_model_play",
+                      "debate_energy",
+                      "values_secondary"
+                ]
+          },
+          {
+                "id": "bench-isfj-infj-007",
+                "cluster": "Care",
+                "title": "Care through memory and obligations",
+                "leading": "ISFJ",
+                "runnerUp": [
+                      "INFJ",
+                      "ESFJ"
+                ],
+                "prompt": "User says: I remember what people need, what helped before, and what obligations I must keep. I care by making sure routines, details, and support are reliable. Future patterns matter less than not failing people now.",
+                "trap": "Do not type INFJ from private care and people-awareness alone.",
+                "falsifier": "future pattern interpretation overrides known obligations",
+                "tags": [
+                      "si_memory",
+                      "fe_care",
+                      "known_obligations"
+                ]
+          },
+          {
+                "id": "bench-estp-entp-008",
+                "cluster": "Tactics",
+                "title": "Live pressure beats abstract play",
+                "leading": "ESTP",
+                "runnerUp": [
+                      "ENTP",
+                      "ESFP"
+                ],
+                "prompt": "User says: I improvise best in live pressure. The real room, real body language, and immediate tactical opening matter more than abstract possibility. I enjoy winning the situation, not just the argument.",
+                "trap": "Do not type ENTP from quickness, wit, and provocation alone.",
+                "falsifier": "abstract conceptual play outranks live tactical action",
+                "tags": [
+                      "se_live_pressure",
+                      "ti_tactical_read",
+                      "concrete_action"
+                ]
+          },
+          {
+                "id": "bench-enfj-esfj-009",
+                "cluster": "Care",
+                "title": "People development before social duty",
+                "leading": "ENFJ",
+                "runnerUp": [
+                      "ESFJ",
+                      "INFJ"
+                ],
+                "prompt": "User says: I naturally read what a group could become and steer people toward that future. I organize warmth and feedback around growth, not just keeping everyone comfortable. Traditions matter only if they serve the shared direction.",
+                "trap": "Do not type ESFJ just because social warmth and caretaking are visible.",
+                "falsifier": "known social duty outranks future people-development",
+                "tags": [
+                      "fe_group_direction",
+                      "ni_people_future",
+                      "comfort_secondary"
+                ]
+          },
+          {
+                "id": "bench-esfj-enfj-010",
+                "cluster": "Care",
+                "title": "Social continuity before future vision",
+                "leading": "ESFJ",
+                "runnerUp": [
+                      "ENFJ",
+                      "ISFJ"
+                ],
+                "prompt": "User says: I track birthdays, obligations, family expectations, and what keeps the group functioning. I can inspire people, but I trust what has kept relationships stable before. Abstract future growth is less urgent than not letting anyone fall through the cracks now.",
+                "trap": "Do not type ENFJ from warmth, encouragement, and people leadership alone.",
+                "falsifier": "future people-development overrides known social obligations",
+                "tags": [
+                      "fe_social_duty",
+                      "si_relationship_continuity",
+                      "future_growth_secondary"
+                ]
+          },
+          {
+                "id": "bench-istp-intp-011",
+                "cluster": "Tactics",
+                "title": "Tool logic under live constraints",
+                "leading": "ISTP",
+                "runnerUp": [
+                      "INTP",
+                      "ESTP"
+                ],
+                "prompt": "User says: I understand systems best by taking them apart, testing the mechanism, and seeing what fails in the real object. Theory is useful when it improves the fix. If the model cannot survive contact with the tool, I stop trusting it.",
+                "trap": "Do not type INTP from detached analysis and systems language alone.",
+                "falsifier": "abstract model exploration outranks tool contact",
+                "tags": [
+                      "ti_mechanism",
+                      "se_tool_testing",
+                      "theory_secondary"
+                ]
+          },
+          {
+                "id": "bench-intp-istp-012",
+                "cluster": "Exploration",
+                "title": "Conceptual model before tool contact",
+                "leading": "INTP",
+                "runnerUp": [
+                      "ISTP",
+                      "ENTP"
+                ],
+                "prompt": "User says: I keep refining the internal model even when no one needs an immediate fix. I enjoy alternate definitions, edge cases, and whether the explanation is logically clean. Physical tinkering is fine, but it is not where the real fascination starts.",
+                "trap": "Do not type ISTP just because the user is analytical, calm, and technically competent.",
+                "falsifier": "tool contact and live mechanism testing outrank conceptual exploration",
+                "tags": [
+                      "ti_model_purity",
+                      "ne_edge_cases",
+                      "tool_contact_secondary"
+                ]
+          },
+          {
+                "id": "bench-isfp-infp-013",
+                "cluster": "Values",
+                "title": "Embodied values before possibility language",
+                "leading": "ISFP",
+                "runnerUp": [
+                      "INFP",
+                      "ESFP"
+                ],
+                "prompt": "User says: I know what feels true when I am making, moving, choosing colors, or responding to the immediate scene. I do not need many possible meanings first. If something violates my taste or inner line, my body knows before I can explain it.",
+                "trap": "Do not type INFP from private values and sensitivity alone.",
+                "falsifier": "abstract possibility exploration outranks embodied aesthetic response",
+                "tags": [
+                      "fi_embodied_line",
+                      "se_aesthetic_response",
+                      "ne_meaning_secondary"
+                ]
+          },
+          {
+                "id": "bench-esfp-estp-014",
+                "cluster": "Tactics",
+                "title": "Live impact with Fi signal",
+                "leading": "ESFP",
+                "runnerUp": [
+                      "ESTP",
+                      "ENFP"
+                ],
+                "prompt": "User says: I come alive in the room, but I track whether the moment feels real to me and whether people are emotionally moved. I can be tactical, yet the win feels empty if it kills the vibe or betrays what I value.",
+                "trap": "Do not type ESTP from social boldness, improvisation, and real-time action alone.",
+                "falsifier": "impersonal tactical leverage outranks live authenticity",
+                "tags": [
+                      "se_room_energy",
+                      "fi_live_authenticity",
+                      "tactics_secondary"
+                ]
+          },
+          {
+                "id": "bench-istj-intj-015",
+                "cluster": "Operations",
+                "title": "Known detail before strategic abstraction",
+                "leading": "ISTJ",
+                "runnerUp": [
+                      "INTJ",
+                      "ESTJ"
+                ],
+                "prompt": "User says: I trust the record: what happened, what was promised, what worked, and which detail breaks the process. I can think strategically, but I first want the facts, the timeline, and the proven procedure to be accurate.",
+                "trap": "Do not type INTJ from competence, reserve, and long-range seriousness alone.",
+                "falsifier": "future strategic abstraction outranks record accuracy",
+                "tags": [
+                      "si_record_accuracy",
+                      "te_procedure_check",
+                      "strategy_secondary"
+                ]
+          },
+          {
+                "id": "bench-enfp-entp-016",
+                "cluster": "Exploration",
+                "title": "Possibility through personal meaning",
+                "leading": "ENFP",
+                "runnerUp": [
+                      "ENTP",
+                      "INFP"
+                ],
+                "prompt": "User says: I chase possibilities because one of them might unlock who I am becoming or what matters. I enjoy arguments, but if the debate strips meaning out of people, I lose interest. The idea has to stay connected to a human value.",
+                "trap": "Do not type ENTP from speed, novelty, and verbal play alone.",
+                "falsifier": "impersonal model play outranks personal meaning",
+                "tags": [
+                      "ne_identity_possibility",
+                      "fi_human_value",
+                      "debate_secondary"
+                ]
+          }
+    ];
+    // END GENERATED CALIBRATION CASES
+
+    const STORAGE_KEY = "mbti-typing-calibration-lab-state";
+    const OVERCLAIM_TERMS = ["definitely", "certainly", "obviously", "100%", "only possible", "no doubt", "guaranteed", "绝对", "肯定是", "毫无疑问", "唯一可能"];
+    const BOUNDARY_TERMS = ["not a clinical", "not clinical", "not a hiring", "not psychometric", "not deterministic", "clinical instrument", "psychometric result", "非临床", "不是临床", "不是招聘", "不是心理测量"];
+
+    const caseSelect = document.getElementById("caseSelect");
+    const caseMeta = document.getElementById("caseMeta");
+    const caseCount = document.getElementById("caseCount");
+    const reportInput = document.getElementById("reportInput");
+    const resultGrid = document.getElementById("resultGrid");
+    const scoreValue = document.getElementById("scoreValue");
+    const scoreMirror = document.getElementById("scoreMirror");
+    const scoreLabel = document.getElementById("scoreLabel");
+    const receiptOutput = document.getElementById("receiptOutput");
+    const repairPromptOutput = document.getElementById("repairPromptOutput");
+    const issueSeedOutput = document.getElementById("issueSeedOutput");
+    const copyRepairPrompt = document.getElementById("copyRepairPrompt");
+    const copyCalibrationJson = document.getElementById("copyCalibrationJson");
+    const copyIssueSeed = document.getElementById("copyIssueSeed");
+    const analyzeButton = document.getElementById("analyzeButton");
+    const clearButton = document.getElementById("clearButton");
+    const loadStrongSample = document.getElementById("loadStrongSample");
+    const loadRiskySample = document.getElementById("loadRiskySample");
+
+    let lastAnalysis = null;
+
+    function normalize(text) {
+      return String(text || "").toLowerCase();
+    }
+
+    function humanizeTag(tag) {
+      return String(tag).replaceAll("_", " ");
+    }
+
+    function selectedCase() {
+      return CALIBRATION_CASES.find((item) => item.id === caseSelect.value) || CALIBRATION_CASES[0];
+    }
+
+    function containsAny(text, terms) {
+      const lowered = normalize(text);
+      return terms.some((term) => lowered.includes(normalize(term)));
+    }
+
+    function containsType(text, typeCode) {
+      return new RegExp(`\\b${typeCode}\\b`, "i").test(text);
+    }
+
+    function tagMatched(text, tag) {
+      const lowered = normalize(text);
+      const literal = normalize(tag);
+      const phrase = normalize(humanizeTag(tag));
+      return lowered.includes(literal) || lowered.includes(phrase);
+    }
+
+    function keyWords(text) {
+      return normalize(text)
+        .split(/[^a-z0-9]+/)
+        .filter((word) => word.length >= 5);
+    }
+
+    function falsifierMatched(text, falsifier) {
+      const lowered = normalize(text);
+      if (lowered.includes(normalize(falsifier))) {
+        return true;
+      }
+      const words = keyWords(falsifier);
+      if (words.length === 0) {
+        return false;
+      }
+      const hits = words.filter((word) => lowered.includes(word)).length;
+      return hits >= Math.min(2, words.length);
+    }
+
+    function populateCases() {
+      caseSelect.replaceChildren();
+      CALIBRATION_CASES.forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = `${item.id} | ${item.leading} vs ${item.runnerUp.join(", ")} | ${item.title}`;
+        caseSelect.append(option);
+      });
+      caseCount.textContent = `${CALIBRATION_CASES.length} cases`;
+    }
+
+    function renderCaseMeta() {
+      const item = selectedCase();
+      if (!item) {
+        caseMeta.textContent = "No benchmark cases loaded.";
+        return;
+      }
+      caseMeta.replaceChildren();
+      const lines = [
+        `Leading: ${item.leading}`,
+        `Runner-up: ${item.runnerUp.join(", ")}`,
+        `Trap: ${item.trap}`,
+        `Falsifier: ${item.falsifier}`,
+        `Evidence tags: ${item.tags.join(", ")}`,
+      ];
+      lines.forEach((line) => {
+        const div = document.createElement("div");
+        div.textContent = line;
+        caseMeta.append(div);
+      });
+    }
+
+    function buildStrongSample(item) {
+      return [
+        `Leading working type: ${item.leading}.`,
+        `Serious runner-up: ${item.runnerUp.join(", ")}. The report should not collapse the runner-up too early.`,
+        `Evidence tags: ${item.tags.map(humanizeTag).join("; ")}.`,
+        `Trap to avoid: ${item.trap}`,
+        `Strongest falsifier: ${item.falsifier}. If this pattern appears repeatedly, revise the leading hypothesis.`,
+        "Boundary: this is not a clinical instrument, not a hiring tool, and not a psychometric result.",
+      ].join("\n");
+    }
+
+    function buildRiskySample(item) {
+      return [
+        `This person is definitely ${item.leading}.`,
+        "There is no need to keep a runner-up because the type is obvious.",
+        `The surface behavior proves the result, so the trap does not matter: ${item.trap}.`,
+        "No falsifier is needed.",
+      ].join("\n");
+    }
+
+    function analyzeReport() {
+      const item = selectedCase();
+      const text = reportInput.value;
+      if (!item) {
+        return;
+      }
+
+      const leadingOk = containsType(text, item.leading);
+      const runnerHits = item.runnerUp.filter((typeCode) => containsType(text, typeCode));
+      const runnerOk = runnerHits.length > 0 || containsAny(text, ["runner-up", "runner up", "alternative", "plausible runner", "serious runner", "候选", "次优"]);
+      const tagHits = item.tags.filter((tag) => tagMatched(text, tag));
+      const tagScore = item.tags.length === 0 ? 1 : tagHits.length / item.tags.length;
+      const falsifierOk = falsifierMatched(text, item.falsifier) || containsAny(text, ["falsifier", "would revise", "would change", "counterexample", "反证", "推翻", "修正"]);
+      const boundaryOk = containsAny(text, BOUNDARY_TERMS);
+      const overclaimHits = OVERCLAIM_TERMS.filter((term) => containsAny(text, [term]));
+      const overclaimOk = overclaimHits.length === 0;
+
+      const rawScore =
+        (leadingOk ? 20 : 0) +
+        (runnerOk ? 20 : 0) +
+        Math.round(tagScore * 25) +
+        (falsifierOk ? 20 : 0) +
+        (boundaryOk ? 10 : 0) +
+        (overclaimOk ? 5 : -15);
+      const score = Math.max(0, Math.min(100, rawScore));
+
+      const checks = [
+        { id: "leading", label: "Leading hypothesis", passed: leadingOk, detail: leadingOk ? `${item.leading} is explicit.` : `${item.leading} is missing or not named clearly.` },
+        { id: "runner_up", label: "Serious runner-up", passed: runnerOk, detail: runnerOk ? `Runner-up signal found: ${runnerHits.join(", ") || "generic runner-up language"}.` : `Expected one of: ${item.runnerUp.join(", ")}.` },
+        { id: "evidence_tags", label: "Evidence tags", passed: tagScore >= 0.67, detail: `${tagHits.length}/${item.tags.length} tags found: ${tagHits.join(", ") || "none"}.` },
+        { id: "falsifier", label: "Falsifier", passed: falsifierOk, detail: falsifierOk ? "Revision trigger is visible." : `Expected theme: ${item.falsifier}.` },
+        { id: "boundary", label: "Safety boundary", passed: boundaryOk, detail: boundaryOk ? "Boundary language is visible." : "Add not clinical, not hiring, and not psychometric wording." },
+        { id: "overclaim", label: "Overclaim risk", passed: overclaimOk, detail: overclaimOk ? "No obvious absolute-certainty trigger found." : `Triggered: ${overclaimHits.join(", ")}.` },
+      ];
+
+      lastAnalysis = {
+        case_id: item.id,
+        leading: item.leading,
+        runner_up: item.runnerUp,
+        score,
+        passed: checks.filter((check) => check.passed).map((check) => check.id),
+        failed: checks.filter((check) => !check.passed).map((check) => check.id),
+        matched_tags: tagHits,
+        missing_tags: item.tags.filter((tag) => !tagHits.includes(tag)),
+        overclaim_hits: overclaimHits,
+      };
+
+      renderResults(checks, item, score);
+      saveState();
+    }
+
+    function renderResults(checks, item, score) {
+      scoreValue.textContent = String(score);
+      scoreMirror.textContent = String(score);
+      scoreLabel.textContent = score >= 85 ? "release-ready" : score >= 65 ? "repairable" : "needs work";
+      resultGrid.replaceChildren();
+      checks.forEach((check) => {
+        const card = document.createElement("article");
+        card.className = `check ${check.passed ? "good" : "warn"}`;
+        const title = document.createElement("div");
+        title.className = "check-title";
+        title.textContent = `${check.passed ? "PASS" : "FIX"}: ${check.label}`;
+        const detail = document.createElement("div");
+        detail.className = "check-detail";
+        detail.textContent = check.detail;
+        card.append(title, detail);
+        resultGrid.append(card);
+      });
+      receiptOutput.textContent = buildCalibrationReceipt(checks, item, score);
+      repairPromptOutput.textContent = buildRepairPrompt(checks, item);
+      issueSeedOutput.textContent = buildIssueSeed(checks, item, score);
+    }
+
+    function buildCalibrationReceipt(checks, item, score) {
+      const failed = checks.filter((check) => !check.passed).map((check) => check.label);
+      return [
+        `Calibration Receipt`,
+        `Case: ${item.id}`,
+        `Expected leading: ${item.leading}`,
+        `Serious runner-up: ${item.runnerUp.join(", ")}`,
+        `Score: ${score}/100`,
+        `Failed gates: ${failed.length ? failed.join(", ") : "none"}`,
+        `Strongest falsifier theme: ${item.falsifier}`,
+        `Not psychometric ground truth; use this as a repair checklist.`,
+      ].join("\n");
+    }
+
+    function buildRepairPrompt(checks, item) {
+      const failed = checks.filter((check) => !check.passed).map((check) => check.label).join(", ") || "none";
+      return [
+        `Use $mbti-typing to revise this benchmark report for ${item.id}.`,
+        `Expected leading hypothesis: ${item.leading}.`,
+        `Serious runner-up types: ${item.runnerUp.join(", ")}.`,
+        `Required evidence tags: ${item.tags.join(", ")}.`,
+        `Trap to avoid: ${item.trap}`,
+        `Required falsifier theme: ${item.falsifier}.`,
+        `Failed calibration gates: ${failed}.`,
+        "Preserve uncertainty, explain the runner-up, add falsifiers, avoid overclaiming, and include a boundary statement.",
+      ].join("\n");
+    }
+
+    function buildIssueSeed(checks, item, score) {
+      const failed = checks.filter((check) => !check.passed).map((check) => `- ${check.label}: ${check.detail}`);
+      return [
+        `## Calibration Result`,
+        ``,
+        `Case: ${item.id}`,
+        `Expected leading: ${item.leading}`,
+        `Runner-up: ${item.runnerUp.join(", ")}`,
+        `Score: ${score}/100`,
+        ``,
+        `## Failed Gates`,
+        failed.length ? failed.join("\n") : "- none",
+        ``,
+        `## Notes`,
+        `This is from the local-first Calibration Lab and is not psychometric ground truth.`,
+      ].join("\n");
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const scratch = document.createElement("textarea");
+        scratch.value = text;
+        document.body.append(scratch);
+        scratch.select();
+        document.execCommand("copy");
+        scratch.remove();
+      }
+    }
+
+    function saveState() {
+      const payload = {
+        case_id: caseSelect.value,
+        report: reportInput.value,
+        analysis: lastAnalysis,
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    }
+
+    function restoreState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        return;
+      }
+      try {
+        const payload = JSON.parse(raw);
+        if (payload.case_id && CALIBRATION_CASES.some((item) => item.id === payload.case_id)) {
+          caseSelect.value = payload.case_id;
+        }
+        if (typeof payload.report === "string") {
+          reportInput.value = payload.report;
+        }
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    caseSelect.addEventListener("change", () => {
+      renderCaseMeta();
+      analyzeReport();
+    });
+
+    reportInput.addEventListener("input", saveState);
+    analyzeButton.addEventListener("click", analyzeReport);
+    clearButton.addEventListener("click", () => {
+      reportInput.value = "";
+      lastAnalysis = null;
+      localStorage.removeItem(STORAGE_KEY);
+      analyzeReport();
+    });
+    loadStrongSample.addEventListener("click", () => {
+      reportInput.value = buildStrongSample(selectedCase());
+      analyzeReport();
+    });
+    loadRiskySample.addEventListener("click", () => {
+      reportInput.value = buildRiskySample(selectedCase());
+      analyzeReport();
+    });
+    copyRepairPrompt.addEventListener("click", () => copyText(repairPromptOutput.textContent));
+    copyCalibrationJson.addEventListener("click", () => copyText(JSON.stringify(lastAnalysis || {}, null, 2)));
+    copyIssueSeed.addEventListener("click", () => copyText(issueSeedOutput.textContent));
+
+    populateCases();
+    restoreState();
+    renderCaseMeta();
+    if (!reportInput.value) {
+      reportInput.value = buildRiskySample(selectedCase());
+    }
+    analyzeReport();
+  </script>
+</body>
+</html>

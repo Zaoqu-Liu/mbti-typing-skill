@@ -31,6 +31,7 @@ REQUIRED_FILES = [
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
+    ".github/ISSUE_TEMPLATE/calibration_result.yml",
     "prompts/prompt-recipes.md",
     "examples/session-state-example.json",
     "examples/evidence-ledger-example.md",
@@ -41,6 +42,7 @@ REQUIRED_FILES = [
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
     "docs/assets/type-coverage-matrix.svg",
+    "docs/assets/calibration-loop-map.svg",
     "docs/evaluation.md",
     "docs/experience-principles.md",
     "docs/github-ux.md",
@@ -49,11 +51,14 @@ REQUIRED_FILES = [
     "docs/sample-report.md",
     "docs/session-lab.html",
     "docs/case-gallery.html",
+    "docs/calibration-lab.html",
     "docs/playground.html",
     "docs/index.html",
     "scripts/session_lab_audit.py",
     "scripts/sync_case_gallery.py",
     "scripts/case_gallery_audit.py",
+    "scripts/sync_calibration_lab.py",
+    "scripts/calibration_lab_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -66,6 +71,7 @@ README_REQUIRED_TERMS = [
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
     "docs/assets/type-coverage-matrix.svg",
+    "docs/assets/calibration-loop-map.svg",
     "Session Lab",
     "https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html",
     "docs/session-lab.html",
@@ -76,6 +82,9 @@ README_REQUIRED_TERMS = [
     "Benchmark Arena",
     "docs/case-gallery.html",
     "case gallery",
+    "Calibration Lab",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html",
+    "docs/calibration-lab.html",
     "Interactive Playground",
     "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
     "docs/playground.html",
@@ -87,8 +96,10 @@ README_REQUIRED_TERMS = [
     "Benchmark Arena Pipeline",
     "Benchmark Type Coverage Matrix",
     "16 / 16 covered",
+    "Calibration Loop Map",
     "source-of-truth sync",
     "scripts/sync_case_gallery.py",
+    "scripts/sync_calibration_lab.py",
     "docs/visual-tour.md",
     "docs/demo-session.md",
     "docs/sample-report.md",
@@ -173,6 +184,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             ("Benchmark Type Coverage Matrix", "16 / 16 covered", "bench-enfp-entp-016", "bench-istp-intp-011"),
         )
     )
+    checks.extend(
+        check_svg_asset(
+            root,
+            "docs/assets/calibration-loop-map.svg",
+            "calibration_loop_map",
+            ("Calibration Loop Map", "Blind Calibration Loop", "Repair Prompt", "Issue Seed"),
+        )
+    )
     return checks
 
 
@@ -213,14 +232,14 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
         Check("readme:zh_hero", "docs/assets/mbti-typing-hero.png" in zh_readme, "Chinese README references hero image"),
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -236,6 +255,7 @@ def check_docs(root: Path) -> list[Check]:
     sample = read_text(root / "docs/sample-report.md")
     session_lab = read_text(root / "docs/session-lab.html")
     case_gallery = read_text(root / "docs/case-gallery.html")
+    calibration_lab = read_text(root / "docs/calibration-lab.html")
     playground = read_text(root / "docs/playground.html")
     index = read_text(root / "docs/index.html")
     pages = read_text(root / ".github/workflows/pages.yml")
@@ -243,6 +263,8 @@ def check_docs(root: Path) -> list[Check]:
     session_lab_audit = read_text(root / "scripts/session_lab_audit.py")
     sync_case_gallery = read_text(root / "scripts/sync_case_gallery.py")
     case_gallery_audit = read_text(root / "scripts/case_gallery_audit.py")
+    sync_calibration_lab = read_text(root / "scripts/sync_calibration_lab.py")
+    calibration_lab_audit = read_text(root / "scripts/calibration_lab_audit.py")
     benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
     benchmark_cases = [case for case in benchmark_payload.get("cases", []) if isinstance(case, dict)]
     benchmark_ids = [str(case.get("id")) for case in benchmark_cases]
@@ -252,9 +274,9 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg")), "Visual tour references bitmap and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "benchmark-arena-pipeline.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg")), "Visual tour references bitmap and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "calibration-loop-map.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:demo_candidate_set", "Current working candidates" in demo and "Round 2: Targeted Duel" in demo, "Demo session shows candidate set and duel loop"),
         Check("docs:sample_falsifiers", "Falsifiers" in sample and "Why INTJ Remains Serious" in sample, "Sample report preserves runner-up and falsifiers"),
         Check("session_lab:title", "MBTI Typing Skill Session Lab" in session_lab, "Session Lab has a clear product title"),
@@ -289,15 +311,29 @@ def check_docs(root: Path) -> list[Check]:
         Check("case_gallery:dom_safety", "textContent" in case_gallery and "replaceChildren" in case_gallery and "innerHTML" not in case_gallery, "Case Gallery renders data without HTML injection"),
         Check("case_gallery:audit_script", "Case Gallery Audit" in case_gallery_audit and "Submit Benchmark Case" in case_gallery_audit, "Case Gallery has a dedicated audit script"),
         Check("case_gallery:audit_make_target", "case-gallery-audit" in makefile and "scripts/case_gallery_audit.py" in makefile, "Makefile runs Case Gallery audit"),
+        Check("calibration_lab:title", "MBTI Typing Skill Calibration Lab" in calibration_lab, "Calibration Lab has a clear product title"),
+        Check("calibration_lab:no_external_runtime", "<script src" not in calibration_lab and " src=" not in calibration_lab, "Calibration Lab has no external runtime dependency"),
+        Check("calibration_lab:interactive_regions", all(term in calibration_lab for term in ("caseSelect", "reportInput", "resultGrid", "receiptOutput", "repairPromptOutput", "issueSeedOutput")), "Calibration Lab contains case, report, result, receipt, repair prompt, and issue seed regions"),
+        Check("calibration_lab:benchmark_cases", len(benchmark_cases) >= 16 and all(case_id in calibration_lab for case_id in benchmark_ids), "Calibration Lab exposes all current benchmark cases"),
+        Check("calibration_lab:all_16_leading_types", required_types <= leading_types, f"{len(leading_types & required_types)} leading types covered"),
+        Check("calibration_lab:source_markers", "BEGIN GENERATED CALIBRATION CASES" in calibration_lab and "END GENERATED CALIBRATION CASES" in calibration_lab, "Calibration Lab marks generated benchmark data"),
+        Check("calibration_lab:source_sync_script", "Calibration Lab Source Sync" in sync_calibration_lab and "make_calibration_cases" in sync_calibration_lab, "Calibration Lab has a JSON source-of-truth sync script"),
+        Check("calibration_lab:source_sync_audit", "source:json_match" in calibration_lab_audit and "make_calibration_cases" in calibration_lab_audit, "Calibration Lab audit compares embedded cases with canonical JSON"),
+        Check("calibration_lab:source_sync_make_target", "calibration-lab-sync" in makefile and "scripts/sync_calibration_lab.py" in makefile, "Makefile checks Calibration Lab source sync"),
+        Check("calibration_lab:copy_outputs", "Copy Repair Prompt" in calibration_lab and "Copy Calibration JSON" in calibration_lab and "Copy Failure Issue Seed" in calibration_lab, "Calibration Lab can copy repair, JSON, and issue outputs"),
+        Check("calibration_lab:dom_safety", "textContent" in calibration_lab and "replaceChildren" in calibration_lab and "innerHTML" not in calibration_lab, "Calibration Lab renders data without HTML injection"),
+        Check("calibration_lab:safety_boundary", "Not psychometric ground truth" in calibration_lab and "not a clinical" in calibration_lab, "Calibration Lab keeps safety boundary visible"),
+        Check("calibration_lab:audit_script", "Calibration Lab Audit" in calibration_lab_audit and "Copy Repair Prompt" in calibration_lab_audit, "Calibration Lab has a dedicated audit script"),
+        Check("calibration_lab:audit_make_target", "calibration-lab-audit" in makefile and "scripts/calibration_lab_audit.py" in makefile, "Makefile runs Calibration Lab audit"),
         Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
         Check("playground:no_external_runtime", "<script src" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
         Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),
         Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
         Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
         Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
-        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
+        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
         Check("pages:github_prompt_links", "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in session_lab and "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in playground, "Public prompt recipe links resolve on GitHub Pages"),
-        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
+        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
         Check("pages:index_redirect", "session-lab.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to Session Lab"),
         Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]
