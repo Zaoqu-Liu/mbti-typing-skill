@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.15 - 2026-05-28
+
+- Added a buildless Question Lab that turns `question-bank.md` into a searchable Round Builder with concrete probes, forced-choice options, 4-6 question templates, copyable `$mbti-typing` round prompts, and `question_improvement.yml` issue seeds.
+- Added `scripts/sync_question_lab.py`, `scripts/question_lab_audit.py`, and the Adaptive Question Loop SVG so question-bank source drift, page safety, and GitHub UX claims are release-gated.
+- Expanded the public product loop with a next-question precision layer between Session Lab and Type Duel Lab, raising the Repository UX Score to 325/325.
+
 ## 0.1.14 - 2026-05-28
 
 - Added a buildless Type Duel Lab that turns `pair-duels.md` into a searchable adjacent-type matrix with Killer Questions, Losing Conditions, copyable `$mbti-typing` duel prompts, and `type_duel_improvement.yml` issue seeds.

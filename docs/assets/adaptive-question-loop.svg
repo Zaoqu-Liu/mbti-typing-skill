@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1280 760">
+  <title>Adaptive Question Loop</title>
+  <desc>A repository-native blueprint showing how question-bank.md becomes Question Lab, round prompts, issue seeds, and release audit gates.</desc>
+  <defs>
+    <linearGradient id="tealAmber" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#128c82"/>
+      <stop offset="1" stop-color="#c77a15"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#17201f" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f4f6f5; }
+      .panel { fill: #ffffff; stroke: #d8dfdd; stroke-width: 2; filter: url(#shadow); }
+      .soft { fill: #fbfcfc; stroke: #d8dfdd; stroke-width: 2; }
+      .ink { fill: #17201f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #63706d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { font-size: 34px; font-weight: 900; letter-spacing: 0; }
+      .section { font-size: 20px; font-weight: 900; letter-spacing: 0; }
+      .label { font-size: 15px; font-weight: 800; letter-spacing: 0; }
+      .small { font-size: 13px; letter-spacing: 0; }
+      .micro { font-size: 11px; letter-spacing: 0; }
+      .pill { fill: #e0f2ef; stroke: #a7d8d2; stroke-width: 1.5; }
+      .amber { fill: #fff0d7; stroke: #e4b56d; }
+      .rose { fill: #fde7ee; stroke: #e7a9bd; }
+      .blue { fill: #e8eef8; stroke: #b3c2df; }
+      .green { fill: #e5f4ea; stroke: #aad7bb; }
+      .line { fill: none; stroke: #9baba7; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .flow { fill: none; stroke: url(#tealAmber); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+      .dot { fill: #128c82; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#77712a"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1280" height="760"/>
+  <text class="ink title" x="58" y="72">Adaptive Question Loop</text>
+  <text class="muted small" x="58" y="100">The sticky part of the product is not more questions. It is the next question chosen for the current fork.</text>
+
+  <rect class="panel" x="54" y="134" width="268" height="184" rx="8"/>
+  <text class="ink section" x="80" y="172">Source of truth</text>
+  <rect class="pill" x="80" y="194" width="190" height="34" rx="17"/>
+  <text class="ink label" x="99" y="216">question-bank.md</text>
+  <text class="muted small" x="80" y="254">Core probes</text>
+  <text class="muted small" x="80" y="278">Adjacent discriminators</text>
+  <text class="muted small" x="80" y="302">Round templates</text>
+
+  <rect class="panel" x="390" y="118" width="288" height="218" rx="8"/>
+  <text class="ink section" x="416" y="156">Source sync</text>
+  <rect class="blue" x="416" y="181" width="214" height="34" rx="17"/>
+  <text class="ink label" x="436" y="203">sync_question_lab.py</text>
+  <path class="line" d="M438 240 H632"/>
+  <circle class="dot" cx="438" cy="240" r="6"/>
+  <circle class="dot" cx="535" cy="240" r="6"/>
+  <circle class="dot" cx="632" cy="240" r="6"/>
+  <text class="muted micro" x="414" y="268">parse cards</text>
+  <text class="muted micro" x="501" y="268">count prompts</text>
+  <text class="muted micro" x="601" y="268">embed JSON</text>
+  <text class="muted small" x="416" y="306">Static previews show current counts.</text>
+
+  <rect class="panel" x="742" y="94" width="480" height="278" rx="8"/>
+  <text class="ink section" x="768" y="134">Question Lab</text>
+  <text class="muted small" x="768" y="159">docs/question-lab.html</text>
+  <rect class="soft" x="768" y="188" width="128" height="74" rx="8"/>
+  <text class="ink label" x="789" y="217">Finder</text>
+  <text class="muted micro" x="789" y="240">search + category</text>
+  <rect class="soft" x="914" y="188" width="128" height="74" rx="8"/>
+  <text class="ink label" x="936" y="217">Detail</text>
+  <text class="muted micro" x="936" y="240">scene + signals</text>
+  <rect class="soft" x="1060" y="188" width="128" height="74" rx="8"/>
+  <text class="ink label" x="1080" y="217">Builder</text>
+  <text class="muted micro" x="1080" y="240">round prompt</text>
+  <path class="flow" marker-end="url(#arrow)" d="M896 225 H914"/>
+  <path class="flow" marker-end="url(#arrow)" d="M1042 225 H1060"/>
+  <rect class="green" x="768" y="294" width="112" height="34" rx="17"/>
+  <text class="ink small" x="790" y="316">local-first</text>
+  <rect class="amber" x="898" y="294" width="148" height="34" rx="17"/>
+  <text class="ink small" x="917" y="316">4-6 questions</text>
+  <rect class="rose" x="1064" y="294" width="124" height="34" rx="17"/>
+  <text class="ink small" x="1083" y="316">falsifier gate</text>
+
+  <path class="flow" marker-end="url(#arrow)" d="M322 224 C348 224 364 224 390 224"/>
+  <path class="flow" marker-end="url(#arrow)" d="M678 225 C704 225 716 225 742 225"/>
+
+  <rect class="panel" x="66" y="418" width="330" height="214" rx="8"/>
+  <text class="ink section" x="92" y="456">Round discipline</text>
+  <rect class="soft" x="92" y="484" width="268" height="36" rx="8"/>
+  <text class="ink label" x="112" y="507">Ask for the current fork</text>
+  <rect class="soft" x="92" y="534" width="268" height="36" rx="8"/>
+  <text class="ink label" x="112" y="557">Update the board after answers</text>
+  <rect class="soft" x="92" y="584" width="268" height="36" rx="8"/>
+  <text class="ink label" x="112" y="607">Stop when falsifiers are visible</text>
+
+  <rect class="panel" x="470" y="410" width="328" height="230" rx="8"/>
+  <text class="ink section" x="496" y="448">Contribution loop</text>
+  <rect class="blue" x="496" y="474" width="214" height="34" rx="17"/>
+  <text class="ink label" x="518" y="496">question_improvement.yml</text>
+  <text class="muted small" x="496" y="540">A weak next question becomes structured:</text>
+  <text class="muted small" x="496" y="566">source card, target uncertainty, limitation,</text>
+  <text class="muted small" x="496" y="592">proposed question, interpretation notes.</text>
+
+  <rect class="panel" x="872" y="408" width="340" height="232" rx="8"/>
+  <text class="ink section" x="898" y="446">Release gate</text>
+  <rect class="green" x="898" y="472" width="206" height="34" rx="17"/>
+  <text class="ink label" x="919" y="494">question_lab_audit.py</text>
+  <path class="line" d="M916 548 H1160"/>
+  <circle class="dot" cx="916" cy="548" r="6"/>
+  <circle class="dot" cx="997" cy="548" r="6"/>
+  <circle class="dot" cx="1078" cy="548" r="6"/>
+  <circle class="dot" cx="1160" cy="548" r="6"/>
+  <text class="muted micro" x="896" y="574">all cards</text>
+  <text class="muted micro" x="972" y="574">categories</text>
+  <text class="muted micro" x="1052" y="574">DOM-safe</text>
+  <text class="muted micro" x="1128" y="574">no drift</text>
+  <text class="muted small" x="898" y="616">make test blocks stale prompts.</text>
+
+  <path class="flow" marker-end="url(#arrow)" d="M982 372 C974 390 964 398 948 408"/>
+  <path class="flow" marker-end="url(#arrow)" d="M1096 372 C992 405 882 440 710 474"/>
+  <path class="flow" marker-end="url(#arrow)" d="M768 318 C607 374 473 420 360 484"/>
+  <path class="flow" marker-end="url(#arrow)" d="M798 536 C826 536 844 536 872 536"/>
+
+  <rect class="soft" x="58" y="692" width="1164" height="34" rx="8"/>
+  <text class="muted small" x="78" y="714">Design rule: the page can be addictive only by making progress visible after each answer, never by hiding uncertainty.</text>
+</svg>

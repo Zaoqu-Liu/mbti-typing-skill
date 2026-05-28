@@ -42,6 +42,20 @@ The sticky loop should be evidence repair:
 
 This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
 
+## Adaptive Question Loop
+
+The highest-frequency retention moment is the next question. A user often knows the previous answer was not enough, but they do not know which fork should be tested next.
+
+The allowed loop is:
+
+1. The user reaches an unresolved uncertainty such as leader vs runner-up, normal vs stress state, public role vs private recovery, or Big Five cross-check.
+2. Question Lab exposes source-synced probes from `question-bank.md`, including concrete questions, forced-choice options, contradiction follow-ups, and 4-6 question round templates.
+3. The user copies a focused `$mbti-typing` round prompt that names the current uncertainty, required evidence state, runner-up, and falsifier target.
+4. If a prompt feels repetitive or generic, the user copies a `question_improvement.yml` issue seed with the weak question, desired discriminator, sanitized context, and safety boundary.
+5. Maintainers turn repeated weak-question patterns into question-bank updates, pair-duel rules, benchmark cases, golden fixtures, or report-audit checks.
+
+This creates stickiness through adaptive precision: the tool earns another round by showing exactly why that round should exist.
+
 ## Adjacent-Type Precision Loop
 
 The highest-value moment for many users is not the first label. It is the point where two nearby explanations both sound plausible.

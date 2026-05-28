@@ -1,0 +1,54 @@
+name: Question improvement
+description: Propose a sharper adaptive interview question or round-template repair.
+title: "[Question]: "
+labels: ["question-bank", "benchmark"]
+body:
+  - type: input
+    id: source-card
+    attributes:
+      label: Source card or round template
+      placeholder: "Round 3: Top-Two Duel"
+    validations:
+      required: true
+  - type: input
+    id: target-uncertainty
+    attributes:
+      label: Target uncertainty
+      placeholder: "ENTJ vs INTJ after conflicting stress evidence"
+    validations:
+      required: true
+  - type: textarea
+    id: current-limitation
+    attributes:
+      label: Current limitation
+      description: Which ambiguity, benchmark miss, or user correction does the current question fail to separate?
+      placeholder: "The current question asks about authority energy but does not separate role-trained command from natural cognition."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-question
+    attributes:
+      label: Proposed question
+      description: Use a concrete scene, forced choice, ranking, or cost-signature prompt.
+      placeholder: "When nobody needs you to lead, where does your attention go after the urgent work is done?"
+    validations:
+      required: true
+  - type: textarea
+    id: interpretation-notes
+    attributes:
+      label: Interpretation notes
+      description: Explain what the answer would support, weaken, or fail to decide.
+      placeholder: "Supports ENTJ if external resource optimization returns without role pressure; supports INTJ if private model refinement dominates."
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety checks
+      options:
+        - label: This question does not add clinical, hiring, legal, school, or deterministic use.
+          required: true
+        - label: This preserves runner-up and falsifier language.
+          required: true
+        - label: This contains no private transcript or identifiable data.
+          required: true

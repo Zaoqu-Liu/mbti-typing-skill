@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Question Lab</title>
+  <meta name="description" content="Local-first MBTI adaptive question lab for source-synced round prompts, next-question selection, and question-bank improvement seeds.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f5;
+      --panel: #ffffff;
+      --panel-soft: #fbfcfc;
+      --ink: #17201f;
+      --muted: #63706d;
+      --line: #d8dfdd;
+      --line-strong: #b8c5c2;
+      --teal: #128c82;
+      --teal-soft: #e0f2ef;
+      --amber: #c77a15;
+      --amber-soft: #fff0d7;
+      --rose: #c33461;
+      --rose-soft: #fde7ee;
+      --blue: #4069a8;
+      --blue-soft: #e8eef8;
+      --green: #287b50;
+      --green-soft: #e5f4ea;
+      --graphite: #24302f;
+      --shadow: 0 16px 38px rgba(23, 32, 31, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(115deg, rgba(18, 140, 130, 0.08), transparent 34%),
+        linear-gradient(255deg, rgba(199, 122, 21, 0.08), transparent 32%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 46px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      letter-spacing: 0;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      background: #fafeff;
+      border-color: rgba(18, 140, 130, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      border-color: var(--graphite);
+      color: #fff;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.6fr);
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .panel,
+    .hero-copy,
+    .hero-proof {
+      border: 1px solid rgba(216, 223, 221, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: clamp(22px, 4vw, 38px);
+      display: grid;
+      align-content: center;
+      min-height: 292px;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.98;
+      max-width: 980px;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 900px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+      min-height: 82px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 6px;
+    }
+
+    .question-flow {
+      display: grid;
+      gap: 8px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 108px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .flow-track {
+      height: 12px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .flow-fill {
+      height: 100%;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr) minmax(330px, 0.52fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-header p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .controls,
+    .output-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: rgba(18, 140, 130, 0.72);
+      box-shadow: 0 0 0 3px rgba(18, 140, 130, 0.12);
+    }
+
+    .card-list {
+      display: grid;
+      gap: 8px;
+      max-height: 740px;
+      overflow: auto;
+      padding-right: 4px;
+      margin-top: 12px;
+    }
+
+    .question-card {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      color: var(--ink);
+      padding: 11px;
+      cursor: pointer;
+      text-align: left;
+      display: grid;
+      gap: 8px;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .question-card:hover,
+    .question-card.active {
+      background: #fafeff;
+      border-color: rgba(18, 140, 130, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .card-summary {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 30px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .chip.teal {
+      border-color: rgba(18, 140, 130, 0.35);
+      background: var(--teal-soft);
+      color: #0a5f59;
+    }
+
+    .chip.amber {
+      border-color: rgba(199, 122, 21, 0.35);
+      background: var(--amber-soft);
+      color: #7d4908;
+    }
+
+    .chip.blue {
+      border-color: rgba(64, 105, 168, 0.35);
+      background: var(--blue-soft);
+      color: #284a7a;
+    }
+
+    .detail-layout {
+      display: grid;
+      gap: 14px;
+    }
+
+    .detail-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .shared {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 7px 0 0;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .detail-cell {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel-soft);
+      min-height: 104px;
+    }
+
+    .detail-cell strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .detail-cell p,
+    .question-list li,
+    .option-list li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.48;
+      margin: 0;
+    }
+
+    .question-list,
+    .option-list {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .question-list li,
+    .option-list li {
+      margin: 8px 0;
+    }
+
+    .option-list strong {
+      color: var(--teal);
+    }
+
+    .textarea {
+      min-height: 220px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .note {
+      border: 1px solid rgba(64, 105, 168, 0.22);
+      border-radius: 8px;
+      background: var(--blue-soft);
+      color: #28456d;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-top: 18px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      border: 1px solid rgba(18, 140, 130, 0.35);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-list {
+        max-height: 390px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .detail-title-row,
+      .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .detail-grid,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">QL</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Question Lab</div>
+          <div class="brand-subtitle">Adaptive prompts from question-bank.md</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Product navigation">
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button primary" href="question-lab.html">Question Lab</a>
+        <a class="button" href="type-duel-lab.html">Type Duel Lab</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="calibration-lab.html">Calibration Lab</a>
+        <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Adaptive Question Bank</div>
+        <h1>Build the next round from the exact uncertainty.</h1>
+        <p>
+          Search source-synced probes, choose a target conflict, and copy a 4-6 questions round prompt.
+          The lab keeps runner-up and falsifier discipline visible so the next question feels chosen for the user, not pulled from a generic quiz.
+        </p>
+      </div>
+      <aside class="hero-proof" aria-label="Question Lab metrics">
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="metricCards">21</strong>
+            <span>source-synced question cards</span>
+          </div>
+          <div class="metric">
+            <strong id="metricQuestions">60</strong>
+            <span>questions and goals</span>
+          </div>
+          <div class="metric">
+            <strong id="metricTemplates">5</strong>
+            <span>round templates</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>server calls or external runtime</span>
+          </div>
+        </div>
+        <div class="question-flow" aria-label="Question selection flow">
+          <div class="flow-step">
+            <div class="flow-label">Target fork</div>
+            <div class="flow-track"><div class="flow-fill" style="--w: 72%"></div></div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-label">Pick probe</div>
+            <div class="flow-track"><div class="flow-fill" style="--w: 60%"></div></div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-label">Copy round</div>
+            <div class="flow-track"><div class="flow-fill" style="--w: 86%"></div></div>
+          </div>
+        </div>
+        <div class="note">Local-first Round Builder. Keep each question tied to a target uncertainty, update the board after the answer, and stop when the falsifier gate is satisfied.</div>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <aside class="panel" aria-label="Question picker">
+        <div class="panel-header">
+          <div>
+            <h2>Question Finder</h2>
+            <p><span id="visibleQuestionCount">21</span> visible cards. Filter by category, type pair, function signal, or round purpose.</p>
+          </div>
+        </div>
+        <div class="controls">
+          <input class="input" id="questionSearch" type="search" placeholder="Search ENTJ, stress, Fi, contradiction, Round 3">
+          <select class="select" id="categoryFilter" aria-label="Filter by question category">
+            <option value="All">All categories</option>
+            <option value="Core probes">Core probes</option>
+            <option value="Adjacent discriminators">Adjacent discriminators</option>
+            <option value="Stress/recovery">Stress/recovery</option>
+            <option value="Big Five cross-checks">Big Five cross-checks</option>
+            <option value="Contradiction follow-ups">Contradiction follow-ups</option>
+            <option value="Round templates">Round templates</option>
+            <option value="Usage rules">Usage rules</option>
+          </select>
+          <button class="button" id="resetQuestionFilters" type="button">Reset Filters</button>
+        </div>
+        <div class="card-list" id="cardList" aria-live="polite"></div>
+      </aside>
+
+      <section class="panel detail-layout" aria-label="Selected question detail">
+        <div class="detail-title-row">
+          <div>
+            <div class="eyebrow">Selected Source Card</div>
+            <h2 id="selectedQuestionTitle">Round 1: Claim Triage</h2>
+            <p class="shared" id="selectedQuestionSummary">Source-synced question guidance appears here.</p>
+          </div>
+          <div id="selectedQuestionChips" class="chip-row"></div>
+        </div>
+
+        <div class="detail-grid" id="questionDetail"></div>
+
+        <div>
+          <div class="panel-header">
+            <div>
+              <h3>Questions And Follow-Ups</h3>
+              <p>Ask 4-6 questions per round. Avoid abstract self-labels and do not reveal option mappings before the subject answers.</p>
+            </div>
+          </div>
+          <ol class="question-list" id="questionList"></ol>
+        </div>
+
+        <div>
+          <div class="panel-header">
+            <div>
+              <h3>Options Or Signals</h3>
+              <p>Use these only after the answer, so the subject is not coached into a type label.</p>
+            </div>
+          </div>
+          <ul class="option-list" id="optionList"></ul>
+        </div>
+      </section>
+
+      <aside class="panel output-stack" aria-label="Round Builder">
+        <div class="panel-header">
+          <div>
+            <h2>Round Builder</h2>
+            <p>Set the current conflict, choose a round template, and copy a focused prompt.</p>
+          </div>
+        </div>
+        <label for="targetConflictInput"><strong>Target uncertainty</strong></label>
+        <input class="input" id="targetConflictInput" type="text" value="ENTJ vs INTJ vs INFP" aria-label="Target uncertainty">
+        <label for="roundTemplateSelect"><strong>Round template</strong></label>
+        <select class="select" id="roundTemplateSelect" aria-label="Round template"></select>
+        <label for="roundPromptOutput"><strong>Copyable $mbti-typing round prompt</strong></label>
+        <textarea class="textarea" id="roundPromptOutput" readonly></textarea>
+        <div class="output-actions">
+          <button class="button primary" id="copyRoundPrompt" type="button">Copy Round Prompt</button>
+          <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill/issues/new?template=question_improvement.yml">Open Issue Template</a>
+        </div>
+        <label for="issueSeedOutput"><strong>Copyable issue seed</strong></label>
+        <textarea class="textarea" id="issueSeedOutput" readonly></textarea>
+        <div class="output-actions">
+          <button class="button" id="copyIssueSeed" type="button">Copy Issue Seed</button>
+        </div>
+        <div class="note">
+          This lab is not a clinical instrument, hiring tool, or deterministic label generator.
+          It is a local-first prompt surface for MBTI-style self-reflection and report review.
+        </div>
+      </aside>
+    </section>
+
+    <p class="footer-note">
+      Data source: <code>skill/mbti-typing/references/question-bank.md</code>. The generated block is checked by
+      <code>scripts/sync_question_lab.py</code> and <code>scripts/question_lab_audit.py</code> so the public page cannot drift from the skill.
+    </p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <script>
+    const STORAGE_KEY = "mbti-typing-question-lab-state";
+
+    // BEGIN GENERATED QUESTION CARDS
+    const QUESTION_CARDS = [
+          {
+                "id": "usage-rules",
+                "title": "Usage Rules",
+                "category": "Usage rules",
+                "kind": "question set",
+                "sourceHeading": "## Usage Rules",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Ask 4-6 questions per round.",
+                      "Use concrete scenes. Avoid asking for type words directly.",
+                      "Prefer ranking top two options when the subject says several options fit.",
+                      "After every round, update the candidate set and write what each answer rules in and rules out.",
+                      "Do not reuse a question if its answer would only confirm the current favorite.",
+                      "For a known top-two battle, load `pair-duels.md` first and use this file only to fill missing probes."
+                ],
+                "followups": [],
+                "guidance": [
+                      "Ask 4-6 questions per round.",
+                      "Use concrete scenes. Avoid asking for type words directly.",
+                      "Prefer ranking top two options when the subject says several options fit.",
+                      "After every round, update the candidate set and write what each answer rules in and rules out.",
+                      "Do not reuse a question if its answer would only confirm the current favorite.",
+                      "For a known top-two battle, load `pair-duels.md` first and use this file only to fill missing probes."
+                ]
+          },
+          {
+                "id": "core-probes-messy-problem-entry",
+                "title": "Messy Problem Entry",
+                "category": "Core probes",
+                "kind": "forced-choice scene",
+                "sourceHeading": "### Messy Problem Entry",
+                "scene": "You inherit a chaotic project with unclear goals, messy people, and no reliable documentation. In the first hour, what do you do?",
+                "options": [
+                      {
+                            "label": "A",
+                            "text": "Define the outcome, owners, constraints, and first executable plan.",
+                            "signal": "Te"
+                      },
+                      {
+                            "label": "B",
+                            "text": "Build a private model of what is really going on before moving people.",
+                            "signal": "Ni/Ti"
+                      },
+                      {
+                            "label": "C",
+                            "text": "Talk to stakeholders to understand expectations and emotional alignment.",
+                            "signal": "Fe"
+                      },
+                      {
+                            "label": "D",
+                            "text": "Inspect concrete artifacts, examples, and working parts before theorizing.",
+                            "signal": "Se/Si"
+                      }
+                ],
+                "questions": [
+                      "You inherit a chaotic project with unclear goals, messy people, and no reliable documentation. In the first hour, what do you do?",
+                      "What feels irresponsible to skip?"
+                ],
+                "followups": [
+                      "What feels irresponsible to skip?"
+                ],
+                "guidance": [
+                      "Ask the scene before revealing the function tags.",
+                      "After the answer, ask what feels irresponsible to skip."
+                ]
+          },
+          {
+                "id": "core-probes-moral-ambiguity",
+                "title": "Moral Ambiguity",
+                "category": "Core probes",
+                "kind": "forced-choice scene",
+                "sourceHeading": "### Moral Ambiguity",
+                "scene": "A close friend did something morally questionable but says it was for someone they love. What happens first?",
+                "options": [
+                      {
+                            "label": "A",
+                            "text": "I internally test whether the act violates my values.",
+                            "signal": "Fi"
+                      },
+                      {
+                            "label": "B",
+                            "text": "I ask for concrete facts and consequences before judging.",
+                            "signal": "Te/Ti"
+                      },
+                      {
+                            "label": "C",
+                            "text": "I map who is hurt, who is responsible, and how to repair the relationship field.",
+                            "signal": "Fe"
+                      },
+                      {
+                            "label": "D",
+                            "text": "I compare it to known cases and precedents.",
+                            "signal": "Si"
+                      }
+                ],
+                "questions": [
+                      "A close friend did something morally questionable but says it was for someone they love. What happens first?",
+                      "Do you feel pulled into the moral emotion before facts are clear?"
+                ],
+                "followups": [
+                      "Do you feel pulled into the moral emotion before facts are clear?"
+                ],
+                "guidance": [
+                      "Ask the scene before revealing the function tags.",
+                      "After the answer, ask what feels irresponsible to skip."
+                ]
+          },
+          {
+                "id": "core-probes-new-domain-learning",
+                "title": "New Domain Learning",
+                "category": "Core probes",
+                "kind": "forced-choice scene",
+                "sourceHeading": "### New Domain Learning",
+                "scene": "You must enter a field you know almost nothing about.",
+                "options": [
+                      {
+                            "label": "A",
+                            "text": "Start doing small tasks and learn from feedback.",
+                            "signal": "Se/Te"
+                      },
+                      {
+                            "label": "B",
+                            "text": "Search for the hidden structure and wait until the map clicks.",
+                            "signal": "Ni"
+                      },
+                      {
+                            "label": "C",
+                            "text": "Generate many analogies and possible connections.",
+                            "signal": "Ne"
+                      },
+                      {
+                            "label": "D",
+                            "text": "Build a careful foundation from reliable references.",
+                            "signal": "Si/Ti"
+                      }
+                ],
+                "questions": [
+                      "You must enter a field you know almost nothing about.",
+                      "What makes you trust that you understand it?"
+                ],
+                "followups": [
+                      "What makes you trust that you understand it?"
+                ],
+                "guidance": [
+                      "Ask the scene before revealing the function tags.",
+                      "After the answer, ask what feels irresponsible to skip."
+                ]
+          },
+          {
+                "id": "core-probes-decision-under-ambiguity",
+                "title": "Decision Under Ambiguity",
+                "category": "Core probes",
+                "kind": "forced-choice scene",
+                "sourceHeading": "### Decision Under Ambiguity",
+                "scene": "A major life decision has incomplete data.",
+                "options": [
+                      {
+                            "label": "A",
+                            "text": "A direction appears first; I then gather evidence to test or execute it.",
+                            "signal": "Ni-Te"
+                      },
+                      {
+                            "label": "B",
+                            "text": "I compare past cases, risks, and proven paths.",
+                            "signal": "Si-Te"
+                      },
+                      {
+                            "label": "C",
+                            "text": "I list options and keep possibilities open until the last responsible moment.",
+                            "signal": "Ne"
+                      },
+                      {
+                            "label": "D",
+                            "text": "I ask which choice I can personally stand behind, even if inefficient.",
+                            "signal": "Fi"
+                      }
+                ],
+                "questions": [
+                      "A major life decision has incomplete data.",
+                      "When people disagree, what actually changes your mind?"
+                ],
+                "followups": [
+                      "When people disagree, what actually changes your mind?"
+                ],
+                "guidance": [
+                      "Ask the scene before revealing the function tags.",
+                      "After the answer, ask what feels irresponsible to skip."
+                ]
+          },
+          {
+                "id": "core-probes-conflict-repair",
+                "title": "Conflict Repair",
+                "category": "Core probes",
+                "kind": "forced-choice scene",
+                "sourceHeading": "### Conflict Repair",
+                "scene": "You snapped at someone important. They are hurt.",
+                "options": [
+                      {
+                            "label": "A",
+                            "text": "I explain the logic, solve the cause, then repair emotion after I cool down.",
+                            "signal": "Te with delayed Fi"
+                      },
+                      {
+                            "label": "B",
+                            "text": "I immediately track their emotional state and repair the bond first.",
+                            "signal": "Fe"
+                      },
+                      {
+                            "label": "C",
+                            "text": "I withdraw to understand what I really feel and whether a boundary was crossed.",
+                            "signal": "Fi"
+                      },
+                      {
+                            "label": "D",
+                            "text": "I analyze the exact trigger and principle that failed.",
+                            "signal": "Ti/Ni"
+                      }
+                ],
+                "questions": [
+                      "You snapped at someone important. They are hurt.",
+                      "What is your first repair language: apology, explanation, solution, reassurance, or space?"
+                ],
+                "followups": [
+                      "What is your first repair language: apology, explanation, solution, reassurance, or space?"
+                ],
+                "guidance": [
+                      "Ask the scene before revealing the function tags.",
+                      "After the answer, ask what feels irresponsible to skip."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-entj-vs-intj",
+                "title": "ENTJ vs INTJ",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### ENTJ vs INTJ",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "On a free morning with no obligations, where does your mind drift?",
+                      "When you have authority over a room and must coordinate many capable people, what happens to your energy?",
+                      "After several days with no meaningful human contact, what changes?",
+                      "When you discuss a new idea, are you creating it with people or stress-testing an already formed model?",
+                      "Under heavy pressure, do you lose emotional value contact, body regulation, strategic patience, or social tolerance first?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "ENTJ-leaning: execution order, people allocation, leverage, external optimization.",
+                      "INTJ-leaning: private models, future architecture, meaning, conceptual refinement.",
+                      "ENTJ-leaning: activated, sharper, enjoys command if the mission matters.",
+                      "INTJ-leaning: can perform it, but sustained people orchestration is usually costly.",
+                      "ENTJ-leaning: rest first, then agitation or under-stimulation.",
+                      "INTJ-leaning: may feel restored longer if projects and mental material are available.",
+                      "ENTJ-leaning: external pressure and dialogue speed up formation or execution.",
+                      "INTJ-leaning: dialogue tests, translates, or operationalizes a mostly internal model."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-infp-vs-infj",
+                "title": "INFP vs INFJ",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### INFP vs INFJ",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "When a friend makes a hurtful choice, do you first ask whether you can morally endorse it, or what it reveals about the relationship and future pattern?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "Values source:",
+                      "INFP: personal congruence, inner rightness, authenticity.",
+                      "INFJ: relational meaning, future implications, hidden motives, collective impact.",
+                      "Idea pattern:",
+                      "INFP: Fi-Ne exploration of possibilities around values.",
+                      "INFJ: Ni-Fe convergence into one interpretive pattern.",
+                      "Conflict:",
+                      "INFP: \"This violates who I am or what I can endorse.\""
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-infp-vs-entj-intj",
+                "title": "INFP vs ENTJ/INTJ",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### INFP vs ENTJ/INTJ",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "When nobody is demanding anything, do you naturally check inner value alignment, optimize external systems, or refine a future model?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "Default daily process: personal values and emotional congruence vs goals, systems, models, execution.",
+                      "Relationship to Te: exhausting emergency tool vs natural operating system.",
+                      "Relationship to Fi: constant inner compass vs delayed, protected, role-dependent, or crisis-activated channel.",
+                      "Stress: Te grip in INFP vs Fi or Se-related breakdown in Te/Ni types."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-estj-vs-entj",
+                "title": "ESTJ vs ENTJ",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### ESTJ vs ENTJ",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "If an old but profitable system works, do you first stabilize and standardize it, or ask whether it blocks the future architecture?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "ESTJ: precedent, reliability, known rules, continuity, operational discipline.",
+                      "ENTJ: future-state architecture, strategic leap, reconfiguration, leverage."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-enfj-vs-entj",
+                "title": "ENFJ vs ENTJ",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### ENFJ vs ENTJ",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "When a team is emotionally misaligned but the plan is correct, do you experience the emotional field as the main problem or as one execution risk among others?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "ENFJ: people alignment is the medium of action.",
+                      "ENTJ: people alignment is a constraint or lever for execution."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-entp-vs-intp",
+                "title": "ENTP vs INTP",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### ENTP vs INTP",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Does live argument make your thinking better in real time, or mainly expose what your private model still needs to clean up?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "ENTP: external debate generates energy and new possibilities.",
+                      "INTP: internal precision and conceptual independence dominate; debate tests rather than fuels."
+                ]
+          },
+          {
+                "id": "adjacent-discriminators-isfp-vs-infp",
+                "title": "ISFP vs INFP",
+                "category": "Adjacent discriminators",
+                "kind": "adjacent-type discriminator",
+                "sourceHeading": "### ISFP vs INFP",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "When moved by something, do you want to act or make something tangible now, or explore what it means and what else it could become?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "ISFP: values meet concrete action, aesthetics, body, immediate reality.",
+                      "INFP: values meet meanings, possibilities, stories, and alternate worlds."
+                ]
+          },
+          {
+                "id": "stress-recovery",
+                "title": "Stress And Recovery Probes",
+                "category": "Stress/recovery",
+                "kind": "question set",
+                "sourceHeading": "## Stress And Recovery Probes",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "When overloaded, what do you do that feels unlike your normal self?",
+                      "What restores you fastest: solitude, people, body sensation, order, novelty, emotional expression, or closure?",
+                      "What do you hide because it would make you feel weak?",
+                      "After public criticism, what loops for 48 hours: facts, shame, revenge, relationship, meaning, or bodily agitation?",
+                      "When very tired, do you need emotional processing or just low-cognition sensory recovery?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "Inferior-function patterns are useful only when repeated and costly.",
+                      "Tertiary-function pressure release is not the same as inferior grip.",
+                      "Body-based recovery does not automatically mean Se dominance."
+                ]
+          },
+          {
+                "id": "big-five-cross-checks",
+                "title": "Big Five Cross-Checks",
+                "category": "Big Five cross-checks",
+                "kind": "question set",
+                "sourceHeading": "## Big Five Cross-Checks",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Do you seek novelty for its own sake, for transfer into a system, for beauty, or for possibility?",
+                      "Can you sustain boring execution after the initial vision fades?",
+                      "Which energizes you: social warmth, dominance, live stimulation, recognition, or none?",
+                      "Do you avoid conflict because harmony matters, or tolerate conflict if the objective requires it?",
+                      "What triggers disproportionate rumination: rejection, failure, uncertainty, loss of control, moral guilt, or bodily threat?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "Openness: \"Do you seek novelty for its own sake, for transfer into a system, for beauty, or for possibility?\"",
+                      "Conscientiousness: \"Can you sustain boring execution after the initial vision fades?\"",
+                      "Extraversion: \"Which energizes you: social warmth, dominance, live stimulation, recognition, or none?\"",
+                      "Agreeableness: \"Do you avoid conflict because harmony matters, or tolerate conflict if the objective requires it?\"",
+                      "Neuroticism: \"What triggers disproportionate rumination: rejection, failure, uncertainty, loss of control, moral guilt, or bodily threat?\"",
+                      "High dominance but low social warmth can mimic Extraversion in MBTI without high Big Five Extraversion.",
+                      "High neuroticism can make many types look introverted, feeling, or turbulent.",
+                      "High conscientiousness can make perceiving types look judging in work contexts."
+                ]
+          },
+          {
+                "id": "contradiction-follow-ups",
+                "title": "Contradiction Follow-Ups",
+                "category": "Contradiction follow-ups",
+                "kind": "question set",
+                "sourceHeading": "## Contradiction Follow-Ups",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "What part is instinctive, and what part is learned from role, culture, or work?",
+                      "What does this behavior cost you afterward?",
+                      "If I removed the audience, deadline, and status stakes, would the behavior remain?",
+                      "What would your spouse, teammate, or close friend say is missing from your self-description?",
+                      "What interpretation have I just made that feels wrong or overdramatic?"
+                ],
+                "followups": [],
+                "guidance": [
+                      "\"Give two real examples, one where this pattern happened and one where it did not.\"",
+                      "\"What part is instinctive, and what part is learned from role, culture, or work?\"",
+                      "\"What does this behavior cost you afterward?\"",
+                      "\"If I removed the audience, deadline, and status stakes, would the behavior remain?\"",
+                      "\"What would your spouse, teammate, or close friend say is missing from your self-description?\"",
+                      "\"What interpretation have I just made that feels wrong or overdramatic?\""
+                ]
+          },
+          {
+                "id": "round-templates-round-1-claim-triage",
+                "title": "Round 1: Claim Triage",
+                "category": "Round templates",
+                "kind": "round template",
+                "sourceHeading": "### Round 1: Claim Triage",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "One moral/process question.",
+                      "One new-domain learning question.",
+                      "One social-energy question.",
+                      "One stress/recovery question.",
+                      "Goal: reduce obvious false positives; do not conclude."
+                ],
+                "followups": [],
+                "guidance": [
+                      "reduce obvious false positives; do not conclude."
+                ]
+          },
+          {
+                "id": "round-templates-round-2-contradiction-drill",
+                "title": "Round 2: Contradiction Drill",
+                "category": "Round templates",
+                "kind": "round template",
+                "sourceHeading": "### Round 2: Contradiction Drill",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Ask only about contradictions from Round 1.",
+                      "Include \"what exactly is in your head?\" follow-ups.",
+                      "Goal: distinguish surface behavior from mechanism."
+                ],
+                "followups": [],
+                "guidance": [
+                      "distinguish surface behavior from mechanism."
+                ]
+          },
+          {
+                "id": "round-templates-round-3-top-two-duel",
+                "title": "Round 3: Top-Two Duel",
+                "category": "Round templates",
+                "kind": "round template",
+                "sourceHeading": "### Round 3: Top-Two Duel",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Ask 4 direct discriminators for the top pair.",
+                      "Include one counterexample request.",
+                      "Goal: force runner-up comparison."
+                ],
+                "followups": [],
+                "guidance": [
+                      "force runner-up comparison."
+                ]
+          },
+          {
+                "id": "round-templates-round-4-cross-framework-check",
+                "title": "Round 4: Cross-Framework Check",
+                "category": "Round templates",
+                "kind": "round template",
+                "sourceHeading": "### Round 4: Cross-Framework Check",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Big Five sketch.",
+                      "Role/culture/attachment alternative explanations.",
+                      "External observer check if available.",
+                      "Goal: prevent MBTI from explaining everything."
+                ],
+                "followups": [],
+                "guidance": [
+                      "prevent MBTI from explaining everything."
+                ]
+          },
+          {
+                "id": "round-templates-round-5-final-falsifier",
+                "title": "Round 5: Final Falsifier",
+                "category": "Round templates",
+                "kind": "round template",
+                "sourceHeading": "### Round 5: Final Falsifier",
+                "scene": "",
+                "options": [],
+                "questions": [
+                      "Ask: \"What evidence would make this conclusion wrong?\"",
+                      "Ask the subject to reject any inaccurate framing.",
+                      "Goal: avoid beautiful but false closure."
+                ],
+                "followups": [],
+                "guidance": [
+                      "avoid beautiful but false closure."
+                ]
+          }
+    ];
+    // END GENERATED QUESTION CARDS
+
+    const state = {
+      search: "",
+      category: "All",
+      selectedId: QUESTION_CARDS[0] ? QUESTION_CARDS[0].id : "",
+      targetConflict: "ENTJ vs INTJ vs INFP",
+      roundTemplateId: "",
+    };
+
+    const els = {
+      questionSearch: document.getElementById("questionSearch"),
+      categoryFilter: document.getElementById("categoryFilter"),
+      cardList: document.getElementById("cardList"),
+      visibleQuestionCount: document.getElementById("visibleQuestionCount"),
+      selectedQuestionTitle: document.getElementById("selectedQuestionTitle"),
+      selectedQuestionSummary: document.getElementById("selectedQuestionSummary"),
+      selectedQuestionChips: document.getElementById("selectedQuestionChips"),
+      questionDetail: document.getElementById("questionDetail"),
+      questionList: document.getElementById("questionList"),
+      optionList: document.getElementById("optionList"),
+      targetConflictInput: document.getElementById("targetConflictInput"),
+      roundTemplateSelect: document.getElementById("roundTemplateSelect"),
+      roundPromptOutput: document.getElementById("roundPromptOutput"),
+      issueSeedOutput: document.getElementById("issueSeedOutput"),
+      copyRoundPrompt: document.getElementById("copyRoundPrompt"),
+      copyIssueSeed: document.getElementById("copyIssueSeed"),
+      resetQuestionFilters: document.getElementById("resetQuestionFilters"),
+      toast: document.getElementById("toast"),
+      metricCards: document.getElementById("metricCards"),
+      metricQuestions: document.getElementById("metricQuestions"),
+      metricTemplates: document.getElementById("metricTemplates"),
+    };
+
+    function makeNode(tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) {
+        element.className = className;
+      }
+      if (text !== undefined) {
+        element.textContent = text;
+      }
+      return element;
+    }
+
+    function normalize(value) {
+      return String(value || "").toLowerCase();
+    }
+
+    function uniqueItems(items) {
+      const seen = new Set();
+      return items.filter((item) => {
+        if (!item || seen.has(item)) {
+          return false;
+        }
+        seen.add(item);
+        return true;
+      });
+    }
+
+    function searchableText(card) {
+      return [
+        card.title,
+        card.category,
+        card.kind,
+        card.scene,
+        ...card.questions,
+        ...card.followups,
+        ...card.guidance,
+        ...card.options.map((option) => `${option.label} ${option.text} ${option.signal}`),
+      ].join(" ");
+    }
+
+    function filteredCards() {
+      const query = normalize(state.search);
+      return QUESTION_CARDS.filter((card) => {
+        const categoryOk = state.category === "All" || card.category === state.category;
+        const queryOk = !query || normalize(searchableText(card)).includes(query);
+        return categoryOk && queryOk;
+      });
+    }
+
+    function ensureSelectedVisible() {
+      const visible = filteredCards();
+      if (visible.length && !visible.some((card) => card.id === state.selectedId)) {
+        state.selectedId = visible[0].id;
+      }
+      return visible;
+    }
+
+    function selectedCard() {
+      return QUESTION_CARDS.find((card) => card.id === state.selectedId) || QUESTION_CARDS[0];
+    }
+
+    function roundTemplates() {
+      return QUESTION_CARDS.filter((card) => card.category === "Round templates");
+    }
+
+    function selectedTemplate() {
+      return roundTemplates().find((card) => card.id === state.roundTemplateId) || roundTemplates()[0] || selectedCard();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          search: state.search,
+          category: state.category,
+          selectedId: state.selectedId,
+          targetConflict: state.targetConflict,
+          roundTemplateId: state.roundTemplateId,
+        }));
+      } catch (error) {
+        return error;
+      }
+      return null;
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        if (typeof parsed.search === "string") {
+          state.search = parsed.search;
+        }
+        if (typeof parsed.category === "string") {
+          state.category = parsed.category;
+        }
+        if (typeof parsed.selectedId === "string" && QUESTION_CARDS.some((card) => card.id === parsed.selectedId)) {
+          state.selectedId = parsed.selectedId;
+        }
+        if (typeof parsed.targetConflict === "string") {
+          state.targetConflict = parsed.targetConflict;
+        }
+        if (typeof parsed.roundTemplateId === "string") {
+          state.roundTemplateId = parsed.roundTemplateId;
+        }
+      } catch (error) {
+        return;
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      window.setTimeout(() => els.toast.classList.remove("show"), 1400);
+    }
+
+    function copyText(text, message) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => fallbackCopy(text, message));
+        return;
+      }
+      fallbackCopy(text, message);
+    }
+
+    function fallbackCopy(text, message) {
+      const scratch = document.createElement("textarea");
+      scratch.value = text;
+      scratch.setAttribute("readonly", "true");
+      scratch.style.position = "fixed";
+      scratch.style.left = "-1000px";
+      document.body.appendChild(scratch);
+      scratch.select();
+      document.execCommand("copy");
+      scratch.remove();
+      showToast(message);
+    }
+
+    function renderMetrics() {
+      const questionCount = QUESTION_CARDS.reduce((sum, card) => sum + card.questions.length, 0);
+      const templateCount = roundTemplates().length;
+      els.metricCards.textContent = String(QUESTION_CARDS.length);
+      els.metricQuestions.textContent = String(questionCount);
+      els.metricTemplates.textContent = String(templateCount);
+    }
+
+    function renderTemplates() {
+      const templates = roundTemplates();
+      if (!state.roundTemplateId && templates[0]) {
+        state.roundTemplateId = templates[0].id;
+      }
+      const nodes = templates.map((template) => {
+        const option = document.createElement("option");
+        option.value = template.id;
+        option.textContent = template.title;
+        return option;
+      });
+      els.roundTemplateSelect.replaceChildren(...nodes);
+      if (templates.some((template) => template.id === state.roundTemplateId)) {
+        els.roundTemplateSelect.value = state.roundTemplateId;
+      }
+    }
+
+    function cardSummary(card) {
+      if (card.scene) {
+        return card.scene;
+      }
+      if (card.questions[0]) {
+        return card.questions[0];
+      }
+      if (card.guidance[0]) {
+        return card.guidance[0];
+      }
+      return card.kind;
+    }
+
+    function renderCardList(visible) {
+      els.visibleQuestionCount.textContent = String(visible.length);
+      const nodes = visible.map((card) => {
+        const button = makeNode("button", `question-card${card.id === state.selectedId ? " active" : ""}`);
+        button.type = "button";
+        button.dataset.cardId = card.id;
+        const title = makeNode("div", "card-title", card.title);
+        const summary = makeNode("div", "card-summary", cardSummary(card));
+        const meta = makeNode("div", "chip-row");
+        meta.append(makeNode("span", "chip teal", card.category));
+        meta.append(makeNode("span", "chip blue", `${card.questions.length} questions`));
+        meta.append(makeNode("span", "chip amber", card.kind));
+        button.append(title, summary, meta);
+        button.addEventListener("click", () => {
+          state.selectedId = card.id;
+          saveState();
+          render();
+        });
+        return button;
+      });
+      if (!nodes.length) {
+        nodes.push(makeNode("div", "note", "No question card matches the current filters."));
+      }
+      els.cardList.replaceChildren(...nodes);
+    }
+
+    function renderChips(card) {
+      const chips = [
+        makeNode("span", "chip teal", card.category),
+        makeNode("span", "chip blue", card.kind),
+        makeNode("span", "chip amber", `${card.questions.length} prompts`),
+      ];
+      els.selectedQuestionChips.replaceChildren(...chips);
+    }
+
+    function renderDetail(card) {
+      els.selectedQuestionTitle.textContent = card.title;
+      els.selectedQuestionSummary.textContent = cardSummary(card);
+      renderChips(card);
+
+      const cells = [];
+      const sourceCell = makeNode("div", "detail-cell");
+      sourceCell.append(makeNode("strong", "", "Source heading"));
+      sourceCell.append(makeNode("p", "", card.sourceHeading));
+      cells.push(sourceCell);
+
+      const targetCell = makeNode("div", "detail-cell");
+      targetCell.append(makeNode("strong", "", "Target uncertainty"));
+      targetCell.append(makeNode("p", "", state.targetConflict || "Set a candidate conflict in the Round Builder."));
+      cells.push(targetCell);
+
+      const ruleCell = makeNode("div", "detail-cell");
+      ruleCell.append(makeNode("strong", "", "Usage rule"));
+      ruleCell.append(makeNode("p", "", "Ask 4-6 questions, update the candidate board, preserve runner-up, and name the falsifier."));
+      cells.push(ruleCell);
+      els.questionDetail.replaceChildren(...cells);
+
+      const prompts = uniqueItems([...card.questions, ...card.followups]);
+      const promptNodes = prompts.map((question) => makeNode("li", "", question));
+      if (!promptNodes.length) {
+        promptNodes.push(makeNode("li", "", "Use this card as guidance for selecting the next discriminator."));
+      }
+      els.questionList.replaceChildren(...promptNodes);
+
+      const optionNodes = card.options.map((option) => {
+        const item = makeNode("li");
+        const strong = makeNode("strong", "", `${option.label}. ${option.signal}: `);
+        const span = makeNode("span", "", option.text);
+        item.append(strong, span);
+        return item;
+      });
+      if (!optionNodes.length) {
+        const guidance = card.guidance.length ? card.guidance : ["No option mapping; use the prompt as an open discriminator."];
+        guidance.forEach((item) => optionNodes.push(makeNode("li", "", item)));
+      }
+      els.optionList.replaceChildren(...optionNodes);
+    }
+
+    function buildRoundPrompt(card, template) {
+      const target = state.targetConflict || "current top candidate conflict";
+      const templateLines = template ? template.questions.map((question) => `- ${question}`) : [];
+      const sourceQuestions = uniqueItems([...card.questions, ...card.followups]);
+      const questionLines = sourceQuestions.map((question, index) => `${index + 1}. ${question}`);
+      const optionLines = card.options.map((option) => `- ${option.label}: ${option.text} [signal after answer: ${option.signal}]`);
+      return [
+        "Use $mbti-typing.",
+        "Mode: Live adaptive interview / next-round question selection.",
+        `Target uncertainty: ${target}.`,
+        `Selected source card: ${card.title} (${card.category}).`,
+        "",
+        "Round template:",
+        ...(templateLines.length ? templateLines : ["- Ask 4-6 concrete questions tied to the current fork."]),
+        "",
+        "Ask from this source card, but only keep questions that attack the actual uncertainty:",
+        ...questionLines,
+        ...(optionLines.length ? ["", "Option signals to interpret only after the user answers:", ...optionLines] : []),
+        "",
+        "Output after the user answers:",
+        "- Current board with leading type and serious runner-up.",
+        "- What evidence moved and what stayed unresolved.",
+        "- Strongest contradiction or falsifier.",
+        "- Next target uncertainty.",
+        "- Boundary: not a clinical, hiring, legal, or deterministic result.",
+      ].join("\n");
+    }
+
+    function buildIssueSeed(card) {
+      return [
+        "# Question Improvement Seed",
+        "",
+        "Template: question_improvement.yml",
+        `Source card: ${card.title}`,
+        `Category: ${card.category}`,
+        `Target uncertainty: ${state.targetConflict || "not set"}`,
+        "",
+        "## Current questions",
+        ...card.questions.map((question, index) => `${index + 1}. ${question}`),
+        "",
+        "## Proposed change",
+        "- Add, remove, or rewrite one question.",
+        "- Explain which ambiguity, repeated correction, or benchmark miss it addresses.",
+        "- Preserve 4-6 question rhythm, runner-up discipline, falsifier language, and safety boundary.",
+      ].join("\n");
+    }
+
+    function renderOutputs(card) {
+      const template = selectedTemplate();
+      els.roundPromptOutput.value = buildRoundPrompt(card, template);
+      els.issueSeedOutput.value = buildIssueSeed(card);
+    }
+
+    function render() {
+      if (!QUESTION_CARDS.length) {
+        els.cardList.replaceChildren(makeNode("div", "note", "No source question cards are embedded yet."));
+        return;
+      }
+      if (!QUESTION_CARDS.some((card) => card.id === state.selectedId)) {
+        state.selectedId = QUESTION_CARDS[0].id;
+      }
+      els.questionSearch.value = state.search;
+      els.categoryFilter.value = state.category;
+      els.targetConflictInput.value = state.targetConflict;
+      const visible = ensureSelectedVisible();
+      renderMetrics();
+      renderTemplates();
+      renderCardList(visible);
+      const card = selectedCard();
+      renderDetail(card);
+      renderOutputs(card);
+    }
+
+    els.questionSearch.addEventListener("input", (event) => {
+      state.search = event.target.value;
+      saveState();
+      render();
+    });
+
+    els.categoryFilter.addEventListener("change", (event) => {
+      state.category = event.target.value;
+      saveState();
+      render();
+    });
+
+    els.targetConflictInput.addEventListener("input", (event) => {
+      state.targetConflict = event.target.value;
+      saveState();
+      render();
+    });
+
+    els.roundTemplateSelect.addEventListener("change", (event) => {
+      state.roundTemplateId = event.target.value;
+      saveState();
+      renderOutputs(selectedCard());
+    });
+
+    els.resetQuestionFilters.addEventListener("click", () => {
+      state.search = "";
+      state.category = "All";
+      saveState();
+      render();
+    });
+
+    els.copyRoundPrompt.addEventListener("click", () => {
+      copyText(els.roundPromptOutput.value, "Round prompt copied");
+    });
+
+    els.copyIssueSeed.addEventListener("click", () => {
+      copyText(els.issueSeedOutput.value, "Issue seed copied");
+    });
+
+    loadState();
+    render();
+  </script>
+</body>
+</html>

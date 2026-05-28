@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -27,6 +27,12 @@ blind-review-audit:
 
 consent-redaction-audit:
 	$(PYTHON) -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
+
+question-lab-sync:
+	$(PYTHON) -B scripts/sync_question_lab.py $(SKILL_DIR)/references/question-bank.md docs/question-lab.html
+
+question-lab-audit:
+	$(PYTHON) -B scripts/question_lab_audit.py docs/question-lab.html $(SKILL_DIR)/references/question-bank.md
 
 type-duel-lab-sync:
 	$(PYTHON) -B scripts/sync_type_duel_lab.py $(SKILL_DIR)/references/pair-duels.md docs/type-duel-lab.html

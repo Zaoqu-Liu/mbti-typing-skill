@@ -16,6 +16,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 ## Good First Contributions
 
 - Add benchmark cases for under-covered type pairs.
+- Improve next-round probes through `docs/question-lab.html` and the `question_improvement.yml` issue template.
 - Improve pair-duel discriminators.
 - Share weak adjacent-type forks through `docs/type-duel-lab.html` and the `type_duel_improvement.yml` issue template.
 - Add realistic bad reports that should fail audit.
@@ -40,6 +41,7 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
+Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
@@ -58,6 +60,20 @@ Each benchmark case must include:
 - `required_falsifier_theme`
 
 Each case should test a real differential-diagnosis problem, not a stereotype.
+
+## Question Improvement Guidelines
+
+Question improvements are useful when the next round feels generic, repetitive, or unable to separate the leading type from a serious runner-up.
+
+Before opening a question issue:
+
+- Start with `docs/question-lab.html` when possible.
+- Identify the target uncertainty, such as leader vs runner-up, normal vs stress, public role vs private recovery, contradiction follow-up, or Big Five cross-check.
+- Propose a concrete scene-based question, not an abstract self-label question.
+- Include the intended evidence state and what answer would weaken the current leading hypothesis.
+- Include forced-choice options only when each side has a real losing condition.
+- Preserve runner-up, falsifier, and safety-boundary language.
+- Do not include private transcripts, direct identifiers, third-party details, clinical claims, hiring use cases, or deterministic claims about people.
 
 ## Calibration Result Guidelines
 
@@ -118,6 +134,7 @@ Before opening a consented follow-up issue:
 
 - [ ] `make test` passes.
 - [ ] Any new claim has a caveat or evidence standard.
+- [ ] Any new question-bank improvement is source-synced through `scripts/sync_question_lab.py` and passes `scripts/question_lab_audit.py`.
 - [ ] Any new type-pair guidance includes losing conditions for both sides.
 - [ ] Any new type-duel improvement is source-synced through `scripts/sync_type_duel_lab.py` and passes `scripts/type_duel_lab_audit.py`.
 - [ ] Any new benchmark case includes a trap and falsifier theme.

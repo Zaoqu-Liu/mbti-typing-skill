@@ -60,7 +60,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Session Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -127,6 +127,20 @@ The consent feedback loop is the bridge between real user usefulness and public 
 
 This is the allowed real-user learning loop: the project can become more useful from lived feedback without making the public issue tracker a place for raw personal data.
 
+## Adaptive Question Loop
+
+![Adaptive Question Loop](assets/adaptive-question-loop.svg)
+
+The Adaptive Question Loop makes the next-round engine visible:
+
+- `skill/mbti-typing/references/question-bank.md` remains the source of truth for probes, adjacent discriminators, contradiction follow-ups, Big Five cross-checks, and round templates.
+- `scripts/sync_question_lab.py` parses the Markdown into generated page data.
+- [Question Lab](question-lab.html) lets users search by category, source section, type pair, or uncertainty pattern before copying a 4-6 question `$mbti-typing` round prompt.
+- Each card preserves source anchors, question goals, forced-choice options, runner-up language, falsifier focus, and `question_improvement.yml` issue seeds.
+- `scripts/question_lab_audit.py` checks source sync, copy outputs, local-first rendering, DOM-safe rendering, and no external runtime before release.
+
+This is the anti-generic-question layer: users return because the next round visibly targets the current uncertainty instead of restarting a broad quiz.
+
 ## Type Duel Decision Map
 
 ![Type Duel Decision Map](assets/type-duel-decision-map.svg)
@@ -164,6 +178,19 @@ The fastest product path is now [Session Lab](session-lab.html):
 
 The lab is intentionally local-first: no build step, no external runtime, no account, and no network call. Share links use a URL hash so the browser can recover a session without sending the evidence to a server.
 
+## Question Lab
+
+[Question Lab](question-lab.html) turns `question-bank.md` into a usable next-round product surface:
+
+- Visitors can search by probe family, uncertainty pattern, type pair, or evidence gap.
+- Every card is source-synced from the skill reference file.
+- The selected card preserves source heading, category, question goals, concrete prompts, forced-choice options, and round templates.
+- The page generates a focused `Use $mbti-typing` round prompt for the next 4-6 questions instead of a full restart.
+- The issue seed makes a weak, repetitive, or generic question easy to convert into a `question_improvement.yml` contribution.
+- Local persistence remembers the selected probe without sending anything to a server.
+
+This is where the repository becomes addictive in the ethical sense: the user can see exactly why this next question exists.
+
 ## Benchmark Arena
 
 [Benchmark Arena](case-gallery.html) turns the regression suite into a product surface:
@@ -196,9 +223,10 @@ This is the retention loop that is allowed: users come back because the system m
 
 ## Public Page Stack
 
-The five buildless product pages now cover the full user loop:
+The six buildless product pages now cover the full user loop:
 
 - [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
+- [Question Lab](question-lab.html): source-synced next-round question selection and question improvement seeds.
 - [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
@@ -229,15 +257,17 @@ flowchart TD
     H --> I[Calibration loop map]
     I --> J[Blind review arena]
     J --> K[Consent feedback loop]
-    K --> L[Type Duel Decision Map]
-    L --> M[Type Duel Lab]
-    M --> N[Follow-Up Lab]
-    N --> O[One-minute demo]
-    O --> P[Demo session]
-    P --> Q[Sample report]
-    Q --> R[Evaluation model]
-    R --> S[Contribution guide]
-    S --> T[Benchmark cases]
+    K --> L[Adaptive Question Loop]
+    L --> M[Question Lab]
+    M --> N[Type Duel Decision Map]
+    N --> O[Type Duel Lab]
+    O --> P[Follow-Up Lab]
+    P --> Q[One-minute demo]
+    Q --> R[Demo session]
+    R --> S[Sample report]
+    S --> T[Evaluation model]
+    T --> U[Contribution guide]
+    U --> V[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.
