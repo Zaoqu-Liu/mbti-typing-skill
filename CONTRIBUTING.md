@@ -42,7 +42,7 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 70/70 (100.00%)
+Agent Adapter Audit: 189/189 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
@@ -140,7 +140,7 @@ Before opening an adapter change:
 
 - Keep `skill/mbti-typing/SKILL.md` as the canonical protocol.
 - Update `AGENTS.md` only for concise cross-agent behavior, not tool-specific detail.
-- Keep `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, and `opencode.json` thin.
+- Keep `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `opencode.json`, `.gemini/settings.json`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `.aider.conf.yml`, and tool-specific files thin.
 - Update `agent-adapters/manifest.json` if a target, entrypoint, install command, or invocation changes.
 - Update `docs/agent-adapters.md` with source links and the date checked when tool conventions change.
 - Run `python3 -B scripts/agent_adapter_audit.py .` before claiming compatibility.

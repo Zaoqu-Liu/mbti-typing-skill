@@ -20,12 +20,12 @@ The README opens with:
 - A Benchmark Arena case gallery for visitors who want to inspect traps, runner-ups, falsifiers, reusable prompts, and contribution seeds.
 - A Calibration Lab for visitors who want to paste a report, see failed gates, copy a repair prompt, and turn misses into calibration issues.
 - A Follow-Up Lab for visitors who came back days later and need to turn delayed observations into a consented, redacted, public-safe packet.
-- Agent adapters for visitors who want the same protocol in Codex, Claude Code, Cursor, opencode, or another AGENTS.md-aware agent.
+- Agent adapters for visitors who want the same protocol in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or another AGENTS.md-aware agent.
 - A Blind Review Protocol for visitors who want to see how multi-reviewer or multi-model outputs are evaluated without showing the expected answer up front.
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Eleven SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, and `docs/assets/agent-adapter-matrix.svg`.
+- Twelve SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, and `docs/assets/agent-compatibility-grid.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -82,10 +82,11 @@ flowchart TD
 16. Adaptive Question Loop: why next-round questions cannot drift from the skill source.
 17. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
 18. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
-19. System map: how inputs become calibrated outputs.
-20. Interview loop: why each round feels progressive.
-21. Evidence ledger: why the answer is not a black box.
-22. Quality gates: why the project is maintainable.
+19. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
+20. System map: how inputs become calibrated outputs.
+21. Interview loop: why each round feels progressive.
+22. Evidence ledger: why the answer is not a black box.
+23. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -109,8 +110,8 @@ The experience should never rely on:
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
-- Keep the eleven precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, and `agent-adapter-matrix.svg`.
-- Keep `AGENTS.md`, `opencode.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `scripts/agent_adapter_audit.py` aligned so adapter portability remains a tested feature, not a claim.
+- Keep the twelve precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, and `agent-compatibility-grid.svg`.
+- Keep `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `scripts/agent_adapter_audit.py` aligned so adapter portability remains a tested feature, not a claim.
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
 - Keep `docs/question-lab.html` usable without a build step, external runtime, network calls, or account setup; preserve source-of-truth sync from `skill/mbti-typing/references/question-bank.md`, search, category filters, all current question cards, copyable round prompts, issue seed copy, local persistence, and safety boundaries.
 - Keep `docs/type-duel-lab.html` usable without a build step, external runtime, network calls, or account setup; preserve source-of-truth sync from `skill/mbti-typing/references/pair-duels.md`, search, cluster filters, all current pair duels, copyable duel prompts, issue seed copy, local persistence, and safety boundaries.

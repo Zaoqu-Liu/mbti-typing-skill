@@ -3,6 +3,7 @@
   "canonical_skill": "skill/mbti-typing/SKILL.md",
   "canonical_contract": "AGENTS.md",
   "adapter_audit": "scripts/agent_adapter_audit.py",
+  "checked_on": "2026-05-28",
   "shared_references": [
     "skill/mbti-typing/references/playbooks.md",
     "skill/mbti-typing/references/question-bank.md",
@@ -16,6 +17,8 @@
     {
       "id": "codex",
       "display": "OpenAI Codex",
+      "support_level": "native-skill",
+      "source_url": "https://github.com/openai/codex",
       "entrypoints": [
         "skill/mbti-typing/SKILL.md",
         "skill/mbti-typing/agents/openai.yaml",
@@ -26,11 +29,27 @@
       "contract": "Codex skill plus repository AGENTS.md contract."
     },
     {
+      "id": "generic-agents-md",
+      "display": "Generic AGENTS.md-aware agents",
+      "support_level": "project-instructions",
+      "source_url": "https://agents.md/",
+      "entrypoints": [
+        "AGENTS.md",
+        "CONVENTIONS.md"
+      ],
+      "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
+      "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
+      "contract": "Portable project-level instruction contract."
+    },
+    {
       "id": "claude-code",
       "display": "Claude Code",
+      "support_level": "project-skill-and-command",
+      "source_url": "https://docs.anthropic.com/en/docs/claude-code/skills",
       "entrypoints": [
         ".claude/skills/mbti-typing/SKILL.md",
         ".claude/commands/mbti-type.md",
+        "CLAUDE.md",
         "AGENTS.md"
       ],
       "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
@@ -40,6 +59,8 @@
     {
       "id": "cursor",
       "display": "Cursor",
+      "support_level": "project-rule",
+      "source_url": "https://docs.cursor.com/en/context/rules",
       "entrypoints": [
         ".cursor/rules/mbti-typing.mdc",
         "AGENTS.md"
@@ -51,6 +72,8 @@
     {
       "id": "opencode",
       "display": "opencode",
+      "support_level": "project-instructions",
+      "source_url": "https://opencode.ai/docs/config/",
       "entrypoints": [
         "AGENTS.md",
         "opencode.json"
@@ -58,6 +81,91 @@
       "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
       "install": "Keep AGENTS.md and opencode.json committed in the project root.",
       "contract": "AGENTS.md project rules with opencode.json instructions aggregation."
+    },
+    {
+      "id": "gemini-cli",
+      "display": "Gemini CLI",
+      "support_level": "context-file",
+      "source_url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md",
+      "entrypoints": [
+        "GEMINI.md",
+        ".gemini/settings.json",
+        "AGENTS.md"
+      ],
+      "invoke": "gemini \"Use the MBTI Typing Skill to run an ENTJ vs INTJ investigation\"",
+      "install": "Copy GEMINI.md, AGENTS.md, and .gemini/settings.json into the target repository root.",
+      "contract": "Gemini context file imports the shared contract and canonical skill."
+    },
+    {
+      "id": "github-copilot",
+      "display": "GitHub Copilot",
+      "support_level": "repository-instructions-and-skill",
+      "source_url": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions",
+      "entrypoints": [
+        ".github/copilot-instructions.md",
+        ".github/instructions/mbti-typing.instructions.md",
+        ".github/skills/mbti-typing/SKILL.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md"
+      ],
+      "invoke": "Ask Copilot to use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
+      "install": "Copy .github/copilot-instructions.md, .github/instructions/mbti-typing.instructions.md, and .github/skills/mbti-typing/SKILL.md into the target repository.",
+      "contract": "Repository custom instructions plus project skill entrypoint."
+    },
+    {
+      "id": "windsurf",
+      "display": "Windsurf",
+      "support_level": "workspace-rule",
+      "source_url": "https://docs.windsurf.com/windsurf/cascade/rules",
+      "entrypoints": [
+        ".windsurf/rules/mbti-typing.md",
+        "AGENTS.md"
+      ],
+      "invoke": "Ask Windsurf to apply the MBTI Typing Skill rule to a type-me, duel, transcript audit, or adapter task.",
+      "install": "Copy .windsurf/rules/mbti-typing.md and AGENTS.md into the target repository.",
+      "contract": "Workspace rule points back to the canonical skill and shared contract."
+    },
+    {
+      "id": "cline",
+      "display": "Cline",
+      "support_level": "project-skill-and-rule",
+      "source_url": "https://docs.cline.bot/features/skills",
+      "entrypoints": [
+        ".cline/skills/mbti-typing/SKILL.md",
+        ".clinerules/mbti-typing.md",
+        "AGENTS.md"
+      ],
+      "invoke": "Ask Cline to use the MBTI Typing Skill for the current typing task.",
+      "install": "Copy .cline/skills/mbti-typing/SKILL.md, .clinerules/mbti-typing.md, and AGENTS.md into the target repository.",
+      "contract": "Project skill and rule both preserve the canonical typing protocol."
+    },
+    {
+      "id": "continue",
+      "display": "Continue",
+      "support_level": "local-rule",
+      "source_url": "https://docs.continue.dev/customize/deep-dives/rules",
+      "entrypoints": [
+        ".continue/rules/mbti-typing.md",
+        "AGENTS.md"
+      ],
+      "invoke": "Ask Continue to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
+      "install": "Copy .continue/rules/mbti-typing.md and AGENTS.md into the target repository.",
+      "contract": "Continue local rule points back to the canonical skill and shared safety boundary."
+    },
+    {
+      "id": "aider",
+      "display": "aider",
+      "support_level": "conventions-file",
+      "source_url": "https://aider.chat/docs/usage/conventions.html",
+      "entrypoints": [
+        "CONVENTIONS.md",
+        ".aider.conf.yml",
+        "AGENTS.md"
+      ],
+      "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
+      "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
+      "contract": "Conventions file keeps the same protocol visible to aider sessions."
     }
   ]
 }

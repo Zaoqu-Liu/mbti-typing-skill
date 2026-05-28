@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1500 1080">
+  <title>Agent Compatibility Grid</title>
+  <desc>Matrix showing eleven agent adapters that all route to one MBTI Typing Skill protocol and one audit gate.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f4ef; }
+      .title { fill: #14212b; font: 800 36px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .sub { fill: #52606a; font: 600 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .panel { fill: #fffdf8; stroke: #232b31; stroke-width: 2; rx: 8; }
+      .core { fill: #17324d; }
+      .coreText { fill: #fff; font: 800 22px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .h { fill: #17212b; font: 800 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #384650; font: 600 12px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tiny { fill: #5a6872; font: 500 11px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .chip { fill: #ffffff; stroke: #aeb8bf; stroke-width: 1.1; rx: 6; }
+      .path { fill: none; stroke: #26323b; stroke-width: 2; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #71808a; stroke-width: 1.4; stroke-dasharray: 6 6; marker-end: url(#arrow); }
+      .codex { fill: #e8f1ec; stroke: #2f7058; }
+      .anthropic { fill: #efe5d6; stroke: #835522; }
+      .editor { fill: #e7ebf7; stroke: #475e9c; }
+      .terminal { fill: #edf2dc; stroke: #667b2d; }
+      .github { fill: #eef0f3; stroke: #4a5561; }
+      .other { fill: #f5e7eb; stroke: #a33c4c; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#26323b"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="1080"/>
+  <text class="title" x="64" y="70">Agent Compatibility Grid</text>
+  <text class="sub" x="64" y="103">11 adapters, one protocol. Every entrypoint must preserve runner-up, falsifier, evidence ledger, and safety boundaries.</text>
+
+  <rect class="panel" x="64" y="140" width="1372" height="132"/>
+  <rect class="core" x="96" y="178" width="355" height="56" rx="8"/>
+  <text class="coreText" x="120" y="214">skill/mbti-typing/SKILL.md</text>
+  <rect class="chip" x="490" y="170" width="138" height="32"/>
+  <text class="small" x="517" y="191">AGENTS.md</text>
+  <rect class="chip" x="648" y="170" width="142" height="32"/>
+  <text class="small" x="674" y="191">GEMINI.md</text>
+  <rect class="chip" x="810" y="170" width="142" height="32"/>
+  <text class="small" x="835" y="191">CLAUDE.md</text>
+  <rect class="chip" x="972" y="170" width="178" height="32"/>
+  <text class="small" x="995" y="191">CONVENTIONS.md</text>
+  <text class="tiny" x="490" y="232">Thin instruction files route agents back to the same source; none may create a tool-specific MBTI fork.</text>
+
+  <rect class="panel" x="64" y="322" width="1372" height="540"/>
+  <text class="h" x="96" y="360">Native Skill or Project Rule Entry Points</text>
+
+  <rect class="panel codex" x="96" y="392" width="225" height="150"/>
+  <text class="h" x="118" y="424">Codex</text>
+  <text class="small" x="118" y="454">$mbti-typing skill</text>
+  <text class="tiny" x="118" y="480">agents/openai.yaml</text>
+  <text class="tiny" x="118" y="505">AGENTS.md fallback</text>
+
+  <rect class="panel anthropic" x="342" y="392" width="225" height="150"/>
+  <text class="h" x="364" y="424">Claude Code</text>
+  <text class="small" x="364" y="454">.claude/skills</text>
+  <text class="tiny" x="364" y="480">.claude/commands</text>
+  <text class="tiny" x="364" y="505">CLAUDE.md fallback</text>
+
+  <rect class="panel editor" x="588" y="392" width="225" height="150"/>
+  <text class="h" x="610" y="424">Cursor</text>
+  <text class="small" x="610" y="454">.cursor/rules</text>
+  <text class="tiny" x="610" y="480">MDC frontmatter</text>
+  <text class="tiny" x="610" y="505">AGENTS.md fallback</text>
+
+  <rect class="panel terminal" x="834" y="392" width="225" height="150"/>
+  <text class="h" x="856" y="424">opencode</text>
+  <text class="small" x="856" y="454">opencode.json</text>
+  <text class="tiny" x="856" y="480">AGENTS.md</text>
+  <text class="tiny" x="856" y="505">instruction array</text>
+
+  <rect class="panel terminal" x="1080" y="392" width="225" height="150"/>
+  <text class="h" x="1102" y="424">Gemini CLI</text>
+  <text class="small" x="1102" y="454">GEMINI.md</text>
+  <text class="tiny" x="1102" y="480">.gemini/settings.json</text>
+  <text class="tiny" x="1102" y="505">@ imports AGENTS.md</text>
+
+  <rect class="panel github" x="96" y="582" width="225" height="150"/>
+  <text class="h" x="118" y="614">GitHub Copilot</text>
+  <text class="small" x="118" y="644">copilot-instructions</text>
+  <text class="tiny" x="118" y="670">.github/instructions</text>
+  <text class="tiny" x="118" y="695">.github/skills</text>
+
+  <rect class="panel editor" x="342" y="582" width="225" height="150"/>
+  <text class="h" x="364" y="614">Windsurf</text>
+  <text class="small" x="364" y="644">.windsurf/rules</text>
+  <text class="tiny" x="364" y="670">trigger: model_decision</text>
+  <text class="tiny" x="364" y="695">AGENTS.md fallback</text>
+
+  <rect class="panel other" x="588" y="582" width="225" height="150"/>
+  <text class="h" x="610" y="614">Cline</text>
+  <text class="small" x="610" y="644">.cline/skills</text>
+  <text class="tiny" x="610" y="670">.clinerules</text>
+  <text class="tiny" x="610" y="695">AGENTS.md fallback</text>
+
+  <rect class="panel other" x="834" y="582" width="225" height="150"/>
+  <text class="h" x="856" y="614">Continue</text>
+  <text class="small" x="856" y="644">.continue/rules</text>
+  <text class="tiny" x="856" y="670">local rule file</text>
+  <text class="tiny" x="856" y="695">canonical skill pointer</text>
+
+  <rect class="panel terminal" x="1080" y="582" width="225" height="150"/>
+  <text class="h" x="1102" y="614">aider</text>
+  <text class="small" x="1102" y="644">CONVENTIONS.md</text>
+  <text class="tiny" x="1102" y="670">.aider.conf.yml</text>
+  <text class="tiny" x="1102" y="695">--read AGENTS.md</text>
+
+  <rect class="panel" x="590" y="762" width="470" height="60"/>
+  <text class="h" x="622" y="797">Generic AGENTS.md-aware agents</text>
+  <text class="tiny" x="622" y="817">Fallback path for tools that understand project instruction files.</text>
+
+  <path class="path" d="M 274 272 L 274 300 L 76 300 L 76 372 L 208 372 L 208 382"/>
+  <path class="path" d="M 455 272 L 455 300 L 454 382"/>
+  <path class="path" d="M 624 272 L 624 300 L 700 300 L 700 382"/>
+  <path class="path" d="M 782 272 L 782 300 L 946 300 L 946 382"/>
+  <path class="path" d="M 954 272 L 954 300 L 1192 300 L 1192 382"/>
+  <path class="soft" d="M 208 542 L 208 572"/>
+  <path class="soft" d="M 454 542 L 454 572"/>
+  <path class="soft" d="M 700 542 L 700 572"/>
+  <path class="soft" d="M 946 542 L 946 572"/>
+  <path class="soft" d="M 1192 542 L 1192 572"/>
+
+  <rect class="panel" x="64" y="910" width="640" height="104"/>
+  <text class="h" x="96" y="946">Protocol Invariants</text>
+  <text class="small" x="96" y="974">candidate set + serious runner-up + evidence ledger + falsifier + revision trigger</text>
+  <text class="tiny" x="96" y="997">No clinical, hiring, legal, medical, financial, or deterministic use.</text>
+
+  <rect class="panel" x="796" y="910" width="640" height="104"/>
+  <text class="h" x="828" y="946">Compatibility Gate</text>
+  <text class="small" x="828" y="974">agent_adapter_audit.py + make test</text>
+  <text class="tiny" x="828" y="997">Checks manifest targets, entrypoints, source links, adapter terms, SVG labels, and drift boundaries.</text>
+</svg>

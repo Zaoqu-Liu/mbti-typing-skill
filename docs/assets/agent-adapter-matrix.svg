@@ -106,6 +106,6 @@
   <path class="softPath" d="M 845 650 L 940 750"/>
   <path class="softPath" d="M 1150 650 L 1035 750"/>
 
-  <rect class="chip" x="620" y="328" width="160" height="34"/>
-  <text class="number" x="641" y="351">4 targets, 1 protocol</text>
+  <rect class="chip" x="600" y="328" width="204" height="34"/>
+  <text class="number" x="621" y="351">core adapters, 1 protocol</text>
 </svg>

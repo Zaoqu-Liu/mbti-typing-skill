@@ -154,7 +154,7 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose eleven exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose twelve exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -167,6 +167,7 @@ The visual blueprint gate checks that the README and visual tour expose eleven e
 - `docs/assets/adaptive-question-loop.svg` for the question-bank Markdown to Question Lab to audit-gate loop.
 - `docs/assets/type-duel-decision-map.svg` for the pair-duels Markdown to Type Duel Lab to audit-gate loop.
 - `docs/assets/agent-adapter-matrix.svg` for the canonical skill to Codex, Claude Code, Cursor, opencode, and audit-gate portability loop.
+- `docs/assets/agent-compatibility-grid.svg` for the 11-adapter compatibility surface across Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md-aware agents.
 
 These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
 
@@ -208,6 +209,6 @@ The dedicated Type Duel Lab audit validates the public adjacent-type surface: ev
 
 The dedicated Follow-Up Lab audit validates the public return surface: all 16 type codes, consent checkboxes, redaction placeholders, local privacy scanner, `consented-followup/v1` packet builder, copied issue seed, copied or downloaded JSON, local persistence, DOM-safe rendering, and no external runtime dependency.
 
-The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md`, `opencode.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `docs/assets/agent-adapter-matrix.svg` must stay aligned with the canonical skill and the current tool conventions checked on 2026-05-28.
+The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, `docs/assets/agent-adapter-matrix.svg`, and `docs/assets/agent-compatibility-grid.svg` must stay aligned with the canonical skill and the current tool conventions checked on 2026-05-28.
 
 The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.

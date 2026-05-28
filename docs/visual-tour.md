@@ -170,6 +170,24 @@ The Agent Adapter Matrix makes portability visible:
 
 This is the distribution layer: users should not have to abandon the workflow because their agent tool changed.
 
+## Agent Compatibility Grid
+
+![Agent Compatibility Grid](assets/agent-compatibility-grid.svg)
+
+The Agent Compatibility Grid expands the portability proof from core adapters to a broader agent surface:
+
+- Codex uses the native skill package and `agents/openai.yaml`.
+- Generic AGENTS.md-aware agents use `AGENTS.md` and `CONVENTIONS.md`.
+- Claude Code uses `.claude/skills`, `.claude/commands`, and `CLAUDE.md`.
+- Cursor uses `.cursor/rules`.
+- opencode uses `opencode.json`.
+- Gemini CLI uses `GEMINI.md` and `.gemini/settings.json`.
+- GitHub Copilot uses `.github/copilot-instructions.md`, `.github/instructions`, and `.github/skills`.
+- Windsurf, Cline, Continue, and aider use their own rule, skill, or conventions entrypoints.
+- `scripts/agent_adapter_audit.py` checks that every entrypoint still preserves the same candidate set, runner-up, evidence ledger, falsifier, and safety-boundary contract.
+
+This is the larger compatibility layer: mainstream agent tools can discover the same MBTI Typing Skill without turning it into disconnected tool-specific lore.
+
 ## Follow-Up Lab
 
 [Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
@@ -246,7 +264,7 @@ The six buildless product pages now cover the full user loop:
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
-- [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, and AGENTS.md portability.
+- [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md portability.
 
 ## Why These Visuals Matter
 
@@ -278,14 +296,15 @@ flowchart TD
     M --> N[Type Duel Decision Map]
     N --> O[Type Duel Lab]
     O --> P[Agent Adapter Matrix]
-    P --> Q[Agent adapters]
-    Q --> R[Follow-Up Lab]
-    R --> S[One-minute demo]
-    S --> T[Demo session]
-    T --> U[Sample report]
-    U --> V[Evaluation model]
-    V --> W[Contribution guide]
-    W --> X[Benchmark cases]
+    P --> Q[Agent Compatibility Grid]
+    Q --> R[Agent adapters]
+    R --> S[Follow-Up Lab]
+    S --> T[One-minute demo]
+    T --> U[Demo session]
+    U --> V[Sample report]
+    V --> W[Evaluation model]
+    W --> X[Contribution guide]
+    X --> Y[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

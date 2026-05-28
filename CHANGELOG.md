@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.17 - 2026-05-28
+
+- Expanded the adapter layer from the four core targets to 11 entrypoints: Codex, generic AGENTS.md-aware agents, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider.
+- Added `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `.gemini/settings.json`, `.aider.conf.yml`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, and the Agent Compatibility Grid SVG.
+- Expanded `scripts/agent_adapter_audit.py` to 189 checks and wired the broader compatibility surface into repository UX gates, raising the Repository UX Score to 405/405.
+
 ## 0.1.16 - 2026-05-28
 
 - Added a cross-agent adapter layer for Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents without forking the canonical MBTI typing protocol.

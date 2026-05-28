@@ -103,8 +103,8 @@ The workflow should survive tool switching. A user may start in Codex, share a r
 The allowed loop is:
 
 1. `skill/mbti-typing/SKILL.md` remains the canonical reasoning source.
-2. `AGENTS.md` keeps a concise project-level contract for agents that read repository instructions.
-3. Claude Code, Cursor, and opencode adapters only describe discovery, invocation, and install shape.
+2. `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and `CONVENTIONS.md` keep concise project-level contracts for agents that read repository instructions.
+3. Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and generic AGENTS.md-aware adapters only describe discovery, invocation, and install shape.
 4. `agent-adapters/manifest.json` records the supported entrypoints.
 5. `scripts/agent_adapter_audit.py` checks that adapters preserve candidate set, runner-up, evidence ledger, falsifier, source references, and safety boundaries.
 
