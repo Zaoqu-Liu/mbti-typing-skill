@@ -63,6 +63,17 @@ The dashboard explains why the repository can keep improving after release:
 - `make test` ties the skill scorecard, Session Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
+## Benchmark Arena Pipeline
+
+![Benchmark Arena pipeline](assets/benchmark-arena-pipeline.svg)
+
+The pipeline explains why the public case gallery can stay trustworthy as the benchmark suite grows:
+
+- `skill/mbti-typing/examples/benchmark-cases.json` is the canonical case source.
+- `scripts/sync_case_gallery.py` writes the generated page data into `case-gallery.html`.
+- The Case Gallery audit compares the embedded page data back against the JSON before release.
+- Issue seed feedback returns new failures to the benchmark source instead of leaving them as anecdotes.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -105,12 +116,13 @@ flowchart TD
     C --> D[GitHub visitor map]
     D --> E[Typing engine blueprint]
     E --> F[Trust loop dashboard]
-    F --> G[One-minute demo]
-    G --> H[Demo session]
-    H --> I[Sample report]
-    I --> J[Evaluation model]
-    J --> K[Contribution guide]
-    K --> L[Benchmark cases]
+    F --> G[Benchmark Arena pipeline]
+    G --> H[One-minute demo]
+    H --> I[Demo session]
+    I --> J[Sample report]
+    J --> K[Evaluation model]
+    K --> L[Contribution guide]
+    L --> M[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

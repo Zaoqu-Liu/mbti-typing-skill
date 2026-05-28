@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="780" viewBox="0 0 1400 780" role="img" aria-labelledby="title desc">
+  <title id="title">Benchmark Arena Pipeline</title>
+  <desc id="desc">A source-of-truth pipeline showing benchmark-cases.json flowing through sync_case_gallery.py into case-gallery.html, then audit, tests, GitHub Pages, and issue feedback.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fbfa"/>
+      <stop offset="0.48" stop-color="#eef7f5"/>
+      <stop offset="1" stop-color="#fff6e8"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#128c82"/>
+      <stop offset="1" stop-color="#0d6f75"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#1b2c2a" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#26302f"/>
+    </marker>
+    <style>
+      .title { font: 900 40px Inter, ui-sans-serif, system-ui, sans-serif; fill: #172120; }
+      .subtitle { font: 600 17px Inter, ui-sans-serif, system-ui, sans-serif; fill: #63706d; }
+      .label { font: 900 21px Inter, ui-sans-serif, system-ui, sans-serif; fill: #172120; }
+      .mono { font: 800 16px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #26302f; }
+      .copy { font: 600 14px Inter, ui-sans-serif, system-ui, sans-serif; fill: #63706d; }
+      .small { font: 800 12px Inter, ui-sans-serif, system-ui, sans-serif; fill: #475654; letter-spacing: 0; }
+      .card { fill: #ffffff; stroke: #d9dfdd; stroke-width: 1.4; rx: 12; filter: url(#shadow); }
+      .soft { fill: #fbfdfc; stroke: #d9dfdd; stroke-width: 1.2; rx: 10; }
+      .pill { fill: #e1f3f0; stroke: #b8deda; stroke-width: 1; rx: 18; }
+      .warn { fill: #fff0d7; stroke: #f0c989; stroke-width: 1; rx: 18; }
+      .line { stroke: #26302f; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .loop { stroke: #c77a15; stroke-width: 2.4; fill: none; stroke-dasharray: 7 7; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1400" height="780" fill="url(#bg)"/>
+  <rect x="48" y="38" width="1304" height="704" rx="22" fill="#ffffff" opacity="0.72" stroke="#d9dfdd"/>
+
+  <text x="82" y="98" class="title">Benchmark Arena Pipeline</text>
+  <text x="82" y="130" class="subtitle">The public case gallery is generated from one canonical benchmark source, then checked before every release.</text>
+
+  <rect x="82" y="176" width="268" height="210" class="card"/>
+  <text x="110" y="222" class="label">1. Canonical Cases</text>
+  <text x="110" y="254" class="mono">benchmark-cases.json</text>
+  <rect x="110" y="282" width="108" height="32" class="pill"/>
+  <text x="130" y="303" class="small">8 cases</text>
+  <rect x="228" y="282" width="94" height="32" class="pill"/>
+  <text x="249" y="303" class="small">traps</text>
+  <text x="110" y="338" class="copy">Leading type, runner-up,</text>
+  <text x="110" y="360" class="copy">required evidence tags, and</text>
+  <text x="110" y="382" class="copy">falsifier themes live here.</text>
+
+  <rect x="410" y="176" width="268" height="210" class="card"/>
+  <text x="438" y="222" class="label">2. Source Sync</text>
+  <text x="438" y="254" class="mono">sync_case_gallery.py</text>
+  <rect x="438" y="282" width="190" height="32" class="pill"/>
+  <text x="458" y="303" class="small">source-of-truth sync</text>
+  <text x="438" y="338" class="copy">Normalizes display title,</text>
+  <text x="438" y="360" class="copy">cluster, prompt, trap, and</text>
+  <text x="438" y="382" class="copy">tags into page-ready JSON.</text>
+
+  <rect x="738" y="176" width="268" height="210" class="card"/>
+  <text x="766" y="222" class="label">3. Public Workbench</text>
+  <text x="766" y="254" class="mono">case-gallery.html</text>
+  <rect x="766" y="282" width="122" height="32" class="pill"/>
+  <text x="786" y="303" class="small">filters</text>
+  <rect x="898" y="282" width="82" height="32" class="pill"/>
+  <text x="918" y="303" class="small">copy</text>
+  <text x="766" y="338" class="copy">Visitors inspect traps, copy</text>
+  <text x="766" y="360" class="copy">prompts, and generate issue</text>
+  <text x="766" y="382" class="copy">seeds without a build step.</text>
+
+  <rect x="1066" y="176" width="268" height="210" class="card"/>
+  <text x="1094" y="222" class="label">4. Release Gate</text>
+  <text x="1094" y="254" class="mono">case_gallery_audit.py</text>
+  <rect x="1094" y="282" width="112" height="32" class="pill"/>
+  <text x="1114" y="303" class="small">38 checks</text>
+  <rect x="1216" y="282" width="82" height="32" class="pill"/>
+  <text x="1236" y="303" class="small">DOM</text>
+  <text x="1094" y="338" class="copy">Verifies JSON parity, safe</text>
+  <text x="1094" y="360" class="copy">rendering, issue seeds, and</text>
+  <text x="1094" y="382" class="copy">visible safety boundaries.</text>
+
+  <path class="line" d="M 350 282 C 370 282 390 282 410 282"/>
+  <path class="line" d="M 678 282 C 698 282 718 282 738 282"/>
+  <path class="line" d="M 1006 282 C 1026 282 1046 282 1066 282"/>
+
+  <rect x="148" y="468" width="262" height="130" class="soft"/>
+  <text x="174" y="508" class="label">make test</text>
+  <text x="174" y="538" class="copy">Case sync, benchmark validate,</text>
+  <text x="174" y="560" class="copy">regression fixtures, scorecards,</text>
+  <text x="174" y="582" class="copy">and local-first page audits.</text>
+
+  <rect x="472" y="468" width="262" height="130" class="soft"/>
+  <text x="498" y="508" class="label">GitHub Pages</text>
+  <text x="498" y="538" class="copy">The same checked page ships as</text>
+  <text x="498" y="560" class="copy">the public Benchmark Arena for</text>
+  <text x="498" y="582" class="copy">first-time visitors.</text>
+
+  <rect x="796" y="468" width="262" height="130" class="soft"/>
+  <text x="822" y="508" class="label">Issue Seed Feedback</text>
+  <text x="822" y="538" class="copy">A failed typing session becomes</text>
+  <text x="822" y="560" class="copy">a structured benchmark proposal,</text>
+  <text x="822" y="582" class="copy">not a loose anecdote.</text>
+
+  <rect x="1120" y="468" width="156" height="130" class="soft"/>
+  <text x="1146" y="508" class="label">Next Case</text>
+  <text x="1146" y="538" class="copy">Curated traps</text>
+  <text x="1146" y="560" class="copy">return to JSON</text>
+  <text x="1146" y="582" class="copy">as regression fuel.</text>
+
+  <path class="line" d="M 1200 386 C 1200 430 1110 450 1040 468"/>
+  <path class="line" d="M 410 533 C 430 533 450 533 472 533"/>
+  <path class="line" d="M 734 533 C 754 533 776 533 796 533"/>
+  <path class="line" d="M 1058 533 C 1078 533 1100 533 1120 533"/>
+  <path class="loop" d="M 1198 598 C 1150 694 232 692 216 390"/>
+
+  <rect x="82" y="646" width="1252" height="54" class="warn"/>
+  <text x="110" y="680" class="small">Boundary:</text>
+  <text x="186" y="680" class="copy">benchmark cases are synthetic regression traps for evidence discipline, not psychometric ground truth or hiring/clinical instruments.</text>
+</svg>

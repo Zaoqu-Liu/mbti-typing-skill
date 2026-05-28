@@ -615,96 +615,152 @@
   </main>
 
   <script>
+    // BEGIN GENERATED BENCHMARK CASES
     const CASES = [
-      {
-        id: "bench-entj-intj-001",
-        cluster: "Command",
-        title: "INTJ test result, ENTJ command energy",
-        leading: "ENTJ",
-        runnerUp: ["INTJ"],
-        prompt: "User asks: I test INTJ but feel alive when directing high-stakes teams. Alone on free mornings I plan people, leverage, and execution order. Under criticism I immediately argue facts, then later feel shame. Type me.",
-        trap: "Do not lock INTJ just because Ni/Te and privacy are present.",
-        falsifier: "private model dominates idle time",
-        tags: ["idle_external_optimization", "command_energy", "delayed_fi_or_shame"]
-      },
-      {
-        id: "bench-intj-entj-002",
-        cluster: "Command",
-        title: "Competent leader, private model first",
-        leading: "INTJ",
-        runnerUp: ["ENTJ"],
-        prompt: "User says: I can lead, but it drains me. My best thinking happens alone after people leave. I want the model clean before execution. I dislike managing people unless the system requires it.",
-        trap: "Do not overtype ENTJ from competence in leadership roles.",
-        falsifier: "live command repeatedly energizes cognition",
-        tags: ["private_model_priority", "leadership_cost", "pre_execution_modeling"]
-      },
-      {
-        id: "bench-infp-infj-003",
-        cluster: "Values",
-        title: "Depth and sensitivity, Fi first",
-        leading: "INFP",
-        runnerUp: ["INFJ", "ISFP"],
-        prompt: "User says: In conflict I first ask whether I can personally endorse the action. I explore many possible meanings around whether it fits who I am. Social harmony matters, but I can break it if it violates inner truth.",
-        trap: "Do not type INFJ merely from depth and sensitivity.",
-        falsifier: "relational pattern convergence outranks inner congruence",
-        tags: ["fi_congruence", "ne_possibility", "harmony_secondary"]
-      },
-      {
-        id: "bench-infj-infp-004",
-        cluster: "Values",
-        title: "Relational trajectory, Ni-Fe first",
-        leading: "INFJ",
-        runnerUp: ["INFP", "ENFJ"],
-        prompt: "User says: I notice where relationships are heading before people admit it. I converge on one interpretation of what an event means for the group. My values matter, but I first read the relational pattern.",
-        trap: "Do not type INFP from emotional depth alone.",
-        falsifier: "personal value congruence overrides relational pattern",
-        tags: ["ni_convergence", "fe_relational_meaning", "future_relationship_pattern"]
-      },
-      {
-        id: "bench-estj-entj-005",
-        cluster: "Operations",
-        title: "Strong Te with precedent trust",
-        leading: "ESTJ",
-        runnerUp: ["ENTJ", "ISTJ"],
-        prompt: "User says: I trust procedures that have proven reliable. When a team is chaotic, I impose standards, roles, deadlines, and accountability. I prefer improving the system through known best practices before radical redesign.",
-        trap: "Do not type ENTJ just because Te and leadership are strong.",
-        falsifier: "future architecture overrides precedent",
-        tags: ["te_order", "si_precedent", "operational_continuity"]
-      },
-      {
-        id: "bench-entp-enfp-006",
-        cluster: "Exploration",
-        title: "Possibility seeking, model play first",
-        leading: "ENTP",
-        runnerUp: ["ENFP", "INTP"],
-        prompt: "User says: I love debate because it sharpens the model. I will attack my own favorite idea if the logic is weak. Personal meaning is interesting, but clean conceptual play matters more in the moment.",
-        trap: "Do not type ENFP from social enthusiasm and possibility seeking.",
-        falsifier: "personal meaning outranks model play",
-        tags: ["ne_ti_model_play", "debate_energy", "values_secondary"]
-      },
-      {
-        id: "bench-isfj-infj-007",
-        cluster: "Care",
-        title: "Care through memory and obligations",
-        leading: "ISFJ",
-        runnerUp: ["INFJ", "ESFJ"],
-        prompt: "User says: I remember what people need, what helped before, and what obligations I must keep. I care by making sure routines, details, and support are reliable. Future patterns matter less than not failing people now.",
-        trap: "Do not type INFJ from private care and people-awareness alone.",
-        falsifier: "future pattern interpretation overrides known obligations",
-        tags: ["si_memory", "fe_care", "known_obligations"]
-      },
-      {
-        id: "bench-estp-entp-008",
-        cluster: "Tactics",
-        title: "Live pressure beats abstract play",
-        leading: "ESTP",
-        runnerUp: ["ENTP", "ESFP"],
-        prompt: "User says: I improvise best in live pressure. The real room, real body language, and immediate tactical opening matter more than abstract possibility. I enjoy winning the situation, not just the argument.",
-        trap: "Do not type ENTP from quickness, wit, and provocation alone.",
-        falsifier: "abstract conceptual play outranks live tactical action",
-        tags: ["se_live_pressure", "ti_tactical_read", "concrete_action"]
-      }
+          {
+                "id": "bench-entj-intj-001",
+                "cluster": "Command",
+                "title": "INTJ test result, ENTJ command energy",
+                "leading": "ENTJ",
+                "runnerUp": [
+                      "INTJ"
+                ],
+                "prompt": "User asks: I test INTJ but feel alive when directing high-stakes teams. Alone on free mornings I plan people, leverage, and execution order. Under criticism I immediately argue facts, then later feel shame. Type me.",
+                "trap": "Do not lock INTJ just because Ni/Te and privacy are present.",
+                "falsifier": "private model dominates idle time",
+                "tags": [
+                      "idle_external_optimization",
+                      "command_energy",
+                      "delayed_fi_or_shame"
+                ]
+          },
+          {
+                "id": "bench-intj-entj-002",
+                "cluster": "Command",
+                "title": "Competent leader, private model first",
+                "leading": "INTJ",
+                "runnerUp": [
+                      "ENTJ"
+                ],
+                "prompt": "User says: I can lead, but it drains me. My best thinking happens alone after people leave. I want the model clean before execution. I dislike managing people unless the system requires it.",
+                "trap": "Do not overtype ENTJ from competence in leadership roles.",
+                "falsifier": "live command repeatedly energizes cognition",
+                "tags": [
+                      "private_model_priority",
+                      "leadership_cost",
+                      "pre_execution_modeling"
+                ]
+          },
+          {
+                "id": "bench-infp-infj-003",
+                "cluster": "Values",
+                "title": "Depth and sensitivity, Fi first",
+                "leading": "INFP",
+                "runnerUp": [
+                      "INFJ",
+                      "ISFP"
+                ],
+                "prompt": "User says: In conflict I first ask whether I can personally endorse the action. I explore many possible meanings around whether it fits who I am. Social harmony matters, but I can break it if it violates inner truth.",
+                "trap": "Do not type INFJ merely from depth and sensitivity.",
+                "falsifier": "relational pattern convergence outranks inner congruence",
+                "tags": [
+                      "fi_congruence",
+                      "ne_possibility",
+                      "harmony_secondary"
+                ]
+          },
+          {
+                "id": "bench-infj-infp-004",
+                "cluster": "Values",
+                "title": "Relational trajectory, Ni-Fe first",
+                "leading": "INFJ",
+                "runnerUp": [
+                      "INFP",
+                      "ENFJ"
+                ],
+                "prompt": "User says: I notice where relationships are heading before people admit it. I converge on one interpretation of what an event means for the group. My values matter, but I first read the relational pattern.",
+                "trap": "Do not type INFP from emotional depth alone.",
+                "falsifier": "personal value congruence overrides relational pattern",
+                "tags": [
+                      "ni_convergence",
+                      "fe_relational_meaning",
+                      "future_relationship_pattern"
+                ]
+          },
+          {
+                "id": "bench-estj-entj-005",
+                "cluster": "Operations",
+                "title": "Strong Te with precedent trust",
+                "leading": "ESTJ",
+                "runnerUp": [
+                      "ENTJ",
+                      "ISTJ"
+                ],
+                "prompt": "User says: I trust procedures that have proven reliable. When a team is chaotic, I impose standards, roles, deadlines, and accountability. I prefer improving the system through known best practices before radical redesign.",
+                "trap": "Do not type ENTJ just because Te and leadership are strong.",
+                "falsifier": "future architecture overrides precedent",
+                "tags": [
+                      "te_order",
+                      "si_precedent",
+                      "operational_continuity"
+                ]
+          },
+          {
+                "id": "bench-entp-enfp-006",
+                "cluster": "Exploration",
+                "title": "Possibility seeking, model play first",
+                "leading": "ENTP",
+                "runnerUp": [
+                      "ENFP",
+                      "INTP"
+                ],
+                "prompt": "User says: I love debate because it sharpens the model. I will attack my own favorite idea if the logic is weak. Personal meaning is interesting, but clean conceptual play matters more in the moment.",
+                "trap": "Do not type ENFP from social enthusiasm and possibility seeking.",
+                "falsifier": "personal meaning outranks model play",
+                "tags": [
+                      "ne_ti_model_play",
+                      "debate_energy",
+                      "values_secondary"
+                ]
+          },
+          {
+                "id": "bench-isfj-infj-007",
+                "cluster": "Care",
+                "title": "Care through memory and obligations",
+                "leading": "ISFJ",
+                "runnerUp": [
+                      "INFJ",
+                      "ESFJ"
+                ],
+                "prompt": "User says: I remember what people need, what helped before, and what obligations I must keep. I care by making sure routines, details, and support are reliable. Future patterns matter less than not failing people now.",
+                "trap": "Do not type INFJ from private care and people-awareness alone.",
+                "falsifier": "future pattern interpretation overrides known obligations",
+                "tags": [
+                      "si_memory",
+                      "fe_care",
+                      "known_obligations"
+                ]
+          },
+          {
+                "id": "bench-estp-entp-008",
+                "cluster": "Tactics",
+                "title": "Live pressure beats abstract play",
+                "leading": "ESTP",
+                "runnerUp": [
+                      "ENTP",
+                      "ESFP"
+                ],
+                "prompt": "User says: I improvise best in live pressure. The real room, real body language, and immediate tactical opening matter more than abstract possibility. I enjoy winning the situation, not just the argument.",
+                "trap": "Do not type ENTP from quickness, wit, and provocation alone.",
+                "falsifier": "abstract conceptual play outranks live tactical action",
+                "tags": [
+                      "se_live_pressure",
+                      "ti_tactical_read",
+                      "concrete_action"
+                ]
+          }
     ];
+    // END GENERATED BENCHMARK CASES
 
     const filters = ["All", ...Array.from(new Set(CASES.map((item) => item.cluster)))];
     let activeFilter = "All";

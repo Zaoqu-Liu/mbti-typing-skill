@@ -18,7 +18,7 @@ The README opens with:
 - A Benchmark Arena case gallery for visitors who want to inspect traps, runner-ups, falsifiers, reusable prompts, and contribution seeds.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Three SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, and `docs/assets/trust-loop-dashboard.svg`.
+- Four SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, and `docs/assets/benchmark-arena-pipeline.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -49,10 +49,11 @@ flowchart TD
 4. GitHub Visitor Experience Map: how different visitors should move.
 5. Typing Engine Blueprint: why the reasoning loop is not a quiz.
 6. Trust Loop Dashboard: why accuracy work is repeatable.
-7. System map: how inputs become calibrated outputs.
-8. Interview loop: why each round feels progressive.
-9. Evidence ledger: why the answer is not a black box.
-10. Quality gates: why the project is maintainable.
+7. Benchmark Arena Pipeline: why public benchmark cases cannot drift from JSON.
+8. System map: how inputs become calibrated outputs.
+9. Interview loop: why each round feels progressive.
+10. Evidence ledger: why the answer is not a black box.
+11. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -76,9 +77,9 @@ The experience should never rely on:
 
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
-- Keep the three precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, and `trust-loop-dashboard.svg`.
+- Keep the four precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, and `benchmark-arena-pipeline.svg`.
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
-- Keep `docs/case-gallery.html` usable without a build step or external runtime; preserve case filters, prompt copy, issue seed copy, all current benchmark cases, and safety boundaries.
+- Keep `docs/case-gallery.html` usable without a build step or external runtime; preserve case filters, prompt copy, issue seed copy, all current benchmark cases, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, and safety boundaries.
 - Keep `docs/playground.html` usable without a build step, external JavaScript, or network calls.
 - Keep at least four Mermaid diagrams in the English README.
 - Keep demo session and sample report links visible in the first half of the README.

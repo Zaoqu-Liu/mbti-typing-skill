@@ -4,6 +4,8 @@
   "cases": [
     {
       "id": "bench-entj-intj-001",
+      "cluster": "Command",
+      "display_title": "INTJ test result, ENTJ command energy",
       "prompt": "User asks: I test INTJ but feel alive when directing high-stakes teams. Alone on free mornings I plan people, leverage, and execution order. Under criticism I immediately argue facts, then later feel shame. Type me.",
       "expected_leading": "ENTJ",
       "expected_runner_up": ["INTJ"],
@@ -13,6 +15,8 @@
     },
     {
       "id": "bench-intj-entj-002",
+      "cluster": "Command",
+      "display_title": "Competent leader, private model first",
       "prompt": "User says: I can lead, but it drains me. My best thinking happens alone after people leave. I want the model clean before execution. I dislike managing people unless the system requires it.",
       "expected_leading": "INTJ",
       "expected_runner_up": ["ENTJ"],
@@ -22,6 +26,8 @@
     },
     {
       "id": "bench-infp-infj-003",
+      "cluster": "Values",
+      "display_title": "Depth and sensitivity, Fi first",
       "prompt": "User says: In conflict I first ask whether I can personally endorse the action. I explore many possible meanings around whether it fits who I am. Social harmony matters, but I can break it if it violates inner truth.",
       "expected_leading": "INFP",
       "expected_runner_up": ["INFJ", "ISFP"],
@@ -31,6 +37,8 @@
     },
     {
       "id": "bench-infj-infp-004",
+      "cluster": "Values",
+      "display_title": "Relational trajectory, Ni-Fe first",
       "prompt": "User says: I notice where relationships are heading before people admit it. I converge on one interpretation of what an event means for the group. My values matter, but I first read the relational pattern.",
       "expected_leading": "INFJ",
       "expected_runner_up": ["INFP", "ENFJ"],
@@ -40,6 +48,8 @@
     },
     {
       "id": "bench-estj-entj-005",
+      "cluster": "Operations",
+      "display_title": "Strong Te with precedent trust",
       "prompt": "User says: I trust procedures that have proven reliable. When a team is chaotic, I impose standards, roles, deadlines, and accountability. I prefer improving the system through known best practices before radical redesign.",
       "expected_leading": "ESTJ",
       "expected_runner_up": ["ENTJ", "ISTJ"],
@@ -49,6 +59,8 @@
     },
     {
       "id": "bench-entp-enfp-006",
+      "cluster": "Exploration",
+      "display_title": "Possibility seeking, model play first",
       "prompt": "User says: I love debate because it sharpens the model. I will attack my own favorite idea if the logic is weak. Personal meaning is interesting, but clean conceptual play matters more in the moment.",
       "expected_leading": "ENTP",
       "expected_runner_up": ["ENFP", "INTP"],
@@ -58,6 +70,8 @@
     },
     {
       "id": "bench-isfj-infj-007",
+      "cluster": "Care",
+      "display_title": "Care through memory and obligations",
       "prompt": "User says: I remember what people need, what helped before, and what obligations I must keep. I care by making sure routines, details, and support are reliable. Future patterns matter less than not failing people now.",
       "expected_leading": "ISFJ",
       "expected_runner_up": ["INFJ", "ESFJ"],
@@ -67,6 +81,8 @@
     },
     {
       "id": "bench-estp-entp-008",
+      "cluster": "Tactics",
+      "display_title": "Live pressure beats abstract play",
       "prompt": "User says: I improvise best in live pressure. The real room, real body language, and immediate tactical opening matter more than abstract possibility. I enjoy winning the situation, not just the argument.",
       "expected_leading": "ESTP",
       "expected_runner_up": ["ENTP", "ESFP"],

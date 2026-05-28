@@ -59,6 +59,12 @@ The blueprint shows the core reasoning machine: all 16 types remain in the unive
 
 The trust loop connects real user ambiguity to benchmark cases, scorecards, GitHub Pages, versioned releases, and safer first-run UX.
 
+### Benchmark Arena Pipeline
+
+![Benchmark Arena Pipeline](docs/assets/benchmark-arena-pipeline.svg)
+
+The Benchmark Arena Pipeline makes the case gallery auditable: `skill/mbti-typing/examples/benchmark-cases.json` is the canonical source, `scripts/sync_case_gallery.py` performs source-of-truth sync into `docs/case-gallery.html`, and the release gate checks that the public page cannot drift from the benchmark suite.
+
 ## Visual System Map
 
 ```mermaid
@@ -164,6 +170,7 @@ sequenceDiagram
       repository-experience-map.svg
       typing-engine-blueprint.svg
       trust-loop-dashboard.svg
+      benchmark-arena-pipeline.svg
   examples/
     session-state-example.json
     evidence-ledger-example.md
@@ -240,7 +247,8 @@ python3 -B skill/mbti-typing/scripts/skill_scorecard.py skill/mbti-typing
 python3 -B skill/mbti-typing/scripts/typing_session.py validate examples/session-state-example.json --final
 python3 -B skill/mbti-typing/scripts/report_audit.py --fail-on-findings docs/sample-report.md
 python3 -B scripts/session_lab_audit.py docs/session-lab.html
-python3 -B scripts/case_gallery_audit.py docs/case-gallery.html
+python3 -B scripts/sync_case_gallery.py skill/mbti-typing/examples/benchmark-cases.json docs/case-gallery.html
+python3 -B scripts/case_gallery_audit.py docs/case-gallery.html skill/mbti-typing/examples/benchmark-cases.json
 python3 -B scripts/repository_scorecard.py .
 ```
 
@@ -250,8 +258,9 @@ Expected result:
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
 Session Lab Audit: 60/60 (100.00%)
-Case Gallery Audit: 34/34 (100.00%)
-Repository UX Score: 144/144 (100.00%)
+Case Gallery Source Sync: PASS (8 cases match)
+Case Gallery Audit: 38/38 (100.00%)
+Repository UX Score: 158/158 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

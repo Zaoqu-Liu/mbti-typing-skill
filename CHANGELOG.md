@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.7 - 2026-05-28
+
+- Added a Benchmark Arena Pipeline SVG to make the benchmark JSON, sync script, public case gallery, audit gate, and issue feedback loop visible to first-time visitors.
+- Added `scripts/sync_case_gallery.py` so `docs/case-gallery.html` is checked against the canonical benchmark JSON before release.
+- Expanded Case Gallery audit coverage to verify JSON parity and raised the repository UX scorecard to 158/158.
+
 ## 0.1.6 - 2026-05-28
 
 - Added a buildless Benchmark Arena case gallery with filters, trap inspection, runner-up/falsifier visibility, copied benchmark prompts, and benchmark issue seeds.
