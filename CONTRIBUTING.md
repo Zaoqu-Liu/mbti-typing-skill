@@ -20,7 +20,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Add realistic bad reports that should fail audit.
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
-- Share consented follow-up observations through the `consented_followup.yml` issue template.
+- Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
 - Tighten Chinese or English output templates.
 - Improve safety wording in reports.
 
@@ -39,6 +39,7 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
+Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
 ```
 
@@ -87,6 +88,7 @@ Consented follow-up contributions are useful when a person has lived with a typi
 
 Before opening a consented follow-up issue:
 
+- Start with `docs/follow-up-lab.html` when possible.
 - Read `docs/consent-redaction-protocol.md`.
 - Confirm subject consent and public issue permission.
 - Do not include raw private chat logs, screenshots, names, handles, emails, phone numbers, exact dates, workplaces, schools, family identifiers, medical details, legal details, salary details, or identifiable third-party behavior.

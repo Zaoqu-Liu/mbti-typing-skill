@@ -127,6 +127,18 @@ The consent feedback loop is the bridge between real user usefulness and public 
 
 This is the allowed real-user learning loop: the project can become more useful from lived feedback without making the public issue tracker a place for raw personal data.
 
+## Follow-Up Lab
+
+[Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
+
+- The user enters candidate set, leading type, serious runner-up, confidence, and falsifier.
+- The page checks consent, public issue permission, withdrawal awareness, data minimization, high-stakes misuse, redaction placeholders, and sensitive markers.
+- The browser builds a `consented-followup/v1` JSON packet without a server call.
+- The output includes a copyable issue seed for `consented_followup.yml`.
+- Local persistence makes a user likely to return after more observations without pushing private drafts anywhere.
+
+This is the practical retention layer: a user can come back days later, add a new observation, and see whether the packet is public-safe before asking the project to learn from it.
+
 ## Session Lab
 
 The fastest product path is now [Session Lab](session-lab.html):
@@ -158,6 +170,15 @@ This is the retention loop that is allowed: users come back because the system m
 - It generates a repair prompt, calibration JSON, and failure issue seed without sending user text to a server.
 - It is intentionally lexical and inspectable; failed gates are repair targets, not psychometric truth.
 
+## Public Page Stack
+
+The four buildless product pages now cover the full user loop:
+
+- [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
+- [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
+- [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
+- [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
+
 ## Why These Visuals Matter
 
 Most personality tools make the result feel magical. This project should make the reasoning feel visible.
@@ -183,12 +204,13 @@ flowchart TD
     H --> I[Calibration loop map]
     I --> J[Blind review arena]
     J --> K[Consent feedback loop]
-    K --> L[One-minute demo]
-    L --> M[Demo session]
-    M --> N[Sample report]
-    N --> O[Evaluation model]
-    O --> P[Contribution guide]
-    P --> Q[Benchmark cases]
+    K --> L[Follow-Up Lab]
+    L --> M[One-minute demo]
+    M --> N[Demo session]
+    N --> O[Sample report]
+    O --> P[Evaluation model]
+    P --> Q[Contribution guide]
+    Q --> R[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

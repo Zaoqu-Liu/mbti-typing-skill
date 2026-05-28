@@ -14,4 +14,4 @@ This project is not intended for clinical diagnosis, hiring, school admission, l
 
 Benchmark cases in this repository should be synthetic or anonymized. Do not contribute private chat logs, medical details, or identifiable third-party information.
 
-For real-world follow-up, use [docs/consent-redaction-protocol.md](docs/consent-redaction-protocol.md) and the `consented_followup.yml` issue template. Public contributions must be consented, minimized, redacted, withdrawable, and free of raw private chat text, direct identifiers, third-party identifiers, exact dates, and high-stakes private details.
+For real-world follow-up, use [docs/follow-up-lab.html](docs/follow-up-lab.html), [docs/consent-redaction-protocol.md](docs/consent-redaction-protocol.md), and the `consented_followup.yml` issue template. Public contributions must be consented, minimized, redacted, withdrawable, and free of raw private chat text, direct identifiers, third-party identifiers, exact dates, and high-stakes private details.

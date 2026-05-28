@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.13 - 2026-05-28
+
+- Added a buildless Follow-Up Lab that turns delayed observations into consented, redacted, public-safe JSON packets and `consented_followup.yml` issue seeds.
+- Added `scripts/follow_up_lab_audit.py` and wired the Follow-Up Lab into `make test`, navigation, README, evaluation docs, and repository UX gates.
+- Expanded the public product loop from Session Lab, Benchmark Arena, and Calibration Lab into a full return path for users who come back with new evidence, raising the Repository UX Score to 262/262.
+
 ## 0.1.12 - 2026-05-28
 
 - Added a Consent Redaction Protocol so real-world follow-up can enter the project only through consented, redacted, withdrawable, public-safe packets.

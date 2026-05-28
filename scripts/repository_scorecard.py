@@ -60,6 +60,7 @@ REQUIRED_FILES = [
     "docs/session-lab.html",
     "docs/case-gallery.html",
     "docs/calibration-lab.html",
+    "docs/follow-up-lab.html",
     "docs/playground.html",
     "docs/index.html",
     "scripts/session_lab_audit.py",
@@ -69,6 +70,7 @@ REQUIRED_FILES = [
     "scripts/calibration_lab_audit.py",
     "scripts/blind_review_audit.py",
     "scripts/consent_redaction_audit.py",
+    "scripts/follow_up_lab_audit.py",
     "skill/mbti-typing/SKILL.md",
 ]
 
@@ -97,6 +99,9 @@ README_REQUIRED_TERMS = [
     "Calibration Lab",
     "https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html",
     "docs/calibration-lab.html",
+    "Follow-Up Lab",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/follow-up-lab.html",
+    "docs/follow-up-lab.html",
     "Blind Review Protocol",
     "docs/blind-review-protocol.md",
     "Blind Review Arena",
@@ -106,6 +111,7 @@ README_REQUIRED_TERMS = [
     "Consent Feedback Loop",
     "examples/consented-followup-packet.json",
     "scripts/consent_redaction_audit.py",
+    "scripts/follow_up_lab_audit.py",
     "Interactive Playground",
     "https://zaoqu-liu.github.io/mbti-typing-skill/playground.html",
     "docs/playground.html",
@@ -273,6 +279,7 @@ def check_readme(root: Path) -> list[Check]:
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
         Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
+        Check("readme:follow_up_lab_link", "GitHub Pages Follow-Up Lab" in readme and "docs/follow-up-lab.html" in readme, "English README links hosted and local Follow-Up Lab"),
         Check("readme:playground_link", "GitHub Pages playground" in readme and "docs/playground.html" in readme, "English README links hosted and local playground"),
         Check("readme:prompt_recipes", "Copy-paste prompt recipes" in readme, "English README links copy-paste recipes"),
         Check("readme:mermaid_count", mermaid_count >= 4, f"{mermaid_count} Mermaid diagrams found"),
@@ -297,6 +304,7 @@ def check_docs(root: Path) -> list[Check]:
     session_lab = read_text(root / "docs/session-lab.html")
     case_gallery = read_text(root / "docs/case-gallery.html")
     calibration_lab = read_text(root / "docs/calibration-lab.html")
+    follow_up_lab = read_text(root / "docs/follow-up-lab.html")
     playground = read_text(root / "docs/playground.html")
     index = read_text(root / "docs/index.html")
     pages = read_text(root / ".github/workflows/pages.yml")
@@ -308,6 +316,7 @@ def check_docs(root: Path) -> list[Check]:
     calibration_lab_audit = read_text(root / "scripts/calibration_lab_audit.py")
     blind_review_audit = read_text(root / "scripts/blind_review_audit.py")
     consent_redaction_audit = read_text(root / "scripts/consent_redaction_audit.py")
+    follow_up_lab_audit = read_text(root / "scripts/follow_up_lab_audit.py")
     benchmark_payload = json.loads(read_text(root / "skill/mbti-typing/examples/benchmark-cases.json"))
     benchmark_cases = [case for case in benchmark_payload.get("cases", []) if isinstance(case, dict)]
     benchmark_ids = [str(case.get("id")) for case in benchmark_cases]
@@ -376,15 +385,25 @@ def check_docs(root: Path) -> list[Check]:
         Check("blind_review:audit_make_target", "blind-review-audit" in makefile and "scripts/blind_review_audit.py" in makefile, "Makefile runs Blind Review audit"),
         Check("consent_redaction:audit_script", "Consent Redaction Audit" in consent_redaction_audit and "Consent Redaction Metrics" in consent_redaction_audit, "Consent Redaction has a dedicated audit script"),
         Check("consent_redaction:audit_make_target", "consent-redaction-audit" in makefile and "scripts/consent_redaction_audit.py" in makefile, "Makefile runs Consent Redaction audit"),
+        Check("follow_up_lab:title", "MBTI Typing Skill Follow-Up Lab" in follow_up_lab, "Follow-Up Lab has a clear product title"),
+        Check("follow_up_lab:no_external_runtime", "<script src" not in follow_up_lab and " src=" not in follow_up_lab, "Follow-Up Lab has no external runtime dependency"),
+        Check("follow_up_lab:interactive_regions", all(term in follow_up_lab for term in ("candidateSetInput", "obsNormal", "privacyScore", "safetyGrid", "packetOutput", "issueSeedOutput")), "Follow-Up Lab contains candidate, observation, gate, packet, and issue seed regions"),
+        Check("follow_up_lab:all_16_types", all(type_code in follow_up_lab for type_code in ("INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP")), "Follow-Up Lab keeps all 16 types visible"),
+        Check("follow_up_lab:privacy_engine", "scanForSensitiveText" in follow_up_lab and "HIGH_RISK_TERMS" in follow_up_lab and "auditPacket" in follow_up_lab, "Follow-Up Lab includes a local privacy gate"),
+        Check("follow_up_lab:copy_outputs", "Copy Follow-Up JSON" in follow_up_lab and "Download JSON" in follow_up_lab and "Copy Issue Seed" in follow_up_lab, "Follow-Up Lab can copy and download packet outputs"),
+        Check("follow_up_lab:dom_safety", "textContent" in follow_up_lab and "replaceChildren" in follow_up_lab and "innerHTML" not in follow_up_lab, "Follow-Up Lab renders data without HTML injection"),
+        Check("follow_up_lab:safety_boundary", "not a clinical instrument" in follow_up_lab and "public-safe" in follow_up_lab, "Follow-Up Lab keeps safety boundary visible"),
+        Check("follow_up_lab:audit_script", "Follow-Up Lab Audit" in follow_up_lab_audit and "Copy Follow-Up JSON" in follow_up_lab_audit, "Follow-Up Lab has a dedicated audit script"),
+        Check("follow_up_lab:audit_make_target", "follow-up-lab-audit" in makefile and "scripts/follow_up_lab_audit.py" in makefile, "Makefile runs Follow-Up Lab audit"),
         Check("playground:title", "MBTI Typing Skill Playground" in playground, "Playground has a clear product title"),
         Check("playground:no_external_runtime", "<script src" not in playground and " src=" not in playground, "Playground has no external runtime dependency"),
         Check("playground:interactive_regions", all(term in playground for term in ("scenarioList", "candidateList", "evidenceList", "duelList", "promptOutput")), "Playground contains scenario, candidate, evidence, duel, and prompt regions"),
         Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
         Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
         Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
-        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
+        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, follow_up_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
         Check("pages:github_prompt_links", "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in session_lab and "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in playground, "Public prompt recipe links resolve on GitHub Pages"),
-        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
+        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + follow_up_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
         Check("pages:index_redirect", "session-lab.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to Session Lab"),
         Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]

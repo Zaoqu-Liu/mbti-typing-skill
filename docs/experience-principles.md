@@ -60,10 +60,11 @@ The highest-risk source of improvement is real user follow-up. It is valuable be
 The allowed loop is:
 
 1. The user shares only consented, redacted, public-safe observations.
-2. The packet preserves state labels, candidate set, runner-up, confidence, and falsifier.
-3. The user states what felt right, what felt wrong, and what should be observed next.
-4. The audit blocks direct identifiers, raw private chat, third-party details, missing consent, and missing withdrawal language.
-5. Maintainers turn repeated feedback into benchmark cases, pair-duel questions, report-audit rules, or documentation changes.
+2. Follow-Up Lab checks consent, redaction placeholders, sensitive markers, candidate set, runner-up, confidence, and falsifier before any public issue exists.
+3. The packet preserves state labels, candidate set, runner-up, confidence, and falsifier.
+4. The user states what felt right, what felt wrong, and what should be observed next.
+5. The audit blocks direct identifiers, raw private chat, third-party details, missing consent, and missing withdrawal language.
+6. Maintainers turn repeated feedback into benchmark cases, pair-duel questions, report-audit rules, or documentation changes.
 
 This lets users come back with corrections without turning personal material into repository content.
 

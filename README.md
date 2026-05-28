@@ -10,7 +10,7 @@ This project is built for people who want serious type reasoning: multi-round in
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Benchmark Arena, Calibration Lab, and Playground
+## Session Lab, Benchmark Arena, Calibration Lab, Follow-Up Lab, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
@@ -20,10 +20,12 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [Local case gallery file](docs/case-gallery.html)
 - [GitHub Pages Calibration Lab](https://zaoqu-liu.github.io/mbti-typing-skill/calibration-lab.html)
 - [Local Calibration Lab file](docs/calibration-lab.html)
+- [GitHub Pages Follow-Up Lab](https://zaoqu-liu.github.io/mbti-typing-skill/follow-up-lab.html)
+- [Local Follow-Up Lab file](docs/follow-up-lab.html)
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -34,6 +36,7 @@ Start here if you want to feel the product before reading the internals:
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Benchmark Arena](docs/case-gallery.html): adversarial case gallery for traps, runner-ups, and falsifiers.
 - [Calibration Lab](docs/calibration-lab.html): blind calibration loop for checking reports against benchmark expectations.
+- [Follow-Up Lab](docs/follow-up-lab.html): local-first consent packet builder for delayed observations, privacy gates, JSON export, and issue seeds.
 - [Blind Review Protocol](docs/blind-review-protocol.md): sanitized multi-reviewer evaluation for top-1, top-2, runner-up, falsifier, boundary, and overclaim metrics.
 - [Consent Redaction Protocol](docs/consent-redaction-protocol.md): public-safe route for consented follow-up observations, redaction, withdrawal, and delayed user feedback.
 - [Demo session](docs/demo-session.md): a short ENTJ vs INTJ vs INFP example showing the live loop.
@@ -195,6 +198,7 @@ sequenceDiagram
     session-lab.html
     case-gallery.html
     calibration-lab.html
+    follow-up-lab.html
     playground.html
     assets/
       mbti-typing-hero.png
@@ -291,6 +295,7 @@ python3 -B scripts/sync_case_gallery.py skill/mbti-typing/examples/benchmark-cas
 python3 -B scripts/case_gallery_audit.py docs/case-gallery.html skill/mbti-typing/examples/benchmark-cases.json
 python3 -B scripts/sync_calibration_lab.py skill/mbti-typing/examples/benchmark-cases.json docs/calibration-lab.html
 python3 -B scripts/calibration_lab_audit.py docs/calibration-lab.html skill/mbti-typing/examples/benchmark-cases.json
+python3 -B scripts/follow_up_lab_audit.py docs/follow-up-lab.html
 python3 -B scripts/repository_scorecard.py .
 ```
 
@@ -308,7 +313,8 @@ Case Gallery Source Sync: PASS (16 cases match)
 Case Gallery Audit: 48/48 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
-Repository UX Score: 245/245 (100.00%)
+Follow-Up Lab Audit: 61/61 (100.00%)
+Repository UX Score: 262/262 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -322,7 +328,8 @@ flowchart TD
     Cases --> Golden[Golden report regression]
     Golden --> Blind[Blind review audit]
     Blind --> Consent[Consent redaction audit]
-    Consent --> SkillScore[Skill package scorecard]
+    Consent --> FollowUp[Follow-Up Lab audit]
+    FollowUp --> SkillScore[Skill package scorecard]
     SkillScore --> UXScore[Repository UX scorecard]
     UXScore --> Cache[No cache artifact check]
     Cache --> Release{Release ready?}

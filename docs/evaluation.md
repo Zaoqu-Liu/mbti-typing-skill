@@ -127,6 +127,12 @@ Checked by:
 python3 -B scripts/consent_redaction_audit.py examples/consented-followup-packet.json
 ```
 
+The interactive product surface for this layer is checked separately:
+
+```bash
+python3 -B scripts/follow_up_lab_audit.py docs/follow-up-lab.html
+```
+
 ## Release Gate
 
 Before release:
@@ -186,5 +192,7 @@ The dedicated Session Lab audit validates the HTML interaction contract: visible
 The dedicated Case Gallery audit validates the public benchmark surface: all current benchmark cases, all 16 leading types, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, case filters, copied `Use $mbti-typing` prompts, benchmark issue seeds, visible runner-up/falsifier language, DOM-safe rendering, and no external runtime dependency.
 
 The dedicated Calibration Lab audit validates the public repair surface: all current benchmark cases, all 16 leading types, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, report paste, visible calibration gates, copied repair prompt, copied calibration JSON, copied failure issue seed, local persistence, DOM-safe rendering, and no external runtime dependency.
+
+The dedicated Follow-Up Lab audit validates the public return surface: all 16 type codes, consent checkboxes, redaction placeholders, local privacy scanner, `consented-followup/v1` packet builder, copied issue seed, copied or downloaded JSON, local persistence, DOM-safe rendering, and no external runtime dependency.
 
 The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.
