@@ -65,9 +65,8 @@ REQUIRED_TERMS = [
 
 
 FORBIDDEN_TERMS = [
+    "<script src",
     " src=",
-    "http://",
-    "https://",
     "innerHTML",
     "insertAdjacentHTML",
     "document.write",
@@ -93,6 +92,8 @@ def run(path: Path) -> int:
     checks.append(Check("html:single_script", html.count("<script>") == 1 and bool(script), "one inline script block is present"))
     checks.append(Check("html:share_controls", "Copy Share Link" in html and "Import JSON" in html, "share and import controls are visible"))
     checks.append(Check("html:proof_strip", "shareable URL hash plus JSON recovery" in html, "share/recovery proof is visible"))
+    checks.append(Check("html:repo_readme_link", "https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in html, "public page links to the GitHub README"))
+    checks.append(Check("html:repo_prompts_link", "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in html, "public page links to prompt recipes on GitHub"))
 
     for item_id in REQUIRED_IDS:
         checks.append(Check(f"id:{item_id}", f'id="{item_id}"' in html, "required interactive element id exists"))

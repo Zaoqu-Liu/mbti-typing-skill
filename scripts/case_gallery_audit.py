@@ -70,6 +70,7 @@ def run(path: Path, cases_path: Path) -> int:
         Check("html:title", "<title>MBTI Typing Skill Benchmark Arena</title>" in html, "product title is present"),
         Check("html:single_script", len(re.findall(r"<script>", html)) == 1, "one inline script block is present"),
         Check("html:no_external_runtime", all(term not in html for term in FORBIDDEN_TERMS), "page stays local and avoids unsafe HTML injection"),
+        Check("html:repo_readme_link", "https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in html, "public page links to the GitHub README"),
         Check("js:case_count", html.count("bench-") >= 8, "benchmark case ids are embedded"),
         Check("js:dom_safety", "textContent" in html and "replaceChildren" in html and "document.createElement" in html, "rendering uses DOM nodes"),
         Check("js:clipboard", "navigator.clipboard.writeText" in html, "copy actions use clipboard with fallback"),

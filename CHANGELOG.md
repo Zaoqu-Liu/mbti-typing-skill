@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.8 - 2026-05-28
+
+- Fixed GitHub Pages navigation so README and prompt recipe buttons resolve to the public GitHub repository instead of parent-directory paths that 404 after deploy.
+- Tightened repository UX gates to distinguish external links from external runtime dependencies and verify public README/prompt links.
+- Raised Session Lab audit coverage to 61/61, Case Gallery audit coverage to 39/39, and repository UX scorecard coverage to 161/161.
+
 ## 0.1.7 - 2026-05-28
 
 - Added a Benchmark Arena Pipeline SVG to make the benchmark JSON, sync script, public case gallery, audit gate, and issue feedback loop visible to first-time visitors.

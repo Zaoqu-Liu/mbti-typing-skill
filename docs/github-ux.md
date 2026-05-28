@@ -81,6 +81,7 @@ The experience should never rely on:
 - Keep `docs/session-lab.html` usable without a build step, external JavaScript, network calls, or account setup; preserve share links, JSON import, and local persistence.
 - Keep `docs/case-gallery.html` usable without a build step or external runtime; preserve case filters, prompt copy, issue seed copy, all current benchmark cases, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, and safety boundaries.
 - Keep `docs/playground.html` usable without a build step, external JavaScript, or network calls.
+- Keep public README and prompt recipe buttons pointing to GitHub repository URLs; parent-directory links break after GitHub Pages deploys the `docs/` folder.
 - Keep at least four Mermaid diagrams in the English README.
 - Keep demo session and sample report links visible in the first half of the README.
 - Keep the Chinese README visually connected to the same hero.

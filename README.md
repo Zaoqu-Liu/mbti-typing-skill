@@ -257,10 +257,10 @@ Expected result:
 ```text
 Score: 35/35 (100.00%)
 Regression passed for 8 golden fixtures.
-Session Lab Audit: 60/60 (100.00%)
+Session Lab Audit: 61/61 (100.00%)
 Case Gallery Source Sync: PASS (8 cases match)
-Case Gallery Audit: 38/38 (100.00%)
-Repository UX Score: 158/158 (100.00%)
+Case Gallery Audit: 39/39 (100.00%)
+Repository UX Score: 161/161 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

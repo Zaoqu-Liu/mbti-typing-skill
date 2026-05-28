@@ -126,3 +126,5 @@ The repository UX scorecard also checks the Session Lab, Benchmark Arena, static
 The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.
 
 The dedicated Case Gallery audit validates the public benchmark surface: all current benchmark cases, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, case filters, copied `Use $mbti-typing` prompts, benchmark issue seeds, visible runner-up/falsifier language, DOM-safe rendering, and no external runtime dependency.
+
+The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.
