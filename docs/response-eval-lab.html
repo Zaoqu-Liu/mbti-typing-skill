@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Response Eval Lab</title>
+  <meta name="description" content="Local-first response quality lab for auditing MBTI typing answers against candidate-set, runner-up, evidence movement, falsifier, next-round, and anti-flattery gates.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f6;
+      --panel: #ffffff;
+      --panel-soft: #f9fbfa;
+      --ink: #17211f;
+      --muted: #64716f;
+      --line: #d8dfdc;
+      --green: #16836f;
+      --green-soft: #e3f4ef;
+      --blue: #415f9f;
+      --blue-soft: #e7edf8;
+      --amber: #b77716;
+      --amber-soft: #fff0d8;
+      --red: #bb3d58;
+      --red-soft: #fbe7ed;
+      --graphite: #24302e;
+      --shadow: 0 16px 38px rgba(23, 32, 31, 0.09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(22, 131, 111, 0.09), transparent 32%),
+        linear-gradient(250deg, rgba(65, 95, 159, 0.11), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    select,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .topbar,
+    .brand,
+    .nav-actions,
+    .panel-title,
+    .action-row,
+    .metric-row,
+    .gate-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-actions {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      background: #fafeff;
+      border-color: rgba(22, 131, 111, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.76fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-proof,
+    .panel {
+      border: 1px solid rgba(216, 223, 220, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 292px;
+      padding: clamp(22px, 4vw, 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.99;
+      max-width: 980px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 880px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .proof {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+      min-height: 86px;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .status-strip {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--green-soft), #fff, var(--blue-soft));
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.92fr) minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .panel-title span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 188px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    textarea:focus,
+    select:focus,
+    input:focus {
+      border-color: rgba(22, 131, 111, 0.75);
+      box-shadow: 0 0 0 3px rgba(22, 131, 111, 0.12);
+    }
+
+    .action-row {
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+      min-height: 78px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 7px;
+    }
+
+    .radar-wrap {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .radar-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .gate {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 11px;
+      min-height: 92px;
+    }
+
+    .gate.pass {
+      border-color: rgba(22, 131, 111, 0.44);
+      background: var(--green-soft);
+    }
+
+    .gate.fail {
+      border-color: rgba(187, 61, 88, 0.42);
+      background: var(--red-soft);
+    }
+
+    .gate.optional {
+      border-color: rgba(183, 119, 22, 0.45);
+      background: var(--amber-soft);
+    }
+
+    .gate-head {
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .gate-name {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .gate-status {
+      border-radius: 999px;
+      padding: 4px 7px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #fff;
+      background: var(--red);
+    }
+
+    .pass .gate-status {
+      background: var(--green);
+    }
+
+    .optional .gate-status {
+      background: var(--amber);
+    }
+
+    .gate-detail {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    output,
+    pre {
+      display: block;
+      width: 100%;
+      min-height: 138px;
+      max-height: 320px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdfc;
+      padding: 12px;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .receipt {
+      min-height: 170px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      z-index: 5;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+
+      .metric-grid,
+      .proof-grid,
+      .gate-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">R</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Response Eval Lab</div>
+          <div class="brand-subtitle">Local-first answer quality radar</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Product navigation">
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button" href="question-lab.html">Question Lab</a>
+        <a class="button" href="type-duel-lab.html">Type Duel Lab</a>
+        <a class="button" href="calibration-lab.html">Calibration Lab</a>
+        <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="playground.html">Playground</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Response Quality Lab</div>
+        <h1>Paste any typing answer and see whether it earned the next round.</h1>
+        <p>This page audits answer shape before the user internalizes a label: candidate set, serious runner-up, evidence movement, falsifier, safety boundary, calibrated confidence, next questions, and Anti-Flattery gates. Everything runs locally in the browser.</p>
+      </div>
+      <aside class="hero-proof" aria-label="Response Eval Lab proof">
+        <div class="proof-grid">
+          <div class="proof">
+            <strong>13</strong>
+            <span>Mode-aware gates across live, duel, final, and anti-pattern responses</span>
+          </div>
+          <div class="proof">
+            <strong>0</strong>
+            <span>Network calls, external runtime dependencies, accounts, or servers</span>
+          </div>
+          <div class="proof">
+            <strong>4</strong>
+            <span>Fixture families in examples/response-eval-cases.json</span>
+          </div>
+          <div class="proof">
+            <strong>1</strong>
+            <span>Copyable repair prompt for returning to $mbti-typing</span>
+          </div>
+        </div>
+        <div class="status-strip">
+          Use this local-first surface for draft outputs, model comparisons, prompt tuning, and issue triage. It is a lexical UX audit, not psychometric ground truth.
+        </div>
+      </aside>
+    </section>
+
+    <section class="workspace" aria-label="Response evaluation workspace">
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Input</h2>
+          <span>Paste response</span>
+        </div>
+        <label for="modeSelect">Mode</label>
+        <select id="modeSelect">
+          <option value="live_round">Live round</option>
+          <option value="type_duel">Type duel</option>
+          <option value="final_report">Final report</option>
+          <option value="anti_pattern">Anti-pattern check</option>
+        </select>
+        <label for="promptInput">Prompt or context</label>
+        <textarea id="promptInput" spellcheck="true" placeholder="Optional. Paste the original user prompt, current uncertainty, or top two candidates."></textarea>
+        <label for="responseInput">Response to audit</label>
+        <textarea id="responseInput" spellcheck="true" placeholder="Paste an MBTI typing answer here."></textarea>
+        <div class="action-row">
+          <button class="button primary" id="runAudit" type="button">Run Audit</button>
+          <button class="button" id="loadStrongExample" type="button">Load Strong Fixture</button>
+          <button class="button" id="loadBadExample" type="button">Load Bad Fixture</button>
+          <button class="button" id="clearLab" type="button">Clear</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Quality Radar</h2>
+          <span id="qualityLabel">Not audited</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="scoreValue">0%</strong>
+            <span>Mode-aware response quality score</span>
+          </div>
+          <div class="metric">
+            <strong id="failedGateCount">0</strong>
+            <span>Required gates needing repair</span>
+          </div>
+        </div>
+        <div class="radar-wrap" aria-label="Response quality radar chart">
+          <svg id="radarSvg" viewBox="0 0 420 340" role="img" aria-labelledby="radarTitle radarDesc">
+            <title id="radarTitle">Response quality radar</title>
+            <desc id="radarDesc">A radar chart showing pass and fail status for mode-aware response quality gates.</desc>
+            <g fill="none" stroke="#cbd3d1" stroke-width="1">
+              <circle cx="210" cy="168" r="42"></circle>
+              <circle cx="210" cy="168" r="84"></circle>
+              <circle cx="210" cy="168" r="126"></circle>
+              <line x1="210" y1="42" x2="210" y2="294"></line>
+              <line x1="84" y1="168" x2="336" y2="168"></line>
+              <line x1="121" y1="79" x2="299" y2="257"></line>
+              <line x1="299" y1="79" x2="121" y2="257"></line>
+            </g>
+            <polygon id="qualityPolygon" points="210,168" fill="rgba(22, 131, 111, 0.22)" stroke="#16836f" stroke-width="3"></polygon>
+            <text x="176" y="28" fill="#3e4d4a" font-size="12" font-weight="800">Candidate</text>
+            <text x="304" y="84" fill="#3e4d4a" font-size="12" font-weight="800">Runner-up</text>
+            <text x="326" y="172" fill="#3e4d4a" font-size="12" font-weight="800">Evidence</text>
+            <text x="284" y="286" fill="#3e4d4a" font-size="12" font-weight="800">Safety</text>
+            <text x="102" y="286" fill="#3e4d4a" font-size="12" font-weight="800">Falsifier</text>
+            <text x="28" y="172" fill="#3e4d4a" font-size="12" font-weight="800">Questions</text>
+            <text x="68" y="84" fill="#3e4d4a" font-size="12" font-weight="800">No overclaim</text>
+          </svg>
+        </div>
+        <div id="gateGrid" class="gate-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Outputs</h2>
+          <span>Repair loop</span>
+        </div>
+        <label for="receiptOutput">Response Eval JSON</label>
+        <pre id="receiptOutput" class="receipt"></pre>
+        <label for="repairPromptOutput">Repair prompt</label>
+        <pre id="repairPromptOutput"></pre>
+        <label for="issueSeedOutput">Issue seed</label>
+        <pre id="issueSeedOutput"></pre>
+        <div class="action-row">
+          <button class="button primary" id="copyRepairPrompt" type="button">Copy Repair Prompt</button>
+          <button class="button" id="copyEvalJson" type="button">Copy Eval JSON</button>
+          <button class="button" id="downloadJson" type="button">Download JSON</button>
+          <button class="button" id="copyIssueSeed" type="button">Copy Issue Seed</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "mbti-typing-response-eval-lab-state";
+    const TYPE_RE = /\b(?:I|E)(?:N|S)(?:T|F)(?:J|P)\b/g;
+    const QUESTION_RE = /(?:^|\n)\s*(?:[-*]|\d+[.)、])\s*[^。\n]*(?:\?|？)/g;
+    const OVERCLAIM_RE = /100%|百分百|绝对|一定是|不用怀疑|无需再问|唯一答案|世界上最准|不可能|必然|永远|\bdefinitely\b|\balways\b|\bnever\b|\bguaranteed\b/i;
+    const FLATTERY_RE = /天生|比别人高级|最强人格|最强类型|完美人格|上等人|注定|无敌|神判|领导者命|\bsuperior\b|\bdestined\b|\bborn leader\b/i;
+
+    const GATES = [
+      { id: "candidate_set", label: "Candidate set", detail: "Names at least two live hypotheses and does not collapse to a label." },
+      { id: "runner_up", label: "Serious runner-up", detail: "Treats the second-best explanation as live and testable." },
+      { id: "evidence_movement", label: "Evidence movement", detail: "Explains what got stronger, weaker, or stayed ambiguous." },
+      { id: "next_questions", label: "Next questions", detail: "Asks the right number of focused next-round or observation questions." },
+      { id: "scene_questions", label: "Concrete scenes", detail: "Questions target recent situations, stress, conflict, recovery, or normal state." },
+      { id: "duel_losing_conditions", label: "Duel losing conditions", detail: "For type duels, states what would make either side lose." },
+      { id: "final_report_shape", label: "Final report shape", detail: "For final reports, includes conclusion, evidence, weak evidence, and observation prompts." },
+      { id: "cross_framework_boundary", label: "Cross-framework boundary", detail: "Separates MBTI from Big Five, A/T, Enneagram, attachment, or role explanations." },
+      { id: "falsifier", label: "Falsifier", detail: "States what evidence would revise or reverse the conclusion." },
+      { id: "safety_boundary", label: "Safety boundary", detail: "Rejects clinical, hiring, psychometric, or deterministic misuse." },
+      { id: "calibrated_confidence", label: "Calibrated confidence", detail: "Uses working formulation language instead of fake certainty." },
+      { id: "no_overclaim", label: "No overclaim", detail: "Avoids 100%, absolute, destiny, or impossible-to-revise claims." },
+      { id: "no_flattery", label: "Anti-Flattery", detail: "Avoids superiority, born-leader, perfect-type, or identity-hook language." }
+    ];
+
+    const REQUIRED_BY_MODE = {
+      live_round: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
+      type_duel: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "duel_losing_conditions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
+      final_report: ["candidate_set", "runner_up", "evidence_movement", "final_report_shape", "cross_framework_boundary", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
+      anti_pattern: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "falsifier", "safety_boundary", "no_overclaim", "no_flattery"]
+    };
+
+    const STRONG_FIXTURE = {
+      mode: "live_round",
+      prompt: "The user is stuck between ENTJ, INTJ, and INFP after multiple tests.",
+      response: `目前证据更支持 ENTJ-like Te-Ni 作为第一假设，但 INTJ 是 serious runner-up，INFP 不能直接丢掉。\n\n候选集：ENTJ、INTJ、INFP。ENTJ 上升是因为你在没人要求时也会把混乱变成目标、负责人和下一步；INTJ 仍然强，因为外部推进可能只是内部模型收敛后的输出；INFP 还活着，因为价值认可可能先于行动。\n\n证据移动：看到低效就忍不住接管支持 ENTJ，但还没有证明这是正常状态而不是项目角色。没有移动的证据是意义语言，因为它既可能是 Fi，也可能是行动后的价值解释。\n\n反证门：如果你在低压力、无人期待、没有绩效目标的日子里仍然先进入私人模型整理，而不是外部结构推进，我会把 INTJ 提到第一候选。\n\n下一轮只问 5 个具体场景：\n1. 最近一次没人要求你负责但你还是主动接管的场景是什么？\n2. 计划混乱时你先写目标负责人，还是先退回去想底层模型？\n3. 冲突后你靠理顺系统、想通模型、维护真实感，还是修复关系来恢复？\n4. 有效方案违背私人价值时，你先暂停行动，还是先推进再修正意义？\n5. 别人说你太强势时，你更像羞耻、愤怒、困惑，还是觉得对方没抓住问题？\n\n边界：这不是临床、招聘或心理测量结论。当前只是可修正的 MBTI 访谈假设，不是确定的人格真值。`
+    };
+
+    const BAD_FIXTURE = {
+      mode: "anti_pattern",
+      prompt: "A shallow agent tries to force a fast label.",
+      response: "你就是 ENTJ，100% 不用怀疑。你天生就是领导者，比别人高级，世界上最准的判型已经出来了。别再纠结其他说法，INTJ 或 INFP 都不可能。你以后一定适合掌控团队，只要接受这个标签就行。无需再提供具体场景，也不需要讨论什么会推翻结论。"
+    };
+
+    const modeSelect = document.getElementById("modeSelect");
+    const promptInput = document.getElementById("promptInput");
+    const responseInput = document.getElementById("responseInput");
+    const scoreValue = document.getElementById("scoreValue");
+    const failedGateCount = document.getElementById("failedGateCount");
+    const qualityLabel = document.getElementById("qualityLabel");
+    const gateGrid = document.getElementById("gateGrid");
+    const receiptOutput = document.getElementById("receiptOutput");
+    const repairPromptOutput = document.getElementById("repairPromptOutput");
+    const issueSeedOutput = document.getElementById("issueSeedOutput");
+    const qualityPolygon = document.getElementById("qualityPolygon");
+    const toast = document.getElementById("toast");
+
+    let latestReceipt = null;
+
+    function containsAny(text, terms) {
+      const lowered = text.toLowerCase();
+      return terms.some((term) => lowered.includes(term.toLowerCase()));
+    }
+
+    function countQuestions(text) {
+      return (text.match(QUESTION_RE) || []).length;
+    }
+
+    function uniqueTypes(text) {
+      return Array.from(new Set(text.match(TYPE_RE) || []));
+    }
+
+    function analyzeResponse(text, mode) {
+      const types = uniqueTypes(text);
+      const qCount = countQuestions(text);
+      const features = {
+        candidate_set: types.length >= 2 && containsAny(text, ["候选集", "候选榜", "candidate set", "hypotheses"]),
+        runner_up: containsAny(text, ["runner-up", "serious runner-up", "第二候选", "备选", "仍然是", "仍然很强"]),
+        evidence_movement: containsAny(text, ["证据移动", "真正移动", "支持", "削弱", "weakens", "moved", "弱证据", "强证据"]),
+        next_questions: mode === "final_report" ? qCount >= 3 : qCount >= 4 && qCount <= 6,
+        scene_questions: containsAny(text, ["最近一次", "具体场景", "发生的例子", "举一个", "复盘", "压力", "冲突", "恢复", "正常状态"]),
+        duel_losing_conditions: containsAny(text, ["loses if", "失去领先", "反超", "降低", "提高"]),
+        final_report_shape: containsAny(text, ["短结论", "为什么", "强证据", "弱证据", "继续观察", "working formulation"]),
+        cross_framework_boundary: containsAny(text, ["big five", "a/t", "九型", "依恋", "框架", "不能替代"]),
+        falsifier: containsAny(text, ["反证", "改判", "反超", "falsifier", "would change", "降低", "提高"]),
+        safety_boundary: containsAny(text, ["不是临床", "不是诊断", "不是心理测量", "not clinical", "not psychometric", "招聘", "hiring", "人格真值"]),
+        calibrated_confidence: containsAny(text, ["目前证据", "confidence", "暂时", "不是确定", "not high", "medium", "可修正"]),
+        no_overclaim: !OVERCLAIM_RE.test(text),
+        no_flattery: !FLATTERY_RE.test(text)
+      };
+      return { features, qCount, types };
+    }
+
+    function buildReceipt() {
+      const mode = modeSelect.value;
+      const prompt = promptInput.value.trim();
+      const response = responseInput.value.trim();
+      const analysis = analyzeResponse(response, mode);
+      const required = REQUIRED_BY_MODE[mode] || REQUIRED_BY_MODE.live_round;
+      const failed = required.filter((gateId) => !analysis.features[gateId]);
+      const optionalFailed = GATES.map((gate) => gate.id).filter((gateId) => !required.includes(gateId) && !analysis.features[gateId]);
+      const passedCount = required.length - failed.length;
+      const score = required.length ? Math.round((passedCount / required.length) * 100) : 0;
+      return {
+        schema_version: "response-eval-lab/v1",
+        mode,
+        score,
+        quality_label: score >= 90 ? "release-ready" : score >= 70 ? "repairable" : "blocked",
+        required_gates: required,
+        failed_gates: failed,
+        optional_failed_gates: optionalFailed,
+        detected_types: analysis.types,
+        question_count: analysis.qCount,
+        features: analysis.features,
+        prompt_excerpt: prompt.slice(0, 360),
+        response_excerpt: response.slice(0, 520),
+        safety_note: "Local lexical audit only; not psychometric ground truth."
+      };
+    }
+
+    function makeRepairPrompt(receipt) {
+      return [
+        "Use $mbti-typing to repair this MBTI response.",
+        "",
+        "Goal: preserve useful evidence while fixing the failed response-quality gates.",
+        `Mode: ${receipt.mode}`,
+        `Current score: ${receipt.score}%`,
+        `Failed gates: ${receipt.failed_gates.length ? receipt.failed_gates.join(", ") : "none"}`,
+        "",
+        "Repair requirements:",
+        "- Keep a live candidate set instead of a label lock.",
+        "- Preserve a serious runner-up and say what would make it win.",
+        "- Explain evidence movement: stronger, weaker, unchanged, and why.",
+        "- Add a falsifier and a safety boundary.",
+        "- Remove 100% certainty, flattery, superiority, destiny, clinical, hiring, or deterministic claims.",
+        "- For live rounds and type duels, ask 4-6 concrete scene questions selected for the current fork.",
+        "",
+        "Original prompt/context:",
+        receipt.prompt_excerpt || "[not provided]",
+        "",
+        "Response excerpt to repair:",
+        receipt.response_excerpt || "[not provided]"
+      ].join("\n");
+    }
+
+    function makeIssueSeed(receipt) {
+      return [
+        "title: Response Eval failure - <short summary>",
+        "template: response_eval_improvement.yml",
+        "mode: " + receipt.mode,
+        "score: " + receipt.score,
+        "failed_gates:",
+        ...(receipt.failed_gates.length ? receipt.failed_gates.map((gate) => "  - " + gate) : ["  - none"]),
+        "expected_repair:",
+        "  - preserve candidate set, runner-up, evidence movement, falsifier, and safety boundary",
+        "  - remove overclaiming or flattery if present",
+        "public_safety:",
+        "  - use synthetic or sanitized excerpts only",
+        "  - do not include raw private chat logs or identifiers"
+      ].join("\n");
+    }
+
+    function renderReceipt(receipt) {
+      latestReceipt = receipt;
+      const required = new Set(receipt.required_gates);
+      const failed = new Set(receipt.failed_gates);
+      const optionalFailed = new Set(receipt.optional_failed_gates);
+
+      scoreValue.textContent = `${receipt.score}%`;
+      failedGateCount.textContent = String(receipt.failed_gates.length);
+      qualityLabel.textContent = receipt.quality_label;
+      receiptOutput.textContent = JSON.stringify(receipt, null, 2);
+      repairPromptOutput.textContent = makeRepairPrompt(receipt);
+      issueSeedOutput.textContent = makeIssueSeed(receipt);
+
+      const gateCards = GATES.map((gate) => {
+        const card = document.createElement("article");
+        const isRequired = required.has(gate.id);
+        const isFailed = failed.has(gate.id);
+        const isOptionalFailed = optionalFailed.has(gate.id);
+        card.className = "gate " + (isFailed ? "fail" : isOptionalFailed ? "optional" : "pass");
+
+        const head = document.createElement("div");
+        head.className = "gate-head";
+        const name = document.createElement("div");
+        name.className = "gate-name";
+        name.textContent = gate.label;
+        const status = document.createElement("div");
+        status.className = "gate-status";
+        status.textContent = isFailed ? "FAIL" : isOptionalFailed ? "OPTIONAL" : "PASS";
+        head.append(name, status);
+
+        const detail = document.createElement("div");
+        detail.className = "gate-detail";
+        detail.textContent = (isRequired ? "Required. " : "Context gate. ") + gate.detail;
+        card.append(head, detail);
+        return card;
+      });
+      gateGrid.replaceChildren(...gateCards);
+      renderRadar(receipt);
+      saveState();
+    }
+
+    function renderRadar(receipt) {
+      const required = new Set(receipt.required_gates);
+      const failed = new Set(receipt.failed_gates);
+      const centerX = 210;
+      const centerY = 168;
+      const maxR = 126;
+      const radarGates = ["candidate_set", "runner_up", "evidence_movement", "next_questions", "safety_boundary", "falsifier", "no_overclaim"];
+      const points = radarGates.map((gateId, index) => {
+        const angle = -Math.PI / 2 + (index / radarGates.length) * Math.PI * 2;
+        const value = !required.has(gateId) ? 0.72 : failed.has(gateId) ? 0.32 : 1;
+        const radius = 32 + (maxR - 32) * value;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+      qualityPolygon.setAttribute("points", points.join(" "));
+    }
+
+    function runAudit() {
+      const receipt = buildReceipt();
+      renderReceipt(receipt);
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 1400);
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(`${label} copied`);
+      } catch {
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        document.body.append(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+        showToast(`${label} copied`);
+      }
+    }
+
+    function downloadJson() {
+      if (!latestReceipt) {
+        runAudit();
+      }
+      const payload = JSON.stringify(latestReceipt, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "response-eval-receipt.json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("JSON downloaded");
+    }
+
+    function loadFixture(fixture) {
+      modeSelect.value = fixture.mode;
+      promptInput.value = fixture.prompt;
+      responseInput.value = fixture.response;
+      runAudit();
+    }
+
+    function clearLab() {
+      promptInput.value = "";
+      responseInput.value = "";
+      modeSelect.value = "live_round";
+      localStorage.removeItem(STORAGE_KEY);
+      runAudit();
+    }
+
+    function saveState() {
+      const state = {
+        mode: modeSelect.value,
+        prompt: promptInput.value,
+        response: responseInput.value
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function restoreState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          loadFixture(STRONG_FIXTURE);
+          return;
+        }
+        const state = JSON.parse(raw);
+        if (REQUIRED_BY_MODE[state.mode]) {
+          modeSelect.value = state.mode;
+        }
+        promptInput.value = typeof state.prompt === "string" ? state.prompt : "";
+        responseInput.value = typeof state.response === "string" ? state.response : "";
+        runAudit();
+      } catch {
+        loadFixture(STRONG_FIXTURE);
+      }
+    }
+
+    document.getElementById("runAudit").addEventListener("click", runAudit);
+    document.getElementById("loadStrongExample").addEventListener("click", () => loadFixture(STRONG_FIXTURE));
+    document.getElementById("loadBadExample").addEventListener("click", () => loadFixture(BAD_FIXTURE));
+    document.getElementById("clearLab").addEventListener("click", clearLab);
+    document.getElementById("copyRepairPrompt").addEventListener("click", () => copyText(repairPromptOutput.textContent, "Repair prompt"));
+    document.getElementById("copyEvalJson").addEventListener("click", () => copyText(receiptOutput.textContent, "Eval JSON"));
+    document.getElementById("copyIssueSeed").addEventListener("click", () => copyText(issueSeedOutput.textContent, "Issue seed"));
+    document.getElementById("downloadJson").addEventListener("click", downloadJson);
+    [modeSelect, promptInput, responseInput].forEach((element) => element.addEventListener("input", runAudit));
+
+    restoreState();
+  </script>
+</body>
+</html>

@@ -13,6 +13,16 @@ The hero image frames the skill as a reasoning system:
 - Adjacent-type duels are separated from generic trait questions.
 - Calibration, report audit, and benchmark checks are part of the same loop.
 
+## GitHub Social Preview
+
+![GitHub social preview](assets/social-preview.jpg)
+
+The GitHub social preview crop keeps the repository share surface consistent outside the README:
+
+- It is wide, under one megabyte, and suitable for repository settings.
+- It uses abstract panels instead of generated readable text.
+- It echoes the same evidence, gate, radar, and receipt language that appears in the precise SVG diagrams.
+
 ## Journey Map
 
 ![Typing journey map](assets/typing-journey-map.png)
@@ -60,7 +70,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Response Eval Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Response Eval Audit, Response Eval Lab Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -215,6 +225,30 @@ The Response Quality Radar makes answer-level trust visible:
 
 This is the answer-quality layer: users return because the response picked the next fork precisely, not because the tool inflated certainty.
 
+## Response Eval Command Center
+
+![Response Eval Command Center](assets/response-eval-command-center.png)
+
+The Response Eval Command Center is the product-feel companion to the precise audit diagrams:
+
+- The generated bitmap shows answer cards, quality gates, radar panels, issue routes, and release receipts in one dense workspace.
+- It avoids readable labels because exact text belongs in reviewable Markdown, SVG, and scripts.
+- It gives the README and share surface a stronger first impression without replacing the falsifiable workflow.
+
+## Response Eval Lab Flow
+
+![Response Eval Lab Flow](assets/response-eval-lab-flow.svg)
+
+The Response Eval Lab Flow shows why the new page is a retention surface rather than a static demo:
+
+- A visitor pastes a prompt and MBTI answer into a local-first page.
+- `REQUIRED_BY_MODE` applies different gates for live rounds, type duels, final reports, and anti-patterns.
+- The quality radar turns candidate set, runner-up, evidence movement, falsifier, safety boundary, and Anti-Flattery gates into a visible receipt.
+- Copy buttons turn weak output into a repair prompt, eval JSON, or `response_eval_improvement.yml` issue seed.
+- `scripts/response_eval_lab_audit.py` checks the page before release so the workflow stays DOM-safe and buildless.
+
+This is the practical answer-quality loop: users do not have to trust a claim that a response is good; they can paste it and see exactly which gate failed.
+
 ## Follow-Up Lab
 
 [Follow-Up Lab](follow-up-lab.html) turns the consent feedback loop into a usable product surface:
@@ -292,6 +326,7 @@ The buildless product pages, adapter docs, and response audit now cover the full
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
 - [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md portability.
+- [Response Eval Lab](response-eval-lab.html): paste any answer, inspect gates, copy repair prompt, JSON receipt, or response eval issue seed.
 - [Response Eval fixtures](../examples/response-eval-cases.json): audited examples for live-round, type-duel, final-report, and anti-pattern response quality.
 
 ## Why These Visuals Matter
@@ -327,14 +362,17 @@ flowchart TD
     P --> Q[Agent Compatibility Grid]
     Q --> R[Agent Pack Export Flow]
     R --> S[Response Quality Radar]
-    S --> T[Agent adapters]
-    T --> U[Follow-Up Lab]
-    U --> V[One-minute demo]
-    V --> W[Demo session]
-    W --> X[Sample report]
-    X --> Y[Evaluation model]
-    Y --> Z[Contribution guide]
-    Z --> AA[Benchmark cases]
+    S --> T[Response Eval Command Center]
+    T --> U[Response Eval Lab Flow]
+    U --> V[Response Eval Lab]
+    V --> W[Agent adapters]
+    W --> X[Follow-Up Lab]
+    X --> Y[One-minute demo]
+    Y --> Z[Demo session]
+    Z --> AA[Sample report]
+    AA --> AB[Evaluation model]
+    AB --> AC[Contribution guide]
+    AC --> AD[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

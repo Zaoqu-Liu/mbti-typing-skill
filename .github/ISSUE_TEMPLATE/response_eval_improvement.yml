@@ -1,0 +1,60 @@
+name: Response Eval Improvement
+description: Report a response-quality failure or propose a stronger answer-level gate.
+title: "[Response Eval] "
+labels: ["response-eval", "quality-gate"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use synthetic or sanitized material only. Do not paste raw private chat logs, identifiers, third-party details, clinical details, hiring contexts, or deterministic claims about people.
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - live_round
+        - type_duel
+        - final_report
+        - anti_pattern
+    validations:
+      required: true
+  - type: input
+    id: score
+    attributes:
+      label: Response Eval Lab score
+      placeholder: "Example: 72"
+    validations:
+      required: true
+  - type: textarea
+    id: failed_gates
+    attributes:
+      label: Failed gates
+      description: List the exact gates from Response Eval Lab.
+      placeholder: |
+        - missing_runner_up
+        - no_overclaim
+    validations:
+      required: true
+  - type: textarea
+    id: sanitized_excerpt
+    attributes:
+      label: Synthetic or sanitized response excerpt
+      description: Keep this public-safe and minimal.
+    validations:
+      required: true
+  - type: textarea
+    id: expected_repair
+    attributes:
+      label: Expected repair
+      description: Explain what a better answer should preserve, remove, or ask next.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public-safety confirmation
+      options:
+        - label: This issue uses synthetic or sanitized material only.
+          required: true
+        - label: This issue contains no raw private chat logs, identifiers, third-party details, clinical details, hiring contexts, or deterministic claims.
+          required: true

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.20 - 2026-05-28
+
+- Added a buildless Response Eval Lab so users can paste any MBTI answer, inspect mode-aware quality gates, copy a repair prompt, export Eval JSON, and create a `response_eval_improvement.yml` issue seed.
+- Added `scripts/response_eval_lab_audit.py`, a GitHub social preview crop, the Response Eval Command Center bitmap, and the Response Eval Lab Flow SVG to make answer-quality UX visible and release-gated.
+- Wired the lab, issue template, and new visual assets into `make test`, README, visual tour, evaluation docs, contribution rules, and repository UX gates, raising the Repository UX Score to 488/488.
+
 ## 0.1.19 - 2026-05-28
 
 - Added `examples/response-eval-cases.json` and `scripts/response_eval_audit.py` so live-round, type-duel, final-report, and anti-pattern answers are release-gated for candidate set, runner-up, evidence movement, next questions, falsifiers, safety boundaries, and Anti-Flattery discipline.

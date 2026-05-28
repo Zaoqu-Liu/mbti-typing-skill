@@ -150,6 +150,7 @@ Checked by:
 
 ```bash
 python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json
+python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 ```
 
 Current target:
@@ -157,6 +158,7 @@ Current target:
 ```text
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
+Response Eval Lab Audit: 69/69 (100.00%)
 ```
 
 ## Release Gate
@@ -178,9 +180,9 @@ python3 -B scripts/repository_scorecard.py .
 
 This verifies that the GitHub-facing project experience has the expected hero image, visual diagrams, bilingual README path, evaluation docs, and repository trust artifacts.
 
-The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, and a second journey-map image. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
+The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose fourteen exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose fifteen exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -196,8 +198,9 @@ The visual blueprint gate checks that the README and visual tour expose fourteen
 - `docs/assets/agent-compatibility-grid.svg` for the 11-adapter compatibility surface across Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md-aware agents.
 - `docs/assets/agent-pack-export-flow.svg` for the manifest to exported pack to target repository copy path.
 - `docs/assets/response-quality-radar.svg` for the answer-level candidate set, runner-up, evidence movement, next-question, falsifier, safety-boundary, Anti-Flattery, and response audit gates.
+- `docs/assets/response-eval-lab-flow.svg` for the paste answer to mode-aware gates to quality radar to JSON receipt to repair prompt to `response_eval_improvement.yml` loop.
 
-These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals can create atmosphere; SVG blueprints carry precise workflow claims.
+These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals such as `docs/assets/social-preview.jpg` and `docs/assets/response-eval-command-center.png` can create atmosphere; SVG blueprints carry precise workflow claims.
 
 The activation gate validates that the sample session state can pass final-state checks and that the sample report passes the report audit:
 
@@ -235,6 +238,12 @@ The Response Eval Audit validates that examples and future templates do not drif
 python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json
 ```
 
+The Response Eval Lab Audit validates the public answer-quality surface: `docs/response-eval-lab.html` must stay buildless, local-first, DOM-safe, mode-aware, copyable, and visibly bounded as not psychometric ground truth. It also checks the repair prompt, Eval JSON, issue seed, radar, and `response_eval_improvement.yml` contribution path:
+
+```bash
+python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
+```
+
 The repository UX scorecard also checks the Session Lab, Question Lab, Type Duel Lab, Benchmark Arena, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
 
 The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.
@@ -253,6 +262,6 @@ The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md
 
 The dedicated Agent Pack Export audit validates the adoption path: `scripts/export_agent_pack.py` must export the canonical skill tree, baseline contracts, selected target entrypoints, adapter docs, prompt recipes, and an `AGENT_PACK_MANIFEST.json` receipt, while refusing unknown targets and non-empty destinations unless the user explicitly chooses `--force`.
 
-The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, and `scripts/response_eval_audit.py` must stay aligned so examples preserve candidate set, runner-up, evidence movement, next-round questions, falsifiers, safety boundaries, calibrated confidence, and Anti-Flattery discipline.
+The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, `docs/assets/response-eval-lab-flow.svg`, `docs/response-eval-lab.html`, `scripts/response_eval_audit.py`, and `scripts/response_eval_lab_audit.py` must stay aligned so examples and the public lab preserve candidate set, runner-up, evidence movement, next-round questions, falsifiers, safety boundaries, calibrated confidence, repair prompts, issue seeds, and Anti-Flattery discipline.
 
 The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.
