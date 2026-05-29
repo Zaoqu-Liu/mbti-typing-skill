@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.22 - 2026-05-29
+
+- Expanded the adapter surface from 11 to 18 targets: ChatGPT GPTs/Projects, Zed Agent Panel, Devin, JetBrains Junie, Amazon Q Developer CLI, Roo Code, and Kilo Code now join Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md-aware agents.
+- Added native entrypoints for the new tools: `.rules`, `.roomodes`, `.roo/rules-mbti-typing/mbti-typing.md`, `kilo.jsonc`, `.kilo/rules/mbti-typing.md`, `.junie/AGENTS.md`, `.junie/commands/mbti-type.md`, `.amazonq/cli-agents/mbti-typing.json`, and `gpts/mbti-typing-gpt-instructions.md`.
+- Added a buildless Benchmark Replay Lab that turns canonical benchmark cases into blind prompts, top-two guesses, reference reveal, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds.
+- Added `scripts/sync_benchmark_replay_lab.py`, `scripts/benchmark_replay_lab_audit.py`, and the Benchmark Replay Loop SVG so replay UX is source-synced and release-gated.
+- Updated the manifest, Agent Adapter Lab, adapter docs, visual diagrams, export audit, and repository UX gates, raising Agent Adapter Audit to 313/313, Agent Adapter Lab Audit to 91/91, Benchmark Replay Lab Audit to 62/62, and Repository UX Score to 581/581.
+
 ## 0.1.21 - 2026-05-28
 
 - Added a buildless Agent Adapter Lab so users can select Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware targets and copy a pack command, install checklist, adapter JSON receipt, and `agent_adapter_improvement.yml` issue seed.

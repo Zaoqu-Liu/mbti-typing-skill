@@ -16,6 +16,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 ## Good First Contributions
 
 - Add benchmark cases for under-covered type pairs.
+- Share blind benchmark replay misses through `docs/benchmark-replay-lab.html` and the `benchmark_replay_improvement.yml` issue template.
 - Improve next-round probes through `docs/question-lab.html` and the `question_improvement.yml` issue template.
 - Improve pair-duel discriminators.
 - Share weak adjacent-type forks through `docs/type-duel-lab.html` and the `type_duel_improvement.yml` issue template.
@@ -46,13 +47,14 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 213/213 (100.00%)
+Agent Adapter Audit: 313/313 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
-Agent Adapter Lab Audit: 84/84 (100.00%)
+Agent Adapter Lab Audit: 91/91 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
 Type Duel Lab Audit: 68/68 (100.00%)
+Benchmark Replay Lab Audit: 62/62 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
 ```
@@ -70,6 +72,19 @@ Each benchmark case must include:
 - `required_falsifier_theme`
 
 Each case should test a real differential-diagnosis problem, not a stereotype.
+
+## Benchmark Replay Guidelines
+
+Benchmark replay contributions are useful when a benchmark prompt exposes a repeatable miss in leading type, runner-up preservation, falsifier recognition, or trap awareness.
+
+Before opening a replay issue:
+
+- Start with `docs/benchmark-replay-lab.html` when possible.
+- Record the blind prompt replay before revealing the reference.
+- Include the Replay Receipt score, leading guess, runner-up guess, and falsifier or trap note.
+- Use `benchmark_replay_improvement.yml` for public-safe replay summaries.
+- Explain whether the repair should update the benchmark prompt, question bank, pair duel, response eval fixture, or audit wording.
+- Do not include private transcripts, direct identifiers, third-party details, clinical claims, hiring use cases, or deterministic claims about people.
 
 ## Question Improvement Guidelines
 
@@ -185,6 +200,7 @@ Before opening an adapter change:
 - [ ] Any new type-pair guidance includes losing conditions for both sides.
 - [ ] Any new type-duel improvement is source-synced through `scripts/sync_type_duel_lab.py` and passes `scripts/type_duel_lab_audit.py`.
 - [ ] Any new benchmark case includes a trap and falsifier theme.
+- [ ] Any Benchmark Replay Lab, replay issue seed, or replay gate change passes `scripts/sync_benchmark_replay_lab.py` and `scripts/benchmark_replay_lab_audit.py`.
 - [ ] Any new calibration result is sanitized and points to a specific failed gate.
 - [ ] Any new blind review result preserves blinding and includes aggregate metrics.
 - [ ] Any new follow-up packet is consented, redacted, withdrawable, and passes `scripts/consent_redaction_audit.py`.

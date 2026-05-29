@@ -34,7 +34,7 @@
   <rect class="bg" width="1440" height="980"/>
   <rect x="44" y="36" width="1352" height="116" rx="24" fill="url(#banner)" stroke="#cfd8d2" stroke-width="2"/>
   <text class="ink title" x="78" y="82">Agent Adapter Lab Flow</text>
-  <text class="muted s" x="78" y="114">11 adapters · one protocol · source-of-truth sync · copyable pack command · AGENT_PACK_MANIFEST.json receipt</text>
+  <text class="muted s" x="78" y="114">18 adapters · one protocol · source-of-truth sync · copyable pack command · AGENT_PACK_MANIFEST.json receipt</text>
   <rect class="chip" x="1050" y="62" width="126" height="34"/>
   <text class="ink tiny" x="1074" y="84">local-first</text>
   <rect class="chip" x="1190" y="62" width="146" height="34"/>
@@ -48,7 +48,7 @@
   <text class="muted tiny" x="84" y="309">schema: mbti-typing-agent-adapters/v1</text>
   <text class="muted tiny" x="84" y="335">canonical: skill/mbti-typing/SKILL.md</text>
   <text class="muted tiny" x="84" y="361">contract: AGENTS.md</text>
-  <text class="muted tiny" x="84" y="387">checked_on: 2026-05-28</text>
+  <text class="muted tiny" x="84" y="387">checked_on: 2026-05-29</text>
   <rect class="green" x="84" y="404" width="226" height="48"/>
   <text class="ink tiny" x="104" y="433">source-of-truth sync</text>
 
@@ -67,11 +67,11 @@
 
   <rect class="panel" x="934" y="202" width="450" height="236"/>
   <text class="ink h" x="964" y="242">Selectable Targets</text>
-  <text class="muted s" x="964" y="274">Codex · Claude Code · Cursor · opencode</text>
-  <text class="muted s" x="964" y="302">Gemini CLI · GitHub Copilot · Windsurf</text>
-  <text class="muted s" x="964" y="330">Cline · Continue · aider · AGENTS.md</text>
+  <text class="muted s" x="964" y="274">Codex · ChatGPT · Zed · Devin · Claude Code</text>
+  <text class="muted s" x="964" y="302">Cursor · opencode · Gemini CLI · GitHub Copilot</text>
+  <text class="muted s" x="964" y="330">Windsurf · Cline · Continue · aider · Junie · Q · Roo · Kilo</text>
   <rect class="blue" x="964" y="360" width="180" height="46"/>
-  <text class="ink tiny" x="988" y="389">11 adapters</text>
+  <text class="ink tiny" x="988" y="389">18 adapters</text>
   <rect class="amber" x="1160" y="360" width="180" height="46"/>
   <text class="ink tiny" x="1184" y="389">one protocol</text>
 

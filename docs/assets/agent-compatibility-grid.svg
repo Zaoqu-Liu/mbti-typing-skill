@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1500 1080">
   <title>Agent Compatibility Grid</title>
-  <desc>Matrix showing eleven agent adapters that all route to one MBTI Typing Skill protocol and one audit gate.</desc>
+  <desc>Matrix showing eighteen agent adapters that all route to one MBTI Typing Skill protocol and one audit gate.</desc>
   <defs>
     <style>
       .bg { fill: #f6f4ef; }
@@ -29,7 +29,7 @@
 
   <rect class="bg" width="1500" height="1080"/>
   <text class="title" x="64" y="70">Agent Compatibility Grid</text>
-  <text class="sub" x="64" y="103">11 adapters, one protocol. Every entrypoint must preserve runner-up, falsifier, evidence ledger, and safety boundaries.</text>
+  <text class="sub" x="64" y="103">18 adapters, one protocol. Every entrypoint must preserve runner-up, falsifier, evidence ledger, and safety boundaries.</text>
 
   <rect class="panel" x="64" y="140" width="1372" height="132"/>
   <rect class="core" x="96" y="178" width="355" height="56" rx="8"/>
@@ -107,9 +107,10 @@
   <text class="tiny" x="1102" y="670">.aider.conf.yml</text>
   <text class="tiny" x="1102" y="695">--read AGENTS.md</text>
 
-  <rect class="panel" x="590" y="762" width="470" height="60"/>
-  <text class="h" x="622" y="797">Generic AGENTS.md-aware agents</text>
-  <text class="tiny" x="622" y="817">Fallback path for tools that understand project instruction files.</text>
+  <rect class="panel" x="410" y="758" width="688" height="76"/>
+  <text class="h" x="442" y="790">Ecosystem Extension</text>
+  <text class="tiny" x="442" y="812">ChatGPT GPTs · Zed · Devin · JetBrains Junie · Amazon Q · Roo Code · Kilo Code</text>
+  <text class="tiny" x="442" y="827">Generic AGENTS.md-aware agents remain the fallback path for project instruction readers.</text>
 
   <path class="path" d="M 274 272 L 274 300 L 76 300 L 76 372 L 208 372 L 208 382"/>
   <path class="path" d="M 455 272 L 455 300 L 454 382"/>

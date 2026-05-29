@@ -1,0 +1,19 @@
+{
+  "name": "mbti-typing",
+  "description": "Rigorous MBTI typing investigator with candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary discipline.",
+  "prompt": "Use skill/mbti-typing/SKILL.md as the canonical protocol. Treat each type as a falsifiable hypothesis, keep a serious runner-up live, ask 4-6 concrete questions per round, maintain an evidence ledger, use question-bank.md and pair-duels.md when needed, name falsifiers and revision triggers, and never use MBTI for clinical, hiring, school admission, legal, medical, financial, or deterministic decisions. For repository, adapter, benchmark, or public UX changes, run make test and python3 -B scripts/agent_adapter_audit.py .",
+  "tools": [
+    "*"
+  ],
+  "allowedTools": [
+    "fs_read"
+  ],
+  "resources": [
+    "file://AGENTS.md",
+    "file://skill/mbti-typing/SKILL.md",
+    "file://skill/mbti-typing/references/question-bank.md",
+    "file://skill/mbti-typing/references/pair-duels.md",
+    "file://skill/mbti-typing/references/evidence-ledger-template.md",
+    "file://skill/mbti-typing/references/quality-gates.md"
+  ]
+}

@@ -1,6 +1,6 @@
 # Agent Adapters
 
-The MBTI Typing Skill should be portable across mainstream agent tools without becoming eleven separate protocols.
+The MBTI Typing Skill should be portable across mainstream agent tools without becoming eighteen separate protocols.
 
 ## Design Rule
 
@@ -29,6 +29,9 @@ One canonical protocol, many thin adapters:
 |---|---|---|
 | Codex | `skill/mbti-typing/SKILL.md`, `skill/mbti-typing/agents/openai.yaml`, `AGENTS.md` | Codex already consumes a local skill package and project-level agent instructions. |
 | Generic AGENTS.md-aware agents | `AGENTS.md`, `CONVENTIONS.md` | Keeps a lowest-common-denominator contract for agents that read project instruction files. |
+| ChatGPT GPTs and Projects | `gpts/mbti-typing-gpt-instructions.md`, `skill/mbti-typing/SKILL.md`, `AGENTS.md` | Custom GPT instructions and Project instructions can carry the same protocol plus knowledge-file guidance. |
+| Zed Agent Panel | `.rules`, `AGENTS.md`, `skill/mbti-typing/SKILL.md` | Zed can auto-include root `.rules` files and also recognizes common project instruction filenames. |
+| Devin and Devin CLI | `AGENTS.md`, `CLAUDE.md`, `skill/mbti-typing/SKILL.md` | Devin supports `AGENTS.md`; the adapter keeps the generic contract explicit instead of inventing a Devin fork. |
 | Claude Code | `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md` | Claude Code skills are directory-based `SKILL.md` files; command files remain compatible. |
 | Cursor | `.cursor/rules/mbti-typing.mdc`, `AGENTS.md` | Cursor project rules live in `.cursor/rules` as MDC files and can also use `AGENTS.md`. |
 | opencode | `AGENTS.md`, `opencode.json` | opencode reads `AGENTS.md`; `opencode.json` can aggregate instruction files. |
@@ -38,6 +41,10 @@ One canonical protocol, many thin adapters:
 | Cline | `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `AGENTS.md` | Project skill and rule both point back to the canonical source. |
 | Continue | `.continue/rules/mbti-typing.md`, `AGENTS.md` | Local rule file preserves the evidence-led workflow in Continue sessions. |
 | aider | `CONVENTIONS.md`, `.aider.conf.yml`, `AGENTS.md` | Conventions file and read config keep the protocol visible during pair-programming sessions. |
+| JetBrains Junie | `.junie/AGENTS.md`, `.junie/commands/mbti-type.md`, `AGENTS.md` | Junie guidelines and project slash commands make the protocol reusable inside JetBrains IDEs and Junie CLI. |
+| Amazon Q Developer CLI | `.amazonq/cli-agents/mbti-typing.json`, `AGENTS.md` | Q custom agents can load a prompt plus read-only resource files for the canonical protocol. |
+| Roo Code | `.roomodes`, `.roo/rules-mbti-typing/mbti-typing.md`, `AGENTS.md` | Project mode plus mode-specific rule files keep Roo focused on the typing workflow. |
+| Kilo Code | `kilo.jsonc`, `.kilo/rules/mbti-typing.md`, `AGENTS.md` | Project rules and instruction arrays make Kilo load the same MBTI protocol. |
 
 ## What Must Never Drift
 
@@ -85,7 +92,7 @@ For first-run adoption, open the buildless local page instead of reading the man
 - [Agent Adapter Lab](agent-adapter-lab.html)
 - [Hosted Agent Adapter Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html)
 
-The lab lets users search the 11 targets, filter support levels, choose a Core Pack or Select All, copy the `scripts/export_agent_pack.py` command, inspect the install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed. It preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language in the adoption path.
+The lab lets users search the 18 targets, filter support levels, choose a Core Pack or Select All, copy the `scripts/export_agent_pack.py` command, inspect the install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed. It preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language in the adoption path.
 
 ```bash
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
@@ -94,8 +101,11 @@ python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-
 
 ## Current Source Notes
 
-These conventions were checked on 2026-05-28:
+These conventions were checked on 2026-05-29:
 
+- [OpenAI GPT instructions](https://help.openai.com/en/articles/9358033-key-guidelines-for-writing-instructions-for-custom-gpts) document GPT instructions, knowledge, and conversation starters; this adapter turns the same protocol into a custom GPT or ChatGPT Project instruction bundle.
+- [Zed rules](https://zed.dev/docs/ai/rules) document root `.rules` files and compatibility with `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md`.
+- [Devin AGENTS.md](https://docs.devin.ai/onboard-devin/agents-md) and [Devin CLI rules](https://cli.devin.ai/docs/extensibility/rules) document `AGENTS.md` as persistent project context.
 - [Claude Code skills](https://docs.anthropic.com/en/docs/claude-code/skills) documents skills as `SKILL.md` files and says project skills live under `.claude/skills/<skill-name>/SKILL.md`; [Claude Code slash commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands) also states legacy `.claude/commands/` files keep working.
 - [Cursor rules](https://docs.cursor.com/en/context/rules) documents project rules under `.cursor/rules` using MDC files with frontmatter such as `description`, `globs`, and `alwaysApply`, and lists `AGENTS.md` as a simple alternative.
 - [opencode rules](https://opencode.ai/docs/rules/) documents `AGENTS.md` as its project instruction file, and [opencode config](https://opencode.ai/docs/config/) supports `opencode.json` with an `instructions` array for additional instruction files.
@@ -106,6 +116,10 @@ These conventions were checked on 2026-05-28:
 - [Cline skills](https://docs.cline.bot/features/skills) and Cline rules document project skills and repository rules for reusable agent behavior.
 - [Continue rules](https://docs.continue.dev/customize/deep-dives/rules) document repository-local rule files under `.continue/rules`.
 - [aider conventions](https://aider.chat/docs/usage/conventions.html) document `CONVENTIONS.md` as a project convention file that can be loaded into coding sessions.
+- [JetBrains Junie guidelines](https://www.jetbrains.com/help/junie/customize-guidelines.html) document `.junie/AGENTS.md`, root `AGENTS.md`, and `.junie/guidelines.md` fallback paths.
+- [Amazon Q Developer CLI agent format](https://aws.github.io/amazon-q-developer-cli/agent-format.html) documents custom agent JSON with prompt, resources, tools, and allowedTools.
+- [Roo Code custom modes](https://roocodeinc.github.io/Roo-Code/features/custom-modes/) document `.roomodes` and `.roo/rules-{slug}/` project-level mode rules.
+- [Kilo Code custom rules](https://kilo.ai/docs/agent-behavior/custom-rules) document `kilo.jsonc` instructions and `.kilo/rules/*.md` project rules.
 
 ## Release Gate
 

@@ -21,6 +21,9 @@ This directory documents how the same MBTI Typing Skill is exposed to multiple a
 |---|---|---|---|
 | Codex | `skill/mbti-typing/SKILL.md` | `Use $mbti-typing ...` | Existing Codex skill package and `agents/openai.yaml`. |
 | Generic AGENTS.md-aware agents | `AGENTS.md`, `CONVENTIONS.md` | Ask the agent to follow `AGENTS.md` | Lowest-common-denominator project contract. |
+| ChatGPT GPTs and Projects | `gpts/mbti-typing-gpt-instructions.md` | Create a GPT or Project from the instructions file | GPT instructions and knowledge-file guidance preserve the protocol outside coding IDEs. |
+| Zed Agent Panel | `.rules`, `AGENTS.md` | Ask Zed Agent Panel to use the MBTI Typing Skill rule | Root `.rules` file and AGENTS fallback keep Zed aligned. |
+| Devin and Devin CLI | `AGENTS.md` | Ask Devin to follow `AGENTS.md` | Devin uses the same portable project instruction contract. |
 | Claude Code | `.claude/skills/mbti-typing/SKILL.md` | `/mbti-typing` | Includes `.claude/commands/mbti-type.md` as a slash-command fallback. |
 | Cursor | `.cursor/rules/mbti-typing.mdc` | Ask Cursor to use the MBTI Typing Skill rule or mention `@mbti-typing` | Project rule uses MDC frontmatter and points back to the canonical skill. |
 | opencode | `AGENTS.md` and `opencode.json` | `opencode run "Use the MBTI Typing Skill ..."` | `opencode.json` aggregates `AGENTS.md`, this adapter README, and the canonical skill. |
@@ -30,6 +33,10 @@ This directory documents how the same MBTI Typing Skill is exposed to multiple a
 | Cline | `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md` | Ask Cline to use the MBTI Typing Skill | Skill and rule both point back to the canonical source. |
 | Continue | `.continue/rules/mbti-typing.md` | Ask Continue to apply the MBTI Typing Skill rule | Local rule preserves the same evidence-led workflow. |
 | aider | `CONVENTIONS.md`, `.aider.conf.yml` | `aider --read CONVENTIONS.md --read AGENTS.md` | Conventions file keeps the protocol visible during coding sessions. |
+| JetBrains Junie | `.junie/AGENTS.md`, `.junie/commands/mbti-type.md` | Ask Junie to use the guidelines or run `/mbti-type` | Guidelines and slash command make the workflow reusable in JetBrains IDEs. |
+| Amazon Q Developer CLI | `.amazonq/cli-agents/mbti-typing.json` | `q chat --agent mbti-typing` | Custom agent loads the canonical skill and read-only resources. |
+| Roo Code | `.roomodes`, `.roo/rules-mbti-typing/mbti-typing.md` | Switch to the MBTI Typing mode | Project mode and rules keep Roo focused on the protocol. |
+| Kilo Code | `kilo.jsonc`, `.kilo/rules/mbti-typing.md` | Ask Kilo to apply the MBTI Typing Skill rule | Project instructions load the same evidence-led workflow. |
 
 ## Universal Contract
 
@@ -142,6 +149,55 @@ aider:
 
 ```bash
 cp AGENTS.md CONVENTIONS.md .aider.conf.yml <target-repo>/
+```
+
+ChatGPT GPTs and Projects:
+
+```bash
+cp gpts/mbti-typing-gpt-instructions.md <target-repo>/
+```
+
+Zed Agent Panel:
+
+```bash
+cp .rules AGENTS.md <target-repo>/
+```
+
+Devin:
+
+```bash
+cp AGENTS.md <target-repo>/
+```
+
+JetBrains Junie:
+
+```bash
+mkdir -p <target-repo>/.junie/commands
+cp .junie/AGENTS.md <target-repo>/.junie/AGENTS.md
+cp .junie/commands/mbti-type.md <target-repo>/.junie/commands/
+```
+
+Amazon Q Developer CLI:
+
+```bash
+mkdir -p <target-repo>/.amazonq/cli-agents
+cp .amazonq/cli-agents/mbti-typing.json <target-repo>/.amazonq/cli-agents/
+```
+
+Roo Code:
+
+```bash
+mkdir -p <target-repo>/.roo/rules-mbti-typing
+cp .roomodes <target-repo>/.roomodes
+cp .roo/rules-mbti-typing/mbti-typing.md <target-repo>/.roo/rules-mbti-typing/
+```
+
+Kilo Code:
+
+```bash
+mkdir -p <target-repo>/.kilo/rules
+cp kilo.jsonc <target-repo>/kilo.jsonc
+cp .kilo/rules/mbti-typing.md <target-repo>/.kilo/rules/
 ```
 
 ## Verification

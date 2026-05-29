@@ -597,6 +597,7 @@
         <a class="button" href="calibration-lab.html">Calibration Lab</a>
         <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
         <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button" href="benchmark-replay-lab.html">Replay Lab</a>
         <a class="button" href="response-eval-lab.html">Response Eval</a>
         <a class="button" href="playground.html">Playground</a>
         <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
@@ -612,11 +613,11 @@
       <aside class="hero-proof" aria-label="Agent Adapter Lab proof">
         <div class="proof-grid">
           <div class="proof">
-            <strong id="metricTargets">11</strong>
+            <strong id="metricTargets">18</strong>
             <span>Adapter targets from agent-adapters/manifest.json</span>
           </div>
           <div class="proof">
-            <strong id="metricEntrypoints">19</strong>
+            <strong id="metricEntrypoints">28</strong>
             <span>Distinct entrypoints available for selected toolchains</span>
           </div>
           <div class="proof">
@@ -629,7 +630,7 @@
           </div>
         </div>
         <div class="status-strip">
-          Checked on <span id="checkedOn">2026-05-28</span>. This is an adoption and source-sync lab, not a promise that any MBTI answer is psychometric ground truth.
+          Checked on <span id="checkedOn">2026-05-29</span>. This is an adoption and source-sync lab, not a promise that any MBTI answer is psychometric ground truth.
         </div>
       </aside>
     </section>
@@ -752,7 +753,7 @@
           "adapter_audit": "scripts/agent_adapter_audit.py",
           "pack_exporter": "scripts/export_agent_pack.py",
           "pack_audit": "scripts/agent_pack_export_audit.py",
-          "checked_on": "2026-05-28",
+          "checked_on": "2026-05-29",
           "baseline_paths": [
                 "skill/mbti-typing",
                 "AGENTS.md",
@@ -808,6 +809,48 @@
                       "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
                       "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
                       "contract": "Portable project-level instruction contract."
+                },
+                {
+                      "id": "chatgpt-gpts",
+                      "display": "ChatGPT GPTs and Projects",
+                      "support_level": "custom-gpt-instructions",
+                      "source_url": "https://help.openai.com/en/articles/9358033-key-guidelines-for-writing-instructions-for-custom-gpts",
+                      "entrypoints": [
+                            "gpts/mbti-typing-gpt-instructions.md",
+                            "skill/mbti-typing/SKILL.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Create a GPT or Project with gpts/mbti-typing-gpt-instructions.md as instructions and upload the canonical skill references as knowledge.",
+                      "install": "Copy gpts/mbti-typing-gpt-instructions.md into the GPT Instructions field or ChatGPT Project instructions, then attach the listed knowledge files.",
+                      "contract": "Custom GPT and Project instructions preserve the same candidate-set, runner-up, evidence-ledger, falsifier, and safety-boundary protocol."
+                },
+                {
+                      "id": "zed",
+                      "display": "Zed Agent Panel",
+                      "support_level": "project-rule",
+                      "source_url": "https://zed.dev/docs/ai/rules",
+                      "entrypoints": [
+                            ".rules",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Zed Agent Panel to use the MBTI Typing Skill rule, or @-mention the saved rule when available.",
+                      "install": "Copy .rules and AGENTS.md into the target repository root, or save the same content as a Zed default rule/skill.",
+                      "contract": "Zed project rule routes back to the canonical skill and shared safety boundary."
+                },
+                {
+                      "id": "devin",
+                      "display": "Devin and Devin CLI",
+                      "support_level": "agents-md",
+                      "source_url": "https://docs.devin.ai/onboard-devin/agents-md",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "CLAUDE.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Devin to follow AGENTS.md and use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
+                      "install": "Keep AGENTS.md at the project root; Devin and Devin CLI can load AGENTS.md project rules automatically.",
+                      "contract": "AGENTS.md provides the portable Devin contract without creating a Devin-only protocol fork."
                 },
                 {
                       "id": "claude-code",
@@ -934,6 +977,65 @@
                       "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
                       "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
                       "contract": "Conventions file keeps the same protocol visible to aider sessions."
+                },
+                {
+                      "id": "jetbrains-junie",
+                      "display": "JetBrains Junie",
+                      "support_level": "project-guidelines-and-command",
+                      "source_url": "https://www.jetbrains.com/help/junie/customize-guidelines.html",
+                      "entrypoints": [
+                            ".junie/AGENTS.md",
+                            ".junie/commands/mbti-type.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Junie to use .junie/AGENTS.md, or run the project /mbti-type command with the case material as input.",
+                      "install": "Copy .junie/AGENTS.md and .junie/commands/mbti-type.md into the target repository, or point Junie Guidelines path at AGENTS.md.",
+                      "contract": "Junie guidelines and slash command preserve the canonical typing protocol."
+                },
+                {
+                      "id": "amazon-q",
+                      "display": "Amazon Q Developer CLI",
+                      "support_level": "custom-agent",
+                      "source_url": "https://aws.github.io/amazon-q-developer-cli/agent-format.html",
+                      "entrypoints": [
+                            ".amazonq/cli-agents/mbti-typing.json",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "q chat --agent mbti-typing",
+                      "install": "Copy .amazonq/cli-agents/mbti-typing.json into the target repository and run q chat --agent mbti-typing from that workspace.",
+                      "contract": "Amazon Q custom agent loads the canonical skill and read-only reference resources."
+                },
+                {
+                      "id": "roo-code",
+                      "display": "Roo Code",
+                      "support_level": "project-mode-and-rule",
+                      "source_url": "https://roocodeinc.github.io/Roo-Code/features/custom-modes/",
+                      "entrypoints": [
+                            ".roomodes",
+                            ".roo/rules-mbti-typing/mbti-typing.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Switch to the MBTI Typing custom mode, then ask Roo to run a type-me, duel, transcript audit, or report review.",
+                      "install": "Copy .roomodes and .roo/rules-mbti-typing/mbti-typing.md into the target repository.",
+                      "contract": "Roo custom mode and mode-specific rules preserve the canonical protocol."
+                },
+                {
+                      "id": "kilo-code",
+                      "display": "Kilo Code",
+                      "support_level": "project-rule",
+                      "source_url": "https://kilo.ai/docs/agent-behavior/custom-rules",
+                      "entrypoints": [
+                            "kilo.jsonc",
+                            ".kilo/rules/mbti-typing.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Kilo Code to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
+                      "install": "Copy kilo.jsonc and .kilo/rules/mbti-typing.md into the target repository.",
+                      "contract": "Kilo project rules point back to the canonical skill and shared safety boundary."
                 }
           ]
     };

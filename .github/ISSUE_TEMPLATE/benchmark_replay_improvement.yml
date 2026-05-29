@@ -1,0 +1,75 @@
+name: Benchmark replay improvement
+description: Report a blind replay miss that should improve a benchmark case, prompt, falsifier, or audit gate.
+title: "[Benchmark Replay]: "
+labels: ["benchmark", "replay", "typing-quality"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this only for public-safe benchmark replay findings. Do not include private transcripts, direct identifiers, third-party details, clinical claims, hiring use cases, or deterministic claims about people.
+        Required fields: case id, replay score, leading guess, runner-up guess, falsifier, and public-safe summary.
+  - type: input
+    id: case_id
+    attributes:
+      label: Benchmark case id
+      description: Paste the case id from Benchmark Replay Lab.
+      placeholder: bench-entj-intj-001
+    validations:
+      required: true
+  - type: input
+    id: replay_score
+    attributes:
+      label: Replay score
+      description: Paste the score shown in the Replay Receipt.
+      placeholder: "75"
+    validations:
+      required: true
+  - type: input
+    id: leading_guess
+    attributes:
+      label: Leading guess
+      description: What leading type did the replay attempt choose?
+      placeholder: ENTJ
+    validations:
+      required: true
+  - type: input
+    id: runner_up_guess
+    attributes:
+      label: runner-up guess
+      description: Which serious runner-up did the replay attempt preserve?
+      placeholder: INTJ
+    validations:
+      required: true
+  - type: textarea
+    id: falsifier
+    attributes:
+      label: Falsifier or trap note
+      description: What falsifier, trap, or evidence tag was missed?
+      placeholder: "The replay overfit the surface leadership cue and missed the private-model falsifier."
+    validations:
+      required: true
+  - type: textarea
+    id: public_safe_summary
+    attributes:
+      label: public-safe replay summary
+      description: Summarize the replay miss without private material.
+      placeholder: "The answer guessed the surface test result and dropped the runner-up before asking a duel question."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_repair
+    attributes:
+      label: Proposed repair
+      description: Should this change the benchmark prompt, expected tags, pair duel, question bank, response eval fixture, or audit wording?
+      placeholder: "Add a stronger question about idle-time cognition and require a runner-up explanation before conclusion."
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed direct identifiers, raw private chat logs, third-party details, and high-stakes private contexts.
+          required: true
+        - label: This issue is not asking for clinical, hiring, legal, medical, financial, or deterministic personality use.
+          required: true

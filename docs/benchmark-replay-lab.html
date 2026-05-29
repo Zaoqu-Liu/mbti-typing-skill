@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Benchmark Replay Lab</title>
+  <meta name="description" content="Local-first blind benchmark replay lab for MBTI Typing Skill cases, guesses, reference reveal, repair prompts, and replay issue seeds.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f6;
+      --panel: #ffffff;
+      --panel-soft: #fbfcfb;
+      --ink: #172120;
+      --muted: #63706d;
+      --line: #d9dfdd;
+      --teal: #128c82;
+      --teal-soft: #e1f3f0;
+      --amber: #c77a15;
+      --amber-soft: #fff0d7;
+      --rose: #c33461;
+      --rose-soft: #fde7ee;
+      --graphite: #26302f;
+      --blue-soft: #e7f0ff;
+      --shadow: 0 14px 34px rgba(23, 32, 31, 0.09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(18, 140, 130, 0.08), transparent 32%),
+        linear-gradient(250deg, rgba(199, 122, 21, 0.12), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    select,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 46px;
+    }
+
+    .topbar,
+    .brand,
+    .nav-actions,
+    .panel-title,
+    .action-row,
+    .chip-row,
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-actions {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover,
+    .button.active {
+      background: #fafeff;
+      border-color: rgba(18, 140, 130, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.76fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-proof,
+    .panel {
+      border: 1px solid rgba(217, 223, 221, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 300px;
+      padding: clamp(22px, 4vw, 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.98;
+      max-width: 980px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 920px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric,
+    .flow-step,
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .metric span,
+    .flow-step span,
+    .score-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .replay-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      min-height: 110px;
+    }
+
+    .flow-step {
+      background: linear-gradient(180deg, #fff, #f7fbfa);
+    }
+
+    .flow-step strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.08fr) minmax(330px, 0.86fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .panel h2,
+    .panel h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .panel p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .pill,
+    .chip {
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pill {
+      background: var(--teal-soft);
+      color: #075e58;
+    }
+
+    .chip-row {
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--graphite);
+    }
+
+    .chip.teal {
+      background: var(--teal-soft);
+      border-color: #b8deda;
+      color: #075e58;
+    }
+
+    .chip.amber {
+      background: var(--amber-soft);
+      border-color: #f0c989;
+      color: #7a4708;
+    }
+
+    .chip.rose {
+      background: var(--rose-soft);
+      border-color: #efb6c7;
+      color: #8a173a;
+    }
+
+    .case-select,
+    .guess-input,
+    .guess-select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 148px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .readonly {
+      background: #f8fbfa;
+      color: #26302f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .control-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--graphite);
+      margin-bottom: 6px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .score-card strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .score-card.pass {
+      background: var(--teal-soft);
+      border-color: #b8deda;
+    }
+
+    .score-card.warn {
+      background: var(--amber-soft);
+      border-color: #f0c989;
+    }
+
+    .score-card.fail {
+      background: var(--rose-soft);
+      border-color: #efb6c7;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: var(--line);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 36px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--graphite);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px var(--line);
+    }
+
+    .timeline-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .timeline-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .reference-lock {
+      min-height: 180px;
+      border: 1px dashed #b8c7c4;
+      border-radius: 8px;
+      background: #f8fbfa;
+      padding: 14px;
+      display: grid;
+      align-content: center;
+      gap: 10px;
+    }
+
+    .reference-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .reference-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .reference-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .reference-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .action-row {
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .boundary {
+      margin-top: 18px;
+      border: 1px solid #f0c989;
+      border-radius: 8px;
+      background: var(--amber-soft);
+      padding: 12px;
+      color: #6f430a;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 160ms ease, transform 160ms ease;
+      pointer-events: none;
+      z-index: 10;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .layout,
+      .output-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+      }
+
+      .topbar,
+      .brand,
+      .nav-actions,
+      .panel-title,
+      .action-row {
+        align-items: stretch;
+      }
+
+      .topbar,
+      .nav-actions {
+        flex-direction: column;
+      }
+
+      .metric-grid,
+      .score-grid,
+      .replay-flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">MB</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Benchmark Replay Lab</div>
+          <div class="brand-subtitle">Blind replay, reference reveal, repair loop</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Repository pages">
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button" href="question-lab.html">Question Lab</a>
+        <a class="button" href="type-duel-lab.html">Type Duel Lab</a>
+        <a class="button" href="agent-adapter-lab.html">Agent Lab</a>
+        <a class="button" href="case-gallery.html">Benchmark Arena</a>
+        <a class="button primary" href="benchmark-replay-lab.html">Replay Lab</a>
+        <a class="button" href="calibration-lab.html">Calibration Lab</a>
+        <a class="button" href="follow-up-lab.html">Follow-Up Lab</a>
+        <a class="button" href="response-eval-lab.html">Response Eval</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Blind Replay</div>
+        <h1>Replay benchmark traps before seeing the answer.</h1>
+        <p>Select a canonical benchmark case, copy the blind prompt, record the leading type, serious runner-up, and falsifier guess, then reveal the reference and export a Replay Receipt.</p>
+      </div>
+      <aside class="hero-proof" aria-label="Benchmark Replay Lab metrics">
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="metricCases">16</strong>
+            <span>source-synced replay cases</span>
+          </div>
+          <div class="metric">
+            <strong>4</strong>
+            <span>guess gates: leading, runner-up, falsifier, trap</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>network calls or external runtime dependencies</span>
+          </div>
+          <div class="metric">
+            <strong>1</strong>
+            <span>repair loop from miss to issue seed</span>
+          </div>
+        </div>
+        <div class="replay-flow" aria-label="Replay workflow">
+          <div class="flow-step">
+            <strong>01</strong>
+            <span>Blind prompt</span>
+          </div>
+          <div class="flow-step">
+            <strong>02</strong>
+            <span>Guess top two</span>
+          </div>
+          <div class="flow-step">
+            <strong>03</strong>
+            <span>Reveal reference</span>
+          </div>
+          <div class="flow-step">
+            <strong>04</strong>
+            <span>Repair or contribute</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <main class="layout">
+      <section class="panel" aria-label="Replay case selection">
+        <div class="panel-title">
+          <div>
+            <h2>1. Select Case</h2>
+            <p><span id="caseCount">16 cases</span> from benchmark-cases.json.</p>
+          </div>
+          <span class="pill">local-first</span>
+        </div>
+        <select id="caseSelect" class="case-select" aria-label="Benchmark replay case"></select>
+        <div id="caseChips" class="chip-row"></div>
+        <textarea id="blindPromptOutput" class="readonly" readonly aria-label="Blind replay prompt"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyBlindPrompt" type="button">Copy Blind Prompt</button>
+          <button class="button" id="revealReference" type="button">Reveal Reference</button>
+        </div>
+        <div class="boundary">Benchmark replay cases are synthetic regression traps, not psychometric ground truth, clinical advice, hiring advice, or deterministic personality truth.</div>
+      </section>
+
+      <section class="panel" aria-label="Replay guesses and score">
+        <div class="panel-title">
+          <div>
+            <h2>2. Enter Guess</h2>
+            <p>Score the replay attempt before looking at the reference.</p>
+          </div>
+          <span class="pill" id="scorePill">0 / 100</span>
+        </div>
+        <div class="control-stack">
+          <div class="field">
+            <label for="leadingGuess">Leading type guess</label>
+            <select id="leadingGuess" class="guess-select" aria-label="Leading type guess"></select>
+          </div>
+          <div class="field">
+            <label for="runnerGuess">runner-up guess</label>
+            <select id="runnerGuess" class="guess-select" aria-label="Runner-up type guess"></select>
+          </div>
+          <div class="field">
+            <label for="falsifierGuess">Strongest falsifier or trap note</label>
+            <textarea id="falsifierGuess" class="guess-input" aria-label="Falsifier guess" placeholder="Name the evidence that would weaken the leading type, and note any surface trap to avoid."></textarea>
+          </div>
+        </div>
+        <div id="replayScoreGrid" class="score-grid" aria-label="Replay score grid"></div>
+        <div id="replayTimeline" class="timeline" aria-label="Replay timeline"></div>
+      </section>
+
+      <section class="panel" aria-label="Reference reveal">
+        <div class="panel-title">
+          <div>
+            <h2>3. Reference</h2>
+            <p>Reveal after the guess is recorded.</p>
+          </div>
+          <span class="pill">source-synced</span>
+        </div>
+        <div id="referencePanel" class="reference-lock"></div>
+      </section>
+    </main>
+
+    <section class="output-grid" aria-label="Replay outputs">
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Replay Receipt</h2>
+            <p>Machine-readable replay-lab/v1 result.</p>
+          </div>
+        </div>
+        <textarea id="replayReceiptOutput" class="readonly" readonly aria-label="Replay Receipt JSON"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyReplayJSON" type="button">Copy Replay JSON</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Repair Prompt</h2>
+            <p>Copy this back into the agent when replay misses a gate.</p>
+          </div>
+        </div>
+        <textarea id="repairPromptOutput" class="readonly" readonly aria-label="Repair prompt"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyRepairPrompt" type="button">Copy Repair Prompt</button>
+        </div>
+      </section>
+
+      <section class="panel wide">
+        <div class="panel-title">
+          <div>
+            <h2>Issue Seed</h2>
+            <p>Turn repeated replay misses into a benchmark_replay_improvement.yml contribution.</p>
+          </div>
+          <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill/issues/new?template=benchmark_replay_improvement.yml">Open Issue</a>
+        </div>
+        <textarea id="issueSeedOutput" class="readonly" readonly aria-label="Benchmark replay issue seed"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyIssueSeed" type="button">Copy Issue Seed</button>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <script>
+    const STORAGE_KEY = "mbti-typing-benchmark-replay-lab-state";
+    const TYPES = ["", "INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
+    const TRAP_TERMS = ["trap", "overfit", "surface", "runner-up", "alternative", "counter", "weakens", "misread", "反证", "误判", "表面", "替代"];
+
+    // BEGIN GENERATED BENCHMARK REPLAY CASES
+    const REPLAY_CASES = [
+          {
+                "id": "bench-entj-intj-001",
+                "cluster": "Command",
+                "title": "INTJ test result, ENTJ command energy",
+                "blindPrompt": "User asks: I test INTJ but feel alive when directing high-stakes teams. Alone on free mornings I plan people, leverage, and execution order. Under criticism I immediately argue facts, then later feel shame. Type me.",
+                "leading": "ENTJ",
+                "runnerUp": [
+                      "INTJ"
+                ],
+                "trap": "Do not lock INTJ just because Ni/Te and privacy are present.",
+                "falsifier": "private model dominates idle time",
+                "tags": [
+                      "idle_external_optimization",
+                      "command_energy",
+                      "delayed_fi_or_shame"
+                ]
+          },
+          {
+                "id": "bench-intj-entj-002",
+                "cluster": "Command",
+                "title": "Competent leader, private model first",
+                "blindPrompt": "User says: I can lead, but it drains me. My best thinking happens alone after people leave. I want the model clean before execution. I dislike managing people unless the system requires it.",
+                "leading": "INTJ",
+                "runnerUp": [
+                      "ENTJ"
+                ],
+                "trap": "Do not overtype ENTJ from competence in leadership roles.",
+                "falsifier": "live command repeatedly energizes cognition",
+                "tags": [
+                      "private_model_priority",
+                      "leadership_cost",
+                      "pre_execution_modeling"
+                ]
+          },
+          {
+                "id": "bench-infp-infj-003",
+                "cluster": "Values",
+                "title": "Depth and sensitivity, Fi first",
+                "blindPrompt": "User says: In conflict I first ask whether I can personally endorse the action. I explore many possible meanings around whether it fits who I am. Social harmony matters, but I can break it if it violates inner truth.",
+                "leading": "INFP",
+                "runnerUp": [
+                      "INFJ",
+                      "ISFP"
+                ],
+                "trap": "Do not type INFJ merely from depth and sensitivity.",
+                "falsifier": "relational pattern convergence outranks inner congruence",
+                "tags": [
+                      "fi_congruence",
+                      "ne_possibility",
+                      "harmony_secondary"
+                ]
+          },
+          {
+                "id": "bench-infj-infp-004",
+                "cluster": "Values",
+                "title": "Relational trajectory, Ni-Fe first",
+                "blindPrompt": "User says: I notice where relationships are heading before people admit it. I converge on one interpretation of what an event means for the group. My values matter, but I first read the relational pattern.",
+                "leading": "INFJ",
+                "runnerUp": [
+                      "INFP",
+                      "ENFJ"
+                ],
+                "trap": "Do not type INFP from emotional depth alone.",
+                "falsifier": "personal value congruence overrides relational pattern",
+                "tags": [
+                      "ni_convergence",
+                      "fe_relational_meaning",
+                      "future_relationship_pattern"
+                ]
+          },
+          {
+                "id": "bench-estj-entj-005",
+                "cluster": "Operations",
+                "title": "Strong Te with precedent trust",
+                "blindPrompt": "User says: I trust procedures that have proven reliable. When a team is chaotic, I impose standards, roles, deadlines, and accountability. I prefer improving the system through known best practices before radical redesign.",
+                "leading": "ESTJ",
+                "runnerUp": [
+                      "ENTJ",
+                      "ISTJ"
+                ],
+                "trap": "Do not type ENTJ just because Te and leadership are strong.",
+                "falsifier": "future architecture overrides precedent",
+                "tags": [
+                      "te_order",
+                      "si_precedent",
+                      "operational_continuity"
+                ]
+          },
+          {
+                "id": "bench-entp-enfp-006",
+                "cluster": "Exploration",
+                "title": "Possibility seeking, model play first",
+                "blindPrompt": "User says: I love debate because it sharpens the model. I will attack my own favorite idea if the logic is weak. Personal meaning is interesting, but clean conceptual play matters more in the moment.",
+                "leading": "ENTP",
+                "runnerUp": [
+                      "ENFP",
+                      "INTP"
+                ],
+                "trap": "Do not type ENFP from social enthusiasm and possibility seeking.",
+                "falsifier": "personal meaning outranks model play",
+                "tags": [
+                      "ne_ti_model_play",
+                      "debate_energy",
+                      "values_secondary"
+                ]
+          },
+          {
+                "id": "bench-isfj-infj-007",
+                "cluster": "Care",
+                "title": "Care through memory and obligations",
+                "blindPrompt": "User says: I remember what people need, what helped before, and what obligations I must keep. I care by making sure routines, details, and support are reliable. Future patterns matter less than not failing people now.",
+                "leading": "ISFJ",
+                "runnerUp": [
+                      "INFJ",
+                      "ESFJ"
+                ],
+                "trap": "Do not type INFJ from private care and people-awareness alone.",
+                "falsifier": "future pattern interpretation overrides known obligations",
+                "tags": [
+                      "si_memory",
+                      "fe_care",
+                      "known_obligations"
+                ]
+          },
+          {
+                "id": "bench-estp-entp-008",
+                "cluster": "Tactics",
+                "title": "Live pressure beats abstract play",
+                "blindPrompt": "User says: I improvise best in live pressure. The real room, real body language, and immediate tactical opening matter more than abstract possibility. I enjoy winning the situation, not just the argument.",
+                "leading": "ESTP",
+                "runnerUp": [
+                      "ENTP",
+                      "ESFP"
+                ],
+                "trap": "Do not type ENTP from quickness, wit, and provocation alone.",
+                "falsifier": "abstract conceptual play outranks live tactical action",
+                "tags": [
+                      "se_live_pressure",
+                      "ti_tactical_read",
+                      "concrete_action"
+                ]
+          },
+          {
+                "id": "bench-enfj-esfj-009",
+                "cluster": "Care",
+                "title": "People development before social duty",
+                "blindPrompt": "User says: I naturally read what a group could become and steer people toward that future. I organize warmth and feedback around growth, not just keeping everyone comfortable. Traditions matter only if they serve the shared direction.",
+                "leading": "ENFJ",
+                "runnerUp": [
+                      "ESFJ",
+                      "INFJ"
+                ],
+                "trap": "Do not type ESFJ just because social warmth and caretaking are visible.",
+                "falsifier": "known social duty outranks future people-development",
+                "tags": [
+                      "fe_group_direction",
+                      "ni_people_future",
+                      "comfort_secondary"
+                ]
+          },
+          {
+                "id": "bench-esfj-enfj-010",
+                "cluster": "Care",
+                "title": "Social continuity before future vision",
+                "blindPrompt": "User says: I track birthdays, obligations, family expectations, and what keeps the group functioning. I can inspire people, but I trust what has kept relationships stable before. Abstract future growth is less urgent than not letting anyone fall through the cracks now.",
+                "leading": "ESFJ",
+                "runnerUp": [
+                      "ENFJ",
+                      "ISFJ"
+                ],
+                "trap": "Do not type ENFJ from warmth, encouragement, and people leadership alone.",
+                "falsifier": "future people-development overrides known social obligations",
+                "tags": [
+                      "fe_social_duty",
+                      "si_relationship_continuity",
+                      "future_growth_secondary"
+                ]
+          },
+          {
+                "id": "bench-istp-intp-011",
+                "cluster": "Tactics",
+                "title": "Tool logic under live constraints",
+                "blindPrompt": "User says: I understand systems best by taking them apart, testing the mechanism, and seeing what fails in the real object. Theory is useful when it improves the fix. If the model cannot survive contact with the tool, I stop trusting it.",
+                "leading": "ISTP",
+                "runnerUp": [
+                      "INTP",
+                      "ESTP"
+                ],
+                "trap": "Do not type INTP from detached analysis and systems language alone.",
+                "falsifier": "abstract model exploration outranks tool contact",
+                "tags": [
+                      "ti_mechanism",
+                      "se_tool_testing",
+                      "theory_secondary"
+                ]
+          },
+          {
+                "id": "bench-intp-istp-012",
+                "cluster": "Exploration",
+                "title": "Conceptual model before tool contact",
+                "blindPrompt": "User says: I keep refining the internal model even when no one needs an immediate fix. I enjoy alternate definitions, edge cases, and whether the explanation is logically clean. Physical tinkering is fine, but it is not where the real fascination starts.",
+                "leading": "INTP",
+                "runnerUp": [
+                      "ISTP",
+                      "ENTP"
+                ],
+                "trap": "Do not type ISTP just because the user is analytical, calm, and technically competent.",
+                "falsifier": "tool contact and live mechanism testing outrank conceptual exploration",
+                "tags": [
+                      "ti_model_purity",
+                      "ne_edge_cases",
+                      "tool_contact_secondary"
+                ]
+          },
+          {
+                "id": "bench-isfp-infp-013",
+                "cluster": "Values",
+                "title": "Embodied values before possibility language",
+                "blindPrompt": "User says: I know what feels true when I am making, moving, choosing colors, or responding to the immediate scene. I do not need many possible meanings first. If something violates my taste or inner line, my body knows before I can explain it.",
+                "leading": "ISFP",
+                "runnerUp": [
+                      "INFP",
+                      "ESFP"
+                ],
+                "trap": "Do not type INFP from private values and sensitivity alone.",
+                "falsifier": "abstract possibility exploration outranks embodied aesthetic response",
+                "tags": [
+                      "fi_embodied_line",
+                      "se_aesthetic_response",
+                      "ne_meaning_secondary"
+                ]
+          },
+          {
+                "id": "bench-esfp-estp-014",
+                "cluster": "Tactics",
+                "title": "Live impact with Fi signal",
+                "blindPrompt": "User says: I come alive in the room, but I track whether the moment feels real to me and whether people are emotionally moved. I can be tactical, yet the win feels empty if it kills the vibe or betrays what I value.",
+                "leading": "ESFP",
+                "runnerUp": [
+                      "ESTP",
+                      "ENFP"
+                ],
+                "trap": "Do not type ESTP from social boldness, improvisation, and real-time action alone.",
+                "falsifier": "impersonal tactical leverage outranks live authenticity",
+                "tags": [
+                      "se_room_energy",
+                      "fi_live_authenticity",
+                      "tactics_secondary"
+                ]
+          },
+          {
+                "id": "bench-istj-intj-015",
+                "cluster": "Operations",
+                "title": "Known detail before strategic abstraction",
+                "blindPrompt": "User says: I trust the record: what happened, what was promised, what worked, and which detail breaks the process. I can think strategically, but I first want the facts, the timeline, and the proven procedure to be accurate.",
+                "leading": "ISTJ",
+                "runnerUp": [
+                      "INTJ",
+                      "ESTJ"
+                ],
+                "trap": "Do not type INTJ from competence, reserve, and long-range seriousness alone.",
+                "falsifier": "future strategic abstraction outranks record accuracy",
+                "tags": [
+                      "si_record_accuracy",
+                      "te_procedure_check",
+                      "strategy_secondary"
+                ]
+          },
+          {
+                "id": "bench-enfp-entp-016",
+                "cluster": "Exploration",
+                "title": "Possibility through personal meaning",
+                "blindPrompt": "User says: I chase possibilities because one of them might unlock who I am becoming or what matters. I enjoy arguments, but if the debate strips meaning out of people, I lose interest. The idea has to stay connected to a human value.",
+                "leading": "ENFP",
+                "runnerUp": [
+                      "ENTP",
+                      "INFP"
+                ],
+                "trap": "Do not type ENTP from speed, novelty, and verbal play alone.",
+                "falsifier": "impersonal model play outranks personal meaning",
+                "tags": [
+                      "ne_identity_possibility",
+                      "fi_human_value",
+                      "debate_secondary"
+                ]
+          }
+    ];
+    // END GENERATED BENCHMARK REPLAY CASES
+
+    const els = {
+      metricCases: document.getElementById("metricCases"),
+      caseCount: document.getElementById("caseCount"),
+      caseSelect: document.getElementById("caseSelect"),
+      caseChips: document.getElementById("caseChips"),
+      blindPromptOutput: document.getElementById("blindPromptOutput"),
+      leadingGuess: document.getElementById("leadingGuess"),
+      runnerGuess: document.getElementById("runnerGuess"),
+      falsifierGuess: document.getElementById("falsifierGuess"),
+      replayScoreGrid: document.getElementById("replayScoreGrid"),
+      replayTimeline: document.getElementById("replayTimeline"),
+      referencePanel: document.getElementById("referencePanel"),
+      replayReceiptOutput: document.getElementById("replayReceiptOutput"),
+      repairPromptOutput: document.getElementById("repairPromptOutput"),
+      issueSeedOutput: document.getElementById("issueSeedOutput"),
+      copyBlindPrompt: document.getElementById("copyBlindPrompt"),
+      copyReplayJSON: document.getElementById("copyReplayJSON"),
+      copyRepairPrompt: document.getElementById("copyRepairPrompt"),
+      copyIssueSeed: document.getElementById("copyIssueSeed"),
+      revealReference: document.getElementById("revealReference"),
+      scorePill: document.getElementById("scorePill"),
+      toast: document.getElementById("toast"),
+    };
+
+    const fallbackCaseId = REPLAY_CASES[0]?.id || "";
+    const state = {
+      selectedCaseId: fallbackCaseId,
+      leadingGuess: "",
+      runnerGuess: "",
+      falsifierGuess: "",
+      revealed: false,
+    };
+
+    function makeNode(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) {
+        node.className = className;
+      }
+      if (text !== undefined) {
+        node.textContent = text;
+      }
+      return node;
+    }
+
+    function normalizeType(value) {
+      return String(value || "").trim().toUpperCase();
+    }
+
+    function getSelectedCase() {
+      return REPLAY_CASES.find((item) => item.id === state.selectedCaseId) || REPLAY_CASES[0];
+    }
+
+    function hasAnyTerm(text, terms) {
+      const haystack = String(text || "").toLowerCase();
+      return terms.some((term) => haystack.includes(String(term).toLowerCase()));
+    }
+
+    function evidenceTerms(selected) {
+      return [
+        selected.falsifier,
+        selected.trap,
+        ...selected.tags,
+        ...String(selected.falsifier).split(/[\s_,-]+/),
+      ].filter(Boolean).map((item) => String(item).toLowerCase());
+    }
+
+    function scoreReplay(selected) {
+      const leading = normalizeType(state.leadingGuess);
+      const runner = normalizeType(state.runnerGuess);
+      const note = state.falsifierGuess;
+      const leadingHit = leading === selected.leading;
+      const runnerHit = selected.runnerUp.includes(runner);
+      const falsifierHit = note.trim().length > 0 && hasAnyTerm(note, evidenceTerms(selected));
+      const trapAware = note.trim().length > 0 && hasAnyTerm(note, TRAP_TERMS);
+      const gates = [
+        { id: "leading", label: "Leading", passed: leadingHit, detail: leadingHit ? `Matched ${selected.leading}` : `Expected ${selected.leading}` },
+        { id: "runner_up", label: "runner-up", passed: runnerHit, detail: runnerHit ? `Preserved ${runner}` : `Expected ${selected.runnerUp.join(" / ")}` },
+        { id: "falsifier", label: "Falsifier", passed: falsifierHit, detail: falsifierHit ? "Theme or evidence tag mentioned" : "Reference falsifier not reflected" },
+        { id: "trap", label: "Trap", passed: trapAware, detail: trapAware ? "Surface-trap risk named" : "Trap awareness not visible" },
+      ];
+      const score = gates.filter((gate) => gate.passed).length * 25;
+      return { score, gates };
+    }
+
+    function buildBlindPrompt(selected) {
+      return [
+        "Use $mbti-typing to type this benchmark case without seeing the expected answer.",
+        "",
+        "Rules:",
+        "- Keep 3-6 live candidates before concluding.",
+        "- Preserve a serious runner-up.",
+        "- State evidence movement, strongest falsifier, and safety boundary.",
+        "- Do not use clinical, hiring, legal, medical, financial, or deterministic claims.",
+        "",
+        "Blind case:",
+        selected.blindPrompt,
+      ].join("\n");
+    }
+
+    function buildReplayReceipt(selected) {
+      const result = scoreReplay(selected);
+      return {
+        schema_version: "replay-lab/v1",
+        case_id: selected.id,
+        cluster: selected.cluster,
+        revealed: state.revealed,
+        score: result.score,
+        leading_guess: normalizeType(state.leadingGuess),
+        runner_up_guess: normalizeType(state.runnerGuess),
+        falsifier_guess: state.falsifierGuess.trim(),
+        reference: state.revealed ? {
+          leading: selected.leading,
+          runner_up: selected.runnerUp,
+          evidence_tags: selected.tags,
+          trap: selected.trap,
+          strongest_falsifier: selected.falsifier,
+        } : "hidden",
+        gates: result.gates,
+        boundary: "Benchmark replay cases are synthetic regression traps, not psychometric ground truth.",
+      };
+    }
+
+    function buildRepairPrompt(selected) {
+      const result = scoreReplay(selected);
+      const failed = result.gates.filter((gate) => !gate.passed).map((gate) => `${gate.label}: ${gate.detail}`);
+      return [
+        "Use $mbti-typing to repair this benchmark replay miss.",
+        "",
+        `Case id: ${selected.id}`,
+        `Replay score: ${result.score}/100`,
+        `My leading guess: ${normalizeType(state.leadingGuess) || "(blank)"}`,
+        `My runner-up guess: ${normalizeType(state.runnerGuess) || "(blank)"}`,
+        `My falsifier note: ${state.falsifierGuess.trim() || "(blank)"}`,
+        "",
+        "Failed gates:",
+        ...(failed.length ? failed.map((item) => `- ${item}`) : ["- None; inspect whether the explanation still overclaims."]),
+        "",
+        "Repair requirements:",
+        "- Rebuild the candidate set before locking a label.",
+        "- Explain why the leading type beats the serious runner-up.",
+        "- Name the strongest falsifier and what evidence would change the conclusion.",
+        "- Ask the next 4-6 scene questions if evidence is still insufficient.",
+        "- Keep the safety boundary visible.",
+      ].join("\n");
+    }
+
+    function buildIssueSeed(selected) {
+      const receipt = buildReplayReceipt(selected);
+      return [
+        "# Benchmark replay improvement",
+        "",
+        `- template: benchmark_replay_improvement.yml`,
+        `- case id: ${selected.id}`,
+        `- replay score: ${receipt.score}/100`,
+        `- leading guess: ${receipt.leading_guess || "(blank)"}`,
+        `- runner-up guess: ${receipt.runner_up_guess || "(blank)"}`,
+        `- falsifier: ${receipt.falsifier_guess || "(blank)"}`,
+        "",
+        "## Failed gates",
+        ...receipt.gates.filter((gate) => !gate.passed).map((gate) => `- ${gate.label}: ${gate.detail}`),
+        "",
+        "## public-safe replay summary",
+        "Summarize what the replay missed without private transcripts, identifiers, third-party details, or high-stakes private contexts.",
+        "",
+        "## Proposed repair",
+        "State whether this should update the benchmark prompt, question bank, pair duel, response eval fixture, or audit wording.",
+      ].join("\n");
+    }
+
+    function renderSelects() {
+      els.caseSelect.replaceChildren(...REPLAY_CASES.map((item) => {
+        const option = makeNode("option", "", `${item.id} - ${item.title}`);
+        option.value = item.id;
+        return option;
+      }));
+      els.caseSelect.value = state.selectedCaseId;
+
+      const typeOptions = TYPES.map((type) => {
+        const option = makeNode("option", "", type || "Select type");
+        option.value = type;
+        return option;
+      });
+      const runnerOptions = TYPES.map((type) => {
+        const option = makeNode("option", "", type || "Select runner-up");
+        option.value = type;
+        return option;
+      });
+      els.leadingGuess.replaceChildren(...typeOptions);
+      els.runnerGuess.replaceChildren(...runnerOptions);
+      els.leadingGuess.value = state.leadingGuess;
+      els.runnerGuess.value = state.runnerGuess;
+    }
+
+    function renderChips(selected) {
+      const chips = [
+        makeNode("span", "chip teal", selected.cluster),
+        makeNode("span", "chip", selected.id),
+        makeNode("span", "chip amber", `${selected.tags.length} evidence tags`),
+      ];
+      els.caseChips.replaceChildren(...chips);
+    }
+
+    function renderScore(selected) {
+      const result = scoreReplay(selected);
+      els.scorePill.textContent = `${result.score} / 100`;
+      const nodes = result.gates.map((gate) => {
+        const card = makeNode("article", `score-card ${gate.passed ? "pass" : "fail"}`);
+        card.append(makeNode("strong", "", gate.passed ? "Pass" : "Miss"));
+        card.append(makeNode("span", "", `${gate.label}: ${gate.detail}`));
+        return card;
+      });
+      els.replayScoreGrid.replaceChildren(...nodes);
+    }
+
+    function renderTimeline(selected) {
+      const result = scoreReplay(selected);
+      const steps = [
+        ["Blind prompt", `${selected.id} copied without expected leading type.`],
+        ["Guess recorded", `${normalizeType(state.leadingGuess) || "No leading"} with ${normalizeType(state.runnerGuess) || "no runner-up"}.`],
+        ["Reference reveal", state.revealed ? "Reference is visible in this browser session." : "Reference is still hidden."],
+        ["Repair loop", `${result.score}/100 feeds JSON receipt, repair prompt, and issue seed.`],
+      ];
+      const nodes = steps.map(([title, detail]) => {
+        const item = makeNode("div", "timeline-item");
+        item.append(makeNode("div", "timeline-dot"));
+        item.append(makeNode("strong", "", title));
+        item.append(makeNode("span", "", detail));
+        return item;
+      });
+      els.replayTimeline.replaceChildren(...nodes);
+    }
+
+    function renderReference(selected) {
+      if (!state.revealed) {
+        els.referencePanel.className = "reference-lock";
+        const lock = makeNode("div", "reference-lock");
+        lock.append(makeNode("strong", "", "Reference hidden"));
+        lock.append(makeNode("span", "", "Reveal only after recording the replay guess. This keeps the benchmark case useful as a blind check."));
+        els.referencePanel.replaceChildren(lock);
+        return;
+      }
+
+      els.referencePanel.className = "reference-grid";
+      const grid = makeNode("div", "reference-grid");
+      const entries = [
+        ["Leading", selected.leading],
+        ["runner-up", selected.runnerUp.join(" / ")],
+        ["Evidence tags", selected.tags.join(", ")],
+        ["Trap", selected.trap],
+        ["Strongest falsifier", selected.falsifier],
+      ];
+      for (const [label, value] of entries) {
+        const card = makeNode("div", "reference-card");
+        card.append(makeNode("strong", "", label));
+        card.append(makeNode("span", "", value));
+        grid.append(card);
+      }
+      els.referencePanel.replaceChildren(grid);
+    }
+
+    function renderOutputs(selected) {
+      els.blindPromptOutput.value = buildBlindPrompt(selected);
+      els.replayReceiptOutput.value = JSON.stringify(buildReplayReceipt(selected), null, 2);
+      els.repairPromptOutput.value = buildRepairPrompt(selected);
+      els.issueSeedOutput.value = buildIssueSeed(selected);
+    }
+
+    function render() {
+      const selected = getSelectedCase();
+      if (!selected) {
+        return;
+      }
+      els.metricCases.textContent = String(REPLAY_CASES.length);
+      els.caseCount.textContent = `${REPLAY_CASES.length} cases`;
+      renderSelects();
+      els.falsifierGuess.value = state.falsifierGuess;
+      els.revealReference.textContent = state.revealed ? "Hide Reference" : "Reveal Reference";
+      renderChips(selected);
+      renderScore(selected);
+      renderTimeline(selected);
+      renderReference(selected);
+      renderOutputs(selected);
+      persist();
+    }
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadPersisted() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (saved && typeof saved === "object") {
+          if (REPLAY_CASES.some((item) => item.id === saved.selectedCaseId)) {
+            state.selectedCaseId = saved.selectedCaseId;
+          }
+          state.leadingGuess = normalizeType(saved.leadingGuess);
+          state.runnerGuess = normalizeType(saved.runnerGuess);
+          state.falsifierGuess = String(saved.falsifierGuess || "");
+          state.revealed = Boolean(saved.revealed);
+        }
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      window.setTimeout(() => els.toast.classList.remove("show"), 1200);
+    }
+
+    async function copyText(value, label) {
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast(`${label} copied`);
+      } catch {
+        const scratch = document.createElement("textarea");
+        scratch.value = value;
+        scratch.setAttribute("readonly", "true");
+        scratch.style.position = "fixed";
+        scratch.style.left = "-9999px";
+        document.body.append(scratch);
+        scratch.select();
+        document.execCommand("copy");
+        scratch.remove();
+        showToast(`${label} copied`);
+      }
+    }
+
+    els.caseSelect.addEventListener("change", () => {
+      state.selectedCaseId = els.caseSelect.value;
+      state.revealed = false;
+      render();
+    });
+
+    els.leadingGuess.addEventListener("change", () => {
+      state.leadingGuess = els.leadingGuess.value;
+      render();
+    });
+
+    els.runnerGuess.addEventListener("change", () => {
+      state.runnerGuess = els.runnerGuess.value;
+      render();
+    });
+
+    els.falsifierGuess.addEventListener("input", () => {
+      state.falsifierGuess = els.falsifierGuess.value;
+      render();
+    });
+
+    els.revealReference.addEventListener("click", () => {
+      state.revealed = !state.revealed;
+      els.revealReference.textContent = state.revealed ? "Hide Reference" : "Reveal Reference";
+      render();
+    });
+
+    els.copyBlindPrompt.addEventListener("click", () => copyText(els.blindPromptOutput.value, "Blind prompt"));
+    els.copyReplayJSON.addEventListener("click", () => copyText(els.replayReceiptOutput.value, "Replay JSON"));
+    els.copyRepairPrompt.addEventListener("click", () => copyText(els.repairPromptOutput.value, "Repair prompt"));
+    els.copyIssueSeed.addEventListener("click", () => copyText(els.issueSeedOutput.value, "Issue seed"));
+
+    loadPersisted();
+    render();
+  </script>
+</body>
+</html>

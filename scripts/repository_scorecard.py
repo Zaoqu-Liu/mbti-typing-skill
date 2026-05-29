@@ -31,8 +31,12 @@ REQUIRED_FILES = [
     "GEMINI.md",
     "CONVENTIONS.md",
     "opencode.json",
+    ".rules",
+    ".roomodes",
     ".aider.conf.yml",
     ".gemini/settings.json",
+    "kilo.jsonc",
+    ".amazonq/cli-agents/mbti-typing.json",
     ".claude/skills/mbti-typing/SKILL.md",
     ".claude/commands/mbti-type.md",
     ".cursor/rules/mbti-typing.mdc",
@@ -43,6 +47,11 @@ REQUIRED_FILES = [
     ".clinerules/mbti-typing.md",
     ".continue/rules/mbti-typing.md",
     ".windsurf/rules/mbti-typing.md",
+    ".roo/rules-mbti-typing/mbti-typing.md",
+    ".kilo/rules/mbti-typing.md",
+    ".junie/AGENTS.md",
+    ".junie/commands/mbti-type.md",
+    "gpts/mbti-typing-gpt-instructions.md",
     "agent-adapters/manifest.json",
     "agent-adapters/README.md",
     ".github/workflows/ci.yml",
@@ -50,6 +59,7 @@ REQUIRED_FILES = [
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/benchmark_case.yml",
+    ".github/ISSUE_TEMPLATE/benchmark_replay_improvement.yml",
     ".github/ISSUE_TEMPLATE/calibration_result.yml",
     ".github/ISSUE_TEMPLATE/blind_review.yml",
     ".github/ISSUE_TEMPLATE/consented_followup.yml",
@@ -71,6 +81,7 @@ REQUIRED_FILES = [
     "docs/assets/typing-engine-blueprint.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
+    "docs/assets/benchmark-replay-loop.svg",
     "docs/assets/type-coverage-matrix.svg",
     "docs/assets/calibration-loop-map.svg",
     "docs/assets/blind-review-arena.svg",
@@ -94,6 +105,7 @@ REQUIRED_FILES = [
     "docs/sample-report.md",
     "docs/session-lab.html",
     "docs/case-gallery.html",
+    "docs/benchmark-replay-lab.html",
     "docs/calibration-lab.html",
     "docs/question-lab.html",
     "docs/type-duel-lab.html",
@@ -105,6 +117,8 @@ REQUIRED_FILES = [
     "scripts/session_lab_audit.py",
     "scripts/sync_case_gallery.py",
     "scripts/case_gallery_audit.py",
+    "scripts/sync_benchmark_replay_lab.py",
+    "scripts/benchmark_replay_lab_audit.py",
     "scripts/sync_calibration_lab.py",
     "scripts/calibration_lab_audit.py",
     "scripts/blind_review_audit.py",
@@ -134,6 +148,7 @@ README_REQUIRED_TERMS = [
     "docs/assets/typing-engine-blueprint.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
+    "docs/assets/benchmark-replay-loop.svg",
     "docs/assets/type-coverage-matrix.svg",
     "docs/assets/calibration-loop-map.svg",
     "docs/assets/blind-review-arena.svg",
@@ -161,6 +176,22 @@ README_REQUIRED_TERMS = [
     "CONVENTIONS.md",
     ".aider.conf.yml",
     ".gemini/settings.json",
+    ".rules",
+    ".roomodes",
+    "kilo.jsonc",
+    ".amazonq/cli-agents/mbti-typing.json",
+    ".roo/rules-mbti-typing/mbti-typing.md",
+    ".kilo/rules/mbti-typing.md",
+    ".junie/AGENTS.md",
+    ".junie/commands/mbti-type.md",
+    "gpts/mbti-typing-gpt-instructions.md",
+    "ChatGPT GPTs",
+    "Zed Agent Panel",
+    "Devin",
+    "JetBrains Junie",
+    "Amazon Q Developer CLI",
+    "Roo Code",
+    "Kilo Code",
     "Claude Code",
     ".claude/skills/mbti-typing/SKILL.md",
     ".claude/commands/mbti-type.md",
@@ -253,6 +284,14 @@ README_REQUIRED_TERMS = [
     "Typing Engine Blueprint",
     "Trust Loop Dashboard",
     "Benchmark Arena Pipeline",
+    "Benchmark Replay Loop",
+    "Benchmark Replay Lab",
+    "docs/benchmark-replay-lab.html",
+    "https://zaoqu-liu.github.io/mbti-typing-skill/benchmark-replay-lab.html",
+    "Replay Receipt",
+    "benchmark_replay_improvement.yml",
+    "scripts/sync_benchmark_replay_lab.py",
+    "scripts/benchmark_replay_lab_audit.py",
     "Benchmark Type Coverage Matrix",
     "16 / 16 covered",
     "Calibration Loop Map",
@@ -379,6 +418,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
     checks.extend(
         check_svg_asset(
             root,
+            "docs/assets/benchmark-replay-loop.svg",
+            "benchmark_replay_loop",
+            ("Benchmark Replay Loop", "benchmark-replay-lab.html", "sync_benchmark_replay_lab.py", "benchmark_replay_lab_audit.py", "Replay Receipt", "Blind Prompt", "Reveal Reference", "Repair Prompt", "benchmark_replay_improvement.yml", "local-first"),
+        )
+    )
+    checks.extend(
+        check_svg_asset(
+            root,
             "docs/assets/type-coverage-matrix.svg",
             "type_coverage_matrix",
             ("Benchmark Type Coverage Matrix", "16 / 16 covered", "bench-enfp-entp-016", "bench-istp-intp-011"),
@@ -437,7 +484,7 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             root,
             "docs/assets/agent-compatibility-grid.svg",
             "agent_compatibility_grid",
-            ("Agent Compatibility Grid", "11 adapters", "one protocol", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "agent_adapter_audit.py"),
+            ("Agent Compatibility Grid", "18 adapters", "one protocol", "ChatGPT GPTs", "Zed", "Devin", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "JetBrains Junie", "Amazon Q", "Roo Code", "Kilo Code", "agent_adapter_audit.py"),
         )
     )
     checks.extend(
@@ -453,7 +500,7 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             root,
             "docs/assets/agent-adapter-lab-flow.svg",
             "agent_adapter_lab_flow",
-            ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "11 adapters", "one protocol"),
+            ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "18 adapters", "one protocol"),
         )
     )
     checks.extend(
@@ -528,7 +575,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:question_lab_link", "GitHub Pages Question Lab" in readme and "docs/question-lab.html" in readme, "English README links hosted and local Question Lab"),
         Check("readme:type_duel_lab_link", "GitHub Pages Type Duel Lab" in readme and "docs/type-duel-lab.html" in readme, "English README links hosted and local Type Duel Lab"),
@@ -542,7 +589,7 @@ def check_readme(root: Path) -> list[Check]:
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
         Check("readme:zh_social_preview", "docs/assets/social-preview.jpg" in zh_readme, "Chinese README references social preview asset"),
         Check("readme:zh_response_eval_command_center", "docs/assets/response-eval-command-center.png" in zh_readme, "Chinese README references Response Eval command center"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -580,6 +627,7 @@ def check_docs(root: Path) -> list[Check]:
     sample = read_text(root / "docs/sample-report.md")
     session_lab = read_text(root / "docs/session-lab.html")
     case_gallery = read_text(root / "docs/case-gallery.html")
+    benchmark_replay_lab = read_text(root / "docs/benchmark-replay-lab.html")
     calibration_lab = read_text(root / "docs/calibration-lab.html")
     question_lab = read_text(root / "docs/question-lab.html")
     type_duel_lab = read_text(root / "docs/type-duel-lab.html")
@@ -593,6 +641,8 @@ def check_docs(root: Path) -> list[Check]:
     session_lab_audit = read_text(root / "scripts/session_lab_audit.py")
     sync_case_gallery = read_text(root / "scripts/sync_case_gallery.py")
     case_gallery_audit = read_text(root / "scripts/case_gallery_audit.py")
+    sync_benchmark_replay_lab = read_text(root / "scripts/sync_benchmark_replay_lab.py")
+    benchmark_replay_lab_audit = read_text(root / "scripts/benchmark_replay_lab_audit.py")
     sync_calibration_lab = read_text(root / "scripts/sync_calibration_lab.py")
     calibration_lab_audit = read_text(root / "scripts/calibration_lab_audit.py")
     sync_question_lab = read_text(root / "scripts/sync_question_lab.py")
@@ -609,6 +659,7 @@ def check_docs(root: Path) -> list[Check]:
     export_agent_pack = read_text(root / "scripts/export_agent_pack.py")
     agent_pack_export_audit = read_text(root / "scripts/agent_pack_export_audit.py")
     agent_adapter_issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml")
+    benchmark_replay_issue_template = read_text(root / ".github/ISSUE_TEMPLATE/benchmark_replay_improvement.yml")
     response_eval_audit = read_text(root / "scripts/response_eval_audit.py")
     response_eval_payload = json.loads(read_text(root / "examples/response-eval-cases.json"))
     question_bank = read_text(root / "skill/mbti-typing/references/question-bank.md")
@@ -624,13 +675,13 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
         Check("docs:ux_social_preview", "GitHub social preview" in ux and "social-preview.jpg" in ux, "GitHub UX document keeps the social preview asset visible"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "agent-adapter-lab-flow.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "repository-experience-map.svg" in evaluation and "benchmark-replay-loop.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "agent-adapter-lab-flow.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:evaluation_response_eval", all(term in evaluation for term in ("Response Eval Audit", "Response Eval Lab Audit", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "scripts/response_eval_lab_audit.py", "sticky precision", "negative_blocked")), "Evaluation docs describe the response quality audit layer"),
         Check("docs:experience_response_quality_loop", all(term in experience for term in ("Response Quality Loop", "response-eval-cases.json", "Response Eval Audit", "candidate set", "Anti-Flattery")), "Experience docs define the response quality loop"),
-        Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "claude-code", "cline", "codex", "continue", "cursor", "gemini-cli", "generic-agents-md", "github-copilot", "opencode", "windsurf"], "Agent adapter manifest covers eleven mainstream target entrypoints"),
+        Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "amazon-q", "chatgpt-gpts", "claude-code", "cline", "codex", "continue", "cursor", "devin", "gemini-cli", "generic-agents-md", "github-copilot", "jetbrains-junie", "kilo-code", "opencode", "roo-code", "windsurf", "zed"], "Agent adapter manifest covers eighteen mainstream target entrypoints"),
         Check("agent_adapters:manifest_pack_export", agent_manifest.get("pack_exporter") == "scripts/export_agent_pack.py" and agent_manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "Agent adapter manifest points to pack export gates"),
         Check("agent_adapters:root_contract", all(term in root_agents for term in ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifiers", "clinical", "hiring", "legal", "medical", "financial", "deterministic")), "Root AGENTS.md preserves the portable typing contract"),
         Check("agent_adapters:root_contexts", all(term in claude_root + gemini_root + conventions for term in ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifier", "clinical", "hiring", "legal", "medical", "financial", "deterministic")), "CLAUDE.md, GEMINI.md, and CONVENTIONS.md preserve the portable contract"),
@@ -714,6 +765,22 @@ def check_docs(root: Path) -> list[Check]:
         Check("case_gallery:dom_safety", "textContent" in case_gallery and "replaceChildren" in case_gallery and "innerHTML" not in case_gallery, "Case Gallery renders data without HTML injection"),
         Check("case_gallery:audit_script", "Case Gallery Audit" in case_gallery_audit and "Submit Benchmark Case" in case_gallery_audit, "Case Gallery has a dedicated audit script"),
         Check("case_gallery:audit_make_target", "case-gallery-audit" in makefile and "scripts/case_gallery_audit.py" in makefile, "Makefile runs Case Gallery audit"),
+        Check("benchmark_replay_lab:title", "MBTI Typing Skill Benchmark Replay Lab" in benchmark_replay_lab, "Benchmark Replay Lab has a clear product title"),
+        Check("benchmark_replay_lab:no_external_runtime", "<script src" not in benchmark_replay_lab and " src=" not in benchmark_replay_lab, "Benchmark Replay Lab has no external runtime dependency"),
+        Check("benchmark_replay_lab:interactive_regions", all(term in benchmark_replay_lab for term in ("caseSelect", "blindPromptOutput", "leadingGuess", "runnerGuess", "falsifierGuess", "replayScoreGrid", "referencePanel", "replayReceiptOutput", "repairPromptOutput", "issueSeedOutput")), "Benchmark Replay Lab contains case, blind prompt, guesses, reference, receipt, repair prompt, and issue seed regions"),
+        Check("benchmark_replay_lab:benchmark_cases", len(benchmark_cases) >= 16 and all(case_id in benchmark_replay_lab for case_id in benchmark_ids), "Benchmark Replay Lab exposes all current benchmark cases"),
+        Check("benchmark_replay_lab:all_16_leading_types", required_types <= leading_types, f"{len(leading_types & required_types)} leading types covered"),
+        Check("benchmark_replay_lab:source_markers", "BEGIN GENERATED BENCHMARK REPLAY CASES" in benchmark_replay_lab and "END GENERATED BENCHMARK REPLAY CASES" in benchmark_replay_lab, "Benchmark Replay Lab marks generated benchmark data"),
+        Check("benchmark_replay_lab:source_sync_script", "Benchmark Replay Lab Source Sync" in sync_benchmark_replay_lab and "make_replay_cases" in sync_benchmark_replay_lab, "Benchmark Replay Lab has a JSON source-of-truth sync script"),
+        Check("benchmark_replay_lab:source_sync_audit", "source:json_match" in benchmark_replay_lab_audit and "make_replay_cases" in benchmark_replay_lab_audit, "Benchmark Replay Lab audit compares embedded cases with canonical JSON"),
+        Check("benchmark_replay_lab:source_sync_make_target", "benchmark-replay-lab-sync" in makefile and "scripts/sync_benchmark_replay_lab.py" in makefile, "Makefile checks Benchmark Replay Lab source sync"),
+        Check("benchmark_replay_lab:copy_outputs", "Copy Blind Prompt" in benchmark_replay_lab and "Copy Replay JSON" in benchmark_replay_lab and "Copy Repair Prompt" in benchmark_replay_lab and "Copy Issue Seed" in benchmark_replay_lab, "Benchmark Replay Lab can copy prompt, JSON, repair, and issue outputs"),
+        Check("benchmark_replay_lab:dom_safety", "textContent" in benchmark_replay_lab and "replaceChildren" in benchmark_replay_lab and "innerHTML" not in benchmark_replay_lab, "Benchmark Replay Lab renders data without HTML injection"),
+        Check("benchmark_replay_lab:safety_boundary", "not psychometric ground truth" in benchmark_replay_lab and "local-first" in benchmark_replay_lab, "Benchmark Replay Lab keeps safety boundary visible"),
+        Check("benchmark_replay_lab:audit_script", "Benchmark Replay Lab Audit" in benchmark_replay_lab_audit and "Copy Repair Prompt" in benchmark_replay_lab_audit, "Benchmark Replay Lab has a dedicated audit script"),
+        Check("benchmark_replay_lab:audit_make_target", "benchmark-replay-lab-audit" in makefile and "scripts/benchmark_replay_lab_audit.py" in makefile, "Makefile runs Benchmark Replay Lab audit"),
+        Check("benchmark_replay_lab:issue_template", all(term in benchmark_replay_issue_template for term in ("Benchmark replay improvement", "case id", "replay score", "leading guess", "runner-up guess", "public-safe")), "Benchmark Replay Lab has a dedicated issue template"),
+        Check("benchmark_replay_lab:flow_docs", all(term in visual + evaluation + ux for term in ("benchmark-replay-loop.svg", "Benchmark Replay Loop", "benchmark_replay_improvement.yml")), "Benchmark Replay Lab flow is documented across UX, visual tour, and evaluation docs"),
         Check("calibration_lab:title", "MBTI Typing Skill Calibration Lab" in calibration_lab, "Calibration Lab has a clear product title"),
         Check("calibration_lab:no_external_runtime", "<script src" not in calibration_lab and " src=" not in calibration_lab, "Calibration Lab has no external runtime dependency"),
         Check("calibration_lab:interactive_regions", all(term in calibration_lab for term in ("caseSelect", "reportInput", "resultGrid", "receiptOutput", "repairPromptOutput", "issueSeedOutput")), "Calibration Lab contains case, report, result, receipt, repair prompt, and issue seed regions"),
@@ -775,10 +842,11 @@ def check_docs(root: Path) -> list[Check]:
         Check("playground:copy_prompt", "navigator.clipboard.writeText" in playground and "Copy Prompt" in playground, "Playground can copy the generated prompt"),
         Check("playground:scenario_count", playground.count("Use $mbti-typing") >= 3, "Playground includes multiple live prompt starts"),
         Check("playground:safety_boundary", "not a clinical instrument" in playground, "Playground keeps safety boundary visible"),
-        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, calibration_lab, question_lab, type_duel_lab, agent_adapter_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
-        Check("pages:agent_lab_nav", all("agent-adapter-lab.html" in page for page in (session_lab, case_gallery, calibration_lab, question_lab, type_duel_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link to Agent Adapter Lab"),
+        Check("pages:github_readme_links", all("https://github.com/Zaoqu-Liu/mbti-typing-skill#readme" in page for page in (session_lab, case_gallery, benchmark_replay_lab, calibration_lab, question_lab, type_duel_lab, agent_adapter_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link README buttons to GitHub instead of a broken parent path"),
+        Check("pages:agent_lab_nav", all("agent-adapter-lab.html" in page for page in (session_lab, case_gallery, benchmark_replay_lab, calibration_lab, question_lab, type_duel_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link to Agent Adapter Lab"),
+        Check("pages:benchmark_replay_nav", all("benchmark-replay-lab.html" in page for page in (session_lab, case_gallery, benchmark_replay_lab, calibration_lab, question_lab, type_duel_lab, agent_adapter_lab, follow_up_lab, response_eval_lab, playground)), "Public pages link to Benchmark Replay Lab"),
         Check("pages:github_prompt_links", "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in session_lab and "https://github.com/Zaoqu-Liu/mbti-typing-skill/blob/main/prompts/prompt-recipes.md" in playground, "Public prompt recipe links resolve on GitHub Pages"),
-        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + calibration_lab + question_lab + type_duel_lab + agent_adapter_lab + follow_up_lab + response_eval_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
+        Check("pages:no_parent_readme", "../README.md" not in session_lab + case_gallery + benchmark_replay_lab + calibration_lab + question_lab + type_duel_lab + agent_adapter_lab + follow_up_lab + response_eval_lab + playground and "../prompts/" not in session_lab + playground, "Public pages avoid parent-directory links that break after Pages deploy"),
         Check("pages:index_redirect", "session-lab.html" in index and "http-equiv=\"refresh\"" in index, "Docs index redirects to Session Lab"),
         Check("pages:workflow", "actions/deploy-pages@v4" in pages and "path: docs" in pages, "GitHub Pages workflow deploys docs"),
     ]

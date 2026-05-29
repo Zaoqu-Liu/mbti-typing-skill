@@ -42,6 +42,20 @@ The sticky loop should be evidence repair:
 
 This keeps people returning because the system becomes more inspectable and harder to fool, not because it withholds answers or inflates certainty.
 
+## Benchmark Replay Loop
+
+The most game-like retention loop should still be falsifiable. Users should be able to replay hard benchmark cases without seeing the expected answer first.
+
+The allowed loop is:
+
+1. Benchmark Replay Lab loads the same canonical `benchmark-cases.json` cases as the public gallery.
+2. The user copies a blind prompt before the reference leading type, runner-up, trap, and falsifier are visible.
+3. The user records a leading type guess, runner-up guess, and falsifier or trap note.
+4. Reveal Reference exposes the expected answer and turns the miss into a Replay Receipt, repair prompt, or `benchmark_replay_improvement.yml` issue seed.
+5. Repeated replay misses become question-bank updates, pair-duel rules, benchmark edits, response-eval fixtures, or audit wording.
+
+This creates an ethical challenge loop: people return because hard cases are replayable and mistakes become sharper prompts, not because the tool hides uncertainty or makes identity promises.
+
 ## Response Quality Loop
 
 The most visible product moment is the answer between rounds. It has to make the user feel tracked without using identity hooks.

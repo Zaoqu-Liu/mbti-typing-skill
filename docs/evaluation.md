@@ -182,12 +182,13 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose sixteen exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose seventeen exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
 - `docs/assets/trust-loop-dashboard.svg` for the feedback-to-benchmark-to-release trust loop.
 - `docs/assets/benchmark-arena-pipeline.svg` for the benchmark JSON to case gallery source-of-truth sync.
+- `docs/assets/benchmark-replay-loop.svg` for the benchmark JSON to blind replay to Replay Receipt to repair prompt feedback loop.
 - `docs/assets/type-coverage-matrix.svg` for the all-16-leading-types benchmark coverage proof.
 - `docs/assets/calibration-loop-map.svg` for the report paste to Calibration Receipt to repair prompt feedback loop.
 - `docs/assets/blind-review-arena.svg` for the sanitized packet to independent reviewer to aggregate metrics evaluation loop.
@@ -195,7 +196,7 @@ The visual blueprint gate checks that the README and visual tour expose sixteen 
 - `docs/assets/adaptive-question-loop.svg` for the question-bank Markdown to Question Lab to audit-gate loop.
 - `docs/assets/type-duel-decision-map.svg` for the pair-duels Markdown to Type Duel Lab to audit-gate loop.
 - `docs/assets/agent-adapter-matrix.svg` for the canonical skill to Codex, Claude Code, Cursor, opencode, and audit-gate portability loop.
-- `docs/assets/agent-compatibility-grid.svg` for the 11-adapter compatibility surface across Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md-aware agents.
+- `docs/assets/agent-compatibility-grid.svg` for the 18-adapter compatibility surface across Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and AGENTS.md-aware agents.
 - `docs/assets/agent-pack-export-flow.svg` for the manifest to exported pack to target repository copy path.
 - `docs/assets/agent-adapter-lab-flow.svg` for the manifest to Agent Adapter Lab to pack command to target repository to `agent_adapter_improvement.yml` loop.
 - `docs/assets/response-quality-radar.svg` for the answer-level candidate set, runner-up, evidence movement, next-question, falsifier, safety-boundary, Anti-Flattery, and response audit gates.
@@ -252,11 +253,18 @@ The Response Eval Lab Audit validates the public answer-quality surface: `docs/r
 python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 ```
 
-The repository UX scorecard also checks the Session Lab, Question Lab, Type Duel Lab, Benchmark Arena, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
+The repository UX scorecard also checks the Session Lab, Question Lab, Type Duel Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, static playground, and GitHub Pages workflow. The Session Lab must be buildless, local-first, shareable, importable, exportable, and free of external runtime dependencies so the first experience is fast, inspectable, and useful before installation.
 
 The dedicated Session Lab audit validates the HTML interaction contract: visible share/import controls, all 16 type codes, URL-hash recovery, unicode-safe share links, JSON import/download, local persistence, DOM-safe rendering, safety boundaries, and focused candidate count.
 
 The dedicated Case Gallery audit validates the public benchmark surface: all current benchmark cases, all 16 leading types, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, case filters, copied `Use $mbti-typing` prompts, benchmark issue seeds, visible runner-up/falsifier language, DOM-safe rendering, and no external runtime dependency.
+
+The Benchmark Replay Lab Source Sync and Audit validate the active benchmark training surface: `docs/benchmark-replay-lab.html` must embed the exact canonical benchmark case set, preserve blind prompts before reference reveal, score leading type, runner-up, falsifier, and trap-awareness guesses, copy Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds, and keep local-first safety-boundary language visible.
+
+```bash
+python3 -B scripts/sync_benchmark_replay_lab.py skill/mbti-typing/examples/benchmark-cases.json docs/benchmark-replay-lab.html
+python3 -B scripts/benchmark_replay_lab_audit.py docs/benchmark-replay-lab.html skill/mbti-typing/examples/benchmark-cases.json .github/ISSUE_TEMPLATE/benchmark_replay_improvement.yml
+```
 
 The dedicated Calibration Lab audit validates the public repair surface: all current benchmark cases, all 16 leading types, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, report paste, visible calibration gates, copied repair prompt, copied calibration JSON, copied failure issue seed, local persistence, DOM-safe rendering, and no external runtime dependency.
 

@@ -35,7 +35,7 @@
   <rect class="card manifest" x="96" y="172" width="300" height="116"/>
   <text class="h" x="120" y="207">Adapter Manifest</text>
   <text class="small" x="120" y="235">agent-adapters/manifest.json</text>
-  <text class="tiny" x="120" y="260">11 targets, source URLs, entrypoints</text>
+  <text class="tiny" x="120" y="260">18 targets, source URLs, entrypoints</text>
   <text class="tiny" x="120" y="281">canonical skill and shared contract</text>
 
   <rect class="card exporter" x="448" y="172" width="310" height="116"/>
@@ -80,7 +80,8 @@
   <text class="tiny" x="794" y="498">.claude, .cursor, .gemini</text>
   <text class="tiny" x="794" y="520">.github, .windsurf, .cline</text>
   <text class="tiny" x="794" y="542">.continue, .aider, opencode</text>
-  <text class="tiny" x="794" y="564">only selected targets are copied</text>
+  <text class="tiny" x="794" y="564">.rules, .junie, .amazonq, .roo, .kilo, gpts</text>
+  <text class="tiny" x="794" y="586">only selected targets are copied</text>
 
   <rect class="card pack" x="1078" y="438" width="292" height="138"/>
   <text class="h" x="1102" y="470">Export Directory</text>
@@ -124,7 +125,7 @@
   <text class="tiny" x="838" y="930">then use the native agent entrypoint</text>
   <rect class="card manifest" x="1104" y="850" width="282" height="86"/>
   <text class="h" x="1128" y="882">Same Experience</text>
-  <text class="small" x="1128" y="910">Codex to aider, one protocol</text>
+  <text class="small" x="1128" y="910">Codex to Kilo, one protocol</text>
   <text class="tiny" x="1128" y="930">sticky through portability, not lock-in</text>
 
   <path class="line" d="M 1224 576 L 1224 686 L 527 686 L 527 840"/>

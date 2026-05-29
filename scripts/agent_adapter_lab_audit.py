@@ -114,7 +114,7 @@ def run(html_path: Path, manifest_path: Path) -> int:
         Check("js:issue_seed", "buildIssueSeed" in html and "agent_adapter_improvement.yml" in html, "agent adapter issue seed exists"),
         Check("sync:embedded_manifest_parse", not embedded_error, f"embedded manifest parses: {embedded_error}"),
         Check("sync:embedded_manifest_exact", embedded == expected, "embedded manifest matches agent-adapters/manifest.json plus export baseline"),
-        Check("sync:target_count", len(embedded.get("targets", [])) >= 11, "embedded manifest covers at least eleven targets"),
+        Check("sync:target_count", len(embedded.get("targets", [])) >= 18, "embedded manifest covers at least eighteen targets"),
         Check("sync:baseline_paths", "docs/agent-adapter-lab.html" in embedded.get("baseline_paths", []), "baseline exports the public Agent Adapter Lab"),
     ]
 

@@ -21,8 +21,12 @@ REQUIRED_FILES = (
     "GEMINI.md",
     "CONVENTIONS.md",
     "opencode.json",
+    ".rules",
+    ".roomodes",
     ".aider.conf.yml",
     ".gemini/settings.json",
+    "kilo.jsonc",
+    ".amazonq/cli-agents/mbti-typing.json",
     ".claude/skills/mbti-typing/SKILL.md",
     ".claude/commands/mbti-type.md",
     ".cursor/rules/mbti-typing.mdc",
@@ -33,6 +37,11 @@ REQUIRED_FILES = (
     ".clinerules/mbti-typing.md",
     ".continue/rules/mbti-typing.md",
     ".windsurf/rules/mbti-typing.md",
+    ".roo/rules-mbti-typing/mbti-typing.md",
+    ".kilo/rules/mbti-typing.md",
+    ".junie/AGENTS.md",
+    ".junie/commands/mbti-type.md",
+    "gpts/mbti-typing-gpt-instructions.md",
     "agent-adapters/manifest.json",
     "agent-adapters/README.md",
     "docs/agent-adapters.md",
@@ -49,17 +58,24 @@ REQUIRED_FILES = (
 )
 
 EXPECTED_TARGETS = (
+    "amazon-q",
     "aider",
+    "chatgpt-gpts",
     "claude-code",
     "cline",
     "codex",
     "continue",
     "cursor",
+    "devin",
     "gemini-cli",
     "generic-agents-md",
     "github-copilot",
+    "jetbrains-junie",
+    "kilo-code",
     "opencode",
+    "roo-code",
     "windsurf",
+    "zed",
 )
 
 SAFETY_TERMS = (
@@ -152,7 +168,7 @@ def check_manifest(root: Path) -> list[Check]:
         Check("manifest:adapter_audit", manifest.get("adapter_audit") == "scripts/agent_adapter_audit.py", "manifest points at adapter audit"),
         Check("manifest:pack_exporter", manifest.get("pack_exporter") == "scripts/export_agent_pack.py", "manifest points at pack exporter"),
         Check("manifest:pack_audit", manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "manifest points at pack export audit"),
-        Check("manifest:checked_on", manifest.get("checked_on") == "2026-05-28", "manifest records convention check date"),
+        Check("manifest:checked_on", manifest.get("checked_on") == "2026-05-29", "manifest records convention check date"),
         Check("manifest:targets", sorted(target_ids) == sorted(EXPECTED_TARGETS), f"targets={target_ids}"),
     ]
 
@@ -205,11 +221,22 @@ def check_tool_adapters(root: Path) -> list[Check]:
     cline_rule = read_text(root / ".clinerules/mbti-typing.md")
     continue_rule = read_text(root / ".continue/rules/mbti-typing.md")
     windsurf_rule = read_text(root / ".windsurf/rules/mbti-typing.md")
+    zed_rule = read_text(root / ".rules")
+    roo_modes = read_text(root / ".roomodes")
+    roo_rule = read_text(root / ".roo/rules-mbti-typing/mbti-typing.md")
+    kilo_config = read_text(root / "kilo.jsonc")
+    kilo_rule = read_text(root / ".kilo/rules/mbti-typing.md")
+    junie_guidelines = read_text(root / ".junie/AGENTS.md")
+    junie_command = read_text(root / ".junie/commands/mbti-type.md")
+    gpt_instructions = read_text(root / "gpts/mbti-typing-gpt-instructions.md")
     opencode = load_json(root / "opencode.json")
     gemini = load_json(root / ".gemini/settings.json")
+    amazon_q = load_json(root / ".amazonq/cli-agents/mbti-typing.json")
     aider_config = read_text(root / ".aider.conf.yml")
     instructions = opencode.get("instructions", []) if isinstance(opencode, dict) else []
     gemini_context_files = gemini.get("context", {}).get("fileName", []) if isinstance(gemini, dict) else []
+    amazon_q_resources = amazon_q.get("resources", []) if isinstance(amazon_q, dict) else []
+    amazon_q_allowed = amazon_q.get("allowedTools", []) if isinstance(amazon_q, dict) else []
     adapter_files = {
         "github_copilot": github_copilot,
         "github_instructions": github_instructions,
@@ -218,6 +245,12 @@ def check_tool_adapters(root: Path) -> list[Check]:
         "cline_rule": cline_rule,
         "continue_rule": continue_rule,
         "windsurf_rule": windsurf_rule,
+        "zed_rule": zed_rule,
+        "roo_rule": roo_rule,
+        "kilo_rule": kilo_rule,
+        "junie_guidelines": junie_guidelines,
+        "junie_command": junie_command,
+        "gpt_instructions": gpt_instructions,
     }
     checks = [
         Check("claude_skill:frontmatter", "name: mbti-typing" in claude_skill and "when_to_use:" in claude_skill, "Claude Code skill has discovery frontmatter"),
@@ -232,6 +265,13 @@ def check_tool_adapters(root: Path) -> list[Check]:
         Check("opencode:instructions", isinstance(instructions, list) and all(rel in instructions for rel in ("AGENTS.md", "agent-adapters/README.md", "skill/mbti-typing/SKILL.md")), "opencode aggregates project, adapter, and skill instructions"),
         Check("gemini:settings", isinstance(gemini_context_files, list) and all(rel in gemini_context_files for rel in ("AGENTS.md", "GEMINI.md")), "Gemini settings load root context files"),
         Check("aider:config", "CONVENTIONS.md" in aider_config and "AGENTS.md" in aider_config, "aider config reads portable conventions"),
+        Check("amazon_q:agent", amazon_q.get("name") == "mbti-typing" and "skill/mbti-typing/SKILL.md" in str(amazon_q.get("prompt", "")), "Amazon Q custom agent names and loads canonical skill"),
+        Check("amazon_q:resources", isinstance(amazon_q_resources, list) and all(rel in amazon_q_resources for rel in ("file://AGENTS.md", "file://skill/mbti-typing/SKILL.md", "file://skill/mbti-typing/references/question-bank.md")), "Amazon Q resources include project and skill references"),
+        Check("amazon_q:allowed_tools", amazon_q_allowed == ["fs_read"], "Amazon Q custom agent keeps a read-only default tool grant"),
+        Check("roo:mode", "slug: mbti-typing" in roo_modes and ".roo/rules-mbti-typing/mbti-typing.md" in roo_modes, "Roo Code custom mode references mode-specific rules"),
+        Check("kilo:config", "AGENTS.md" in kilo_config and ".kilo/rules/mbti-typing.md" in kilo_config, "Kilo Code config loads project and MBTI rule instructions"),
+        Check("junie:command", "description:" in junie_command and "$input" in junie_command and "serious runner-up" in junie_command, "Junie slash command forwards user input and protocol terms"),
+        Check("gpt:instructions", "Conversation Starters" in gpt_instructions and "Knowledge Files" in gpt_instructions, "ChatGPT GPT instructions include knowledge and starter prompts"),
         Check("github_instructions:frontmatter", 'applyTo: "**/*"' in github_instructions, "GitHub Copilot instructions have repo-wide frontmatter"),
         Check("github_skill:frontmatter", "name: mbti-typing" in github_skill, "GitHub Copilot skill has discovery frontmatter"),
         Check("cline_skill:frontmatter", "name: mbti-typing" in cline_skill, "Cline skill has discovery frontmatter"),
@@ -258,8 +298,8 @@ def check_docs_and_visual(root: Path) -> list[Check]:
     lab_audit = read_text(root / "scripts/agent_adapter_lab_audit.py")
     issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml")
     dependency_scan = (svg + compatibility_svg + pack_svg + lab_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
-    required_tool_terms = ("Codex", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider")
-    source_terms = ("docs.anthropic.com", "docs.cursor.com", "opencode.ai", "github.com/openai/codex", "google-gemini", "docs.github.com", "docs.windsurf.com", "docs.cline.bot", "docs.continue.dev", "aider.chat")
+    required_tool_terms = ("Codex", "ChatGPT", "Zed", "Devin", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "JetBrains Junie", "Amazon Q", "Roo Code", "Kilo Code")
+    source_terms = ("help.openai.com", "zed.dev", "docs.devin.ai", "docs.anthropic.com", "docs.cursor.com", "opencode.ai", "github.com/openai/codex", "google-gemini", "docs.github.com", "docs.windsurf.com", "docs.cline.bot", "docs.continue.dev", "aider.chat", "jetbrains.com/help/junie", "aws.github.io/amazon-q-developer-cli", "roocodeinc.github.io", "kilo.ai")
     return [
         Check("docs:adapter_readme_tools", contains_all(adapter_readme, required_tool_terms), "adapter README covers all target tools"),
         Check("docs:adapter_readme_contract", contains_all(adapter_readme, ("candidate set", "runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter README preserves universal contract"),
@@ -280,13 +320,13 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("svg:labels", contains_all(svg, SVG_TERMS), "adapter matrix contains expected labels"),
         Check("compat_svg:shape", "<svg" in compatibility_svg and "viewBox=" in compatibility_svg, "compatibility grid is an SVG with viewBox"),
         Check("compat_svg:accessibility", 'role="img"' in compatibility_svg and "<title" in compatibility_svg and "<desc" in compatibility_svg, "compatibility grid has accessibility metadata"),
-        Check("compat_svg:labels", contains_all(compatibility_svg, required_tool_terms + ("11 adapters", "one protocol", "AGENTS.md", "agent_adapter_audit.py")), "compatibility grid contains expected labels"),
+        Check("compat_svg:labels", contains_all(compatibility_svg, required_tool_terms + ("18 adapters", "one protocol", "AGENTS.md", "agent_adapter_audit.py")), "compatibility grid contains expected labels"),
         Check("pack_svg:shape", "<svg" in pack_svg and "viewBox=" in pack_svg, "pack export flow is an SVG with viewBox"),
         Check("pack_svg:accessibility", 'role="img"' in pack_svg and "<title" in pack_svg and "<desc" in pack_svg, "pack export flow has accessibility metadata"),
         Check("pack_svg:labels", contains_all(pack_svg, ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo")), "pack export flow contains expected labels"),
         Check("lab_svg:shape", "<svg" in lab_svg and "viewBox=" in lab_svg, "Agent Adapter Lab flow is an SVG with viewBox"),
         Check("lab_svg:accessibility", 'role="img"' in lab_svg and "<title" in lab_svg and "<desc" in lab_svg, "Agent Adapter Lab flow has accessibility metadata"),
-        Check("lab_svg:labels", contains_all(lab_svg, ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "11 adapters", "one protocol")), "Agent Adapter Lab flow contains expected labels"),
+        Check("lab_svg:labels", contains_all(lab_svg, ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "18 adapters", "one protocol")), "Agent Adapter Lab flow contains expected labels"),
     ]
 
 

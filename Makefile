@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -69,6 +69,12 @@ case-gallery-sync:
 
 case-gallery-audit:
 	$(PYTHON) -B scripts/case_gallery_audit.py docs/case-gallery.html $(SKILL_DIR)/examples/benchmark-cases.json
+
+benchmark-replay-lab-sync:
+	$(PYTHON) -B scripts/sync_benchmark_replay_lab.py $(SKILL_DIR)/examples/benchmark-cases.json docs/benchmark-replay-lab.html
+
+benchmark-replay-lab-audit:
+	$(PYTHON) -B scripts/benchmark_replay_lab_audit.py docs/benchmark-replay-lab.html $(SKILL_DIR)/examples/benchmark-cases.json .github/ISSUE_TEMPLATE/benchmark_replay_improvement.yml
 
 calibration-lab-sync:
 	$(PYTHON) -B scripts/sync_calibration_lab.py $(SKILL_DIR)/examples/benchmark-cases.json docs/calibration-lab.html

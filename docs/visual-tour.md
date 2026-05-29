@@ -84,6 +84,21 @@ The pipeline explains why the public case gallery can stay trustworthy as the be
 - The Case Gallery audit compares the embedded page data back against the JSON before release.
 - Issue seed feedback returns new failures to the benchmark source instead of leaving them as anecdotes.
 
+## Benchmark Replay Loop
+
+![Benchmark Replay Loop](assets/benchmark-replay-loop.svg)
+
+The replay loop turns benchmark inspection into an active GitHub experience:
+
+- `skill/mbti-typing/examples/benchmark-cases.json` remains the source of truth.
+- `scripts/sync_benchmark_replay_lab.py` embeds those cases into [Benchmark Replay Lab](benchmark-replay-lab.html).
+- A visitor copies a blind prompt before the expected leading type, runner-up, trap, and falsifier are visible.
+- The page records a leading guess, runner-up guess, falsifier note, and trap awareness gate.
+- Reveal Reference exposes the answer, then generates a Replay Receipt, repair prompt, and `benchmark_replay_improvement.yml` issue seed.
+- `scripts/benchmark_replay_lab_audit.py` checks source sync, copy outputs, DOM-safe rendering, local-first behavior, and safety-boundary language before release.
+
+This is the user-retention layer for accuracy work: people can replay hard cases, see exactly which gate failed, and turn that miss into a sharper next run.
+
 ## Benchmark Type Coverage Matrix
 
 ![Benchmark Type Coverage Matrix](assets/type-coverage-matrix.svg)
@@ -188,12 +203,16 @@ The Agent Compatibility Grid expands the portability proof from core adapters to
 
 - Codex uses the native skill package and `agents/openai.yaml`.
 - Generic AGENTS.md-aware agents use `AGENTS.md` and `CONVENTIONS.md`.
+- ChatGPT GPTs/Projects use `gpts/mbti-typing-gpt-instructions.md`.
+- Zed Agent Panel uses root `.rules` plus common project instruction fallbacks.
+- Devin and Devin CLI use `AGENTS.md`.
 - Claude Code uses `.claude/skills`, `.claude/commands`, and `CLAUDE.md`.
 - Cursor uses `.cursor/rules`.
 - opencode uses `opencode.json`.
 - Gemini CLI uses `GEMINI.md` and `.gemini/settings.json`.
 - GitHub Copilot uses `.github/copilot-instructions.md`, `.github/instructions`, and `.github/skills`.
 - Windsurf, Cline, Continue, and aider use their own rule, skill, or conventions entrypoints.
+- JetBrains Junie, Amazon Q Developer CLI, Roo Code, and Kilo Code use `.junie`, `.amazonq`, `.roomodes`/`.roo`, and `kilo.jsonc` project adapters.
 - `scripts/agent_adapter_audit.py` checks that every entrypoint still preserves the same candidate set, runner-up, evidence ledger, falsifier, and safety-boundary contract.
 
 This is the larger compatibility layer: mainstream agent tools can discover the same MBTI Typing Skill without turning it into disconnected tool-specific lore.
@@ -337,9 +356,10 @@ The buildless product pages, adapter docs, and response audit now cover the full
 - [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
 - [Agent Adapter Lab](agent-adapter-lab.html): target selector, pack command, install checklist, adapter JSON receipt, and adapter improvement seed.
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
+- [Benchmark Replay Lab](benchmark-replay-lab.html): blind prompts, top-two guesses, reference reveal, Replay Receipt, repair prompt, and replay issue seed.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
 - [Follow-Up Lab](follow-up-lab.html): consented delayed observations, privacy gate, JSON packet, and follow-up issue seed.
-- [Agent adapters](agent-adapters.md): Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md portability.
+- [Agent adapters](agent-adapters.md): Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and AGENTS.md portability.
 - [Response Eval Lab](response-eval-lab.html): paste any answer, inspect gates, copy repair prompt, JSON receipt, or response eval issue seed.
 - [Response Eval fixtures](../examples/response-eval-cases.json): audited examples for live-round, type-duel, final-report, and anti-pattern response quality.
 
@@ -364,31 +384,33 @@ flowchart TD
     D --> E[Typing engine blueprint]
     E --> F[Trust loop dashboard]
     F --> G[Benchmark Arena pipeline]
-    G --> H[Type coverage matrix]
-    H --> I[Calibration loop map]
-    I --> J[Blind review arena]
-    J --> K[Consent feedback loop]
-    K --> L[Adaptive Question Loop]
-    L --> M[Question Lab]
-    M --> N[Type Duel Decision Map]
-    N --> O[Type Duel Lab]
-    O --> P[Agent Adapter Matrix]
-    P --> Q[Agent Compatibility Grid]
-    Q --> R[Agent Pack Export Flow]
-    R --> S[Agent Adapter Lab Flow]
-    S --> T[Agent Adapter Lab]
-    T --> U[Response Quality Radar]
-    U --> V[Response Eval Command Center]
-    V --> W[Response Eval Lab Flow]
-    W --> X[Response Eval Lab]
-    X --> Y[Agent adapters]
-    Y --> Z[Follow-Up Lab]
-    Z --> AA[One-minute demo]
-    AA --> AB[Demo session]
-    AB --> AC[Sample report]
-    AC --> AD[Evaluation model]
-    AD --> AE[Contribution guide]
-    AE --> AF[Benchmark cases]
+    G --> H[Benchmark Replay Loop]
+    H --> I[Benchmark Replay Lab]
+    I --> J[Type coverage matrix]
+    J --> K[Calibration loop map]
+    K --> L[Blind review arena]
+    L --> M[Consent feedback loop]
+    M --> N[Adaptive Question Loop]
+    N --> O[Question Lab]
+    O --> P[Type Duel Decision Map]
+    P --> Q[Type Duel Lab]
+    Q --> R[Agent Adapter Matrix]
+    R --> S[Agent Compatibility Grid]
+    S --> T[Agent Pack Export Flow]
+    T --> U[Agent Adapter Lab Flow]
+    U --> V[Agent Adapter Lab]
+    V --> W[Response Quality Radar]
+    W --> X[Response Eval Command Center]
+    X --> Y[Response Eval Lab Flow]
+    Y --> Z[Response Eval Lab]
+    Z --> AA[Agent adapters]
+    AA --> AB[Follow-Up Lab]
+    AB --> AC[One-minute demo]
+    AC --> AD[Demo session]
+    AD --> AE[Sample report]
+    AE --> AF[Evaluation model]
+    AF --> AG[Contribution guide]
+    AG --> AH[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.
