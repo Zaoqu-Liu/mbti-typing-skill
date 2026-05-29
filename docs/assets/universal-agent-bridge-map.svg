@@ -49,7 +49,7 @@
 
   <rect class="node-soft" x="76" y="198" width="360" height="146" />
   <text class="section" x="108" y="244">Known host catalog</text>
-  <text class="small" x="108" y="278">18 named targets</text>
+  <text class="small" x="108" y="278">4 core plus optional recipes</text>
   <text class="tiny" x="108" y="306">Codex, Claude Code, Cursor, opencode,</text>
   <text class="tiny" x="108" y="329">GitHub Copilot, Windsurf, Cline, Continue...</text>
 

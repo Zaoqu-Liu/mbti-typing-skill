@@ -78,9 +78,13 @@ REQUIRED_FILES = [
     "docs/assets/typing-journey-map.png",
     "docs/assets/social-preview.jpg",
     "docs/assets/response-eval-command-center.png",
+    "docs/assets/github-product-command-center.png",
     "docs/assets/experience-hub-route-map.svg",
+    "docs/assets/github-ux-flywheel.svg",
     "docs/assets/repository-experience-map.svg",
+    "docs/assets/typing-os-stack.svg",
     "docs/assets/typing-engine-blueprint.svg",
+    "docs/assets/evidence-retention-loop.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
     "docs/assets/benchmark-replay-loop.svg",
@@ -151,9 +155,13 @@ README_REQUIRED_TERMS = [
     "docs/assets/typing-journey-map.png",
     "docs/assets/social-preview.jpg",
     "docs/assets/response-eval-command-center.png",
+    "docs/assets/github-product-command-center.png",
     "docs/assets/experience-hub-route-map.svg",
+    "docs/assets/github-ux-flywheel.svg",
     "docs/assets/repository-experience-map.svg",
+    "docs/assets/typing-os-stack.svg",
     "docs/assets/typing-engine-blueprint.svg",
+    "docs/assets/evidence-retention-loop.svg",
     "docs/assets/trust-loop-dashboard.svg",
     "docs/assets/benchmark-arena-pipeline.svg",
     "docs/assets/benchmark-replay-loop.svg",
@@ -172,7 +180,11 @@ README_REQUIRED_TERMS = [
     "docs/assets/response-eval-lab-flow.svg",
     "GitHub social preview",
     "Response Eval Command Center",
+    "GitHub Product Command Center",
     "Experience Hub Route Map",
+    "GitHub UX Flywheel",
+    "MBTI Typing OS Stack",
+    "Evidence Retention Loop",
     "Agent Adapter Matrix",
     "Agent Compatibility Grid",
     "Agent Pack Export Flow",
@@ -407,6 +419,10 @@ def check_response_eval_command_center(root: Path) -> list[Check]:
     return check_png_asset(root, "docs/assets/response-eval-command-center.png", "response_eval_command_center")
 
 
+def check_github_product_command_center(root: Path) -> list[Check]:
+    return check_png_asset(root, "docs/assets/github-product-command-center.png", "github_product_command_center")
+
+
 def check_visual_blueprints(root: Path) -> list[Check]:
     checks: list[Check] = []
     checks.extend(
@@ -420,6 +436,14 @@ def check_visual_blueprints(root: Path) -> list[Check]:
     checks.extend(
         check_svg_asset(
             root,
+            "docs/assets/github-ux-flywheel.svg",
+            "github_ux_flywheel",
+            ("GitHub UX Flywheel", "First scan", "Try locally", "Trust proof", "Install Core Pack", "Return with evidence", "Contribute safely", "Sticky precision", "No fake certainty", "README", "Experience Hub", "make test"),
+        )
+    )
+    checks.extend(
+        check_svg_asset(
+            root,
             "docs/assets/repository-experience-map.svg",
             "repo_experience_map",
             ("GitHub Visitor Experience Map", "Visitor intent", "First-run product path", "Proof and action"),
@@ -428,9 +452,25 @@ def check_visual_blueprints(root: Path) -> list[Check]:
     checks.extend(
         check_svg_asset(
             root,
+            "docs/assets/typing-os-stack.svg",
+            "typing_os_stack",
+            ("MBTI Typing OS Stack", "Intake Layer", "Hypothesis Layer", "Question Layer", "Evidence Layer", "Duel Layer", "Audit Layer", "Distribution Layer", "Agent Core Pack", "Release Gates", "safety boundary"),
+        )
+    )
+    checks.extend(
+        check_svg_asset(
+            root,
             "docs/assets/typing-engine-blueprint.svg",
             "typing_engine_blueprint",
             ("Typing Engine Blueprint", "Candidate universe", "Evidence", "Ledger", "Falsifier bank"),
+        )
+    )
+    checks.extend(
+        check_svg_asset(
+            root,
+            "docs/assets/evidence-retention-loop.svg",
+            "evidence_retention_loop",
+            ("Evidence Retention Loop", "Round N", "User contradiction", "Next discriminator", "Ledger delta", "Runner-up pressure", "Falsifier trigger", "Follow-up observation", "Benchmark repair", "user returns because the system remembers"),
         )
     )
     checks.extend(
@@ -518,7 +558,7 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             root,
             "docs/assets/agent-compatibility-grid.svg",
             "agent_compatibility_grid",
-            ("Agent Compatibility Grid", "18 adapters", "one protocol", "ChatGPT GPTs", "Zed", "Devin", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "JetBrains Junie", "Amazon Q", "Roo Code", "Kilo Code", "agent_adapter_audit.py"),
+            ("Agent Compatibility Grid", "4 core adapters", "optional recipes", "one protocol", "ChatGPT GPTs", "Zed", "Devin", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "JetBrains Junie", "Amazon Q", "Roo Code", "Kilo Code", "agent_adapter_audit.py"),
         )
     )
     checks.extend(
@@ -526,7 +566,7 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             root,
             "docs/assets/agent-pack-export-flow.svg",
             "agent_pack_export_flow",
-            ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo"),
+            ("Agent Pack Export Flow", "scripts/export_agent_pack.py", "agent-adapters/manifest.json", "core_targets", "AGENT_PACK_MANIFEST.json", "scripts/agent_pack_export_audit.py", "make test", "Target Repo"),
         )
     )
     checks.extend(
@@ -534,7 +574,7 @@ def check_visual_blueprints(root: Path) -> list[Check]:
             root,
             "docs/assets/agent-adapter-lab-flow.svg",
             "agent_adapter_lab_flow",
-            ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "18 adapters", "one protocol"),
+            ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "4 core", "optional recipes"),
         )
     )
     checks.extend(
@@ -617,7 +657,7 @@ def check_readme(root: Path) -> list[Check]:
     checks = [
         Check("readme:hero_image", "![MBTI Typing Skill hero]" in readme, "English README displays hero image"),
         Check("readme:journey_image", "![Typing journey map]" in readme, "English README displays journey image"),
-        Check("readme:blueprint_images", all(asset in readme for asset in ("experience-hub-route-map.svg", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
+        Check("readme:blueprint_images", all(asset in readme for asset in ("experience-hub-route-map.svg", "github-ux-flywheel.svg", "repository-experience-map.svg", "typing-os-stack.svg", "typing-engine-blueprint.svg", "evidence-retention-loop.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "English README displays all blueprint visuals"),
         Check("readme:session_lab_link", "GitHub Pages Session Lab" in readme and "docs/session-lab.html" in readme, "English README links hosted and local Session Lab"),
         Check("readme:question_lab_link", "GitHub Pages Question Lab" in readme and "docs/question-lab.html" in readme, "English README links hosted and local Question Lab"),
         Check("readme:type_duel_lab_link", "GitHub Pages Type Duel Lab" in readme and "docs/type-duel-lab.html" in readme, "English README links hosted and local Type Duel Lab"),
@@ -632,7 +672,8 @@ def check_readme(root: Path) -> list[Check]:
         Check("readme:zh_journey", "docs/assets/typing-journey-map.png" in zh_readme, "Chinese README references journey image"),
         Check("readme:zh_social_preview", "docs/assets/social-preview.jpg" in zh_readme, "Chinese README references social preview asset"),
         Check("readme:zh_response_eval_command_center", "docs/assets/response-eval-command-center.png" in zh_readme, "Chinese README references Response Eval command center"),
-        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("experience-hub-route-map.svg", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
+        Check("readme:zh_github_product_command_center", "docs/assets/github-product-command-center.png" in zh_readme, "Chinese README references GitHub product command center"),
+        Check("readme:zh_blueprints", all(asset in zh_readme for asset in ("experience-hub-route-map.svg", "github-ux-flywheel.svg", "repository-experience-map.svg", "typing-os-stack.svg", "typing-engine-blueprint.svg", "evidence-retention-loop.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Chinese README references all blueprint visuals"),
     ]
     for term in README_REQUIRED_TERMS:
         checks.append(Check(f"readme:term:{term}", term in readme, "English README contains required UX/proof term"))
@@ -723,15 +764,16 @@ def check_docs(root: Path) -> list[Check]:
         Check("docs:ux_mermaid", "```mermaid" in ux, "GitHub UX document contains a visitor journey diagram"),
         Check("docs:evaluation_repo_gate", "repository_scorecard.py" in evaluation, "Evaluation docs mention repository scorecard"),
         Check("docs:experience_no_fake_certainty", "Fake certainty" in experience, "Experience docs reject manipulative certainty"),
-        Check("docs:ux_blueprint_rules", all(term in ux for term in ("experience-hub-route-map.svg", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
+        Check("docs:ux_blueprint_rules", all(term in ux for term in ("experience-hub-route-map.svg", "github-ux-flywheel.svg", "repository-experience-map.svg", "typing-os-stack.svg", "typing-engine-blueprint.svg", "evidence-retention-loop.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "GitHub UX document keeps blueprint visuals in the maintenance rules"),
         Check("docs:ux_social_preview", "GitHub social preview" in ux and "social-preview.jpg" in ux, "GitHub UX document keeps the social preview asset visible"),
-        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "experience-hub-route-map.svg", "repository-experience-map.svg", "typing-engine-blueprint.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
-        Check("docs:evaluation_visual_gate", "experience-hub-route-map.svg" in evaluation and "repository-experience-map.svg" in evaluation and "benchmark-replay-loop.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "agent-adapter-lab-flow.svg" in evaluation and "universal-agent-bridge-map.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
+        Check("docs:visual_images", all(term in visual for term in ("typing-journey-map.png", "mbti-typing-hero.png", "social-preview.jpg", "response-eval-command-center.png", "github-product-command-center.png", "experience-hub-route-map.svg", "github-ux-flywheel.svg", "repository-experience-map.svg", "typing-os-stack.svg", "typing-engine-blueprint.svg", "evidence-retention-loop.svg", "trust-loop-dashboard.svg", "benchmark-arena-pipeline.svg", "benchmark-replay-loop.svg", "type-coverage-matrix.svg", "calibration-loop-map.svg", "blind-review-arena.svg", "consent-feedback-loop.svg", "type-duel-decision-map.svg", "adaptive-question-loop.svg", "agent-adapter-matrix.svg", "agent-compatibility-grid.svg", "agent-pack-export-flow.svg", "agent-adapter-lab-flow.svg", "universal-agent-bridge-map.svg", "response-quality-radar.svg", "response-eval-lab-flow.svg")), "Visual tour references bitmap, social preview, and blueprint assets"),
+        Check("docs:evaluation_visual_gate", "experience-hub-route-map.svg" in evaluation and "github-ux-flywheel.svg" in evaluation and "repository-experience-map.svg" in evaluation and "typing-os-stack.svg" in evaluation and "typing-engine-blueprint.svg" in evaluation and "evidence-retention-loop.svg" in evaluation and "benchmark-replay-loop.svg" in evaluation and "blind-review-arena.svg" in evaluation and "consent-feedback-loop.svg" in evaluation and "type-duel-decision-map.svg" in evaluation and "adaptive-question-loop.svg" in evaluation and "agent-adapter-matrix.svg" in evaluation and "agent-compatibility-grid.svg" in evaluation and "agent-pack-export-flow.svg" in evaluation and "agent-adapter-lab-flow.svg" in evaluation and "universal-agent-bridge-map.svg" in evaluation and "response-quality-radar.svg" in evaluation and "response-eval-lab-flow.svg" in evaluation, "Evaluation docs describe the visual blueprint gate"),
         Check("docs:evaluation_response_eval", all(term in evaluation for term in ("Response Eval Audit", "Response Eval Lab Audit", "examples/response-eval-cases.json", "scripts/response_eval_audit.py", "scripts/response_eval_lab_audit.py", "sticky precision", "negative_blocked")), "Evaluation docs describe the response quality audit layer"),
         Check("docs:experience_response_quality_loop", all(term in experience for term in ("Response Quality Loop", "response-eval-cases.json", "Response Eval Audit", "candidate set", "Anti-Flattery")), "Experience docs define the response quality loop"),
         Check("docs:experience_universal_agent_bridge_loop", all(term in experience for term in ("Universal Agent Bridge Loop", "Agent Portability Lab", "agent-portability-lab/v1", "agent_portability_request.yml", "capability-first")), "Experience docs define the future-host portability loop"),
         Check("docs:experience_hub_loop", all(term in experience for term in ("Experience Hub Loop", "docs/index.html", "Index Hub Audit", "Experience Hub Route Map", "starter prompt")), "Experience docs define the Pages root route loop"),
-        Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "amazon-q", "chatgpt-gpts", "claude-code", "cline", "codex", "continue", "cursor", "devin", "gemini-cli", "generic-agents-md", "github-copilot", "jetbrains-junie", "kilo-code", "opencode", "roo-code", "windsurf", "zed"], "Agent adapter manifest covers eighteen mainstream target entrypoints"),
+        Check("agent_adapters:manifest_core_targets", agent_manifest.get("core_targets") == ["codex", "claude-code", "cursor", "opencode"], "Agent adapter manifest defines the small first-class Core Pack"),
+        Check("agent_adapters:manifest_targets", sorted(target.get("id") for target in agent_manifest.get("targets", [])) == ["aider", "amazon-q", "chatgpt-gpts", "claude-code", "cline", "codex", "continue", "cursor", "devin", "gemini-cli", "generic-agents-md", "github-copilot", "jetbrains-junie", "kilo-code", "opencode", "roo-code", "windsurf", "zed"], "Agent adapter manifest keeps optional recipes available without expanding the first-class core"),
         Check("agent_adapters:manifest_pack_export", agent_manifest.get("pack_exporter") == "scripts/export_agent_pack.py" and agent_manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "Agent adapter manifest points to pack export gates"),
         Check("agent_adapters:root_contract", all(term in root_agents for term in ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifiers", "clinical", "hiring", "legal", "medical", "financial", "deterministic")), "Root AGENTS.md preserves the portable typing contract"),
         Check("agent_adapters:root_contexts", all(term in claude_root + gemini_root + conventions for term in ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifier", "clinical", "hiring", "legal", "medical", "financial", "deterministic")), "CLAUDE.md, GEMINI.md, and CONVENTIONS.md preserve the portable contract"),
@@ -746,8 +788,8 @@ def check_docs(root: Path) -> list[Check]:
         Check("agent_adapters:aider", "CONVENTIONS.md" in aider_config and "AGENTS.md" in aider_config and "skill/mbti-typing/SKILL.md" in conventions, "aider config reads portable conventions"),
         Check("agent_adapters:audit_script", "Agent Adapter Audit" in agent_adapter_audit and "EXPECTED_TARGETS" in agent_adapter_audit, "Agent adapters have a dedicated audit script"),
         Check("agent_adapters:audit_make_target", "agent-adapter-audit" in makefile and "scripts/agent_adapter_audit.py" in makefile, "Makefile runs Agent Adapter audit"),
-        Check("agent_adapters:pack_exporter", all(term in export_agent_pack for term in ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "Agent pack exporter has schema, baseline, receipt, and write guard"),
-        Check("agent_adapters:pack_audit_script", all(term in agent_pack_export_audit for term in ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "Agent pack export has a dedicated audit script"),
+        Check("agent_adapters:pack_exporter", all(term in export_agent_pack for term in ("PACK_SCHEMA", "BASELINE_PATHS", "core_targets", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "Agent pack exporter has schema, baseline, core alias, receipt, and write guard"),
+        Check("agent_adapters:pack_audit_script", all(term in agent_pack_export_audit for term in ("Agent Pack Export Audit", "core_run", "dry_run", "all_export", "selective_export", "unknown_target")), "Agent pack export has a dedicated audit script"),
         Check("agent_adapters:pack_audit_make_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs Agent Pack Export audit"),
         Check("agent_adapter_lab:title", "MBTI Typing Skill Agent Adapter Lab" in agent_adapter_lab, "Agent Adapter Lab has a clear product title"),
         Check("agent_adapter_lab:no_external_runtime", "<script src" not in agent_adapter_lab and " src=" not in agent_adapter_lab, "Agent Adapter Lab has no external runtime dependency"),
@@ -1005,6 +1047,7 @@ def run(root: Path) -> int:
     checks.extend(check_journey_map(root))
     checks.extend(check_social_preview(root))
     checks.extend(check_response_eval_command_center(root))
+    checks.extend(check_github_product_command_center(root))
     checks.extend(check_visual_blueprints(root))
     checks.extend(check_readme(root))
     checks.extend(check_docs(root))

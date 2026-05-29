@@ -1,6 +1,6 @@
 # Agent Adapters
 
-The MBTI Typing Skill should be portable across mainstream agent tools without becoming eighteen separate protocols.
+The MBTI Typing Skill should be portable across mainstream agent tools without turning the repository into an adapter farm. The maintained Core Pack is Codex, Claude Code, Cursor, and opencode; broader compatibility stays as optional manifest recipes plus a capability-first bridge.
 
 ## Design Rule
 
@@ -16,6 +16,12 @@ One canonical protocol, many thin adapters:
 - `scripts/sync_agent_adapter_lab.py` and `scripts/agent_adapter_lab_audit.py` block public-page drift.
 - `docs/agent-portability-lab.html` turns the same manifest into a capability-first Universal Agent Bridge for known and unknown hosts.
 - `scripts/sync_agent_portability_lab.py` and `scripts/agent_portability_lab_audit.py` block capability-map drift and issue-template drift.
+
+Maintenance budget:
+
+- Keep the first-class Core Pack small: Codex, Claude Code, Cursor, opencode.
+- Keep `AGENTS.md` as the durable fallback for AGENTS.md-aware agents.
+- Treat every other host-specific file as an optional recipe unless real usage proves it deserves first-class status.
 
 ## Supported Tools
 
@@ -67,10 +73,10 @@ Every adapter must preserve:
 The compatibility layer is productized as an exportable pack. This is the recommended path when a user wants to bring the MBTI Typing Skill into another repository:
 
 ```bash
-python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target all
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target core
 ```
 
-For lean installs, export only the target tools needed in the destination repository:
+For lean installs, export only the target tools needed in the destination repository. Use `--target all` only when a team explicitly wants every optional recipe:
 
 ```bash
 python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-cursor-cline-pack --target cursor --target cline
@@ -96,7 +102,7 @@ For first-run adoption, open the buildless local page instead of reading the man
 - [Agent Adapter Lab](agent-adapter-lab.html)
 - [Hosted Agent Adapter Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html)
 
-The lab lets users search the 18 targets, filter support levels, choose a Core Pack or Select All, copy the `scripts/export_agent_pack.py` command, inspect the install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed. It preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language in the adoption path.
+The lab defaults to the Core Pack so normal users do not need to choose from a long tool list. Advanced users can search the manifest recipes, filter support levels, choose Select All, copy the `scripts/export_agent_pack.py` command, inspect the install checklist, export an adapter JSON receipt, and copy an `agent_adapter_improvement.yml` issue seed. It preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language in the adoption path.
 
 ```bash
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html

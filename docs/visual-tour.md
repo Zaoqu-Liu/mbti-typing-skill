@@ -23,6 +23,16 @@ The GitHub social preview crop keeps the repository share surface consistent out
 - It uses abstract panels instead of generated readable text.
 - It echoes the same evidence, gate, radar, and receipt language that appears in the precise SVG diagrams.
 
+## GitHub Product Command Center
+
+![GitHub Product Command Center](assets/github-product-command-center.png)
+
+This `imagegen` asset is the product-feel companion to the exact diagrams:
+
+- It shows the repository as a dense command center with labs, evidence lanes, adapter nodes, and audit receipts.
+- It has no readable generated text; generated text is too fragile for proof-bearing documentation.
+- It gives first-time visitors a sophisticated product signal before the SVGs explain the exact workflow.
+
 ## Journey Map
 
 ![Typing journey map](assets/typing-journey-map.png)
@@ -48,6 +58,21 @@ The Pages root is now a real product surface rather than a redirect:
 - The route map makes the invariant explicit: candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary must survive every route.
 - `scripts/index_hub_audit.py` checks local-first rendering, workflow links, starter prompt copy, route-map visibility, safety language, and unsafe HTML injection before release.
 
+## GitHub UX Flywheel
+
+![GitHub UX Flywheel](assets/github-ux-flywheel.svg)
+
+The flywheel explains the repository experience from the user's side:
+
+- First scan should answer what this is, why it is serious, and where to click.
+- Try locally should work without account setup, network calls, or build steps.
+- Trust proof should appear before installation, through `make test`, audits, and safety boundaries.
+- Install Core Pack should keep the first-class surface small: Codex, Claude Code, Cursor, and opencode.
+- Return evidence should become a state update or contribution path, not another generic quiz restart.
+- Contribute safely should create issue seeds with redaction and boundary language already attached.
+
+This is the retention model: the user comes back because the system remembers evidence and pressure-tests the runner-up.
+
 ## GitHub Visitor Experience Map
 
 ![GitHub visitor experience map](assets/repository-experience-map.svg)
@@ -61,6 +86,19 @@ This blueprint is for repository design, not personality theory. It shows how th
 
 The map keeps the most important UX promise visible: the fastest path is still evidence-based.
 
+## MBTI Typing OS Stack
+
+![MBTI Typing OS Stack](assets/typing-os-stack.svg)
+
+The OS stack explains how the project can become broad without becoming unmaintainable:
+
+- Intake handles claims, transcripts, old reports, contradictions, and follow-up observations.
+- Hypothesis keeps all 16 types reachable and protects the runner-up.
+- Question, evidence, and duel layers keep adaptive rounds from becoming generic survey flow.
+- Audit blocks overconfident or manipulative answers before release.
+- Distribution keeps Codex, Claude Code, Cursor, opencode, portable AGENTS.md, and optional recipes on one protocol.
+- Release gates force the GitHub-facing product claims back through `make test`.
+
 ## Typing Engine Blueprint
 
 ![Typing engine blueprint](assets/typing-engine-blueprint.svg)
@@ -72,6 +110,20 @@ This is the reasoning architecture behind the experience:
 - Every useful observation must pass through the evidence ledger.
 - Adjacent-type duels are separate from generic trait questions.
 - Reports are not trusted until falsifiers and framework boundaries are visible.
+
+## Evidence Retention Loop
+
+![Evidence Retention Loop](assets/evidence-retention-loop.svg)
+
+The retention loop makes "addictive" mean precision rather than manipulation:
+
+- A user contradiction is routed into the ledger instead of treated as noise.
+- The ledger shows support, weaken, and caveat deltas.
+- Runner-up pressure stays visible, so the answer does not become a one-type story.
+- The next discriminator is selected from the actual conflict.
+- Follow-up observations and repeated misses feed benchmark repair.
+
+The user should feel that the system remembers them because the state changed, not because the prose became more flattering.
 
 ## Trust Loop Dashboard
 
@@ -259,7 +311,7 @@ This is the adoption UX layer: users do not need to infer which hidden files bel
 
 ![Universal Agent Bridge Map](assets/universal-agent-bridge-map.svg)
 
-The Universal Agent Bridge Map generalizes beyond the current 18 named targets:
+The Universal Agent Bridge Map generalizes beyond the small Core Pack and optional manifest recipes:
 
 - `agent-adapters/manifest.json` remains the source for known targets and source-checked conventions.
 - `scripts/sync_agent_portability_lab.py` embeds known targets plus capability axes into [Agent Portability Lab](agent-portability-lab.html).
@@ -406,11 +458,15 @@ The visual system therefore emphasizes:
 ```mermaid
 flowchart TD
     A[Hero image] --> HUB[Experience Hub Route Map]
-    HUB --> B[Session Lab]
+    HUB --> CMD[GitHub Product Command Center]
+    CMD --> FLY[GitHub UX Flywheel]
+    FLY --> B[Session Lab]
     B --> C[Benchmark Arena]
     C --> D[GitHub visitor map]
-    D --> E[Typing engine blueprint]
-    E --> F[Trust loop dashboard]
+    D --> OS[MBTI Typing OS Stack]
+    OS --> E[Typing engine blueprint]
+    E --> RET[Evidence Retention Loop]
+    RET --> F[Trust loop dashboard]
     F --> G[Benchmark Arena pipeline]
     G --> H[Benchmark Replay Loop]
     H --> I[Benchmark Replay Lab]

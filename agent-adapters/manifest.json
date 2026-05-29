@@ -6,6 +6,12 @@
   "pack_exporter": "scripts/export_agent_pack.py",
   "pack_audit": "scripts/agent_pack_export_audit.py",
   "checked_on": "2026-05-29",
+  "core_targets": [
+    "codex",
+    "claude-code",
+    "cursor",
+    "opencode"
+  ],
   "shared_references": [
     "skill/mbti-typing/references/playbooks.md",
     "skill/mbti-typing/references/question-bank.md",

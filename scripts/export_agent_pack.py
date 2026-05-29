@@ -91,6 +91,17 @@ def select_targets(manifest: dict[str, Any], requested: list[str]) -> list[dict[
     if "all" in requested_ids:
         return [target for target in manifest["targets"] if isinstance(target, dict)]
 
+    expanded_requested: list[str] = []
+    for target_id in requested_ids:
+        if target_id == "core":
+            core_targets = manifest.get("core_targets", [])
+            if not isinstance(core_targets, list) or not all(isinstance(item, str) for item in core_targets):
+                raise ValueError("manifest core_targets must be a list of target ids")
+            expanded_requested.extend(core_targets)
+        else:
+            expanded_requested.append(target_id)
+    requested_ids = list(dict.fromkeys(expanded_requested))
+
     unknown = sorted(set(requested_ids) - set(targets))
     if unknown:
         known = ", ".join(sorted(targets))
@@ -199,7 +210,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Export a portable MBTI Typing Skill agent pack.")
     parser.add_argument("--root", default=".", help="Repository root containing agent-adapters/manifest.json.")
     parser.add_argument("--dest", default="agent-pack", help="Destination directory for the exported pack.")
-    parser.add_argument("--target", action="append", default=[], help="Target id to export; repeatable. Use all for every target.")
+    parser.add_argument("--target", action="append", default=[], help="Target id to export; repeatable. Use core for the first-class pack or all for every target.")
     parser.add_argument("--force", action="store_true", help="Merge into a non-empty destination.")
     parser.add_argument("--dry-run", action="store_true", help="Print the export plan JSON without writing files.")
     parser.add_argument("--list-targets", action="store_true", help="Print known target ids and exit.")

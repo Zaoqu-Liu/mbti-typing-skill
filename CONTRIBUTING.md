@@ -24,11 +24,12 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Share Calibration Lab failures through the `calibration_result.yml` issue template.
 - Share sanitized blind review findings through the `blind_review.yml` issue template.
 - Share consented follow-up observations through `docs/follow-up-lab.html` and the `consented_followup.yml` issue template.
-- Improve agent adapters for Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware tools without forking the protocol.
+- Improve the first-class Core Pack for Codex, Claude Code, Cursor, and opencode; keep other agent support as optional manifest recipes unless real usage proves they should be promoted.
 - Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
 - Improve adapter adoption through `docs/agent-adapter-lab.html` and the `agent_adapter_improvement.yml` issue template.
 - Add or repair future-host support through `docs/agent-portability-lab.html` and the `agent_portability_request.yml` issue template before committing a bespoke adapter.
 - Improve the first-run GitHub Pages route through `docs/index.html`, `docs/assets/experience-hub-route-map.svg`, and `scripts/index_hub_audit.py` so new visitors can pick a task before reading internals.
+- Improve the GitHub visual UX through `docs/assets/github-product-command-center.png`, `docs/assets/github-ux-flywheel.svg`, `docs/assets/typing-os-stack.svg`, or `docs/assets/evidence-retention-loop.svg`, but keep exact claims in reviewable SVG or Markdown rather than generated image text.
 - Add response-eval fixtures that catch shallow live-round, type-duel, final-report, or anti-pattern answers.
 - Share weak answers through `docs/response-eval-lab.html` and the `response_eval_improvement.yml` issue template.
 - Tighten Chinese or English output templates.
@@ -49,9 +50,9 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 326/326 (100.00%)
-Agent Pack Export Audit: 24/24 (100.00%)
-Agent Adapter Lab Audit: 91/91 (100.00%)
+Agent Adapter Audit: 328/328 (100.00%)
+Agent Pack Export Audit: 28/28 (100.00%)
+Agent Adapter Lab Audit: 94/94 (100.00%)
 Agent Portability Lab Audit: 92/92 (100.00%)
 Index Hub Audit: 82/82 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
@@ -61,7 +62,7 @@ Type Duel Lab Audit: 68/68 (100.00%)
 Benchmark Replay Lab Audit: 62/62 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
-Repository UX Score: 641/641 (100.00%)
+Repository UX Score: 670/670 (100.00%)
 ```
 
 ## Benchmark Case Guidelines

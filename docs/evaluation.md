@@ -180,13 +180,16 @@ python3 -B scripts/repository_scorecard.py .
 
 This verifies that the GitHub-facing project experience has the expected hero image, visual diagrams, bilingual README path, evaluation docs, and repository trust artifacts.
 
-The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
+The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, a GitHub product command-center bitmap, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose nineteen exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose twenty-two exact-label SVG assets:
 
 - `docs/assets/experience-hub-route-map.svg` for the Pages root workflow selector to starter prompt to proof route.
+- `docs/assets/github-ux-flywheel.svg` for the first-scan to local try-run to proof to Core Pack to return-evidence to safe-contribution repository flywheel.
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
+- `docs/assets/typing-os-stack.svg` for the intake, hypothesis, question, evidence, duel, audit, distribution, and release-gate layering model.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
+- `docs/assets/evidence-retention-loop.svg` for the user-contradiction to ledger delta to runner-up pressure to next discriminator to benchmark repair retention loop.
 - `docs/assets/trust-loop-dashboard.svg` for the feedback-to-benchmark-to-release trust loop.
 - `docs/assets/benchmark-arena-pipeline.svg` for the benchmark JSON to case gallery source-of-truth sync.
 - `docs/assets/benchmark-replay-loop.svg` for the benchmark JSON to blind replay to Replay Receipt to repair prompt feedback loop.
@@ -197,14 +200,14 @@ The visual blueprint gate checks that the README and visual tour expose nineteen
 - `docs/assets/adaptive-question-loop.svg` for the question-bank Markdown to Question Lab to audit-gate loop.
 - `docs/assets/type-duel-decision-map.svg` for the pair-duels Markdown to Type Duel Lab to audit-gate loop.
 - `docs/assets/agent-adapter-matrix.svg` for the canonical skill to Codex, Claude Code, Cursor, opencode, and audit-gate portability loop.
-- `docs/assets/agent-compatibility-grid.svg` for the 18-adapter compatibility surface across Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and AGENTS.md-aware agents.
+- `docs/assets/agent-compatibility-grid.svg` for the maintainable Core Pack surface across Codex, Claude Code, Cursor, and opencode, plus optional manifest recipes for teams that explicitly need another host.
 - `docs/assets/agent-pack-export-flow.svg` for the manifest to exported pack to target repository copy path.
 - `docs/assets/agent-adapter-lab-flow.svg` for the manifest to Agent Adapter Lab to pack command to target repository to `agent_adapter_improvement.yml` loop.
 - `docs/assets/universal-agent-bridge-map.svg` for the known or unknown host to capability map to Agent Portability Lab to `agent_portability_request.yml` loop.
 - `docs/assets/response-quality-radar.svg` for the answer-level candidate set, runner-up, evidence movement, next-question, falsifier, safety-boundary, Anti-Flattery, and response audit gates.
 - `docs/assets/response-eval-lab-flow.svg` for the paste answer to mode-aware gates to quality radar to JSON receipt to repair prompt to `response_eval_improvement.yml` loop.
 
-These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals such as `docs/assets/social-preview.jpg` and `docs/assets/response-eval-command-center.png` can create atmosphere; SVG blueprints carry precise workflow claims.
+These SVGs are checked for accessibility metadata, expected product labels, and absence of script or remote dependencies. Bitmap visuals such as `docs/assets/social-preview.jpg`, `docs/assets/github-product-command-center.png`, and `docs/assets/response-eval-command-center.png` can create atmosphere; SVG blueprints carry precise workflow claims.
 
 The activation gate validates that the sample session state can pass final-state checks and that the sample report passes the report audit:
 
@@ -230,7 +233,7 @@ The Agent Adapter Audit validates that every supported agent entrypoint points b
 python3 -B scripts/agent_adapter_audit.py .
 ```
 
-The Agent Pack Export Audit validates that the compatibility layer can be exported into a portable directory without hand-copying drift. It checks dry-run JSON, all-target export, selective export, required files, unknown-target failure, non-empty destination protection, and the generated `AGENT_PACK_MANIFEST.json` receipt:
+The Agent Pack Export Audit validates that the compatibility layer can be exported into a portable directory without hand-copying drift. It checks the first-class Core Pack export, dry-run JSON, all-target export, selective export, required files, unknown-target failure, non-empty destination protection, and the generated `AGENT_PACK_MANIFEST.json` receipt:
 
 ```bash
 python3 -B scripts/agent_pack_export_audit.py .

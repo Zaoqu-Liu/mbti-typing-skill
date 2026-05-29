@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Evidence Retention Loop</title>
+  <desc id="desc">A user-retention diagram showing how each MBTI typing round remembers evidence, pressures the runner-up, generates the next discriminator, records falsifier triggers, and converts follow-up observations into benchmark repair.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fbfa"/>
+      <stop offset="0.48" stop-color="#eef5f3"/>
+      <stop offset="1" stop-color="#fff7eb"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#39c6b8"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b66a08"/>
+      <stop offset="1" stop-color="#f7b84b"/>
+    </linearGradient>
+    <linearGradient id="rose" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9d174d"/>
+      <stop offset="1" stop-color="#e95f8f"/>
+    </linearGradient>
+    <linearGradient id="dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172120"/>
+      <stop offset="1" stop-color="#2e3e3b"/>
+    </linearGradient>
+    <filter id="shadow" x="-18%" y="-18%" width="136%" height="145%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#172120" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M1 1 L12 7 L1 13 Z" fill="#0f766e"/>
+    </marker>
+    <style>
+      .bg { fill: url(#bg); }
+      .panel { fill: #ffffff; stroke: #d7dfdc; stroke-width: 2; filter: url(#shadow); }
+      .soft { fill: #fbfdfc; stroke: #d7dfdc; stroke-width: 2; }
+      .ink { fill: #172120; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #63706d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .white { fill: #ffffff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { font-size: 44px; font-weight: 900; }
+      .label { font-size: 23px; font-weight: 900; }
+      .small { font-size: 16px; font-weight: 650; }
+      .micro { font-size: 14px; font-weight: 760; }
+      .teal { fill: url(#teal); }
+      .amber { fill: url(#amber); }
+      .rose { fill: url(#rose); }
+      .dark { fill: url(#dark); }
+      .line { fill: none; stroke: #0f766e; stroke-width: 5; stroke-linecap: round; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 11 11; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="980"/>
+  <text x="80" y="78" class="ink title">Evidence Retention Loop</text>
+  <text x="82" y="114" class="muted small">Users return when the system remembers the last contradiction and shows exactly how new evidence changes the next round.</text>
+
+  <rect x="90" y="162" width="1420" height="692" rx="28" class="panel"/>
+  <circle cx="800" cy="505" r="210" fill="#ffffff" stroke="#d7dfdc" stroke-width="2"/>
+  <circle cx="800" cy="505" r="126" class="dark"/>
+  <text x="739" y="492" class="white" font-size="26" font-weight="900" font-family="Inter, ui-sans-serif, system-ui">Round N</text>
+  <text x="701" y="526" fill="#cce7e3" font-size="17" font-weight="740" font-family="Inter, ui-sans-serif, system-ui">stateful interview loop</text>
+
+  <g transform="translate(640 198)">
+    <rect width="320" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="teal"/>
+    <path d="M36 49 h24 M48 37 v24" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <text x="88" y="42" class="ink label">User contradiction</text>
+    <text x="88" y="68" class="muted small">not hidden, routed</text>
+  </g>
+  <g transform="translate(1055 292)">
+    <rect width="332" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="amber"/>
+    <path d="M36 42 h25 M36 50 h30 M36 58 h18" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <text x="88" y="42" class="ink label">Ledger delta</text>
+    <text x="88" y="68" class="muted small">support / weaken / caveat</text>
+  </g>
+  <g transform="translate(1115 600)">
+    <rect width="332" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="rose"/>
+    <text x="36" y="57" fill="#fff" font-size="20" font-weight="900" font-family="Inter, ui-sans-serif, system-ui">vs</text>
+    <text x="88" y="42" class="ink label">Runner-up pressure</text>
+    <text x="88" y="68" class="muted small">closest rival stays alive</text>
+  </g>
+  <g transform="translate(640 715)">
+    <rect width="320" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="teal"/>
+    <path d="M36 50 l8 8 l19 -27" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="88" y="42" class="ink label">Next discriminator</text>
+    <text x="88" y="68" class="muted small">4-6 targeted questions</text>
+  </g>
+  <g transform="translate(205 600)">
+    <rect width="350" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="amber"/>
+    <path d="M48 36 v20 M48 64 h1" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <text x="88" y="42" class="ink label">Falsifier trigger</text>
+    <text x="88" y="68" class="muted small">what would change the answer</text>
+  </g>
+  <g transform="translate(220 292)">
+    <rect width="340" height="98" rx="18" class="soft"/>
+    <circle cx="48" cy="49" r="25" class="rose"/>
+    <path d="M35 54 c9 -24 30 -24 39 0 M42 47 h25" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="88" y="42" class="ink label">Follow-up observation</text>
+    <text x="88" y="68" class="muted small">days later, consented</text>
+  </g>
+
+  <path d="M820 296 C940 284 1012 298 1055 340" class="line"/>
+  <path d="M1218 390 C1278 470 1280 555 1210 600" class="line"/>
+  <path d="M1115 658 C1016 733 970 756 960 764" class="line"/>
+  <path d="M640 764 C532 747 480 706 455 698" class="line"/>
+  <path d="M305 600 C246 520 248 445 330 390" class="line"/>
+  <path d="M560 340 C622 286 648 255 640 247" class="line"/>
+
+  <g transform="translate(626 430)">
+    <rect width="348" height="44" rx="22" fill="#ffffff" stroke="#cfd8d5" stroke-width="2"/>
+    <text x="34" y="29" class="ink micro">candidate set remembers evidence movement</text>
+  </g>
+  <g transform="translate(622 548)">
+    <rect width="356" height="44" rx="22" fill="#ffffff" stroke="#cfd8d5" stroke-width="2"/>
+    <text x="34" y="29" class="ink micro">user returns because the system remembers</text>
+  </g>
+
+  <rect x="155" y="880" width="395" height="62" rx="18" fill="#172120"/>
+  <text x="184" y="906" class="white" font-size="18" font-weight="900" font-family="Inter, ui-sans-serif, system-ui">No endless quiz</text>
+  <text x="184" y="930" fill="#cce7e3" font-size="15" font-weight="750" font-family="Inter, ui-sans-serif, system-ui">every round changes state</text>
+
+  <rect x="603" y="880" width="395" height="62" rx="18" fill="#172120"/>
+  <text x="632" y="906" class="white" font-size="18" font-weight="900" font-family="Inter, ui-sans-serif, system-ui">Benchmark repair</text>
+  <text x="632" y="930" fill="#cce7e3" font-size="15" font-weight="750" font-family="Inter, ui-sans-serif, system-ui">captures repeated misses</text>
+
+  <rect x="1050" y="880" width="395" height="62" rx="18" fill="#172120"/>
+  <text x="1079" y="906" class="white" font-size="18" font-weight="900" font-family="Inter, ui-sans-serif, system-ui">Ethical retention</text>
+  <text x="1079" y="930" fill="#cce7e3" font-size="15" font-weight="750" font-family="Inter, ui-sans-serif, system-ui">precision, not dependence</text>
+
+  <path d="M800 715 C800 672 800 650 800 632" class="line dash"/>
+  <path d="M800 378 C800 338 800 318 800 296" class="line dash"/>
+</svg>

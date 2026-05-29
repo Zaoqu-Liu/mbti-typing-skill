@@ -609,13 +609,13 @@
       <div class="hero-copy">
         <div class="eyebrow">Agent Adoption Lab</div>
         <h1>Select an agent stack and leave with a copyable installation path.</h1>
-        <p>This page turns the adapter manifest into a usable surface: choose Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md agents, then copy the exact pack command, install checklist, JSON receipt, and contribution issue seed. It stays local-first and preserves the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary across tools.</p>
+        <p>This page keeps the maintained surface small: the Core Pack is first-class for Codex, Claude Code, Cursor, and opencode. Extended manifest recipes remain searchable for teams that need them, but the default path is lean, local-first, and preserves the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary across tools.</p>
       </div>
       <aside class="hero-proof" aria-label="Agent Adapter Lab proof">
         <div class="proof-grid">
           <div class="proof">
             <strong id="metricTargets">18</strong>
-            <span>Adapter targets from agent-adapters/manifest.json</span>
+            <span>Manifest recipes, with 4 first-class Core Pack targets</span>
           </div>
           <div class="proof">
             <strong id="metricEntrypoints">28</strong>
@@ -755,6 +755,12 @@
           "pack_exporter": "scripts/export_agent_pack.py",
           "pack_audit": "scripts/agent_pack_export_audit.py",
           "checked_on": "2026-05-29",
+          "core_targets": [
+                "codex",
+                "claude-code",
+                "cursor",
+                "opencode"
+          ],
           "baseline_paths": [
                 "skill/mbti-typing",
                 "AGENTS.md",
@@ -1048,7 +1054,7 @@
     // END GENERATED AGENT ADAPTER MANIFEST
 
     const STORAGE_KEY = "mbti-typing-agent-adapter-lab-state";
-    const CORE_TARGETS = ["codex", "claude-code", "cursor", "opencode"];
+    const CORE_TARGETS = AGENT_ADAPTER_MANIFEST.core_targets || ["codex", "claude-code", "cursor", "opencode"];
     const SAFETY_CONTRACT = [
       "candidate set with serious runner-up",
       "evidence ledger",
@@ -1120,9 +1126,12 @@
         return "Select at least one target to generate a pack export command.";
       }
       const selectedAll = targets.length === AGENT_ADAPTER_MANIFEST.targets.length;
+      const selectedCore = targets.length === CORE_TARGETS.length && CORE_TARGETS.every((id) => targets.some((target) => target.id === id));
       const targetArgs = selectedAll
         ? ["--target", "all"]
-        : targets.flatMap((target) => ["--target", target.id]);
+        : selectedCore
+          ? ["--target", "core"]
+          : targets.flatMap((target) => ["--target", target.id]);
       return [
         "python3",
         "-B",
@@ -1200,6 +1209,7 @@
         "title: Agent adapter improvement - <tool or workflow>",
         "template: agent_adapter_improvement.yml",
         "selected_targets: " + ids,
+        "core_targets: " + CORE_TARGETS.join(", "),
         "manifest_schema: " + receipt.manifest_schema,
         "expected_behavior:",
         "  - adapter should preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary",

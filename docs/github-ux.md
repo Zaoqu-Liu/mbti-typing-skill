@@ -15,6 +15,7 @@ The README opens with:
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
 - A GitHub social preview asset at `docs/assets/social-preview.jpg` so the same product signal survives link sharing outside the README.
+- A GitHub product command-center bitmap at `docs/assets/github-product-command-center.png` for product feel without relying on generated readable text.
 - A Pages-root Experience Hub at `docs/index.html` for visitors who want task cards, a copyable starter prompt, and direct workflow routes before choosing a lab.
 - A local-first Session Lab for visitors who want to paste their own evidence, get a usable next round immediately, copy a share link, and recover work through imported JSON.
 - A Question Lab for visitors who want the exact source-synced next 4-6 questions instead of a generic personality quiz restart.
@@ -33,7 +34,7 @@ The README opens with:
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Nineteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/experience-hub-route-map.svg`, `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
+- Twenty-two SVG blueprints that make the GitHub experience inspectable: `docs/assets/experience-hub-route-map.svg`, `docs/assets/github-ux-flywheel.svg`, `docs/assets/repository-experience-map.svg`, `docs/assets/typing-os-stack.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/evidence-retention-loop.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -85,36 +86,40 @@ flowchart TD
 ## Visual Hierarchy
 
 1. Hero image: emotional hook and product shape.
-2. Experience Hub Route Map: why the Pages root is a task router instead of a redirect.
-3. Session Lab links: immediate proof that the repo is usable.
-4. Question Lab: visible next-round questions, round prompts, and question improvement seeds.
-5. Type Duel Lab: visible adjacent-type forks and copyable duel prompts.
-6. Benchmark Arena: visible traps and contribution path.
-7. Calibration Lab: visible repair loop for failed reports.
-8. Follow-Up Lab: safe return path for delayed observations.
-9. GitHub Visitor Experience Map: how different visitors should move.
-10. Typing Engine Blueprint: why the reasoning loop is not a quiz.
-11. Trust Loop Dashboard: why accuracy work is repeatable.
-12. Benchmark Arena Pipeline: why public benchmark cases cannot drift from JSON.
-13. Benchmark Replay Loop: why hard cases become blind prompts, Replay Receipts, repair prompts, and replay issue seeds.
-14. Benchmark Type Coverage Matrix: why all 16 leading types are now represented.
-15. Calibration Loop Map: why failed reports turn into repair prompts and issue seeds.
-16. Blind Review Arena: why accuracy claims can be blinded, scored, and adjudicated.
-17. Consent Feedback Loop: why real user follow-up can improve the project without exposing raw private material.
-18. Adaptive Question Loop: why next-round questions cannot drift from the skill source.
-19. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
-20. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
-21. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
-22. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
-23. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
-24. Universal Agent Bridge Map: why unknown hosts are mapped by project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays before claiming support.
-25. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
-26. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
-27. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
-28. System map: how inputs become calibrated outputs.
-29. Interview loop: why each round feels progressive.
-30. Evidence ledger: why the answer is not a black box.
-31. Quality gates: why the project is maintainable.
+2. GitHub Product Command Center: why the repo should feel like a polished product before a user reads internals.
+3. Experience Hub Route Map: why the Pages root is a task router instead of a redirect.
+4. GitHub UX Flywheel: why first scan, local try-run, proof, Core Pack install, return evidence, and safe contribution form the retention loop.
+5. Session Lab links: immediate proof that the repo is usable.
+6. Question Lab: visible next-round questions, round prompts, and question improvement seeds.
+7. Type Duel Lab: visible adjacent-type forks and copyable duel prompts.
+8. Benchmark Arena: visible traps and contribution path.
+9. Calibration Lab: visible repair loop for failed reports.
+10. Follow-Up Lab: safe return path for delayed observations.
+11. GitHub Visitor Experience Map: how different visitors should move.
+12. MBTI Typing OS Stack: why large functionality remains layered and maintainable.
+13. Typing Engine Blueprint: why the reasoning loop is not a quiz.
+14. Evidence Retention Loop: why users return because state changes, not because prose flatters them.
+15. Trust Loop Dashboard: why accuracy work is repeatable.
+16. Benchmark Arena Pipeline: why public benchmark cases cannot drift from JSON.
+17. Benchmark Replay Loop: why hard cases become blind prompts, Replay Receipts, repair prompts, and replay issue seeds.
+18. Benchmark Type Coverage Matrix: why all 16 leading types are now represented.
+19. Calibration Loop Map: why failed reports turn into repair prompts and issue seeds.
+20. Blind Review Arena: why accuracy claims can be blinded, scored, and adjudicated.
+21. Consent Feedback Loop: why real user follow-up can improve the project without exposing raw private material.
+22. Adaptive Question Loop: why next-round questions cannot drift from the skill source.
+23. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
+24. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
+25. Agent Compatibility Grid: why optional recipes also route to the same protocol without becoming first-class maintenance burden.
+26. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
+27. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
+28. Universal Agent Bridge Map: why unknown hosts are mapped by project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays before claiming support.
+29. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
+30. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
+31. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
+32. System map: how inputs become calibrated outputs.
+33. Interview loop: why each round feels progressive.
+34. Evidence ledger: why the answer is not a black box.
+35. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 
@@ -139,8 +144,9 @@ The experience should never rely on:
 - Keep at least one strong bitmap hero image in `docs/assets/`.
 - Keep a second journey-map visual in `docs/assets/`.
 - Keep the GitHub social preview asset in `docs/assets/social-preview.jpg`.
+- Keep the GitHub product command-center bitmap in `docs/assets/github-product-command-center.png`.
 - Keep the Response Eval command-center bitmap in `docs/assets/response-eval-command-center.png`.
-- Keep the seventeen precise SVG blueprints in `docs/assets/`: `repository-experience-map.svg`, `typing-engine-blueprint.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `benchmark-replay-loop.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, `agent-compatibility-grid.svg`, `agent-pack-export-flow.svg`, `agent-adapter-lab-flow.svg`, `response-quality-radar.svg`, and `response-eval-lab-flow.svg`.
+- Keep the twenty-two precise SVG blueprints in `docs/assets/`: `experience-hub-route-map.svg`, `github-ux-flywheel.svg`, `repository-experience-map.svg`, `typing-os-stack.svg`, `typing-engine-blueprint.svg`, `evidence-retention-loop.svg`, `trust-loop-dashboard.svg`, `benchmark-arena-pipeline.svg`, `benchmark-replay-loop.svg`, `type-coverage-matrix.svg`, `calibration-loop-map.svg`, `blind-review-arena.svg`, `consent-feedback-loop.svg`, `adaptive-question-loop.svg`, `type-duel-decision-map.svg`, `agent-adapter-matrix.svg`, `agent-compatibility-grid.svg`, `agent-pack-export-flow.svg`, `agent-adapter-lab-flow.svg`, `universal-agent-bridge-map.svg`, `response-quality-radar.svg`, and `response-eval-lab-flow.svg`.
 - Keep `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, and `scripts/agent_adapter_audit.py` aligned so adapter portability remains a tested feature, not a claim.
 - Keep `scripts/export_agent_pack.py`, `scripts/agent_pack_export_audit.py`, `agent-adapters/manifest.json`, and `docs/assets/agent-pack-export-flow.svg` aligned so adapter portability remains a copyable product path, not only a documentation claim.
 - Keep `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` aligned so adapter selection remains a tested GitHub UX path, not only a manifest.

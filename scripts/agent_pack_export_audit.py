@@ -118,6 +118,19 @@ def audit(root: Path) -> list[Check]:
     checks.append(Check("list_targets:exit", list_run.returncode == 0, "target listing exits successfully"))
     checks.append(Check("list_targets:coverage", listed_targets == EXPECTED_TARGETS, f"targets={listed_targets}"))
 
+    core_run = run_command(root, ["--dry-run", "--target", "core"])
+    checks.append(Check("core_run:exit", core_run.returncode == 0, "core alias dry run exits successfully"))
+    try:
+        core_payload = json.loads(core_run.stdout)
+    except Exception as exc:
+        core_payload = {}
+        checks.append(Check("core_run:json", False, f"core dry run emits JSON: {exc}"))
+    else:
+        checks.append(Check("core_run:json", isinstance(core_payload, dict), "core dry run emits a JSON object"))
+        checks.append(Check("core_run:targets", core_payload.get("selected_targets") == ["codex", "claude-code", "cursor", "opencode"], "core dry run expands to the first-class maintained targets"))
+        core_files = {item.get("source") for item in core_payload.get("files", []) if isinstance(item, dict)}
+        checks.append(Check("core_run:entrypoints", {"skill/mbti-typing", ".claude/skills/mbti-typing/SKILL.md", ".cursor/rules/mbti-typing.mdc", "opencode.json"} <= core_files, "core dry run includes Codex, Claude Code, Cursor, and opencode entrypoints"))
+
     dry_run = run_command(root, ["--dry-run", "--target", "cursor", "--target", "cline"])
     checks.append(Check("dry_run:exit", dry_run.returncode == 0, "dry run exits successfully"))
     try:

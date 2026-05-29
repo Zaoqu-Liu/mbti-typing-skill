@@ -62,7 +62,7 @@ REQUIRED_TERMS = [
     "Use $mbti-typing",
     "Copy Starter Prompt",
     "local-first",
-    "18",
+    "4",
     "16",
     "0",
 ]

@@ -44,6 +44,8 @@ REQUIRED_IDS = [
 REQUIRED_TERMS = [
     "MBTI Typing Skill Agent Adapter Lab",
     "Agent Adoption Lab",
+    "Core Pack",
+    "first-class",
     "Codex",
     "Claude Code",
     "Cursor",
@@ -98,6 +100,7 @@ def run(html_path: Path, manifest_path: Path) -> int:
         embedded_error = ""
 
     target_ids = [target.get("id") for target in expected.get("targets", []) if isinstance(target, dict)]
+    core_targets = manifest.get("core_targets", [])
     checks: list[Check] = [
         Check("html:title", "<title>MBTI Typing Skill Agent Adapter Lab</title>" in html, "product title is present"),
         Check("html:single_script", html.count("<script>") == 1, "one inline script block is present"),
@@ -115,6 +118,7 @@ def run(html_path: Path, manifest_path: Path) -> int:
         Check("sync:embedded_manifest_parse", not embedded_error, f"embedded manifest parses: {embedded_error}"),
         Check("sync:embedded_manifest_exact", embedded == expected, "embedded manifest matches agent-adapters/manifest.json plus export baseline"),
         Check("sync:target_count", len(embedded.get("targets", [])) >= 18, "embedded manifest covers at least eighteen targets"),
+        Check("sync:core_targets", core_targets == ["codex", "claude-code", "cursor", "opencode"] and embedded.get("core_targets") == core_targets, "manifest defines a small first-class core target set"),
         Check("sync:baseline_paths", "docs/agent-adapter-lab.html" in embedded.get("baseline_paths", []), "baseline exports the public Agent Adapter Lab"),
     ]
 

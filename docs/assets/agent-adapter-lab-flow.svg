@@ -34,7 +34,7 @@
   <rect class="bg" width="1440" height="980"/>
   <rect x="44" y="36" width="1352" height="116" rx="24" fill="url(#banner)" stroke="#cfd8d2" stroke-width="2"/>
   <text class="ink title" x="78" y="82">Agent Adapter Lab Flow</text>
-  <text class="muted s" x="78" y="114">18 adapters · one protocol · source-of-truth sync · copyable pack command · AGENT_PACK_MANIFEST.json receipt</text>
+  <text class="muted s" x="78" y="114">4 core adapters · optional recipes · source-of-truth sync · copyable pack command · AGENT_PACK_MANIFEST.json receipt</text>
   <rect class="chip" x="1050" y="62" width="126" height="34"/>
   <text class="ink tiny" x="1074" y="84">local-first</text>
   <rect class="chip" x="1190" y="62" width="146" height="34"/>
@@ -71,7 +71,7 @@
   <text class="muted s" x="964" y="302">Cursor · opencode · Gemini CLI · GitHub Copilot</text>
   <text class="muted s" x="964" y="330">Windsurf · Cline · Continue · aider · Junie · Q · Roo · Kilo</text>
   <rect class="blue" x="964" y="360" width="180" height="46"/>
-  <text class="ink tiny" x="988" y="389">18 adapters</text>
+  <text class="ink tiny" x="988" y="389">4 core</text>
   <rect class="amber" x="1160" y="360" width="180" height="46"/>
   <text class="ink tiny" x="1184" y="389">one protocol</text>
 

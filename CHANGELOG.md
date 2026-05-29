@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.25 - 2026-05-29
+
+- Added a maintainable first-class Core Pack for Codex, Claude Code, Cursor, and opencode, including the `--target core` export path, manifest `core_targets`, Agent Adapter Lab defaults, and stricter pack-export audits.
+- Added the `imagegen` GitHub Product Command Center bitmap plus three precise SVG blueprints: GitHub UX Flywheel, MBTI Typing OS Stack, and Evidence Retention Loop, so the repository explains user retention, maintainable scope, and stateful evidence flow from a first-time visitor's perspective.
+- Wired the new visual assets, Core Pack guidance, and audit expectations into README, Chinese README, Visual Tour, Evaluation, GitHub UX guidance, contribution rules, and repository gates, raising Agent Adapter Audit to 328/328, Agent Pack Export Audit to 28/28, Agent Adapter Lab Audit to 94/94, and Repository UX Score to 670/670.
+
 ## 0.1.24 - 2026-05-29
 
 - Replaced the GitHub Pages root redirect with a buildless Experience Hub that routes first-time visitors by task: typing, answer review, benchmark replay, follow-up evidence, agent installation, future-host portability, and contribution.

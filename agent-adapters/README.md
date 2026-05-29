@@ -1,6 +1,6 @@
 # Agent Adapter Layer
 
-This directory documents how the same MBTI Typing Skill is exposed to multiple agent tools without changing the underlying reasoning protocol.
+This directory documents how the same MBTI Typing Skill is exposed to a small first-class agent surface without changing the underlying reasoning protocol. The maintained Core Pack is Codex, Claude Code, Cursor, and opencode; the rest of the manifest is an optional recipe catalog for teams that need a specific host.
 
 ## Source Of Truth
 
@@ -14,6 +14,12 @@ This directory documents how the same MBTI Typing Skill is exposed to multiple a
 - Portability lab audit: `scripts/agent_portability_lab_audit.py`
 
 ## Adapter Matrix
+
+Maintenance rule:
+
+- First-class Core Pack: Codex, Claude Code, Cursor, opencode.
+- Portable baseline: `AGENTS.md` and `CONVENTIONS.md` for AGENTS.md-aware agents.
+- Optional manifest recipes: additional host-specific files can be exported when needed, but they are not allowed to fork the protocol.
 
 ![Agent Adapter Matrix](../docs/assets/agent-adapter-matrix.svg)
 
@@ -57,10 +63,10 @@ Every adapter must preserve the same behavior:
 The safest way to move the adapter layer into another repository is to export a pack from the manifest instead of hand-copying files:
 
 ```bash
-python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target all
+python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack --target core
 ```
 
-Selective exports keep the pack lean:
+Selective exports keep the pack lean, and `--target all` is reserved for teams that deliberately want every optional manifest recipe:
 
 ```bash
 python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-cursor-continue-pack --target cursor --target continue

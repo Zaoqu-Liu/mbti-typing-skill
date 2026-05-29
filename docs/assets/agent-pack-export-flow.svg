@@ -35,18 +35,18 @@
   <rect class="card manifest" x="96" y="172" width="300" height="116"/>
   <text class="h" x="120" y="207">Adapter Manifest</text>
   <text class="small" x="120" y="235">agent-adapters/manifest.json</text>
-  <text class="tiny" x="120" y="260">18 targets, source URLs, entrypoints</text>
+  <text class="tiny" x="120" y="260">core_targets plus optional recipes</text>
   <text class="tiny" x="120" y="281">canonical skill and shared contract</text>
 
   <rect class="card exporter" x="448" y="172" width="310" height="116"/>
   <text class="h" x="472" y="207">Pack Exporter</text>
   <text class="small" x="472" y="235">scripts/export_agent_pack.py</text>
-  <text class="tiny" x="472" y="260">--target all or repeated target ids</text>
+  <text class="tiny" x="472" y="260">--target core, all, or repeated ids</text>
   <text class="tiny" x="472" y="281">--dry-run emits the copy plan</text>
 
   <rect class="card pack" x="810" y="172" width="270" height="116"/>
   <text class="h" x="834" y="207">Target Selector</text>
-  <text class="small" x="834" y="235">all / codex / cursor / cline</text>
+  <text class="small" x="834" y="235">core / all / codex / cursor</text>
   <text class="tiny" x="834" y="260">selective export keeps pack lean</text>
   <text class="tiny" x="834" y="281">unknown targets fail clearly</text>
 

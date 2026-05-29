@@ -53,7 +53,7 @@
   <rect class="amber" x="1186" y="198" width="338" height="118" />
   <text class="section" x="1218" y="239">Install or adapt</text>
   <text class="small" x="1218" y="268">Agent Adapter Lab + Agent Portability Lab</text>
-  <text class="tiny" x="1218" y="294">18 targets plus unknown host mapping</text>
+  <text class="tiny" x="1218" y="294">4 core targets plus bridge mapping</text>
 
   <path class="line-strong" marker-end="url(#arrow)" d="M414 257 C470 257 494 257 548 257" />
   <path class="line-strong" marker-end="url(#arrow)" d="M1186 257 C1130 257 1106 257 1052 257" />

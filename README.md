@@ -10,6 +10,8 @@ This project is built for people who want serious type reasoning: multi-round in
 
 The GitHub social preview asset is stored at [docs/assets/social-preview.jpg](docs/assets/social-preview.jpg) so the repository can keep the same product signal when shared outside the README.
 
+The GitHub product command-center asset is stored at [docs/assets/github-product-command-center.png](docs/assets/github-product-command-center.png). It is generated with `imagegen` as an atmosphere layer only; exact claims stay in SVG, Markdown, and audit scripts.
+
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
 ## Experience Hub, Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Agent Portability Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
@@ -51,7 +53,7 @@ Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
 - [Experience Hub](docs/index.html): the Pages root command center with workflow cards, copyable starter prompt, and route-map visual.
-- [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and generic AGENTS.md-aware agents.
+- [Agent adapters](docs/agent-adapters.md): the first-class Core Pack for Codex, Claude Code, Cursor, and opencode, plus optional manifest recipes for ChatGPT GPTs/Projects, Zed, Devin, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and generic AGENTS.md-aware agents.
 - [Agent pack export](agent-adapters/README.md): manifest-driven pack export for copying selected agent adapters into another repository without manual drift.
 - [Agent Adapter Lab](docs/agent-adapter-lab.html): local-first target selector for pack commands, installation checklists, adapter JSON receipts, and adapter issue seeds.
 - [Agent Portability Lab](docs/agent-portability-lab.html): capability-first Universal Agent Bridge for new or unknown agent hosts, portable install recipes, adapter JSON drafts, and `agent_portability_request.yml` issue seeds.
@@ -75,11 +77,23 @@ The experience target is simple: every round should make the user feel that the 
 
 The repository is designed like a product surface: a visitor should know where to click, why the workflow is different, and what proof backs it before they install anything.
 
+### GitHub Product Command Center
+
+![GitHub Product Command Center](docs/assets/github-product-command-center.png)
+
+The GitHub Product Command Center is the `imagegen` atmosphere layer for the repository: a dense, inspectable product surface with labs, evidence lanes, adapter nodes, and audit receipts. It intentionally avoids readable generated text. Exact flow claims are carried by the SVGs and checked by `scripts/repository_scorecard.py`.
+
 ### Experience Hub Route Map
 
 ![Experience Hub Route Map](docs/assets/experience-hub-route-map.svg)
 
 The Experience Hub Route Map explains the new Pages root: [docs/index.html](docs/index.html) no longer redirects to a single lab. It routes the visitor to typing, validation, benchmark replay, follow-up evidence, agent installation, future-host portability, or contribution paths, while preserving the candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary contract. `scripts/index_hub_audit.py` gates the page for local-first rendering, workflow links, starter prompt copy, route-map visibility, safety language, and no unsafe HTML injection before release.
+
+### GitHub UX Flywheel
+
+![GitHub UX Flywheel](docs/assets/github-ux-flywheel.svg)
+
+The GitHub UX Flywheel designs retention ethically: first scan, local try-run, proof, Core Pack installation, return evidence, and safe contribution. The sticky part is not identity flattery; it is visible state movement, a remembered runner-up, and the feeling that the next question was selected from the user's actual contradiction.
 
 ### GitHub Visitor Experience Map
 
@@ -87,11 +101,23 @@ The Experience Hub Route Map explains the new Pages root: [docs/index.html](docs
 
 This map explains the first-run GitHub path: visitor intent, Session Lab, copyable prompt, share link, install commands, and contribution routes.
 
+### MBTI Typing OS Stack
+
+![MBTI Typing OS Stack](docs/assets/typing-os-stack.svg)
+
+The MBTI Typing OS Stack shows how the broad user-facing skill stays maintainable: intake, hypothesis, question, evidence, duel, audit, distribution, and release gates are separate layers. This is why the repository can feel general and large without letting every new agent or lab fork the core protocol.
+
 ### Typing Engine Blueprint
 
 ![Typing Engine Blueprint](docs/assets/typing-engine-blueprint.svg)
 
 The blueprint shows the core reasoning machine: all 16 types remain in the universe, the candidate set feeds an evidence ledger, adjacent-type duels attack the strongest conflict, and reports must pass falsifier and boundary gates.
+
+### Evidence Retention Loop
+
+![Evidence Retention Loop](docs/assets/evidence-retention-loop.svg)
+
+The Evidence Retention Loop is the answer to "why would people keep using it?": each return brings a contradiction, follow-up observation, or real-world miss back into the ledger. The system must show the delta, pressure the runner-up, select the next discriminator, and convert repeated misses into benchmark repair without pretending to be a clinical instrument.
 
 ### Trust Loop Dashboard
 
@@ -157,13 +183,13 @@ The Agent Adapter Matrix shows the core portability layer: `AGENTS.md`, `.claude
 
 ![Agent Compatibility Grid](docs/assets/agent-compatibility-grid.svg)
 
-The Agent Compatibility Grid expands the adapter layer to 18 entrypoints without creating 18 protocols: Codex, generic AGENTS.md-aware agents, ChatGPT GPTs/Projects, Zed Agent Panel, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q Developer CLI, Roo Code, and Kilo Code. The extra adapters add `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `.rules`, `.roomodes`, `kilo.jsonc`, `.amazonq/cli-agents/mbti-typing.json`, `.gemini/settings.json`, `.aider.conf.yml`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `.roo/rules-mbti-typing/mbti-typing.md`, `.kilo/rules/mbti-typing.md`, `.junie/AGENTS.md`, `.junie/commands/mbti-type.md`, and `gpts/mbti-typing-gpt-instructions.md`. Every file is audited for the same candidate-set, runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary contract.
+The Agent Compatibility Grid now uses a maintainable core-first model: Codex, Claude Code, Cursor, and opencode are the first-class Core Pack, while generic AGENTS.md-aware agents and additional host recipes remain available through the manifest when a team needs them. Extended recipes still cover ChatGPT GPTs/Projects, Zed Agent Panel, Devin, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q Developer CLI, Roo Code, and Kilo Code without turning them into separate protocols. Every adapter file is audited for the same candidate-set, runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary contract.
 
 ### Agent Pack Export Flow
 
 ![Agent Pack Export Flow](docs/assets/agent-pack-export-flow.svg)
 
-The Agent Pack Export Flow turns compatibility into something a user can actually move. `scripts/export_agent_pack.py` reads `agent-adapters/manifest.json`, exports `--target all` or a lean selected set such as `--target cursor --target cline`, includes the canonical `skill/mbti-typing/` directory, adapter docs, prompt recipes, selected entrypoints, and writes an `AGENT_PACK_MANIFEST.json` receipt. `scripts/agent_pack_export_audit.py` checks dry-run JSON, all-target export, selective export, non-empty destination protection, unknown-target failure, and required files. This makes cross-agent adoption copyable and auditable instead of a hand-maintained checklist.
+The Agent Pack Export Flow turns compatibility into something a user can actually move. `scripts/export_agent_pack.py` reads `agent-adapters/manifest.json`, exports the first-class Core Pack with `--target core`, supports deliberate `--target all`, and still allows a lean selected set such as `--target cursor --target cline`. The export includes the canonical `skill/mbti-typing/` directory, adapter docs, prompt recipes, selected entrypoints, and writes an `AGENT_PACK_MANIFEST.json` receipt. `scripts/agent_pack_export_audit.py` checks core export, dry-run JSON, all-target export, selective export, non-empty destination protection, unknown-target failure, and required files. This makes cross-agent adoption copyable and auditable instead of a hand-maintained checklist.
 
 ### Agent Adapter Lab Flow
 
@@ -336,9 +362,13 @@ sequenceDiagram
       mbti-typing-hero.png
       typing-journey-map.png
       social-preview.jpg
+      github-product-command-center.png
       response-eval-command-center.png
       repository-experience-map.svg
+      github-ux-flywheel.svg
+      typing-os-stack.svg
       typing-engine-blueprint.svg
+      evidence-retention-loop.svg
       trust-loop-dashboard.svg
       benchmark-arena-pipeline.svg
       type-coverage-matrix.svg
@@ -402,6 +432,7 @@ For other agent tools, keep the adapter files with the target repository:
 - Cline: `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, and `AGENTS.md`.
 - Continue: `.continue/rules/mbti-typing.md` plus `AGENTS.md`.
 - aider: `CONVENTIONS.md`, `.aider.conf.yml`, and `AGENTS.md`.
+- Optional manifest recipes: Zed uses `.rules`; Roo Code uses `.roomodes` and `.roo/rules-mbti-typing/mbti-typing.md`; Kilo Code uses `kilo.jsonc` and `.kilo/rules/mbti-typing.md`; Amazon Q Developer CLI uses `.amazonq/cli-agents/mbti-typing.json`; JetBrains Junie uses `.junie/AGENTS.md` and `.junie/commands/mbti-type.md`; ChatGPT GPTs/Projects use `gpts/mbti-typing-gpt-instructions.md`.
 
 The cross-agent contract is documented in [docs/agent-adapters.md](docs/agent-adapters.md) and indexed by [agent-adapters/manifest.json](agent-adapters/manifest.json).
 
@@ -491,10 +522,10 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
-Agent Adapter Audit: 326/326 (100.00%)
-Agent Pack Export Audit: 24/24 (100.00%)
+Agent Adapter Audit: 328/328 (100.00%)
+Agent Pack Export Audit: 28/28 (100.00%)
 Agent Adapter Lab Source Sync: PASS (18 targets match)
-Agent Adapter Lab Audit: 91/91 (100.00%)
+Agent Adapter Lab Audit: 94/94 (100.00%)
 Agent Portability Lab Source Sync: PASS (18 targets, 7 capabilities match)
 Agent Portability Lab Audit: 92/92 (100.00%)
 Index Hub Audit: 82/82 (100.00%)
@@ -512,7 +543,7 @@ Benchmark Replay Lab Audit: 62/62 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 641/641 (100.00%)
+Repository UX Score: 670/670 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
