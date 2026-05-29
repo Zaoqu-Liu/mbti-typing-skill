@@ -48,6 +48,9 @@ REQUIRED_TERMS = [
     "target uncertainty",
     "runner-up",
     "falsifier",
+    "low-typing",
+    "native question UI",
+    "Other / none of these",
 ]
 
 

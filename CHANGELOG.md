@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.26 - 2026-05-29
+
+- Added a low-typing question UX contract across the canonical skill, playbooks, question bank, Core Pack adapters, and agent docs: use native question UI only when present, otherwise ask compact `A/B/C/D/E` choices with a final `Other / none of these` escape hatch.
+- Updated Cursor, Claude Code, Codex, opencode, Agent Adapter Lab, Agent Portability Lab, Question Lab, and Response Eval Lab so the low-friction choice path is visible, copyable, and source-synced instead of being a README-only recommendation.
+- Added audit coverage for native-question gating and choice-first answers, raising Agent Adapter Audit to 339/339, Agent Adapter Lab Audit to 98/98, Agent Portability Lab Audit to 95/95, Response Eval Audit to 46/46, Response Eval Lab Audit to 71/71, Question Lab Audit to 74/74, and Repository UX Score to 678/678.
+
 ## 0.1.25 - 2026-05-29
 
 - Added a maintainable first-class Core Pack for Codex, Claude Code, Cursor, and opencode, including the `--target core` export path, manifest `core_targets`, Agent Adapter Lab defaults, and stricter pack-export audits.

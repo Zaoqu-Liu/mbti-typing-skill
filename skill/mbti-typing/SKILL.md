@@ -29,6 +29,27 @@ Choose the mode before doing substantive work:
 
 If the request is broad, start with a short mode declaration and then proceed. Do not ask the user to choose a mode unless the target is genuinely ambiguous.
 
+## Low-Typing Question UX
+
+Typing interviews should feel easy to answer, not like essay homework.
+
+- Prefer recognition over recall: ask concrete scene questions with selectable options before asking for prose.
+- Use the host's native question UI when it is actually available. Do not invent a host tool from a product name.
+- Codex: use `request_user_input` only in Plan Mode or another context where it is present; otherwise use a compact text fallback.
+- Claude Code: use `AskUserQuestion` only when it appears in the active tool list; otherwise use the compact fallback.
+- Cursor: use `AskQuestion` only when it appears in the active tool list or active Cursor mode; otherwise use the compact fallback.
+- opencode and headless CLI hosts: use compact `A/B/C/D/E` choices and proceed only when the user answers or when the assumption is low-risk and explicitly stated.
+- For live typing questions, do not mark a recommended answer. All options should be plausible and similarly dignified so the user is not nudged toward a type.
+- Unless the active host automatically adds a free-form "Other" field, make the final option `Other / none of these - I will explain`.
+- Hide option-to-type mappings until after the user answers; explain the interpretation in the evidence ledger.
+- When the user chooses `Other`, treat the correction as evidence and rewrite the next question instead of forcing the old frame.
+
+Compact fallback format:
+
+```text
+直接选 A/B/C/D/E；E = 以上都不是，我补充一句。每题可以只回一个字母。
+```
+
 ## Workflow
 
 1. **Intake the claim**
@@ -49,6 +70,7 @@ If the request is broad, start with a short mode declaration and then proceed. D
 
 4. **Interview adaptively**
    - Ask 4-6 questions per round. Use forced-choice, ranking, or concrete scenario questions.
+   - Default to low-typing choices: each question should be answerable by tapping or typing one option, with a final free-form escape hatch.
    - Avoid abstract self-label questions such as "Are you empathetic?" Prefer scenes: "When your partner cries during a conflict, what happens in your body first?"
    - Design each round against the current top conflict, not against all 16 types at once.
    - Load `references/question-bank.md` when drafting questions.

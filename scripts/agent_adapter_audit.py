@@ -101,6 +101,13 @@ CORE_PROTOCOL_TERMS = (
     "falsifier",
 )
 
+QUESTION_UX_TERMS = (
+    "low-typing",
+    "native question UI",
+    "A/B/C/D/E",
+    "Other / none of these",
+)
+
 SVG_TERMS = (
     "Agent Adapter Matrix",
     "Codex",
@@ -175,6 +182,7 @@ def check_manifest(root: Path) -> list[Check]:
         Check("manifest:pack_audit", manifest.get("pack_audit") == "scripts/agent_pack_export_audit.py", "manifest points at pack export audit"),
         Check("manifest:checked_on", manifest.get("checked_on") == "2026-05-29", "manifest records convention check date"),
         Check("manifest:core_targets", manifest.get("core_targets") == ["codex", "claude-code", "cursor", "opencode"], "manifest keeps the first-class maintained adapter surface small"),
+        Check("manifest:interaction_contract", contains_all(json.dumps(manifest.get("interaction_contract", {})), ("low-typing-choice-first", "native question UI", "Other / none of these", "option-to-type mappings")), "manifest preserves low-typing choice-first question UX"),
         Check("manifest:targets", sorted(target_ids) == sorted(EXPECTED_TARGETS), f"targets={target_ids}"),
     ]
 
@@ -194,6 +202,8 @@ def check_manifest(root: Path) -> list[Check]:
         checks.append(Check(f"manifest:{target_id}:contract", bool(target.get("contract")), "target has contract guidance"))
         checks.append(Check(f"manifest:{target_id}:support_level", bool(target.get("support_level")), "target has support level"))
         checks.append(Check(f"manifest:{target_id}:source_url", str(target.get("source_url", "")).startswith("https://"), "target has source URL"))
+        if target_id in {"codex", "claude-code", "cursor", "opencode"}:
+            checks.append(Check(f"manifest:{target_id}:question_ui", contains_all(str(target.get("question_ui", "")), ("Other / none of these", "compact")) and any(tool in str(target.get("question_ui", "")) for tool in ("request_user_input", "AskUserQuestion", "AskQuestion", "CLI-friendly")), "Core Pack target defines native-or-fallback question UI guidance"))
         for rel in entrypoints:
             checks.append(Check(f"manifest:{target_id}:entrypoint:{rel}", isinstance(rel, str) and (root / rel).exists(), "entrypoint file exists"))
 
@@ -208,6 +218,7 @@ def check_contract(root: Path) -> list[Check]:
     return [
         Check("contract:canonical_refs", contains_all(agents, CORE_PROTOCOL_TERMS), "root contract preserves protocol references"),
         Check("contract:safety", contains_all(agents, SAFETY_TERMS), "root contract preserves safety boundary"),
+        Check("contract:question_ux", contains_all(agents, QUESTION_UX_TERMS) and contains_all(agents, ("AskQuestion", "AskUserQuestion", "request_user_input")), "root contract preserves low-typing native-question guidance"),
         Check("contract:output_minimum", contains_all(agents, ("leading formulation", "serious runner-up", "decisive evidence", "revision triggers")), "root contract defines final output minimum"),
         Check("contract:verification", "make test" in agents and "scripts/agent_adapter_audit.py" in agents, "root contract requires adapter verification"),
         Check("contract:claude_root", contains_all(claude_root, CORE_PROTOCOL_TERMS + SAFETY_TERMS), "CLAUDE.md preserves portable protocol"),
@@ -262,12 +273,15 @@ def check_tool_adapters(root: Path) -> list[Check]:
         Check("claude_skill:frontmatter", "name: mbti-typing" in claude_skill and "when_to_use:" in claude_skill, "Claude Code skill has discovery frontmatter"),
         Check("claude_skill:canonical_refs", contains_all(claude_skill, ("skill/mbti-typing/SKILL.md", "runner-up", "falsifier", "question-bank.md", "pair-duels.md")), "Claude Code skill points back to canonical protocol"),
         Check("claude_skill:safety", contains_all(claude_skill, SAFETY_TERMS), "Claude Code skill preserves safety boundary"),
+        Check("claude_skill:question_ux", contains_all(claude_skill, ("AskUserQuestion", "A/B/C/D/E", "Other / none of these")), "Claude Code skill preserves low-typing question UX"),
         Check("claude_command:arguments", "$ARGUMENTS" in claude_command, "Claude command forwards user arguments"),
         Check("claude_command:mode_refs", contains_all(claude_command, ("question-bank.md", "pair-duels.md", "evidence-ledger-template.md", "quality-gates.md")), "Claude command routes to mode references"),
         Check("claude_command:safety", contains_all(claude_command, SAFETY_TERMS), "Claude command preserves safety boundary"),
+        Check("claude_command:question_ux", contains_all(claude_command, ("AskUserQuestion", "A/B/C/D/E", "Other / none of these")), "Claude command preserves low-typing question UX"),
         Check("cursor_rule:frontmatter", "description:" in cursor_rule and "alwaysApply: false" in cursor_rule and '"**/*"' in cursor_rule, "Cursor rule has explicit MDC frontmatter"),
         Check("cursor_rule:canonical_refs", contains_all(cursor_rule, ("skill/mbti-typing/SKILL.md", "question-bank.md", "pair-duels.md", "runner-up", "falsifiers")), "Cursor rule points back to canonical protocol"),
         Check("cursor_rule:safety", contains_all(cursor_rule, SAFETY_TERMS[:-1]) and "deterministic claims" in cursor_rule, "Cursor rule preserves safety boundary"),
+        Check("cursor_rule:question_ux", contains_all(cursor_rule, ("AskQuestion", "A/B/C/D/E", "Other / none of these", "active mode or tool list")), "Cursor rule preserves native question UI gating and low-typing fallback"),
         Check("opencode:instructions", isinstance(instructions, list) and all(rel in instructions for rel in ("AGENTS.md", "agent-adapters/README.md", "skill/mbti-typing/SKILL.md")), "opencode aggregates project, adapter, and skill instructions"),
         Check("gemini:settings", isinstance(gemini_context_files, list) and all(rel in gemini_context_files for rel in ("AGENTS.md", "GEMINI.md")), "Gemini settings load root context files"),
         Check("aider:config", "CONVENTIONS.md" in aider_config and "AGENTS.md" in aider_config, "aider config reads portable conventions"),
@@ -315,9 +329,11 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("docs:adapter_readme_tools", contains_all(adapter_readme, required_tool_terms), "adapter README covers all target tools"),
         Check("docs:adapter_readme_contract", contains_all(adapter_readme, ("candidate set", "runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter README preserves universal contract"),
         Check("docs:adapter_readme_pack_export", contains_all(adapter_readme, ("scripts/export_agent_pack.py", "AGENT_PACK_MANIFEST.json", "Agent Pack Export Audit")), "adapter README documents pack export"),
+        Check("docs:adapter_readme_question_ux", contains_all(adapter_readme, QUESTION_UX_TERMS + ("AskQuestion", "AskUserQuestion", "request_user_input")), "adapter README documents low-typing native question UI strategy"),
         Check("docs:maintenance_budget", contains_all(adapter_readme + docs, ("Core Pack", "first-class", "Codex", "Claude Code", "Cursor", "opencode", "optional recipe")), "adapter docs separate the small maintained core from optional recipes"),
         Check("docs:agent_adapters_tools", contains_all(docs, required_tool_terms), "agent adapter docs cover all target tools"),
         Check("docs:agent_adapters_sources", contains_all(docs, source_terms), "agent adapter docs cite current source conventions"),
+        Check("docs:agent_adapters_question_ux", contains_all(docs, QUESTION_UX_TERMS + ("AskQuestion", "AskUserQuestion", "request_user_input")), "agent adapter docs document low-typing native question UI strategy"),
         Check("docs:agent_adapter_lab", contains_all(lab, LAB_TERMS + required_tool_terms), "Agent Adapter Lab covers targets, export path, issue seed, and protocol terms"),
         Check("docs:agent_portability_lab", contains_all(portability_lab, ("Universal Agent Bridge Lab", "Agent Portability Lab", "agent-portability-lab/v1", "agent_portability_request.yml", "unknown host", "capability-first", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary") + required_tool_terms), "Agent Portability Lab covers known and unknown hosts, capability bridge, receipts, and safety terms"),
         Check("docs:agent_adapter_issue_template", contains_all(issue_template, ("Agent adapter improvement", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter issue template preserves protocol terms"),

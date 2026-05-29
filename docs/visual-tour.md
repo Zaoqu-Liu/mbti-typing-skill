@@ -254,7 +254,7 @@ The Agent Adapter Matrix makes portability visible:
 - `.claude/skills/mbti-typing/SKILL.md` and `.claude/commands/mbti-type.md` expose the same workflow to Claude Code.
 - `.cursor/rules/mbti-typing.mdc` exposes the protocol through Cursor project rules.
 - `opencode.json` aggregates the root contract, adapter README, and canonical skill for opencode.
-- `scripts/agent_adapter_audit.py` checks targets, entrypoints, source references, runner-up language, falsifiers, safety boundaries, and this SVG before release.
+- `scripts/agent_adapter_audit.py` checks targets, entrypoints, source references, low-typing native-question guidance, runner-up language, falsifiers, safety boundaries, and this SVG before release.
 
 This is the distribution layer: users should not have to abandon the workflow because their agent tool changed.
 
@@ -388,7 +388,8 @@ The lab is intentionally local-first: no build step, no external runtime, no acc
 - Visitors can search by probe family, uncertainty pattern, type pair, or evidence gap.
 - Every card is source-synced from the skill reference file.
 - The selected card preserves source heading, category, question goals, concrete prompts, forced-choice options, and round templates.
-- The page generates a focused `Use $mbti-typing` round prompt for the next 4-6 questions instead of a full restart.
+- The page generates a focused `Use $mbti-typing` round prompt for the next 4-6 questions instead of a full restart, with native question UI preferred when available and compact `A/B/C/D/E` fallback when it is not.
+- The final answer option stays `Other / none of these - I will explain` so the user can escape a bad frame without writing full paragraphs by default.
 - The issue seed makes a weak, repetitive, or generic question easy to convert into a `question_improvement.yml` contribution.
 - Local persistence remembers the selected probe without sending anything to a server.
 

@@ -581,7 +581,7 @@
             <span>source-synced question cards</span>
           </div>
           <div class="metric">
-            <strong id="metricQuestions">60</strong>
+            <strong id="metricQuestions">63</strong>
             <span>questions and goals</span>
           </div>
           <div class="metric">
@@ -652,7 +652,7 @@
           <div class="panel-header">
             <div>
               <h3>Questions And Follow-Ups</h3>
-              <p>Ask 4-6 questions per round. Avoid abstract self-labels and do not reveal option mappings before the subject answers.</p>
+              <p>Ask 4-6 questions per round. Prefer low-typing choices, keep a final Other escape hatch, and do not reveal option mappings before the subject answers.</p>
             </div>
           </div>
           <ol class="question-list" id="questionList"></ol>
@@ -722,6 +722,9 @@
                 "questions": [
                       "Ask 4-6 questions per round.",
                       "Use concrete scenes. Avoid asking for type words directly.",
+                      "Prefer low-typing answer design: native selectable options when available, otherwise compact A/B/C/D/E choices.",
+                      "Use the final option as `Other / none of these - I will explain` unless the host automatically provides free-form input.",
+                      "Do not reveal option-to-type mappings before the answer.",
                       "Prefer ranking top two options when the subject says several options fit.",
                       "After every round, update the candidate set and write what each answer rules in and rules out.",
                       "Do not reuse a question if its answer would only confirm the current favorite.",
@@ -731,10 +734,12 @@
                 "guidance": [
                       "Ask 4-6 questions per round.",
                       "Use concrete scenes. Avoid asking for type words directly.",
+                      "Prefer low-typing answer design: native selectable options when available, otherwise compact A/B/C/D/E choices.",
+                      "Use the final option as `Other / none of these - I will explain` unless the host automatically provides free-form input.",
+                      "Do not reveal option-to-type mappings before the answer.",
                       "Prefer ranking top two options when the subject says several options fit.",
                       "After every round, update the candidate set and write what each answer rules in and rules out.",
-                      "Do not reuse a question if its answer would only confirm the current favorite.",
-                      "For a known top-two battle, load `pair-duels.md` first and use this file only to fill missing probes."
+                      "Do not reuse a question if its answer would only confirm the current favorite."
                 ]
           },
           {
@@ -1509,7 +1514,7 @@
 
       const ruleCell = makeNode("div", "detail-cell");
       ruleCell.append(makeNode("strong", "", "Usage rule"));
-      ruleCell.append(makeNode("p", "", "Ask 4-6 questions, update the candidate board, preserve runner-up, and name the falsifier."));
+      ruleCell.append(makeNode("p", "", "Ask 4-6 questions, prefer low-typing choices, update the candidate board, preserve runner-up, and name the falsifier."));
       cells.push(ruleCell);
       els.questionDetail.replaceChildren(...cells);
 
@@ -1548,6 +1553,9 @@
         "",
         "Round template:",
         ...(templateLines.length ? templateLines : ["- Ask 4-6 concrete questions tied to the current fork."]),
+        "- Use native question UI when the host exposes it; otherwise ask compact A/B/C/D/E choices.",
+        "- Keep E as Other / none of these - I will explain unless the host already adds free-form input.",
+        "- Do not reveal option-to-type mappings before the user answers.",
         "",
         "Ask from this source card, but only keep questions that attack the actual uncertainty:",
         ...questionLines,

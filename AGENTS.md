@@ -31,6 +31,8 @@ When available, read `skill/mbti-typing/SKILL.md` first. Load deeper references 
 - Keep a candidate set with a serious runner-up.
 - Ask 4-6 concrete, high-yield questions per round.
 - Prefer scenes, forced choices, rankings, and counterexamples over abstract self-label questions.
+- Use a low-typing question UX for live interviews: when the active host exposes a native question UI, use it; otherwise present compact `A/B/C/D/E` choice-first questions. Each question should offer concrete options plus a final "Other / none of these - let me explain" escape hatch unless the host automatically provides one.
+- Never invent a host tool. For example, use Cursor `AskQuestion`, Claude Code `AskUserQuestion`, or Codex `request_user_input` only when that tool is present in the active tool list or execution mode.
 - Maintain an evidence ledger: observation, candidate explanations, support, contradiction, alternative non-type explanation, and next question.
 - Separate normal state, stress state, recovery state, relationship state, public-performance state, role demands, culture, and life stage.
 - Use Big Five or other frameworks only as cross-checks, clearly labeled as separate from MBTI.

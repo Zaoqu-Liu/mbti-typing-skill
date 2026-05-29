@@ -23,6 +23,13 @@ Maintenance budget:
 - Keep `AGENTS.md` as the durable fallback for AGENTS.md-aware agents.
 - Treat every other host-specific file as an optional recipe unless real usage proves it deserves first-class status.
 
+Question UX budget:
+
+- Prefer native question UI when the active host actually exposes one: Codex `request_user_input`, Claude Code `AskUserQuestion`, Cursor `AskQuestion`, or an equivalent host tool.
+- Never invent a tool from a product name. If the active run does not expose the native question UI, use compact `A/B/C/D/E` choices in chat.
+- Keep the last option as `Other / none of these - I will explain` unless the host automatically provides a free-form field.
+- Do not mark any answer option as recommended in MBTI typing questions, and do not reveal option-to-type mappings before the user answers.
+
 ## Supported Tools
 
 ![Agent Adapter Matrix](assets/agent-adapter-matrix.svg)
@@ -63,6 +70,7 @@ Every adapter must preserve:
 - candidate set and serious runner-up
 - evidence ledger
 - 4-6 question rhythm
+- low-typing choice-first question UX
 - adjacent-type duel discipline
 - source references to `question-bank.md` and `pair-duels.md`
 - falsifiers and revision triggers
@@ -116,7 +124,7 @@ For a new mainstream agent that is not yet named in `agent-adapters/manifest.jso
 - [Agent Portability Lab](agent-portability-lab.html)
 - [Hosted Agent Portability Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-portability-lab.html)
 
-The Agent Portability Lab lets a visitor select a known target or type an unknown host name, then check the real capabilities the host exposes: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed.
+The Agent Portability Lab lets a visitor select a known target or type an unknown host name, then check the real capabilities the host exposes: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, native question UI, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed.
 
 This is the generalization layer for future tools. It avoids claiming native support until the host proves an instruction surface, while still preserving the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary contract.
 

@@ -68,6 +68,9 @@ REQUIRED_TERMS = [
     "evidence ledger",
     "falsifier",
     "safety boundary",
+    "low-typing",
+    "native question UI",
+    "Other / none of these",
     "source-of-truth sync",
     "local-first",
     "agent-adapter-lab/v1",
@@ -119,6 +122,7 @@ def run(html_path: Path, manifest_path: Path) -> int:
         Check("sync:embedded_manifest_exact", embedded == expected, "embedded manifest matches agent-adapters/manifest.json plus export baseline"),
         Check("sync:target_count", len(embedded.get("targets", [])) >= 18, "embedded manifest covers at least eighteen targets"),
         Check("sync:core_targets", core_targets == ["codex", "claude-code", "cursor", "opencode"] and embedded.get("core_targets") == core_targets, "manifest defines a small first-class core target set"),
+        Check("sync:interaction_contract", "low-typing-choice-first" == embedded.get("interaction_contract", {}).get("name") and "Other / none of these" in str(embedded.get("interaction_contract", {})), "embedded manifest preserves low-typing choice-first question UX"),
         Check("sync:baseline_paths", "docs/agent-adapter-lab.html" in embedded.get("baseline_paths", []), "baseline exports the public Agent Adapter Lab"),
     ]
 

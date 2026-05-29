@@ -620,6 +620,7 @@
     const STORAGE_KEY = "mbti-typing-response-eval-lab-state";
     const TYPE_RE = /\b(?:I|E)(?:N|S)(?:T|F)(?:J|P)\b/g;
     const QUESTION_RE = /(?:^|\n)\s*(?:[-*]|\d+[.)、])\s*[^。\n]*(?:\?|？)/g;
+    const OPTION_RE = /(?:^|\n)\s*(?:[A-EＡ-Ｅ][.)、:]|[-*]\s*(?:A|B|C|D|E)\b)/gi;
     const OVERCLAIM_RE = /100%|百分百|绝对|一定是|不用怀疑|无需再问|唯一答案|世界上最准|不可能|必然|永远|\bdefinitely\b|\balways\b|\bnever\b|\bguaranteed\b/i;
     const FLATTERY_RE = /天生|比别人高级|最强人格|最强类型|完美人格|上等人|注定|无敌|神判|领导者命|\bsuperior\b|\bdestined\b|\bborn leader\b/i;
 
@@ -629,6 +630,7 @@
       { id: "evidence_movement", label: "Evidence movement", detail: "Explains what got stronger, weaker, or stayed ambiguous." },
       { id: "next_questions", label: "Next questions", detail: "Asks the right number of focused next-round or observation questions." },
       { id: "scene_questions", label: "Concrete scenes", detail: "Questions target recent situations, stress, conflict, recovery, or normal state." },
+      { id: "choice_first_questions", label: "Choice-first UX", detail: "Live questions can be answered with options and preserve an Other escape hatch." },
       { id: "duel_losing_conditions", label: "Duel losing conditions", detail: "For type duels, states what would make either side lose." },
       { id: "final_report_shape", label: "Final report shape", detail: "For final reports, includes conclusion, evidence, weak evidence, and observation prompts." },
       { id: "cross_framework_boundary", label: "Cross-framework boundary", detail: "Separates MBTI from Big Five, A/T, Enneagram, attachment, or role explanations." },
@@ -640,8 +642,8 @@
     ];
 
     const REQUIRED_BY_MODE = {
-      live_round: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
-      type_duel: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "duel_losing_conditions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
+      live_round: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "choice_first_questions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
+      type_duel: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "scene_questions", "choice_first_questions", "duel_losing_conditions", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
       final_report: ["candidate_set", "runner_up", "evidence_movement", "final_report_shape", "cross_framework_boundary", "falsifier", "safety_boundary", "calibrated_confidence", "no_overclaim", "no_flattery"],
       anti_pattern: ["candidate_set", "runner_up", "evidence_movement", "next_questions", "falsifier", "safety_boundary", "no_overclaim", "no_flattery"]
     };
@@ -649,7 +651,7 @@
     const STRONG_FIXTURE = {
       mode: "live_round",
       prompt: "The user is stuck between ENTJ, INTJ, and INFP after multiple tests.",
-      response: `目前证据更支持 ENTJ-like Te-Ni 作为第一假设，但 INTJ 是 serious runner-up，INFP 不能直接丢掉。\n\n候选集：ENTJ、INTJ、INFP。ENTJ 上升是因为你在没人要求时也会把混乱变成目标、负责人和下一步；INTJ 仍然强，因为外部推进可能只是内部模型收敛后的输出；INFP 还活着，因为价值认可可能先于行动。\n\n证据移动：看到低效就忍不住接管支持 ENTJ，但还没有证明这是正常状态而不是项目角色。没有移动的证据是意义语言，因为它既可能是 Fi，也可能是行动后的价值解释。\n\n反证门：如果你在低压力、无人期待、没有绩效目标的日子里仍然先进入私人模型整理，而不是外部结构推进，我会把 INTJ 提到第一候选。\n\n下一轮只问 5 个具体场景：\n1. 最近一次没人要求你负责但你还是主动接管的场景是什么？\n2. 计划混乱时你先写目标负责人，还是先退回去想底层模型？\n3. 冲突后你靠理顺系统、想通模型、维护真实感，还是修复关系来恢复？\n4. 有效方案违背私人价值时，你先暂停行动，还是先推进再修正意义？\n5. 别人说你太强势时，你更像羞耻、愤怒、困惑，还是觉得对方没抓住问题？\n\n边界：这不是临床、招聘或心理测量结论。当前只是可修正的 MBTI 访谈假设，不是确定的人格真值。`
+      response: `目前证据更支持 ENTJ-like Te-Ni 作为第一假设，但 INTJ 是 serious runner-up，INFP 不能直接丢掉。\n\n候选集：ENTJ、INTJ、INFP。ENTJ 上升是因为你在没人要求时也会把混乱变成目标、负责人和下一步；INTJ 仍然强，因为外部推进可能只是内部模型收敛后的输出；INFP 还活着，因为价值认可可能先于行动。\n\n证据移动：看到低效就忍不住接管支持 ENTJ，但还没有证明这是正常状态而不是项目角色。没有移动的证据是意义语言，因为它既可能是 Fi，也可能是行动后的价值解释。\n\n反证门：如果你在低压力、无人期待、没有绩效目标的日子里仍然先进入私人模型整理，而不是外部结构推进，我会把 INTJ 提到第一候选。\n\n下一轮只问 5 个具体场景。为了少打字，直接选 A/B/C/D/E；E = 以上都不是，我补充一句。选项含义我会在你回答后解释。\n1. 最近一次没人要求你负责但你还是主动接管时，第一秒最刺痛你的是什么？\n   A. 浪费动作和没人推进\n   B. 底层模型明显不对\n   C. 私人价值被冒犯\n   D. 关系气氛已经乱了\n   E. 以上都不是，我补充\n2. 计划混乱时你最自动的第一步是什么？\n   A. 写目标、负责人和下一步\n   B. 先退回去想底层模型\n   C. 先确认自己能否认可这个方向\n   D. 先读各方期待和情绪阻力\n   E. 以上都不是，我补充\n3. 冲突后你靠什么恢复？\n   A. 把系统理顺\n   B. 把模型想通\n   C. 找回真实感或价值边界\n   D. 修复关系和气氛\n   E. 以上都不是，我补充\n4. 有效方案违背私人价值时，你通常怎样动？\n   A. 先推进，再修正意义或边界\n   B. 暂停行动，直到内在认可\n   C. 找一个更长期的结构解释\n   D. 先看谁会受伤以及如何修复\n   E. 以上都不是，我补充\n5. 别人说你太强势时，你更接近什么？\n   A. 羞耻或价值混乱\n   B. 愤怒，因为问题没人解决\n   C. 困惑，想先理解模式\n   D. 担心关系被我压坏\n   E. 以上都不是，我补充\n\n边界：这不是临床、招聘或心理测量结论。当前只是可修正的 MBTI 访谈假设，不是确定的人格真值。`
     };
 
     const BAD_FIXTURE = {
@@ -689,12 +691,15 @@
     function analyzeResponse(text, mode) {
       const types = uniqueTypes(text);
       const qCount = countQuestions(text);
+      const optionCount = (text.match(OPTION_RE) || []).length;
+      const hasEscape = containsAny(text, ["Other / none of these", "以上都不是", "都不是", "我补充", "自由补充", "let me explain", "none of these"]);
       const features = {
         candidate_set: types.length >= 2 && containsAny(text, ["候选集", "候选榜", "candidate set", "hypotheses"]),
         runner_up: containsAny(text, ["runner-up", "serious runner-up", "第二候选", "备选", "仍然是", "仍然很强"]),
         evidence_movement: containsAny(text, ["证据移动", "真正移动", "支持", "削弱", "weakens", "moved", "弱证据", "强证据"]),
         next_questions: mode === "final_report" ? qCount >= 3 : qCount >= 4 && qCount <= 6,
         scene_questions: containsAny(text, ["最近一次", "具体场景", "发生的例子", "举一个", "复盘", "压力", "冲突", "恢复", "正常状态"]),
+        choice_first_questions: optionCount >= 10 && hasEscape && containsAny(text, ["直接选", "少打字", "低打字", "choice", "选项", "A/B/C/D/E"]),
         duel_losing_conditions: containsAny(text, ["loses if", "失去领先", "反超", "降低", "提高"]),
         final_report_shape: containsAny(text, ["短结论", "为什么", "强证据", "弱证据", "继续观察", "working formulation"]),
         cross_framework_boundary: containsAny(text, ["big five", "a/t", "九型", "依恋", "框架", "不能替代"]),
@@ -704,7 +709,7 @@
         no_overclaim: !OVERCLAIM_RE.test(text),
         no_flattery: !FLATTERY_RE.test(text)
       };
-      return { features, qCount, types };
+      return { features, qCount, optionCount, types };
     }
 
     function buildReceipt() {

@@ -609,7 +609,7 @@
       <div class="hero-copy">
         <div class="eyebrow">Agent Adoption Lab</div>
         <h1>Select an agent stack and leave with a copyable installation path.</h1>
-        <p>This page keeps the maintained surface small: the Core Pack is first-class for Codex, Claude Code, Cursor, and opencode. Extended manifest recipes remain searchable for teams that need them, but the default path is lean, local-first, and preserves the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary across tools.</p>
+        <p>This page keeps the maintained surface small: the Core Pack is first-class for Codex, Claude Code, Cursor, and opencode. Extended manifest recipes remain searchable for teams that need them, but the default path is lean, local-first, low-typing, and preserves the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary across tools.</p>
       </div>
       <aside class="hero-proof" aria-label="Agent Adapter Lab proof">
         <div class="proof-grid">
@@ -714,6 +714,10 @@
             <strong>Sticky precision</strong>
             <span>Adoption is anchored in falsifiable typing, not flattery or label lock.</span>
           </div>
+          <div class="mini-card">
+            <strong>Low-typing questions</strong>
+            <span>Use native question UI when present, otherwise compact choices with an Other escape hatch.</span>
+          </div>
         </div>
 
         <label for="packCommandOutput">Pack export command</label>
@@ -761,6 +765,13 @@
                 "cursor",
                 "opencode"
           ],
+          "interaction_contract": {
+                "name": "low-typing-choice-first",
+                "native_question_ui": "Use a host-native question UI only when that tool is present in the active tool list or mode.",
+                "fallback": "If no native question UI is available, ask compact A/B/C/D/E choices in chat.",
+                "freeform_escape": "The final option must be Other / none of these - I will explain, unless the host automatically provides a free-form field.",
+                "typing_rule": "Do not mark a recommended answer or reveal option-to-type mappings before the user answers."
+          },
           "baseline_paths": [
                 "skill/mbti-typing",
                 "AGENTS.md",
@@ -807,7 +818,8 @@
                       ],
                       "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
                       "install": "cp -R skill/mbti-typing ~/.codex/skills/",
-                      "contract": "Codex skill plus repository AGENTS.md contract."
+                      "contract": "Codex skill plus repository AGENTS.md contract.",
+                      "question_ui": "Use Codex request_user_input only in Plan Mode or another context where it is present; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
                 },
                 {
                       "id": "generic-agents-md",
@@ -820,7 +832,8 @@
                       ],
                       "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
                       "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
-                      "contract": "Portable project-level instruction contract."
+                      "contract": "Portable project-level instruction contract.",
+                      "question_ui": ""
                 },
                 {
                       "id": "chatgpt-gpts",
@@ -834,7 +847,8 @@
                       ],
                       "invoke": "Create a GPT or Project with gpts/mbti-typing-gpt-instructions.md as instructions and upload the canonical skill references as knowledge.",
                       "install": "Copy gpts/mbti-typing-gpt-instructions.md into the GPT Instructions field or ChatGPT Project instructions, then attach the listed knowledge files.",
-                      "contract": "Custom GPT and Project instructions preserve the same candidate-set, runner-up, evidence-ledger, falsifier, and safety-boundary protocol."
+                      "contract": "Custom GPT and Project instructions preserve the same candidate-set, runner-up, evidence-ledger, falsifier, and safety-boundary protocol.",
+                      "question_ui": ""
                 },
                 {
                       "id": "zed",
@@ -848,7 +862,8 @@
                       ],
                       "invoke": "Ask Zed Agent Panel to use the MBTI Typing Skill rule, or @-mention the saved rule when available.",
                       "install": "Copy .rules and AGENTS.md into the target repository root, or save the same content as a Zed default rule/skill.",
-                      "contract": "Zed project rule routes back to the canonical skill and shared safety boundary."
+                      "contract": "Zed project rule routes back to the canonical skill and shared safety boundary.",
+                      "question_ui": ""
                 },
                 {
                       "id": "devin",
@@ -862,7 +877,8 @@
                       ],
                       "invoke": "Ask Devin to follow AGENTS.md and use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
                       "install": "Keep AGENTS.md at the project root; Devin and Devin CLI can load AGENTS.md project rules automatically.",
-                      "contract": "AGENTS.md provides the portable Devin contract without creating a Devin-only protocol fork."
+                      "contract": "AGENTS.md provides the portable Devin contract without creating a Devin-only protocol fork.",
+                      "question_ui": ""
                 },
                 {
                       "id": "claude-code",
@@ -877,7 +893,8 @@
                       ],
                       "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
                       "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
-                      "contract": "Project skill and slash-command fallback for Claude Code."
+                      "contract": "Project skill and slash-command fallback for Claude Code.",
+                      "question_ui": "Use AskUserQuestion only when it appears in the active Claude Code tool list; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
                 },
                 {
                       "id": "cursor",
@@ -890,7 +907,8 @@
                       ],
                       "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
                       "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
-                      "contract": "Project rule in MDC format plus AGENTS.md fallback."
+                      "contract": "Project rule in MDC format plus AGENTS.md fallback.",
+                      "question_ui": "Use Cursor AskQuestion only when it appears in the active Cursor tool list or mode; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
                 },
                 {
                       "id": "opencode",
@@ -903,7 +921,8 @@
                       ],
                       "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
                       "install": "Keep AGENTS.md and opencode.json committed in the project root.",
-                      "contract": "AGENTS.md project rules with opencode.json instructions aggregation."
+                      "contract": "AGENTS.md project rules with opencode.json instructions aggregation.",
+                      "question_ui": "Use compact CLI-friendly A/B/C/D/E choices; do not require prose unless the user selects Other / none of these."
                 },
                 {
                       "id": "gemini-cli",
@@ -917,7 +936,8 @@
                       ],
                       "invoke": "gemini \"Use the MBTI Typing Skill to run an ENTJ vs INTJ investigation\"",
                       "install": "Copy GEMINI.md, AGENTS.md, and .gemini/settings.json into the target repository root.",
-                      "contract": "Gemini context file imports the shared contract and canonical skill."
+                      "contract": "Gemini context file imports the shared contract and canonical skill.",
+                      "question_ui": ""
                 },
                 {
                       "id": "github-copilot",
@@ -934,7 +954,8 @@
                       ],
                       "invoke": "Ask Copilot to use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
                       "install": "Copy .github/copilot-instructions.md, .github/instructions/mbti-typing.instructions.md, and .github/skills/mbti-typing/SKILL.md into the target repository.",
-                      "contract": "Repository custom instructions plus project skill entrypoint."
+                      "contract": "Repository custom instructions plus project skill entrypoint.",
+                      "question_ui": ""
                 },
                 {
                       "id": "windsurf",
@@ -947,7 +968,8 @@
                       ],
                       "invoke": "Ask Windsurf to apply the MBTI Typing Skill rule to a type-me, duel, transcript audit, or adapter task.",
                       "install": "Copy .windsurf/rules/mbti-typing.md and AGENTS.md into the target repository.",
-                      "contract": "Workspace rule points back to the canonical skill and shared contract."
+                      "contract": "Workspace rule points back to the canonical skill and shared contract.",
+                      "question_ui": ""
                 },
                 {
                       "id": "cline",
@@ -961,7 +983,8 @@
                       ],
                       "invoke": "Ask Cline to use the MBTI Typing Skill for the current typing task.",
                       "install": "Copy .cline/skills/mbti-typing/SKILL.md, .clinerules/mbti-typing.md, and AGENTS.md into the target repository.",
-                      "contract": "Project skill and rule both preserve the canonical typing protocol."
+                      "contract": "Project skill and rule both preserve the canonical typing protocol.",
+                      "question_ui": ""
                 },
                 {
                       "id": "continue",
@@ -974,7 +997,8 @@
                       ],
                       "invoke": "Ask Continue to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
                       "install": "Copy .continue/rules/mbti-typing.md and AGENTS.md into the target repository.",
-                      "contract": "Continue local rule points back to the canonical skill and shared safety boundary."
+                      "contract": "Continue local rule points back to the canonical skill and shared safety boundary.",
+                      "question_ui": ""
                 },
                 {
                       "id": "aider",
@@ -988,7 +1012,8 @@
                       ],
                       "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
                       "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
-                      "contract": "Conventions file keeps the same protocol visible to aider sessions."
+                      "contract": "Conventions file keeps the same protocol visible to aider sessions.",
+                      "question_ui": ""
                 },
                 {
                       "id": "jetbrains-junie",
@@ -1003,7 +1028,8 @@
                       ],
                       "invoke": "Ask Junie to use .junie/AGENTS.md, or run the project /mbti-type command with the case material as input.",
                       "install": "Copy .junie/AGENTS.md and .junie/commands/mbti-type.md into the target repository, or point Junie Guidelines path at AGENTS.md.",
-                      "contract": "Junie guidelines and slash command preserve the canonical typing protocol."
+                      "contract": "Junie guidelines and slash command preserve the canonical typing protocol.",
+                      "question_ui": ""
                 },
                 {
                       "id": "amazon-q",
@@ -1017,7 +1043,8 @@
                       ],
                       "invoke": "q chat --agent mbti-typing",
                       "install": "Copy .amazonq/cli-agents/mbti-typing.json into the target repository and run q chat --agent mbti-typing from that workspace.",
-                      "contract": "Amazon Q custom agent loads the canonical skill and read-only reference resources."
+                      "contract": "Amazon Q custom agent loads the canonical skill and read-only reference resources.",
+                      "question_ui": ""
                 },
                 {
                       "id": "roo-code",
@@ -1032,7 +1059,8 @@
                       ],
                       "invoke": "Switch to the MBTI Typing custom mode, then ask Roo to run a type-me, duel, transcript audit, or report review.",
                       "install": "Copy .roomodes and .roo/rules-mbti-typing/mbti-typing.md into the target repository.",
-                      "contract": "Roo custom mode and mode-specific rules preserve the canonical protocol."
+                      "contract": "Roo custom mode and mode-specific rules preserve the canonical protocol.",
+                      "question_ui": ""
                 },
                 {
                       "id": "kilo-code",
@@ -1047,7 +1075,8 @@
                       ],
                       "invoke": "Ask Kilo Code to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
                       "install": "Copy kilo.jsonc and .kilo/rules/mbti-typing.md into the target repository.",
-                      "contract": "Kilo project rules point back to the canonical skill and shared safety boundary."
+                      "contract": "Kilo project rules point back to the canonical skill and shared safety boundary.",
+                      "question_ui": ""
                 }
           ]
     };
@@ -1153,6 +1182,12 @@
         "2. Inspect AGENT_PACK_MANIFEST.json before copying into a target repo.",
         "3. Run make test, scripts/agent_adapter_audit.py, and scripts/agent_pack_export_audit.py after edits.",
         "4. Preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language.",
+        "5. Preserve low-typing question UX: native question UI only when present, compact choices otherwise, final Other / none of these escape hatch.",
+        "",
+        "Global question UX:",
+        `- ${AGENT_ADAPTER_MANIFEST.interaction_contract?.native_question_ui || "Use native question UI only when present."}`,
+        `- ${AGENT_ADAPTER_MANIFEST.interaction_contract?.fallback || "Use compact choices when no native question UI is available."}`,
+        `- ${AGENT_ADAPTER_MANIFEST.interaction_contract?.freeform_escape || "Keep a free-form escape hatch."}`,
         "",
         "Selected targets:"
       ];
@@ -1187,6 +1222,7 @@
         lab_sync: "scripts/sync_agent_adapter_lab.py",
         lab_audit: "scripts/agent_adapter_lab_audit.py",
         issue_template: "agent_adapter_improvement.yml",
+        question_ux: AGENT_ADAPTER_MANIFEST.interaction_contract,
         pack_command: buildPackCommand(targets),
         safety_contract: SAFETY_CONTRACT,
         shared_references: AGENT_ADAPTER_MANIFEST.shared_references,
@@ -1198,7 +1234,8 @@
           entrypoints: target.entrypoints,
           install: target.install,
           invoke: target.invoke,
-          contract: target.contract
+          contract: target.contract,
+          question_ui: target.question_ui
         }))
       };
     }
@@ -1213,6 +1250,8 @@
         "manifest_schema: " + receipt.manifest_schema,
         "expected_behavior:",
         "  - adapter should preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary",
+        "  - adapter should preserve low-typing choice-first questions with a final Other / none of these escape hatch",
+        "  - native question UI should be used only when the active host exposes the tool",
         "  - exported pack should include canonical skill, target entrypoints, and AGENT_PACK_MANIFEST.json",
         "reproduction:",
         "  - command: " + receipt.pack_command,
@@ -1269,7 +1308,10 @@
       invoke.textContent = `Invoke: ${target.invoke}`;
       const install = document.createElement("div");
       install.textContent = `Install: ${target.install}`;
-      body.append(invoke, install);
+      const questionUi = document.createElement("div");
+      const fallbackQuestionUi = AGENT_ADAPTER_MANIFEST.interaction_contract?.fallback || "Use compact A/B/C/D/E choices when no native question UI is available.";
+      questionUi.textContent = `Question UX: ${target.question_ui || fallbackQuestionUi}`;
+      body.append(invoke, install, questionUi);
 
       card.append(head, meta, body);
       card.addEventListener("click", (event) => {

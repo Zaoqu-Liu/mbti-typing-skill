@@ -43,7 +43,7 @@ Open the local-first Experience Hub when you want a task-based command center, o
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Experience Hub turns the GitHub Pages root into a workflow selector with direct routes, a copyable starter prompt, and an Experience Hub Route Map. The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Agent Portability Lab turns the same manifest into a capability-first Universal Agent Bridge for unknown host support, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Experience Hub turns the GitHub Pages root into a workflow selector with direct routes, a copyable starter prompt, and an Experience Hub Route Map. The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, low-typing `A/B/C/D/E` question UX, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, native question UI versus compact-choice fallback guidance, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Agent Portability Lab turns the same manifest into a capability-first Universal Agent Bridge for unknown host support, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, choice-first question gate, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -71,7 +71,7 @@ Start here if you want to feel the product before reading the internals:
 - [Sample report](docs/sample-report.md): what a calibrated final answer should look like.
 - [Copy-paste prompt recipes](prompts/prompt-recipes.md): six ready-to-use prompts for live typing, duels, transcript audits, and report review.
 
-The experience target is simple: every round should make the user feel that the next question was chosen because of their previous answer, not because the system is walking through a generic quiz.
+The experience target is simple: every round should make the user feel that the next question was chosen because of their previous answer, not because the system is walking through a generic quiz. The process should also be low-typing: use native question UI such as Codex `request_user_input`, Claude Code `AskUserQuestion`, or Cursor `AskQuestion` only when the host actually exposes it; otherwise ask compact `A/B/C/D/E` choices with `Other / none of these - I will explain` as the escape hatch.
 
 ## Product Experience Blueprints
 
@@ -522,18 +522,18 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
-Agent Adapter Audit: 328/328 (100.00%)
+Agent Adapter Audit: 339/339 (100.00%)
 Agent Pack Export Audit: 28/28 (100.00%)
 Agent Adapter Lab Source Sync: PASS (18 targets match)
-Agent Adapter Lab Audit: 94/94 (100.00%)
+Agent Adapter Lab Audit: 98/98 (100.00%)
 Agent Portability Lab Source Sync: PASS (18 targets, 7 capabilities match)
-Agent Portability Lab Audit: 92/92 (100.00%)
+Agent Portability Lab Audit: 95/95 (100.00%)
 Index Hub Audit: 82/82 (100.00%)
-Response Eval Audit: 45/45 (100.00%)
+Response Eval Audit: 46/46 (100.00%)
 Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
-Response Eval Lab Audit: 69/69 (100.00%)
+Response Eval Lab Audit: 71/71 (100.00%)
 Question Lab Source Sync: PASS (21 cards match)
-Question Lab Audit: 71/71 (100.00%)
+Question Lab Audit: 74/74 (100.00%)
 Type Duel Lab Source Sync: PASS (20 duels match)
 Type Duel Lab Audit: 68/68 (100.00%)
 Case Gallery Source Sync: PASS (16 cases match)
@@ -543,7 +543,7 @@ Benchmark Replay Lab Audit: 62/62 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 670/670 (100.00%)
+Repository UX Score: 678/678 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

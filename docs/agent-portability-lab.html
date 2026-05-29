@@ -531,7 +531,7 @@
             <span>known adapter targets from manifest</span>
           </div>
           <div class="metric">
-            <strong id="metricCapabilities">7</strong>
+            <strong id="metricCapabilities">8</strong>
             <span>capability axes for unknown hosts</span>
           </div>
           <div class="metric">
@@ -715,6 +715,12 @@
                       "entrypoint_hint": ".claude/commands/mbti-type.md"
                 },
                 {
+                      "id": "native_question_ui",
+                      "label": "Native question UI",
+                      "proof": "An active host tool such as request_user_input, AskUserQuestion, AskQuestion, or equivalent elicitation UI",
+                      "entrypoint_hint": "agent-adapters/manifest.json"
+                },
+                {
                       "id": "chat_project",
                       "label": "Chat project or custom GPT instructions",
                       "proof": "A hosted chat instructions field plus uploaded knowledge files",
@@ -741,7 +747,9 @@
                       "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
                       "install": "cp -R skill/mbti-typing ~/.codex/skills/",
                       "contract": "Codex skill plus repository AGENTS.md contract.",
+                      "question_ui": "Use Codex request_user_input only in Plan Mode or another context where it is present; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these.",
                       "capabilities": [
+                            "native_question_ui",
                             "native_skill",
                             "project_instruction"
                       ]
@@ -758,6 +766,7 @@
                       "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
                       "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
                       "contract": "Portable project-level instruction contract.",
+                      "question_ui": "",
                       "capabilities": [
                             "project_instruction"
                       ]
@@ -775,6 +784,7 @@
                       "invoke": "Create a GPT or Project with gpts/mbti-typing-gpt-instructions.md as instructions and upload the canonical skill references as knowledge.",
                       "install": "Copy gpts/mbti-typing-gpt-instructions.md into the GPT Instructions field or ChatGPT Project instructions, then attach the listed knowledge files.",
                       "contract": "Custom GPT and Project instructions preserve the same candidate-set, runner-up, evidence-ledger, falsifier, and safety-boundary protocol.",
+                      "question_ui": "",
                       "capabilities": [
                             "chat_project",
                             "native_skill",
@@ -794,6 +804,7 @@
                       "invoke": "Ask Zed Agent Panel to use the MBTI Typing Skill rule, or @-mention the saved rule when available.",
                       "install": "Copy .rules and AGENTS.md into the target repository root, or save the same content as a Zed default rule/skill.",
                       "contract": "Zed project rule routes back to the canonical skill and shared safety boundary.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction",
@@ -813,6 +824,7 @@
                       "invoke": "Ask Devin to follow AGENTS.md and use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
                       "install": "Keep AGENTS.md at the project root; Devin and Devin CLI can load AGENTS.md project rules automatically.",
                       "contract": "AGENTS.md provides the portable Devin contract without creating a Devin-only protocol fork.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction"
@@ -832,7 +844,9 @@
                       "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
                       "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
                       "contract": "Project skill and slash-command fallback for Claude Code.",
+                      "question_ui": "Use AskUserQuestion only when it appears in the active Claude Code tool list; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these.",
                       "capabilities": [
+                            "native_question_ui",
                             "native_skill",
                             "project_instruction",
                             "slash_command"
@@ -850,7 +864,9 @@
                       "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
                       "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
                       "contract": "Project rule in MDC format plus AGENTS.md fallback.",
+                      "question_ui": "Use Cursor AskQuestion only when it appears in the active Cursor tool list or mode; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these.",
                       "capabilities": [
+                            "native_question_ui",
                             "project_instruction",
                             "project_rule"
                       ]
@@ -867,6 +883,7 @@
                       "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
                       "install": "Keep AGENTS.md and opencode.json committed in the project root.",
                       "contract": "AGENTS.md project rules with opencode.json instructions aggregation.",
+                      "question_ui": "Use compact CLI-friendly A/B/C/D/E choices; do not require prose unless the user selects Other / none of these.",
                       "capabilities": [
                             "config_instruction_array",
                             "project_instruction"
@@ -885,6 +902,7 @@
                       "invoke": "gemini \"Use the MBTI Typing Skill to run an ENTJ vs INTJ investigation\"",
                       "install": "Copy GEMINI.md, AGENTS.md, and .gemini/settings.json into the target repository root.",
                       "contract": "Gemini context file imports the shared contract and canonical skill.",
+                      "question_ui": "",
                       "capabilities": [
                             "config_instruction_array",
                             "project_instruction"
@@ -906,6 +924,7 @@
                       "invoke": "Ask Copilot to use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
                       "install": "Copy .github/copilot-instructions.md, .github/instructions/mbti-typing.instructions.md, and .github/skills/mbti-typing/SKILL.md into the target repository.",
                       "contract": "Repository custom instructions plus project skill entrypoint.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction",
@@ -924,6 +943,7 @@
                       "invoke": "Ask Windsurf to apply the MBTI Typing Skill rule to a type-me, duel, transcript audit, or adapter task.",
                       "install": "Copy .windsurf/rules/mbti-typing.md and AGENTS.md into the target repository.",
                       "contract": "Workspace rule points back to the canonical skill and shared contract.",
+                      "question_ui": "",
                       "capabilities": [
                             "project_instruction",
                             "project_rule"
@@ -942,6 +962,7 @@
                       "invoke": "Ask Cline to use the MBTI Typing Skill for the current typing task.",
                       "install": "Copy .cline/skills/mbti-typing/SKILL.md, .clinerules/mbti-typing.md, and AGENTS.md into the target repository.",
                       "contract": "Project skill and rule both preserve the canonical typing protocol.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction",
@@ -960,6 +981,7 @@
                       "invoke": "Ask Continue to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
                       "install": "Copy .continue/rules/mbti-typing.md and AGENTS.md into the target repository.",
                       "contract": "Continue local rule points back to the canonical skill and shared safety boundary.",
+                      "question_ui": "",
                       "capabilities": [
                             "project_instruction",
                             "project_rule"
@@ -978,6 +1000,7 @@
                       "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
                       "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
                       "contract": "Conventions file keeps the same protocol visible to aider sessions.",
+                      "question_ui": "",
                       "capabilities": [
                             "config_instruction_array",
                             "project_instruction"
@@ -997,6 +1020,7 @@
                       "invoke": "Ask Junie to use .junie/AGENTS.md, or run the project /mbti-type command with the case material as input.",
                       "install": "Copy .junie/AGENTS.md and .junie/commands/mbti-type.md into the target repository, or point Junie Guidelines path at AGENTS.md.",
                       "contract": "Junie guidelines and slash command preserve the canonical typing protocol.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction",
@@ -1016,6 +1040,7 @@
                       "invoke": "q chat --agent mbti-typing",
                       "install": "Copy .amazonq/cli-agents/mbti-typing.json into the target repository and run q chat --agent mbti-typing from that workspace.",
                       "contract": "Amazon Q custom agent loads the canonical skill and read-only reference resources.",
+                      "question_ui": "",
                       "capabilities": [
                             "custom_agent",
                             "native_skill",
@@ -1036,6 +1061,7 @@
                       "invoke": "Switch to the MBTI Typing custom mode, then ask Roo to run a type-me, duel, transcript audit, or report review.",
                       "install": "Copy .roomodes and .roo/rules-mbti-typing/mbti-typing.md into the target repository.",
                       "contract": "Roo custom mode and mode-specific rules preserve the canonical protocol.",
+                      "question_ui": "",
                       "capabilities": [
                             "native_skill",
                             "project_instruction",
@@ -1056,6 +1082,7 @@
                       "invoke": "Ask Kilo Code to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
                       "install": "Copy kilo.jsonc and .kilo/rules/mbti-typing.md into the target repository.",
                       "contract": "Kilo project rules point back to the canonical skill and shared safety boundary.",
+                      "question_ui": "",
                       "capabilities": [
                             "config_instruction_array",
                             "custom_agent",

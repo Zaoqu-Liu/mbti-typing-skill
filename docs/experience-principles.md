@@ -17,6 +17,7 @@ This loop should feel progressive. Every round should narrow, split, or revise t
 Use:
 
 - Precision: name the exact behavior pattern, not a generic type slogan.
+- Low friction: let the user select a concrete option instead of writing paragraphs whenever that still preserves evidence quality.
 - Progressive revelation: show the user what became clearer this round.
 - Contradiction handling: treat "that is not me" as valuable evidence.
 - Personal utility: explain how the pattern affects work, conflict, recovery, and decision-making.
@@ -64,10 +65,10 @@ The allowed loop is:
 
 1. A response states the current candidate set and serious runner-up before any label lock.
 2. It shows evidence movement: what got stronger, what stayed weak, and what would reverse the order.
-3. It asks 4-6 concrete scene questions only when those questions target the current fork.
+3. It asks 4-6 concrete scene questions only when those questions target the current fork, and renders them as choice-first low-typing prompts whenever possible.
 4. It keeps falsifiers, safety boundaries, and calibrated confidence visible.
 5. `examples/response-eval-cases.json` stores positive live-round, type-duel, and final-report fixtures plus a blocked anti-pattern.
-6. `Response Eval Audit` checks sticky precision, next-round relevance, no-overclaim, negative blocking, and Anti-Flattery before release.
+6. `Response Eval Audit` checks sticky precision, next-round relevance, choice-first question UX, no-overclaim, negative blocking, and Anti-Flattery before release.
 
 This creates stickiness through answer quality. The user returns because the response remembered the uncertainty and selected the next fork, not because it used 100% certainty, flattery, superiority language, or a permanent identity lock.
 
@@ -79,11 +80,25 @@ The allowed loop is:
 
 1. The user reaches an unresolved uncertainty such as leader vs runner-up, normal vs stress state, public role vs private recovery, or Big Five cross-check.
 2. Question Lab exposes source-synced probes from `question-bank.md`, including concrete questions, forced-choice options, contradiction follow-ups, and 4-6 question round templates.
-3. The user copies a focused `$mbti-typing` round prompt that names the current uncertainty, required evidence state, runner-up, and falsifier target.
+3. The user copies a focused `$mbti-typing` round prompt that names the current uncertainty, required evidence state, runner-up, falsifier target, native question UI preference, compact `A/B/C/D/E` fallback, and final `Other / none of these` escape hatch.
 4. If a prompt feels repetitive or generic, the user copies a `question_improvement.yml` issue seed with the weak question, desired discriminator, sanitized context, and safety boundary.
 5. Maintainers turn repeated weak-question patterns into question-bank updates, pair-duel rules, benchmark cases, golden fixtures, or report-audit checks.
 
 This creates stickiness through adaptive precision: the tool earns another round by showing exactly why that round should exist.
+
+## Low-Typing Choice Loop
+
+The fastest way to make the interview feel easy is to remove unnecessary typing. The user should only write prose when all presented choices miss their actual experience.
+
+The allowed loop is:
+
+1. The agent detects whether the active host exposes a native question UI.
+2. If a native question UI exists, it asks the next discriminator with selectable options.
+3. If no native question UI exists, it renders compact `A/B/C/D/E` choices in chat.
+4. The final option stays `Other / none of these - I will explain` unless the host automatically provides free-form input.
+5. The agent interprets option-to-type signals only after the user answers, then updates the evidence ledger and chooses the next fork.
+
+This creates ethical convenience: the user returns because the process is fast and precise, not because the tool hides ambiguity or pressures a label.
 
 ## Adjacent-Type Precision Loop
 

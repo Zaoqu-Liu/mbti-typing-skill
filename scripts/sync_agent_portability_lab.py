@@ -50,6 +50,12 @@ CAPABILITY_AXES = [
         "entrypoint_hint": ".claude/commands/mbti-type.md",
     },
     {
+        "id": "native_question_ui",
+        "label": "Native question UI",
+        "proof": "An active host tool such as request_user_input, AskUserQuestion, AskQuestion, or equivalent elicitation UI",
+        "entrypoint_hint": "agent-adapters/manifest.json",
+    },
+    {
         "id": "chat_project",
         "label": "Chat project or custom GPT instructions",
         "proof": "A hosted chat instructions field plus uploaded knowledge files",
@@ -80,7 +86,7 @@ def load_manifest(path: Path) -> dict[str, Any]:
     return payload
 
 
-def capability_ids_for_entrypoints(entrypoints: list[str]) -> list[str]:
+def capability_ids_for_entrypoints(entrypoints: list[str], question_ui: str = "") -> list[str]:
     joined = "\n".join(entrypoints)
     capabilities: list[str] = []
     if any(path in entrypoints for path in ("AGENTS.md", "CLAUDE.md", "GEMINI.md", "CONVENTIONS.md")):
@@ -106,6 +112,8 @@ def capability_ids_for_entrypoints(entrypoints: list[str]) -> list[str]:
         capabilities.append("custom_agent")
     if "/commands/" in joined:
         capabilities.append("slash_command")
+    if any(marker in question_ui for marker in ("request_user_input", "AskUserQuestion", "AskQuestion")):
+        capabilities.append("native_question_ui")
     if any(marker in joined for marker in ("gpts/", "GPT", "Project")):
         capabilities.append("chat_project")
     if any(marker in joined for marker in ("opencode.json", ".gemini/settings.json", ".aider.conf.yml", "kilo.jsonc")):
@@ -127,7 +135,8 @@ def normalize_target(target: dict[str, Any]) -> dict[str, Any]:
         "invoke": str(target.get("invoke", "")),
         "install": str(target.get("install", "")),
         "contract": str(target.get("contract", "")),
-        "capabilities": capability_ids_for_entrypoints(normalized_entrypoints),
+        "question_ui": str(target.get("question_ui", "")),
+        "capabilities": capability_ids_for_entrypoints(normalized_entrypoints, str(target.get("question_ui", ""))),
     }
 
 

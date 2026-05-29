@@ -53,10 +53,15 @@ Every adapter must preserve the same behavior:
 - candidate set with serious runner-up
 - evidence ledger
 - 4-6 concrete questions per round
+- low-typing native question UI strategy: use `request_user_input`, `AskUserQuestion`, `AskQuestion`, or another host question tool only when it is actually available
+- compact `A/B/C/D/E` fallback when no native question UI is present
+- final `Other / none of these - I will explain` escape hatch unless the host automatically provides free-form input
 - adjacent-type duel when the top two are close
 - Big Five or framework cross-checks only when labeled separately
 - falsifier and revision trigger before final closure
 - explicit safety boundary: not clinical, hiring, legal, medical, financial, or deterministic advice
+
+Typing answers are not product preferences, so adapters must not mark one answer option as recommended and must not reveal option-to-type mappings before the subject answers.
 
 ## Installation Notes
 
@@ -78,9 +83,11 @@ The export includes the canonical `skill/mbti-typing/` directory, baseline proje
 
 For first-run adoption, use the [Agent Adapter Lab](../docs/agent-adapter-lab.html). It reads the same manifest, lets a user choose Core Pack or Select All, copies the export command, shows the install checklist, emits an adapter JSON receipt, and prepares an `agent_adapter_improvement.yml` issue seed when an adapter is missing or stale.
 
+The lab also exposes the low-typing question UX contract from `agent-adapters/manifest.json`, so users can see whether a selected host should use native question UI or compact choices.
+
 ![Agent Adapter Lab Flow](../docs/assets/agent-adapter-lab-flow.svg)
 
-For future or unknown hosts, use the [Agent Portability Lab](../docs/agent-portability-lab.html). It maps a host by capability before inventing an adapter: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed while preserving the candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary.
+For future or unknown hosts, use the [Agent Portability Lab](../docs/agent-portability-lab.html). It maps a host by capability before inventing an adapter: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, native question UI, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed while preserving the candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary.
 
 ![Universal Agent Bridge Map](../docs/assets/universal-agent-bridge-map.svg)
 

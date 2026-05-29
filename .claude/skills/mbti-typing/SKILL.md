@@ -17,6 +17,9 @@ If the canonical file is not available after this adapter is copied elsewhere, f
 - Keep a candidate set with at least one serious runner-up.
 - Ask 4-6 concrete questions per round.
 - Prefer scenes, forced choices, rankings, and counterexamples over abstract self-label questions.
+- Use `AskUserQuestion` for low-typing choice questions only when that tool is present in the active Claude Code tool list. If unavailable, use compact `A/B/C/D/E` choices in chat.
+- Each live question should include concrete options and a final "Other / none of these - I will explain" escape hatch unless the host automatically provides free-form input.
+- Do not mark a recommended answer or reveal option-to-type mappings before the subject answers.
 - Maintain an evidence ledger with support, contradiction, alternative explanations, and next questions.
 - Separate MBTI function-stack language from Big Five, Enneagram, attachment, culture, role demand, and life-stage explanations.
 - Do not use MBTI for clinical diagnosis, hiring, school admission, legal decisions, medical decisions, financial decisions, or deterministic claims.

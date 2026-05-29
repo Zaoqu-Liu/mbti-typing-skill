@@ -142,6 +142,7 @@ The response evaluation layer checks:
 - Candidate set and serious runner-up are visible.
 - Evidence movement is stated: what moved, what did not move, and why.
 - Live and duel responses ask 4-6 concrete scene questions.
+- Live and duel responses preserve low-typing choice-first UX with a final "Other / none of these" escape hatch.
 - Falsifiers and safety boundaries remain visible.
 - Final reports include cross-framework boundaries when relevant.
 - Anti-pattern responses with 100% certainty, flattery, no runner-up, no falsifier, or no next questions are blocked.
@@ -156,9 +157,9 @@ python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 Current target:
 
 ```text
-Response Eval Audit: 45/45 (100.00%)
-Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
-Response Eval Lab Audit: 69/69 (100.00%)
+Response Eval Audit: 46/46 (100.00%)
+Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); choice_first: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
+Response Eval Lab Audit: 71/71 (100.00%)
 ```
 
 ## Release Gate
@@ -286,7 +287,7 @@ python3 -B scripts/benchmark_replay_lab_audit.py docs/benchmark-replay-lab.html 
 
 The dedicated Calibration Lab audit validates the public repair surface: all current benchmark cases, all 16 leading types, source-of-truth sync from `skill/mbti-typing/examples/benchmark-cases.json`, report paste, visible calibration gates, copied repair prompt, copied calibration JSON, copied failure issue seed, local persistence, DOM-safe rendering, and no external runtime dependency.
 
-The dedicated Question Lab audit validates the public next-round surface: every current subsection in `skill/mbti-typing/references/question-bank.md`, Markdown source sync through `scripts/sync_question_lab.py`, search and category filters, concrete question goals, forced-choice options, copied 4-6 question round prompts, `question_improvement.yml` issue seeds, local persistence, DOM-safe rendering, and no external runtime dependency.
+The dedicated Question Lab audit validates the public next-round surface: every current subsection in `skill/mbti-typing/references/question-bank.md`, Markdown source sync through `scripts/sync_question_lab.py`, search and category filters, concrete question goals, forced-choice options, low-typing native-question guidance, copied 4-6 question round prompts, `question_improvement.yml` issue seeds, local persistence, DOM-safe rendering, and no external runtime dependency.
 
 The dedicated Type Duel Lab audit validates the public adjacent-type surface: every current pair in `skill/mbti-typing/references/pair-duels.md`, all 16 type codes, Markdown source sync through `scripts/sync_type_duel_lab.py`, search and cluster filters, Killer Questions, Losing Conditions, copied duel prompts, `type_duel_improvement.yml` issue seeds, local persistence, DOM-safe rendering, and no external runtime dependency.
 
@@ -296,12 +297,12 @@ The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md
 
 The dedicated Agent Pack Export audit validates the adoption path: `scripts/export_agent_pack.py` must export the canonical skill tree, baseline contracts, selected target entrypoints, adapter docs, prompt recipes, and an `AGENT_PACK_MANIFEST.json` receipt, while refusing unknown targets and non-empty destinations unless the user explicitly chooses `--force`.
 
-The dedicated Agent Adapter Lab audit validates the adoption UX path: `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` must stay aligned so visitors can select agent targets, copy the pack command, inspect the install checklist, export adapter JSON, and file adapter improvements without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
+The dedicated Agent Adapter Lab audit validates the adoption UX path: `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` must stay aligned so visitors can select agent targets, copy the pack command, inspect the install checklist, export adapter JSON, see native question UI versus compact-choice fallback guidance, and file adapter improvements without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
 
 The dedicated Agent Portability Lab audit validates the generalization path: `docs/agent-portability-lab.html`, `scripts/sync_agent_portability_lab.py`, `scripts/agent_portability_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_portability_request.yml`, and `docs/assets/universal-agent-bridge-map.svg` must stay aligned so visitors can map a new or unknown host by capability, copy a bridge plan, copy a portable install recipe, export an adapter draft JSON, and file a portability request without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
 
 The dedicated Index Hub audit validates the first-run product surface: `docs/index.html`, `docs/assets/experience-hub-route-map.svg`, and `scripts/index_hub_audit.py` must stay aligned so visitors can choose a task, copy a starter prompt, and reach every public workflow without a redirect or hidden network dependency.
 
-The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, `docs/assets/response-eval-lab-flow.svg`, `docs/response-eval-lab.html`, `scripts/response_eval_audit.py`, and `scripts/response_eval_lab_audit.py` must stay aligned so examples and the public lab preserve candidate set, runner-up, evidence movement, next-round questions, falsifiers, safety boundaries, calibrated confidence, repair prompts, issue seeds, and Anti-Flattery discipline.
+The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, `docs/assets/response-eval-lab-flow.svg`, `docs/response-eval-lab.html`, `scripts/response_eval_audit.py`, and `scripts/response_eval_lab_audit.py` must stay aligned so examples and the public lab preserve candidate set, runner-up, evidence movement, choice-first next-round questions, falsifiers, safety boundaries, calibrated confidence, repair prompts, issue seeds, and Anti-Flattery discipline.
 
 The public Pages link gate validates that README and prompt recipe buttons resolve to GitHub repository URLs. Local-first pages can link out to documentation; they just cannot depend on external scripts, remote assets, or network calls to render the core workflow.

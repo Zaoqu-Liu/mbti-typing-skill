@@ -14,6 +14,9 @@
 
 - Ask 4-6 questions per round.
 - Use concrete scenes. Avoid asking for type words directly.
+- Prefer low-typing answer design: native selectable options when available, otherwise compact A/B/C/D/E choices.
+- Use the final option as `Other / none of these - I will explain` unless the host automatically provides free-form input.
+- Do not reveal option-to-type mappings before the answer.
 - Prefer ranking top two options when the subject says several options fit.
 - After every round, update the candidate set and write what each answer rules in and rules out.
 - Do not reuse a question if its answer would only confirm the current favorite.

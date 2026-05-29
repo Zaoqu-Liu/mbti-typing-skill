@@ -24,6 +24,7 @@ FLATTERY_RE = re.compile(
 )
 TYPE_RE = re.compile(r"\b(?:I|E)(?:N|S)(?:T|F)(?:J|P)\b")
 QUESTION_RE = re.compile(r"(?:^|\n)\s*(?:[-*]|\d+[.)、])\s*[^。\n]*(?:\?|？)", re.MULTILINE)
+OPTION_RE = re.compile(r"(?:^|\n)\s*(?:[A-EＡ-Ｅ][.)、:]|[-*]\s*(?:A|B|C|D|E)\b)", re.MULTILINE | re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -56,14 +57,17 @@ def question_count(text: str) -> int:
 def feature_map(text: str) -> dict[str, bool]:
     types = set(TYPE_RE.findall(text))
     q_count = question_count(text)
+    option_count = len(OPTION_RE.findall(text))
     no_overclaim = OVERCLAIM_RE.search(text) is None
     no_flattery = FLATTERY_RE.search(text) is None
+    has_escape = contains_any(text, ("Other / none of these", "以上都不是", "都不是", "我补充", "自由补充", "let me explain", "none of these"))
     return {
         "candidate_set": len(types) >= 2 and contains_any(text, ("候选集", "候选榜", "candidate set", "hypotheses")),
         "runner_up": contains_any(text, ("runner-up", "serious runner-up", "第二候选", "备选", "仍然是", "仍然很强")),
         "evidence_movement": contains_any(text, ("证据移动", "真正移动", "支持", "削弱", "weakens", "moved", "弱证据", "强证据")),
         "next_questions": 4 <= q_count <= 6,
         "scene_questions": contains_any(text, ("最近一次", "具体场景", "发生的例子", "举一个", "复盘", "压力", "冲突", "恢复", "正常状态")),
+        "choice_first_questions": option_count >= 10 and has_escape and contains_any(text, ("直接选", "少打字", "低打字", "choice", "选项", "A/B/C/D/E")),
         "falsifier": contains_any(text, ("反证", "改判", "反超", "falsifier", "would change", "降低", "提高")),
         "safety_boundary": contains_any(text, ("不是临床", "不是诊断", "不是心理测量", "not clinical", "not psychometric", "招聘", "hiring", "人格真值")),
         "calibrated_confidence": contains_any(text, ("目前证据", "confidence", "暂时", "不是确定", "not high", "medium", "可修正")),
@@ -83,6 +87,7 @@ def failure_codes(features: dict[str, bool], mode: str) -> set[str]:
             "evidence_movement",
             "next_questions",
             "scene_questions",
+            "choice_first_questions",
             "falsifier",
             "safety_boundary",
             "calibrated_confidence",
@@ -93,6 +98,7 @@ def failure_codes(features: dict[str, bool], mode: str) -> set[str]:
             "evidence_movement",
             "next_questions",
             "scene_questions",
+            "choice_first_questions",
             "falsifier",
             "safety_boundary",
             "duel_losing_conditions",
@@ -146,6 +152,7 @@ def run(path: Path) -> int:
     negative_blocked = 0
     sticky_precision_hits = 0
     next_round_hits = 0
+    choice_first_hits = 0
     no_overclaim_hits = 0
 
     for case_index, case in enumerate(cases, start=1):
@@ -188,6 +195,8 @@ def run(path: Path) -> int:
             next_round_needed = mode in {"live_round", "type_duel"}
             next_round_ok = (not next_round_needed) or (features["next_questions"] and features["scene_questions"])
             next_round_hits += int(next_round_ok)
+            choice_first_ok = (not next_round_needed) or features["choice_first_questions"]
+            choice_first_hits += int(choice_first_ok)
             no_overclaim_hits += int(features["no_overclaim"] and features["no_flattery"])
             checks.extend(
                 [
@@ -217,6 +226,7 @@ def run(path: Path) -> int:
             Check("metrics:negative_blocked", negative_blocked == negative_total and negative_total > 0, metric_line("negative_blocked", negative_blocked, negative_total)),
             Check("metrics:sticky_precision", sticky_precision_hits == positive_total and positive_total > 0, metric_line("sticky_precision", sticky_precision_hits, positive_total)),
             Check("metrics:next_round", next_round_hits == positive_total and positive_total > 0, metric_line("next_round", next_round_hits, positive_total)),
+            Check("metrics:choice_first", choice_first_hits == positive_total and positive_total > 0, metric_line("choice_first", choice_first_hits, positive_total)),
             Check("metrics:no_overclaim", no_overclaim_hits == positive_total and positive_total > 0, metric_line("no_overclaim", no_overclaim_hits, positive_total)),
         ]
     )
@@ -233,6 +243,7 @@ def run(path: Path) -> int:
                 metric_line("negative_blocked", negative_blocked, negative_total),
                 metric_line("sticky_precision", sticky_precision_hits, positive_total),
                 metric_line("next_round", next_round_hits, positive_total),
+                metric_line("choice_first", choice_first_hits, positive_total),
                 metric_line("no_overclaim", no_overclaim_hits, positive_total),
             ]
         )

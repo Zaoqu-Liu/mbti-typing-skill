@@ -24,6 +24,15 @@ Always show:
 
 Avoid revealing option-to-type mappings before the subject answers if it would bias them. Explain mappings after the answer.
 
+Use low-typing interaction by default:
+
+- In hosts with a native question UI, ask with that UI instead of making the user write paragraphs.
+- Only call a native question tool when it is actually available in the active tool list or mode.
+- In text-only hosts, render compact choices and say the user can answer with one letter.
+- Each live interview question needs concrete options and a final `Other / none of these - I will explain` escape hatch unless the host adds free-form input automatically.
+- Do not recommend an answer option in typing questions; the subject's choice is evidence, not a product preference.
+- Put interpretation labels, function mappings, and type signals after the answer, not before it.
+
 ## Live Adaptive Interview
 
 Use this when the user wants to be typed from scratch or wants a claim tested.
@@ -41,6 +50,7 @@ Each round should have:
 
 - A target conflict, for example `INFP vs INTJ vs ENTJ`.
 - 4-6 forced-choice or ranking questions.
+- A low-typing answer path: native choice UI when present, otherwise `A/B/C/D/E` choices where the last option lets the subject explain that none fit.
 - At least one question about normal default cognition.
 - At least one question about stress, conflict, or recovery.
 - A post-round update:

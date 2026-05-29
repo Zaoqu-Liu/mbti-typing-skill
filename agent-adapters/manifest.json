@@ -12,6 +12,13 @@
     "cursor",
     "opencode"
   ],
+  "interaction_contract": {
+    "name": "low-typing-choice-first",
+    "native_question_ui": "Use a host-native question UI only when that tool is present in the active tool list or mode.",
+    "fallback": "If no native question UI is available, ask compact A/B/C/D/E choices in chat.",
+    "freeform_escape": "The final option must be Other / none of these - I will explain, unless the host automatically provides a free-form field.",
+    "typing_rule": "Do not mark a recommended answer or reveal option-to-type mappings before the user answers."
+  },
   "shared_references": [
     "skill/mbti-typing/references/playbooks.md",
     "skill/mbti-typing/references/question-bank.md",
@@ -34,7 +41,8 @@
       ],
       "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
       "install": "cp -R skill/mbti-typing ~/.codex/skills/",
-      "contract": "Codex skill plus repository AGENTS.md contract."
+      "contract": "Codex skill plus repository AGENTS.md contract.",
+      "question_ui": "Use Codex request_user_input only in Plan Mode or another context where it is present; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
     },
     {
       "id": "generic-agents-md",
@@ -104,7 +112,8 @@
       ],
       "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
       "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
-      "contract": "Project skill and slash-command fallback for Claude Code."
+      "contract": "Project skill and slash-command fallback for Claude Code.",
+      "question_ui": "Use AskUserQuestion only when it appears in the active Claude Code tool list; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
     },
     {
       "id": "cursor",
@@ -117,7 +126,8 @@
       ],
       "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
       "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
-      "contract": "Project rule in MDC format plus AGENTS.md fallback."
+      "contract": "Project rule in MDC format plus AGENTS.md fallback.",
+      "question_ui": "Use Cursor AskQuestion only when it appears in the active Cursor tool list or mode; otherwise use compact A/B/C/D/E choices with the final option for Other / none of these."
     },
     {
       "id": "opencode",
@@ -130,7 +140,8 @@
       ],
       "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
       "install": "Keep AGENTS.md and opencode.json committed in the project root.",
-      "contract": "AGENTS.md project rules with opencode.json instructions aggregation."
+      "contract": "AGENTS.md project rules with opencode.json instructions aggregation.",
+      "question_ui": "Use compact CLI-friendly A/B/C/D/E choices; do not require prose unless the user selects Other / none of these."
     },
     {
       "id": "gemini-cli",

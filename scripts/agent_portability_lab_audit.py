@@ -44,6 +44,8 @@ REQUIRED_TERMS = [
     "canonical protocol",
     "unknown host",
     "capability-first",
+    "Native question UI",
+    "native_question_ui",
     "candidate set",
     "serious runner-up",
     "evidence ledger",
@@ -111,7 +113,7 @@ def run(html_path: Path, manifest_path: Path, issue_template_path: Path) -> int:
         Check("sync:embedded_manifest_parse", not embedded_error, f"embedded manifest parses: {embedded_error}"),
         Check("sync:embedded_manifest_exact", embedded == expected, "embedded manifest matches agent-adapters/manifest.json plus capability axes"),
         Check("sync:target_count", len(embedded.get("targets", [])) >= 18, "embedded manifest covers at least eighteen targets"),
-        Check("sync:capability_count", len(embedded.get("capability_axes", [])) >= 7, "embedded manifest covers capability-first portability axes"),
+        Check("sync:capability_count", len(embedded.get("capability_axes", [])) >= 8, "embedded manifest covers capability-first portability axes"),
         Check("issue_template:contract", all(term in issue_template for term in ("Agent portability request", "unknown host", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "portability issue template preserves protocol terms"),
     ]
 

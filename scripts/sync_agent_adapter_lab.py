@@ -50,6 +50,7 @@ def normalize_target(target: dict[str, Any]) -> dict[str, Any]:
         "invoke": str(target.get("invoke", "")),
         "install": str(target.get("install", "")),
         "contract": str(target.get("contract", "")),
+        "question_ui": str(target.get("question_ui", "")),
     }
 
 
@@ -66,6 +67,7 @@ def build_lab_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         "pack_audit": manifest.get("pack_audit"),
         "checked_on": manifest.get("checked_on"),
         "core_targets": [str(item) for item in manifest.get("core_targets", []) if isinstance(item, str)],
+        "interaction_contract": manifest.get("interaction_contract") if isinstance(manifest.get("interaction_contract"), dict) else {},
         "baseline_paths": list(BASELINE_PATHS),
         "shared_references": [str(item) for item in shared_references],
         "targets": [normalize_target(target) for target in manifest.get("targets", []) if isinstance(target, dict)],

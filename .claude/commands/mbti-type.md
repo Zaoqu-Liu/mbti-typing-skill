@@ -20,6 +20,8 @@ Keep the output evidence-led:
 
 - candidate set with serious runner-up
 - 4-6 concrete questions per round if interviewing
+- low-typing question UX: use `AskUserQuestion` when available; otherwise ask compact `A/B/C/D/E` choices with the final option for "Other / none of these - I will explain"
+- no recommended answer option and no option-to-type mapping before the user answers
 - evidence ledger updates after answers
 - falsifiers and revision triggers
 - boundary statement: not clinical, hiring, legal, medical, financial, or deterministic advice
