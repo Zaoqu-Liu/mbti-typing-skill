@@ -37,6 +37,17 @@ The journey map shows the experience loop:
 6. The final report includes runner-up types, falsifiers, and revision triggers.
 7. The user leaves with observation prompts, so the result can improve over time.
 
+## Experience Hub Route Map
+
+![Experience Hub Route Map](assets/experience-hub-route-map.svg)
+
+The Pages root is now a real product surface rather than a redirect:
+
+- `docs/index.html` routes first-time visitors by job: start typing, validate a result, study failure cases, install in an agent, map a future host, or contribute evidence.
+- The page keeps a copyable `Use $mbti-typing` starter prompt visible.
+- The route map makes the invariant explicit: candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary must survive every route.
+- `scripts/index_hub_audit.py` checks local-first rendering, workflow links, starter prompt copy, route-map visibility, safety language, and unsafe HTML injection before release.
+
 ## GitHub Visitor Experience Map
 
 ![GitHub visitor experience map](assets/repository-experience-map.svg)
@@ -70,7 +81,7 @@ The dashboard explains why the repository can keep improving after release:
 
 - Real user ambiguity enters through Session Lab, transcripts, and failure reports.
 - Repeated failures become benchmark cases or golden fixtures.
-- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Agent Adapter Lab audit, Response Eval Audit, Response Eval Lab Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
+- `make test` ties the skill scorecard, Agent Adapter audit, Agent Pack Export audit, Agent Adapter Lab audit, Agent Portability Lab audit, Index Hub Audit, Response Eval Audit, Response Eval Lab Audit, Session Lab audit, Question Lab audit, Type Duel Lab audit, report audit, and repository UX scorecard together.
 - GitHub Pages and releases expose the result back to first-time users.
 
 ## Benchmark Arena Pipeline
@@ -365,6 +376,7 @@ This is the retention loop that is allowed: users come back because the system m
 
 The buildless product pages, adapter docs, and response audit now cover the full user loop:
 
+- [Experience Hub](index.html): Pages-root workflow selector, starter prompt, route-map visual, and direct links to every public workflow.
 - [Session Lab](session-lab.html): first-run evidence triage and next-round prompt.
 - [Question Lab](question-lab.html): source-synced next-round question selection and question improvement seeds.
 - [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
@@ -393,7 +405,8 @@ The visual system therefore emphasizes:
 
 ```mermaid
 flowchart TD
-    A[Hero image] --> B[Session Lab]
+    A[Hero image] --> HUB[Experience Hub Route Map]
+    HUB --> B[Session Lab]
     B --> C[Benchmark Arena]
     C --> D[GitHub visitor map]
     D --> E[Typing engine blueprint]

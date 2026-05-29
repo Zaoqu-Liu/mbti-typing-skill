@@ -155,6 +155,20 @@ The allowed loop is:
 
 This creates generality without hand-waving: users can bring the skill to future tools because the bridge is based on instruction capabilities, while the project avoids claiming native support before a host proves it can load the canonical protocol.
 
+## Experience Hub Loop
+
+The Pages root should reduce choice paralysis instead of hiding the product behind a redirect. A visitor who lands on `docs/index.html` should see the main jobs immediately: start typing, validate an answer, study failures, install in an agent, map an unknown host, or contribute evidence.
+
+The allowed loop is:
+
+1. The visitor opens the Experience Hub and chooses a task card.
+2. The page keeps a copyable starter prompt visible for agents that can already read `$mbti-typing`.
+3. The Experience Hub Route Map shows how each route preserves candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary.
+4. The page links directly to Session Lab, Question Lab, Type Duel Lab, Response Eval Lab, Calibration Lab, Benchmark Replay Lab, Benchmark Arena, Follow-Up Lab, Agent Adapter Lab, and Agent Portability Lab.
+5. `scripts/index_hub_audit.py` and the Index Hub Audit keep the root page local-first, non-redirecting, link-complete, copyable, and visually grounded before release.
+
+This creates first-run stickiness without dark patterns: users return because the root page remembers the real jobs they came to do and sends them to the shortest useful workflow.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:

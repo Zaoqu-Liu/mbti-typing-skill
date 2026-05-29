@@ -12,10 +12,12 @@ The GitHub social preview asset is stored at [docs/assets/social-preview.jpg](do
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Agent Portability Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
+## Experience Hub, Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Agent Portability Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
 
-Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
+Open the local-first Experience Hub when you want a task-based command center, or jump directly into the Session Lab when you already have messy evidence:
 
+- [GitHub Pages Experience Hub](https://zaoqu-liu.github.io/mbti-typing-skill/)
+- [Local Experience Hub file](docs/index.html)
 - [GitHub Pages Session Lab](https://zaoqu-liu.github.io/mbti-typing-skill/session-lab.html)
 - [Local Session Lab file](docs/session-lab.html)
 - [GitHub Pages Question Lab](https://zaoqu-liu.github.io/mbti-typing-skill/question-lab.html)
@@ -39,7 +41,7 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Agent Portability Lab turns the same manifest into a capability-first Universal Agent Bridge for unknown host support, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Experience Hub turns the GitHub Pages root into a workflow selector with direct routes, a copyable starter prompt, and an Experience Hub Route Map. The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Agent Portability Lab turns the same manifest into a capability-first Universal Agent Bridge for unknown host support, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -48,6 +50,7 @@ The Session Lab turns a claim and notes into a heuristic candidate board, eviden
 Start here if you want to feel the product before reading the internals:
 
 - [Visual tour](docs/visual-tour.md): how the repository is meant to be read.
+- [Experience Hub](docs/index.html): the Pages root command center with workflow cards, copyable starter prompt, and route-map visual.
 - [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and generic AGENTS.md-aware agents.
 - [Agent pack export](agent-adapters/README.md): manifest-driven pack export for copying selected agent adapters into another repository without manual drift.
 - [Agent Adapter Lab](docs/agent-adapter-lab.html): local-first target selector for pack commands, installation checklists, adapter JSON receipts, and adapter issue seeds.
@@ -71,6 +74,12 @@ The experience target is simple: every round should make the user feel that the 
 ## Product Experience Blueprints
 
 The repository is designed like a product surface: a visitor should know where to click, why the workflow is different, and what proof backs it before they install anything.
+
+### Experience Hub Route Map
+
+![Experience Hub Route Map](docs/assets/experience-hub-route-map.svg)
+
+The Experience Hub Route Map explains the new Pages root: [docs/index.html](docs/index.html) no longer redirects to a single lab. It routes the visitor to typing, validation, benchmark replay, follow-up evidence, agent installation, future-host portability, or contribution paths, while preserving the candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary contract. `scripts/index_hub_audit.py` gates the page for local-first rendering, workflow links, starter prompt copy, route-map visibility, safety language, and no unsafe HTML injection before release.
 
 ### GitHub Visitor Experience Map
 
@@ -454,6 +463,7 @@ python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/a
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
 python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
+python3 -B scripts/index_hub_audit.py docs/index.html docs/assets/experience-hub-route-map.svg
 python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json
 python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 python3 -B scripts/sync_question_lab.py skill/mbti-typing/references/question-bank.md docs/question-lab.html
@@ -487,6 +497,7 @@ Agent Adapter Lab Source Sync: PASS (18 targets match)
 Agent Adapter Lab Audit: 91/91 (100.00%)
 Agent Portability Lab Source Sync: PASS (18 targets, 7 capabilities match)
 Agent Portability Lab Audit: 92/92 (100.00%)
+Index Hub Audit: 82/82 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
@@ -501,7 +512,7 @@ Benchmark Replay Lab Audit: 62/62 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 618/618 (100.00%)
+Repository UX Score: 641/641 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).
@@ -518,7 +529,9 @@ flowchart TD
     Consent --> Adapter[Agent Adapter audit]
     Adapter --> Pack[Agent Pack Export audit]
     Pack --> AdapterLab[Agent Adapter Lab audit]
-    AdapterLab --> Response[Response Eval audit]
+    AdapterLab --> Portability[Agent Portability Lab audit]
+    Portability --> IndexHub[Index Hub audit]
+    IndexHub --> Response[Response Eval audit]
     Response --> ResponseLab[Response Eval Lab audit]
     ResponseLab --> QuestionLab[Question Lab audit]
     QuestionLab --> TypeDuel[Type Duel Lab audit]

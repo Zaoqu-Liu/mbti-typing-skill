@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1600 980">
+  <title>Experience Hub Route Map</title>
+  <desc>First-run route map for the MBTI Typing Skill Experience Hub, showing user intents, local labs, proof receipts, agent adoption, and release gates.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #182321; }
+      .title { font-size: 52px; font-weight: 900; }
+      .subtitle { font-size: 22px; fill: #5b6865; }
+      .section { font-size: 22px; font-weight: 900; }
+      .small { font-size: 16px; fill: #4f5c59; }
+      .tiny { font-size: 14px; fill: #586461; }
+      .node { fill: #ffffff; stroke: #d6dedb; stroke-width: 2; rx: 12; }
+      .core { fill: #26302f; stroke: #26302f; stroke-width: 2; rx: 14; }
+      .core-text { fill: #ffffff; font-size: 24px; font-weight: 900; }
+      .core-small { fill: #e4eeec; font-size: 15px; }
+      .teal { fill: #e1f3f0; stroke: #9fd5ce; stroke-width: 2; rx: 12; }
+      .amber { fill: #fff0d7; stroke: #e3bd7a; stroke-width: 2; rx: 12; }
+      .rose { fill: #fde7ee; stroke: #e9aac0; stroke-width: 2; rx: 12; }
+      .blue { fill: #e7f0ff; stroke: #abc3ea; stroke-width: 2; rx: 12; }
+      .green { fill: #e7f7df; stroke: #add69c; stroke-width: 2; rx: 12; }
+      .purple { fill: #eeeafd; stroke: #c8bff1; stroke-width: 2; rx: 12; }
+      .line { stroke: #9aa9a5; stroke-width: 3; fill: none; }
+      .line-strong { stroke: #128c82; stroke-width: 4; fill: none; }
+      .badge { fill: #26302f; rx: 999; }
+      .badge-text { fill: #ffffff; font-size: 14px; font-weight: 900; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#128c82" />
+    </marker>
+    <marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#9aa9a5" />
+    </marker>
+  </defs>
+
+  <rect width="1600" height="980" fill="#f5f7f6" />
+  <path d="M0 145 C290 45 495 232 745 110 C1020 -20 1265 120 1600 50 L1600 0 L0 0 Z" fill="#e1f3f0" opacity="0.78" />
+  <path d="M0 980 L0 845 C260 760 500 905 770 804 C1040 704 1310 805 1600 716 L1600 980 Z" fill="#fff0d7" opacity="0.62" />
+
+  <text class="title" x="76" y="88">Experience Hub Route Map</text>
+  <text class="subtitle" x="78" y="128">The Pages root is a command center: every intent gets a direct workflow, export, and proof path.</text>
+
+  <rect class="core" x="548" y="188" width="504" height="156" />
+  <text class="core-text" x="612" y="236">MBTI Typing Skill Experience Hub</text>
+  <text class="core-small" x="612" y="270">docs/index.html</text>
+  <text class="core-small" x="612" y="298">candidate set + serious runner-up</text>
+  <text class="core-small" x="612" y="323">evidence ledger + falsifier + safety boundary</text>
+
+  <rect class="teal" x="76" y="198" width="338" height="118" />
+  <text class="section" x="108" y="239">Start typing</text>
+  <text class="small" x="108" y="268">Session Lab + Question Lab</text>
+  <text class="tiny" x="108" y="294">messy evidence to next-round questions</text>
+
+  <rect class="amber" x="1186" y="198" width="338" height="118" />
+  <text class="section" x="1218" y="239">Install or adapt</text>
+  <text class="small" x="1218" y="268">Agent Adapter Lab + Agent Portability Lab</text>
+  <text class="tiny" x="1218" y="294">18 targets plus unknown host mapping</text>
+
+  <path class="line-strong" marker-end="url(#arrow)" d="M414 257 C470 257 494 257 548 257" />
+  <path class="line-strong" marker-end="url(#arrow)" d="M1186 257 C1130 257 1106 257 1052 257" />
+
+  <rect class="blue" x="80" y="418" width="286" height="118" />
+  <text class="section" x="108" y="457">Session Lab</text>
+  <text class="tiny" x="108" y="485">candidate board + ledger</text>
+  <text class="tiny" x="108" y="510">share link + JSON recovery</text>
+
+  <rect class="purple" x="400" y="418" width="286" height="118" />
+  <text class="section" x="428" y="457">Type Duel Lab</text>
+  <text class="tiny" x="428" y="485">adjacent-type conflicts</text>
+  <text class="tiny" x="428" y="510">killer questions + losing conditions</text>
+
+  <rect class="green" x="720" y="418" width="286" height="118" />
+  <text class="section" x="748" y="457">Response Eval Lab</text>
+  <text class="tiny" x="748" y="485">mode-aware quality radar</text>
+  <text class="tiny" x="748" y="510">repair prompt + JSON receipt</text>
+
+  <rect class="rose" x="1040" y="418" width="286" height="118" />
+  <text class="section" x="1068" y="457">Benchmark Replay</text>
+  <text class="tiny" x="1068" y="485">blind prompt + reference reveal</text>
+  <text class="tiny" x="1068" y="510">Replay Receipt + issue seed</text>
+
+  <rect class="amber" x="1360" y="418" width="164" height="118" />
+  <text class="section" x="1384" y="457">Follow-Up</text>
+  <text class="tiny" x="1384" y="485">consent</text>
+  <text class="tiny" x="1384" y="510">redaction</text>
+
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L223 418" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L543 418" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L863 418" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L1183 418" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L1442 418" />
+
+  <rect class="node" x="76" y="632" width="418" height="150" />
+  <text class="section" x="108" y="674">User-facing proof</text>
+  <text class="tiny" x="108" y="704">Starter Prompt, Session JSON, Calibration Receipt</text>
+  <text class="tiny" x="108" y="730">Replay Receipt, Response Eval JSON</text>
+  <rect class="badge" x="108" y="748" width="205" height="28" />
+  <text class="badge-text" x="124" y="767">local-first receipts</text>
+
+  <rect class="node" x="591" y="632" width="418" height="150" />
+  <text class="section" x="623" y="674">Contribution routes</text>
+  <text class="tiny" x="623" y="704">benchmark_case.yml, response_eval_improvement.yml</text>
+  <text class="tiny" x="623" y="730">agent_portability_request.yml, consented_followup.yml</text>
+  <rect class="badge" x="623" y="748" width="186" height="28" />
+  <text class="badge-text" x="639" y="767">issue seed loop</text>
+
+  <rect class="node" x="1106" y="632" width="418" height="150" />
+  <text class="section" x="1138" y="674">Release gate</text>
+  <text class="tiny" x="1138" y="704">scripts/index_hub_audit.py</text>
+  <text class="tiny" x="1138" y="730">make test + repository_scorecard.py</text>
+  <rect class="badge" x="1138" y="748" width="198" height="28" />
+  <text class="badge-text" x="1154" y="767">GitHub Pages root</text>
+
+  <path class="line-strong" marker-end="url(#arrow)" d="M494 707 C530 707 552 707 591 707" />
+  <path class="line-strong" marker-end="url(#arrow)" d="M1009 707 C1046 707 1068 707 1106 707" />
+
+  <rect class="rose" x="76" y="850" width="1448" height="70" />
+  <text class="section" x="108" y="892">Non-negotiable invariant</text>
+  <text class="small" x="380" y="892">No route claims psychometric ground truth; every route keeps uncertainty, runner-up, falsifier, and safety boundary visible.</text>
+</svg>

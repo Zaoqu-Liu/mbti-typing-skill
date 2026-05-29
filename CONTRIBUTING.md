@@ -28,6 +28,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
 - Improve adapter adoption through `docs/agent-adapter-lab.html` and the `agent_adapter_improvement.yml` issue template.
 - Add or repair future-host support through `docs/agent-portability-lab.html` and the `agent_portability_request.yml` issue template before committing a bespoke adapter.
+- Improve the first-run GitHub Pages route through `docs/index.html`, `docs/assets/experience-hub-route-map.svg`, and `scripts/index_hub_audit.py` so new visitors can pick a task before reading internals.
 - Add response-eval fixtures that catch shallow live-round, type-duel, final-report, or anti-pattern answers.
 - Share weak answers through `docs/response-eval-lab.html` and the `response_eval_improvement.yml` issue template.
 - Tighten Chinese or English output templates.
@@ -52,6 +53,7 @@ Agent Adapter Audit: 326/326 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
 Agent Adapter Lab Audit: 91/91 (100.00%)
 Agent Portability Lab Audit: 92/92 (100.00%)
+Index Hub Audit: 82/82 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
@@ -59,6 +61,7 @@ Type Duel Lab Audit: 68/68 (100.00%)
 Benchmark Replay Lab Audit: 62/62 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
 Calibration Lab Audit: 53/53 (100.00%)
+Repository UX Score: 641/641 (100.00%)
 ```
 
 ## Benchmark Case Guidelines
@@ -207,12 +210,25 @@ Before opening a portability change:
 - Run `python3 -B scripts/agent_adapter_audit.py .` and `python3 -B scripts/agent_pack_export_audit.py .` if the change touches export packaging or named adapter targets.
 - Preserve candidate set, serious runner-up, evidence ledger, falsifier, revision trigger, and safety-boundary language in every bridge.
 
+## Experience Hub Guidelines
+
+Experience Hub contributions are useful when the first GitHub Pages visit is unclear, too linear, or missing a path for a major user intent.
+
+Before opening an Experience Hub change:
+
+- Start with `docs/index.html` and choose the user job first: typing, validation, benchmark replay, follow-up evidence, agent installation, future-host portability, or contribution.
+- Keep `docs/assets/experience-hub-route-map.svg` text-accurate and readable in README, visual tour, and Pages contexts.
+- Preserve the starter prompt, candidate set, serious runner-up, evidence ledger, falsifier, and safety-boundary language.
+- Link public Pages routes directly and use GitHub blob links for repository files that are outside `docs/`.
+- Run `python3 -B scripts/index_hub_audit.py docs/index.html docs/assets/experience-hub-route-map.svg`.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
 - [ ] Any agent adapter change passes `scripts/agent_adapter_audit.py` and keeps `agent-adapters/manifest.json` aligned.
 - [ ] Any adapter packaging or manifest change passes `scripts/agent_pack_export_audit.py`.
 - [ ] Any Agent Portability Lab, future-host bridge, or portability issue-template change passes `scripts/sync_agent_portability_lab.py` and `scripts/agent_portability_lab_audit.py`.
+- [ ] Any Experience Hub, first-run route, Pages root, or route-map change passes `scripts/index_hub_audit.py`.
 - [ ] Any response example or output-template change passes `scripts/response_eval_audit.py`.
 - [ ] Any Response Eval Lab, answer-quality gate, repair prompt, or issue seed change passes `scripts/response_eval_lab_audit.py`.
 - [ ] Any new claim has a caveat or evidence standard.

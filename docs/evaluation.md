@@ -182,8 +182,9 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose eighteen exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose nineteen exact-label SVG assets:
 
+- `docs/assets/experience-hub-route-map.svg` for the Pages root workflow selector to starter prompt to proof route.
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
 - `docs/assets/trust-loop-dashboard.svg` for the feedback-to-benchmark-to-release trust loop.
@@ -249,6 +250,12 @@ python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json do
 python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
 ```
 
+The Index Hub Audit validates the Pages root: `docs/index.html` must be a real Experience Hub, not a redirect. It stays buildless, local-first, copyable, and visibly bounded. It checks workflow cards, direct links to every public lab, starter prompt copy, `docs/assets/experience-hub-route-map.svg`, safety-boundary language, and absence of unsafe rendering patterns:
+
+```bash
+python3 -B scripts/index_hub_audit.py docs/index.html docs/assets/experience-hub-route-map.svg
+```
+
 The Response Eval Audit validates that examples and future templates do not drift into shallow label assignment. It checks `examples/response-eval-cases.json` for positive live-round, type-duel, and final-report fixtures plus a blocked anti-pattern fixture, then reports `positive_pass`, `negative_blocked`, `sticky_precision`, `next_round`, and `no_overclaim` metrics:
 
 ```bash
@@ -289,6 +296,8 @@ The dedicated Agent Pack Export audit validates the adoption path: `scripts/expo
 The dedicated Agent Adapter Lab audit validates the adoption UX path: `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` must stay aligned so visitors can select agent targets, copy the pack command, inspect the install checklist, export adapter JSON, and file adapter improvements without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
 
 The dedicated Agent Portability Lab audit validates the generalization path: `docs/agent-portability-lab.html`, `scripts/sync_agent_portability_lab.py`, `scripts/agent_portability_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_portability_request.yml`, and `docs/assets/universal-agent-bridge-map.svg` must stay aligned so visitors can map a new or unknown host by capability, copy a bridge plan, copy a portable install recipe, export an adapter draft JSON, and file a portability request without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
+
+The dedicated Index Hub audit validates the first-run product surface: `docs/index.html`, `docs/assets/experience-hub-route-map.svg`, and `scripts/index_hub_audit.py` must stay aligned so visitors can choose a task, copy a starter prompt, and reach every public workflow without a redirect or hidden network dependency.
 
 The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, `docs/assets/response-eval-lab-flow.svg`, `docs/response-eval-lab.html`, `scripts/response_eval_audit.py`, and `scripts/response_eval_lab_audit.py` must stay aligned so examples and the public lab preserve candidate set, runner-up, evidence movement, next-round questions, falsifiers, safety boundaries, calibrated confidence, repair prompts, issue seeds, and Anti-Flattery discipline.
 

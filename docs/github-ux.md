@@ -15,6 +15,7 @@ The README opens with:
 - A badge row for immediate operational credibility.
 - A large visual hero that shows the system as a command center.
 - A GitHub social preview asset at `docs/assets/social-preview.jpg` so the same product signal survives link sharing outside the README.
+- A Pages-root Experience Hub at `docs/index.html` for visitors who want task cards, a copyable starter prompt, and direct workflow routes before choosing a lab.
 - A local-first Session Lab for visitors who want to paste their own evidence, get a usable next round immediately, copy a share link, and recover work through imported JSON.
 - A Question Lab for visitors who want the exact source-synced next 4-6 questions instead of a generic personality quiz restart.
 - A Type Duel Lab for visitors who are stuck between two nearby types and want the exact source-synced discriminator, losing conditions, prompt, and improvement seed.
@@ -32,7 +33,7 @@ The README opens with:
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Eighteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
+- Nineteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/experience-hub-route-map.svg`, `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -45,6 +46,8 @@ The SVG blueprints carry precise labels because they are repository-native, revi
 ```mermaid
 flowchart TD
     A[Visitor lands on README] --> B{What are they looking for?}
+    A --> ROOT[Open Experience Hub]
+    ROOT --> B
     B -->|Can this type me better?| C[See adaptive interview loop]
     B -->|What should I ask next?| U[Open Question Lab]
     B -->|Can I trust it?| D[See evidence ledger and safety boundaries]
@@ -82,35 +85,36 @@ flowchart TD
 ## Visual Hierarchy
 
 1. Hero image: emotional hook and product shape.
-2. Session Lab links: immediate proof that the repo is usable.
-3. Question Lab: visible next-round questions, round prompts, and question improvement seeds.
-4. Type Duel Lab: visible adjacent-type forks and copyable duel prompts.
-5. Benchmark Arena: visible traps and contribution path.
-6. Calibration Lab: visible repair loop for failed reports.
-7. Follow-Up Lab: safe return path for delayed observations.
-8. GitHub Visitor Experience Map: how different visitors should move.
-9. Typing Engine Blueprint: why the reasoning loop is not a quiz.
-10. Trust Loop Dashboard: why accuracy work is repeatable.
-11. Benchmark Arena Pipeline: why public benchmark cases cannot drift from JSON.
-12. Benchmark Replay Loop: why hard cases become blind prompts, Replay Receipts, repair prompts, and replay issue seeds.
-13. Benchmark Type Coverage Matrix: why all 16 leading types are now represented.
-14. Calibration Loop Map: why failed reports turn into repair prompts and issue seeds.
-15. Blind Review Arena: why accuracy claims can be blinded, scored, and adjudicated.
-16. Consent Feedback Loop: why real user follow-up can improve the project without exposing raw private material.
-17. Adaptive Question Loop: why next-round questions cannot drift from the skill source.
-18. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
-19. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
-20. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
-21. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
-22. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
-23. Universal Agent Bridge Map: why unknown hosts are mapped by project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays before claiming support.
-24. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
-25. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
-26. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
-27. System map: how inputs become calibrated outputs.
-28. Interview loop: why each round feels progressive.
-29. Evidence ledger: why the answer is not a black box.
-30. Quality gates: why the project is maintainable.
+2. Experience Hub Route Map: why the Pages root is a task router instead of a redirect.
+3. Session Lab links: immediate proof that the repo is usable.
+4. Question Lab: visible next-round questions, round prompts, and question improvement seeds.
+5. Type Duel Lab: visible adjacent-type forks and copyable duel prompts.
+6. Benchmark Arena: visible traps and contribution path.
+7. Calibration Lab: visible repair loop for failed reports.
+8. Follow-Up Lab: safe return path for delayed observations.
+9. GitHub Visitor Experience Map: how different visitors should move.
+10. Typing Engine Blueprint: why the reasoning loop is not a quiz.
+11. Trust Loop Dashboard: why accuracy work is repeatable.
+12. Benchmark Arena Pipeline: why public benchmark cases cannot drift from JSON.
+13. Benchmark Replay Loop: why hard cases become blind prompts, Replay Receipts, repair prompts, and replay issue seeds.
+14. Benchmark Type Coverage Matrix: why all 16 leading types are now represented.
+15. Calibration Loop Map: why failed reports turn into repair prompts and issue seeds.
+16. Blind Review Arena: why accuracy claims can be blinded, scored, and adjudicated.
+17. Consent Feedback Loop: why real user follow-up can improve the project without exposing raw private material.
+18. Adaptive Question Loop: why next-round questions cannot drift from the skill source.
+19. Type Duel Decision Map: why pair-duel pages cannot drift from the skill source.
+20. Agent Adapter Matrix: why Codex, Claude Code, Cursor, opencode, and AGENTS.md-aware agents share one protocol.
+21. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
+22. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
+23. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
+24. Universal Agent Bridge Map: why unknown hosts are mapped by project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays before claiming support.
+25. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
+26. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
+27. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
+28. System map: how inputs become calibrated outputs.
+29. Interview loop: why each round feels progressive.
+30. Evidence ledger: why the answer is not a black box.
+31. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 

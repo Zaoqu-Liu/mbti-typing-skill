@@ -1,9 +1,9 @@
 PYTHON ?= python3
 SKILL_DIR := skill/mbti-typing
 
-.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit agent-portability-lab-sync agent-portability-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+.PHONY: test validate benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit agent-portability-lab-sync agent-portability-lab-audit index-hub-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
-test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit agent-portability-lab-sync agent-portability-lab-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
+test: validate clean benchmark regression scorecard activation blind-review-audit consent-redaction-audit agent-adapter-audit agent-pack-export-audit agent-adapter-lab-sync agent-adapter-lab-audit agent-portability-lab-sync agent-portability-lab-audit index-hub-audit response-eval-audit response-eval-lab-audit question-lab-sync question-lab-audit type-duel-lab-sync type-duel-lab-audit follow-up-lab-audit session-lab-audit case-gallery-sync case-gallery-audit benchmark-replay-lab-sync benchmark-replay-lab-audit calibration-lab-sync calibration-lab-audit repo-scorecard clean
 
 validate:
 	$(PYTHON) -m py_compile $(SKILL_DIR)/scripts/*.py
@@ -45,6 +45,9 @@ agent-portability-lab-sync:
 
 agent-portability-lab-audit:
 	$(PYTHON) -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
+
+index-hub-audit:
+	$(PYTHON) -B scripts/index_hub_audit.py docs/index.html docs/assets/experience-hub-route-map.svg
 
 response-eval-audit:
 	$(PYTHON) -B scripts/response_eval_audit.py examples/response-eval-cases.json

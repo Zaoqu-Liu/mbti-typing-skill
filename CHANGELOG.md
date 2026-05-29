@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.24 - 2026-05-29
+
+- Replaced the GitHub Pages root redirect with a buildless Experience Hub that routes first-time visitors by task: typing, answer review, benchmark replay, follow-up evidence, agent installation, future-host portability, and contribution.
+- Added the Experience Hub Route Map SVG and direct starter-prompt UX so README, Pages, and the visual tour explain the full product loop before a user chooses a lab.
+- Added `scripts/index_hub_audit.py` and wired it into `make test`, README, evaluation docs, contribution rules, and repository UX gates, raising Index Hub Audit to 82/82 and Repository UX Score to 641/641.
+
 ## 0.1.23 - 2026-05-29
 
 - Added a buildless Agent Portability Lab for future or unknown agent hosts, with capability-first host intake, Universal Agent Bridge plans, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds.
