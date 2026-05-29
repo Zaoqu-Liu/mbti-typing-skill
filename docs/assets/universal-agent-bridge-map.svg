@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1600 980">
+  <title>Universal Agent Bridge Map</title>
+  <desc>Capability-first adapter map for moving the MBTI Typing Skill from known agent targets to unknown hosts while preserving one canonical protocol.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #182321; }
+      .title { font-size: 52px; font-weight: 900; }
+      .subtitle { font-size: 22px; fill: #5b6865; }
+      .section { font-size: 22px; font-weight: 900; }
+      .small { font-size: 17px; fill: #4f5c59; }
+      .tiny { font-size: 14px; fill: #586461; }
+      .node { fill: #ffffff; stroke: #d6dedb; stroke-width: 2; rx: 12; }
+      .node-soft { fill: #f7fbfa; stroke: #d6dedb; stroke-width: 2; rx: 12; }
+      .core { fill: #26302f; stroke: #26302f; stroke-width: 2; rx: 14; }
+      .core-text { fill: #ffffff; font-size: 23px; font-weight: 900; }
+      .core-small { fill: #e4eeec; font-size: 15px; }
+      .teal { fill: #e1f3f0; stroke: #9fd5ce; stroke-width: 2; rx: 12; }
+      .amber { fill: #fff0d7; stroke: #e3bd7a; stroke-width: 2; rx: 12; }
+      .rose { fill: #fde7ee; stroke: #e9aac0; stroke-width: 2; rx: 12; }
+      .blue { fill: #e7f0ff; stroke: #abc3ea; stroke-width: 2; rx: 12; }
+      .green { fill: #e7f7df; stroke: #add69c; stroke-width: 2; rx: 12; }
+      .purple { fill: #eeeafd; stroke: #c8bff1; stroke-width: 2; rx: 12; }
+      .line { stroke: #9aa9a5; stroke-width: 3; fill: none; }
+      .line-strong { stroke: #128c82; stroke-width: 4; fill: none; }
+      .dash { stroke-dasharray: 10 10; }
+      .badge { fill: #26302f; rx: 999; }
+      .badge-text { fill: #ffffff; font-size: 14px; font-weight: 900; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#128c82" />
+    </marker>
+    <marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#9aa9a5" />
+    </marker>
+  </defs>
+
+  <rect width="1600" height="980" fill="#f5f7f6" />
+  <path d="M0 140 C300 40 460 240 720 120 C1000 0 1230 110 1600 45 L1600 0 L0 0 Z" fill="#e1f3f0" opacity="0.78" />
+  <path d="M0 980 L0 845 C250 760 480 905 755 805 C1060 695 1280 810 1600 710 L1600 980 Z" fill="#fff0d7" opacity="0.62" />
+
+  <text class="title" x="76" y="88">Universal Agent Bridge Map</text>
+  <text class="subtitle" x="78" y="128">Known adapters are finite. Capability-first mapping keeps the MBTI Typing Skill portable when the next agent host appears.</text>
+
+  <rect class="core" x="570" y="198" width="460" height="146" />
+  <text class="core-text" x="618" y="244">Canonical protocol</text>
+  <text class="core-small" x="618" y="278">skill/mbti-typing/SKILL.md</text>
+  <text class="core-small" x="618" y="305">candidate set + serious runner-up</text>
+  <text class="core-small" x="618" y="330">evidence ledger + falsifier + safety boundary</text>
+
+  <rect class="node-soft" x="76" y="198" width="360" height="146" />
+  <text class="section" x="108" y="244">Known host catalog</text>
+  <text class="small" x="108" y="278">18 named targets</text>
+  <text class="tiny" x="108" y="306">Codex, Claude Code, Cursor, opencode,</text>
+  <text class="tiny" x="108" y="329">GitHub Copilot, Windsurf, Cline, Continue...</text>
+
+  <rect class="node-soft" x="1164" y="198" width="360" height="146" />
+  <text class="section" x="1196" y="244">Unknown host intake</text>
+  <text class="small" x="1196" y="278">New IDE, CLI, chat project, or agent profile</text>
+  <text class="tiny" x="1196" y="306">No protocol fork until capability evidence is named.</text>
+
+  <path class="line-strong" marker-end="url(#arrow)" d="M436 270 C486 270 510 270 570 270" />
+  <path class="line-strong" marker-end="url(#arrow)" d="M1164 270 C1115 270 1092 270 1030 270" />
+
+  <rect class="teal" x="72" y="420" width="282" height="104" />
+  <text class="section" x="100" y="459">Project instructions</text>
+  <text class="tiny" x="100" y="484">AGENTS.md + CLAUDE.md</text>
+  <text class="tiny" x="100" y="506">GEMINI.md / CONVENTIONS.md</text>
+
+  <rect class="blue" x="386" y="420" width="282" height="104" />
+  <text class="section" x="414" y="459">Native skill</text>
+  <text class="tiny" x="414" y="486">SKILL.md + references + scripts</text>
+  <text class="tiny" x="414" y="508">Best for reusable workflows</text>
+
+  <rect class="amber" x="700" y="420" width="282" height="104" />
+  <text class="section" x="728" y="459">Rule or mode files</text>
+  <text class="tiny" x="728" y="486">.cursor/rules, .roomodes, .rules</text>
+  <text class="tiny" x="728" y="508">Thin bridge to canonical source</text>
+
+  <rect class="green" x="1014" y="420" width="282" height="104" />
+  <text class="section" x="1042" y="459">Custom agent profile</text>
+  <text class="tiny" x="1042" y="486">JSON prompt + resources + tools</text>
+  <text class="tiny" x="1042" y="508">Keep default grants read-only</text>
+
+  <rect class="purple" x="1328" y="420" width="196" height="104" />
+  <text class="section" x="1356" y="459">Chat project</text>
+  <text class="tiny" x="1356" y="486">GPT instructions</text>
+  <text class="tiny" x="1356" y="508">Knowledge files</text>
+
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L214 420" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L527 420" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L841 420" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L1155 420" />
+  <path class="line" marker-end="url(#arrow-gray)" d="M800 344 L1426 420" />
+
+  <rect class="node" x="76" y="604" width="418" height="160" />
+  <text class="section" x="108" y="646">Agent Portability Lab</text>
+  <text class="tiny" x="108" y="678">Select a known target or describe an unknown host.</text>
+  <text class="tiny" x="108" y="704">Map capabilities before inventing new files.</text>
+  <text class="tiny" x="108" y="730">Emit bridge plan, install recipe, adapter draft, issue seed.</text>
+  <rect class="badge" x="108" y="740" width="210" height="30" />
+  <text class="badge-text" x="124" y="760">agent-portability-lab/v1</text>
+
+  <rect class="node" x="591" y="604" width="418" height="160" />
+  <text class="section" x="623" y="646">Generated adoption proof</text>
+  <text class="tiny" x="623" y="678">Portable Install Plan</text>
+  <text class="tiny" x="623" y="704">Adapter JSON Draft</text>
+  <text class="tiny" x="623" y="730">Capability flags + safety contract snapshot</text>
+  <rect class="badge" x="623" y="740" width="188" height="30" />
+  <text class="badge-text" x="639" y="760">local-first receipt</text>
+
+  <rect class="node" x="1106" y="604" width="418" height="160" />
+  <text class="section" x="1138" y="646">Release gate</text>
+  <text class="tiny" x="1138" y="678">sync_agent_portability_lab.py</text>
+  <text class="tiny" x="1138" y="704">agent_portability_lab_audit.py</text>
+  <text class="tiny" x="1138" y="730">make test + repository_scorecard.py</text>
+  <rect class="badge" x="1138" y="740" width="270" height="30" />
+  <text class="badge-text" x="1154" y="760">agent_portability_request.yml</text>
+
+  <path class="line-strong" marker-end="url(#arrow)" d="M494 684 C530 684 552 684 591 684" />
+  <path class="line-strong" marker-end="url(#arrow)" d="M1009 684 C1046 684 1068 684 1106 684" />
+
+  <rect class="rose" x="76" y="842" width="1448" height="76" />
+  <text class="section" x="108" y="884">Non-negotiable invariant</text>
+  <text class="small" x="380" y="884">All adapters, including unknown hosts, must preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary.</text>
+</svg>

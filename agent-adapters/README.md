@@ -10,6 +10,8 @@ This directory documents how the same MBTI Typing Skill is exposed to multiple a
 - Drift gate: `scripts/agent_adapter_audit.py`
 - Adoption lab sync: `scripts/sync_agent_adapter_lab.py`
 - Adoption lab audit: `scripts/agent_adapter_lab_audit.py`
+- Portability lab sync: `scripts/sync_agent_portability_lab.py`
+- Portability lab audit: `scripts/agent_portability_lab_audit.py`
 
 ## Adapter Matrix
 
@@ -72,12 +74,18 @@ For first-run adoption, use the [Agent Adapter Lab](../docs/agent-adapter-lab.ht
 
 ![Agent Adapter Lab Flow](../docs/assets/agent-adapter-lab-flow.svg)
 
+For future or unknown hosts, use the [Agent Portability Lab](../docs/agent-portability-lab.html). It maps a host by capability before inventing an adapter: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed while preserving the candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary.
+
+![Universal Agent Bridge Map](../docs/assets/universal-agent-bridge-map.svg)
+
 Run the dedicated Agent Pack Export Audit before publishing adapter changes:
 
 ```bash
 python3 -B scripts/agent_pack_export_audit.py .
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
 ```
 
 Codex:
@@ -209,6 +217,8 @@ python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
 make test
 ```
 

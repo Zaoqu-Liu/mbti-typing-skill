@@ -27,6 +27,7 @@ This repository values rigor over personality-label theater. Contributions shoul
 - Improve agent adapters for Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or AGENTS.md-aware tools without forking the protocol.
 - Improve `scripts/export_agent_pack.py` so cross-agent adoption is easier to copy into another repository.
 - Improve adapter adoption through `docs/agent-adapter-lab.html` and the `agent_adapter_improvement.yml` issue template.
+- Add or repair future-host support through `docs/agent-portability-lab.html` and the `agent_portability_request.yml` issue template before committing a bespoke adapter.
 - Add response-eval fixtures that catch shallow live-round, type-duel, final-report, or anti-pattern answers.
 - Share weak answers through `docs/response-eval-lab.html` and the `response_eval_improvement.yml` issue template.
 - Tighten Chinese or English output templates.
@@ -47,9 +48,10 @@ Score: 35/35 (100.00%)
 Regression passed for 16 golden fixtures.
 Blind Review Audit: 93/93 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
-Agent Adapter Audit: 313/313 (100.00%)
+Agent Adapter Audit: 326/326 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
 Agent Adapter Lab Audit: 91/91 (100.00%)
+Agent Portability Lab Audit: 92/92 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
 Question Lab Audit: 71/71 (100.00%)
@@ -188,11 +190,29 @@ Before opening an adapter change:
 - Run `python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json` if the manifest, pack baseline, public adoption lab, issue seed, or adapter UX wording changed.
 - Preserve runner-up, falsifier, evidence-ledger, source-reference, and safety-boundary language in every adapter.
 
+## Agent Portability Guidelines
+
+Agent portability contributions are useful when a new or unknown host is likely to become a mainstream workflow, but its exact adapter shape is not proven yet.
+
+Before opening a portability change:
+
+- Start with `docs/agent-portability-lab.html` when possible.
+- Map real host capabilities before proposing files: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array.
+- Use `agent_portability_request.yml` for public-safe portability requests.
+- Do not claim native skill support unless the host documentation or a real host run proves it.
+- Keep the bridge thin: unknown hosts should route to `skill/mbti-typing/SKILL.md`, `AGENTS.md`, and the existing adapter manifest instead of duplicating the whole protocol.
+- Update `agent-adapters/manifest.json` only after the target has stable entrypoints, invocation guidance, installation guidance, and a source URL.
+- Run `python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html`.
+- Run `python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml`.
+- Run `python3 -B scripts/agent_adapter_audit.py .` and `python3 -B scripts/agent_pack_export_audit.py .` if the change touches export packaging or named adapter targets.
+- Preserve candidate set, serious runner-up, evidence ledger, falsifier, revision trigger, and safety-boundary language in every bridge.
+
 ## Pull Request Checklist
 
 - [ ] `make test` passes.
 - [ ] Any agent adapter change passes `scripts/agent_adapter_audit.py` and keeps `agent-adapters/manifest.json` aligned.
 - [ ] Any adapter packaging or manifest change passes `scripts/agent_pack_export_audit.py`.
+- [ ] Any Agent Portability Lab, future-host bridge, or portability issue-template change passes `scripts/sync_agent_portability_lab.py` and `scripts/agent_portability_lab_audit.py`.
 - [ ] Any response example or output-template change passes `scripts/response_eval_audit.py`.
 - [ ] Any Response Eval Lab, answer-quality gate, repair prompt, or issue seed change passes `scripts/response_eval_lab_audit.py`.
 - [ ] Any new claim has a caveat or evidence standard.

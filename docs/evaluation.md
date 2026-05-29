@@ -182,7 +182,7 @@ This verifies that the GitHub-facing project experience has the expected hero im
 
 The scorecard also requires a demo layer: a visual tour, a short demo session, a sample report, a second journey-map image, a GitHub social preview crop, and a Response Eval command-center bitmap. This prevents the repository from becoming only a technical reference; visitors should be able to feel the typing loop quickly.
 
-The visual blueprint gate checks that the README and visual tour expose seventeen exact-label SVG assets:
+The visual blueprint gate checks that the README and visual tour expose eighteen exact-label SVG assets:
 
 - `docs/assets/repository-experience-map.svg` for the first-time GitHub visitor path.
 - `docs/assets/typing-engine-blueprint.svg` for the evidence, duel, audit, and falsifier architecture.
@@ -199,6 +199,7 @@ The visual blueprint gate checks that the README and visual tour expose seventee
 - `docs/assets/agent-compatibility-grid.svg` for the 18-adapter compatibility surface across Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and AGENTS.md-aware agents.
 - `docs/assets/agent-pack-export-flow.svg` for the manifest to exported pack to target repository copy path.
 - `docs/assets/agent-adapter-lab-flow.svg` for the manifest to Agent Adapter Lab to pack command to target repository to `agent_adapter_improvement.yml` loop.
+- `docs/assets/universal-agent-bridge-map.svg` for the known or unknown host to capability map to Agent Portability Lab to `agent_portability_request.yml` loop.
 - `docs/assets/response-quality-radar.svg` for the answer-level candidate set, runner-up, evidence movement, next-question, falsifier, safety-boundary, Anti-Flattery, and response audit gates.
 - `docs/assets/response-eval-lab-flow.svg` for the paste answer to mode-aware gates to quality radar to JSON receipt to repair prompt to `response_eval_improvement.yml` loop.
 
@@ -241,6 +242,13 @@ python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/a
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 ```
 
+The Agent Portability Lab Source Sync and Audit validate the future-host bridge: `docs/agent-portability-lab.html` must embed the exact known targets from `agent-adapters/manifest.json` plus the capability axes used to support unknown hosts. It stays buildless, local-first, DOM-safe, copyable, and visibly bounded. It checks known target selection, unknown host intake, capability cards, Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, `agent_portability_request.yml` issue seed, `docs/assets/universal-agent-bridge-map.svg`, and safety-boundary language:
+
+```bash
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
+```
+
 The Response Eval Audit validates that examples and future templates do not drift into shallow label assignment. It checks `examples/response-eval-cases.json` for positive live-round, type-duel, and final-report fixtures plus a blocked anti-pattern fixture, then reports `positive_pass`, `negative_blocked`, `sticky_precision`, `next_round`, and `no_overclaim` metrics:
 
 ```bash
@@ -274,11 +282,13 @@ The dedicated Type Duel Lab audit validates the public adjacent-type surface: ev
 
 The dedicated Follow-Up Lab audit validates the public return surface: all 16 type codes, consent checkboxes, redaction placeholders, local privacy scanner, `consented-followup/v1` packet builder, copied issue seed, copied or downloaded JSON, local persistence, DOM-safe rendering, and no external runtime dependency.
 
-The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, `docs/agent-adapter-lab.html`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, `scripts/export_agent_pack.py`, `scripts/agent_pack_export_audit.py`, `scripts/sync_agent_adapter_lab.py`, and `scripts/agent_adapter_lab_audit.py` must stay aligned with the canonical skill and the current tool conventions checked on 2026-05-28.
+The dedicated Agent Adapter audit validates the distribution surface: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CONVENTIONS.md`, `opencode.json`, `.aider.conf.yml`, `.gemini/settings.json`, `.claude/skills/mbti-typing/SKILL.md`, `.claude/commands/mbti-type.md`, `.cursor/rules/mbti-typing.mdc`, `.github/copilot-instructions.md`, `.github/instructions/mbti-typing.instructions.md`, `.github/skills/mbti-typing/SKILL.md`, `.windsurf/rules/mbti-typing.md`, `.cline/skills/mbti-typing/SKILL.md`, `.clinerules/mbti-typing.md`, `.continue/rules/mbti-typing.md`, `agent-adapters/manifest.json`, `docs/agent-adapters.md`, `docs/agent-adapter-lab.html`, `docs/agent-portability-lab.html`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, `.github/ISSUE_TEMPLATE/agent_portability_request.yml`, `scripts/export_agent_pack.py`, `scripts/agent_pack_export_audit.py`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `scripts/sync_agent_portability_lab.py`, and `scripts/agent_portability_lab_audit.py` must stay aligned with the canonical skill and the current tool conventions checked on 2026-05-29.
 
 The dedicated Agent Pack Export audit validates the adoption path: `scripts/export_agent_pack.py` must export the canonical skill tree, baseline contracts, selected target entrypoints, adapter docs, prompt recipes, and an `AGENT_PACK_MANIFEST.json` receipt, while refusing unknown targets and non-empty destinations unless the user explicitly chooses `--force`.
 
 The dedicated Agent Adapter Lab audit validates the adoption UX path: `docs/agent-adapter-lab.html`, `scripts/sync_agent_adapter_lab.py`, `scripts/agent_adapter_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_adapter_improvement.yml`, and `docs/assets/agent-adapter-lab-flow.svg` must stay aligned so visitors can select agent targets, copy the pack command, inspect the install checklist, export adapter JSON, and file adapter improvements without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
+
+The dedicated Agent Portability Lab audit validates the generalization path: `docs/agent-portability-lab.html`, `scripts/sync_agent_portability_lab.py`, `scripts/agent_portability_lab_audit.py`, `.github/ISSUE_TEMPLATE/agent_portability_request.yml`, and `docs/assets/universal-agent-bridge-map.svg` must stay aligned so visitors can map a new or unknown host by capability, copy a bridge plan, copy a portable install recipe, export an adapter draft JSON, and file a portability request without losing the candidate set, runner-up, evidence ledger, falsifier, or safety-boundary contract.
 
 The dedicated Response Eval audit validates the answer-level UX path: `examples/response-eval-cases.json`, `docs/assets/response-quality-radar.svg`, `docs/assets/response-eval-lab-flow.svg`, `docs/response-eval-lab.html`, `scripts/response_eval_audit.py`, and `scripts/response_eval_lab_audit.py` must stay aligned so examples and the public lab preserve candidate set, runner-up, evidence movement, next-round questions, falsifiers, safety boundaries, calibrated confidence, repair prompts, issue seeds, and Anti-Flattery discipline.
 

@@ -14,6 +14,8 @@ One canonical protocol, many thin adapters:
 - `scripts/agent_pack_export_audit.py` proves the pack path, selective export, write guard, and generated receipt.
 - `docs/agent-adapter-lab.html` turns the same manifest into a local-first selector with copyable pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds.
 - `scripts/sync_agent_adapter_lab.py` and `scripts/agent_adapter_lab_audit.py` block public-page drift.
+- `docs/agent-portability-lab.html` turns the same manifest into a capability-first Universal Agent Bridge for known and unknown hosts.
+- `scripts/sync_agent_portability_lab.py` and `scripts/agent_portability_lab_audit.py` block capability-map drift and issue-template drift.
 
 ## Supported Tools
 
@@ -24,6 +26,8 @@ One canonical protocol, many thin adapters:
 ![Agent Pack Export Flow](assets/agent-pack-export-flow.svg)
 
 ![Agent Adapter Lab Flow](assets/agent-adapter-lab-flow.svg)
+
+![Universal Agent Bridge Map](assets/universal-agent-bridge-map.svg)
 
 | Tool | Files | Why this shape |
 |---|---|---|
@@ -99,6 +103,22 @@ python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/a
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
 ```
 
+## Agent Portability Lab
+
+For a new mainstream agent that is not yet named in `agent-adapters/manifest.json`, open the capability-first bridge instead of guessing a tool-specific file shape:
+
+- [Agent Portability Lab](agent-portability-lab.html)
+- [Hosted Agent Portability Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-portability-lab.html)
+
+The Agent Portability Lab lets a visitor select a known target or type an unknown host name, then check the real capabilities the host exposes: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array. It emits a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed.
+
+This is the generalization layer for future tools. It avoids claiming native support until the host proves an instruction surface, while still preserving the same candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary contract.
+
+```bash
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
+```
+
 ## Current Source Notes
 
 These conventions were checked on 2026-05-29:
@@ -128,6 +148,8 @@ python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
 make test
 ```
 

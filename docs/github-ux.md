@@ -25,13 +25,14 @@ The README opens with:
 - Agent adapters for visitors who want the same protocol in Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, or another AGENTS.md-aware agent.
 - Agent pack export for visitors who want to copy selected adapters into another repository without hand-maintained file lists.
 - Agent Adapter Lab for visitors who want to choose exact agent targets and copy a pack command, install checklist, adapter JSON receipt, or `agent_adapter_improvement.yml` issue seed.
+- Agent Portability Lab for visitors who need a Universal Agent Bridge for a new or unknown host, with capability evidence, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds.
 - Response Eval Lab for visitors who want to paste any answer, see quality gates, copy a repair prompt, export JSON, and create a response eval issue seed.
 - Response Eval fixtures for visitors who want proof that answer quality is tested for candidate set, runner-up, evidence movement, next questions, falsifiers, safety boundaries, and Anti-Flattery discipline.
 - A Blind Review Protocol for visitors who want to see how multi-reviewer or multi-model outputs are evaluated without showing the expected answer up front.
 - A Consent Redaction Protocol for visitors who want to contribute delayed real-world observations without exposing private chat logs, identifiers, or third-party details.
 - A static interactive playground for visitors who want to try the loop before installing anything.
 - A one-minute demo path that links to a visual tour, demo session, and sample report.
-- Seventeen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
+- Eighteen SVG blueprints that make the GitHub experience inspectable: `docs/assets/repository-experience-map.svg`, `docs/assets/typing-engine-blueprint.svg`, `docs/assets/trust-loop-dashboard.svg`, `docs/assets/benchmark-arena-pipeline.svg`, `docs/assets/benchmark-replay-loop.svg`, `docs/assets/type-coverage-matrix.svg`, `docs/assets/calibration-loop-map.svg`, `docs/assets/blind-review-arena.svg`, `docs/assets/consent-feedback-loop.svg`, `docs/assets/adaptive-question-loop.svg`, `docs/assets/type-duel-decision-map.svg`, `docs/assets/agent-adapter-matrix.svg`, `docs/assets/agent-compatibility-grid.svg`, `docs/assets/agent-pack-export-flow.svg`, `docs/assets/agent-adapter-lab-flow.svg`, `docs/assets/universal-agent-bridge-map.svg`, `docs/assets/response-quality-radar.svg`, and `docs/assets/response-eval-lab-flow.svg`.
 - A short promise that explains the core product difference.
 - A quick trust statement that prevents misuse.
 
@@ -56,6 +57,7 @@ flowchart TD
     B -->|Can my agent use this?| W[Read Agent Adapters]
     B -->|Can I move it to another repo?| Y[Export Agent Pack]
     B -->|Which adapters should I choose?| AC[Open Agent Adapter Lab]
+    B -->|What about a new agent host?| AG[Open Agent Portability Lab]
     B -->|Can this be evaluated blind?| M[Read Blind Review Protocol]
     B -->|Can I safely share follow-up?| O[Read Consent Redaction Protocol]
     B -->|Can I install it fast?| F[Copy install command]
@@ -71,6 +73,7 @@ flowchart TD
     W --> X[Install Codex, Claude Code, Cursor, or opencode adapter]
     Y --> Z[Copy selected adapter pack]
     AC --> AD[Copy pack command and adapter JSON]
+    AG --> AH[Copy bridge plan, adapter draft, or portability request]
     M --> N[Inspect aggregate metrics]
     O --> P[Open consented follow-up issue]
     F --> J[Use skill in Codex]
@@ -100,13 +103,14 @@ flowchart TD
 20. Agent Compatibility Grid: why Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, and aider also route to the same protocol.
 21. Agent Pack Export Flow: why adapters can be copied into a target repo from the manifest without manual drift.
 22. Agent Adapter Lab Flow: why adapter selection, pack command, install checklist, JSON receipt, and `agent_adapter_improvement.yml` issue seed form one adoption loop.
-23. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
-24. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
-25. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
-26. System map: how inputs become calibrated outputs.
-27. Interview loop: why each round feels progressive.
-28. Evidence ledger: why the answer is not a black box.
-29. Quality gates: why the project is maintainable.
+23. Universal Agent Bridge Map: why unknown hosts are mapped by project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays before claiming support.
+24. Response Quality Radar: why generated answers must preserve candidate set, runner-up, evidence movement, next questions, falsifier, safety boundary, and Anti-Flattery gates.
+25. Response Eval Command Center: why answer-level audit should feel like a usable product, not only a fixture.
+26. Response Eval Lab Flow: why paste-answer, mode-aware gates, quality radar, repair prompt, JSON receipt, and `response_eval_improvement.yml` issue seed form one loop.
+27. System map: how inputs become calibrated outputs.
+28. Interview loop: why each round feels progressive.
+29. Evidence ledger: why the answer is not a black box.
+30. Quality gates: why the project is maintainable.
 
 ## Experience Promise
 

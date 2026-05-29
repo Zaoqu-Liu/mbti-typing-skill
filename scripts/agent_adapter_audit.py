@@ -46,15 +46,20 @@ REQUIRED_FILES = (
     "agent-adapters/README.md",
     "docs/agent-adapters.md",
     "docs/agent-adapter-lab.html",
+    "docs/agent-portability-lab.html",
     "docs/assets/agent-adapter-matrix.svg",
     "docs/assets/agent-compatibility-grid.svg",
     "docs/assets/agent-pack-export-flow.svg",
     "docs/assets/agent-adapter-lab-flow.svg",
+    "docs/assets/universal-agent-bridge-map.svg",
     ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml",
+    ".github/ISSUE_TEMPLATE/agent_portability_request.yml",
     "scripts/export_agent_pack.py",
     "scripts/agent_pack_export_audit.py",
     "scripts/sync_agent_adapter_lab.py",
     "scripts/agent_adapter_lab_audit.py",
+    "scripts/sync_agent_portability_lab.py",
+    "scripts/agent_portability_lab_audit.py",
 )
 
 EXPECTED_TARGETS = (
@@ -292,12 +297,17 @@ def check_docs_and_visual(root: Path) -> list[Check]:
     compatibility_svg = read_text(root / "docs/assets/agent-compatibility-grid.svg")
     pack_svg = read_text(root / "docs/assets/agent-pack-export-flow.svg")
     lab_svg = read_text(root / "docs/assets/agent-adapter-lab-flow.svg")
+    portability_lab = read_text(root / "docs/agent-portability-lab.html")
+    portability_svg = read_text(root / "docs/assets/universal-agent-bridge-map.svg")
     makefile = read_text(root / "Makefile")
     exporter = read_text(root / "scripts/export_agent_pack.py")
     pack_audit = read_text(root / "scripts/agent_pack_export_audit.py")
     lab_audit = read_text(root / "scripts/agent_adapter_lab_audit.py")
+    portability_sync = read_text(root / "scripts/sync_agent_portability_lab.py")
+    portability_audit = read_text(root / "scripts/agent_portability_lab_audit.py")
     issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_adapter_improvement.yml")
-    dependency_scan = (svg + compatibility_svg + pack_svg + lab_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
+    portability_issue_template = read_text(root / ".github/ISSUE_TEMPLATE/agent_portability_request.yml")
+    dependency_scan = (svg + compatibility_svg + pack_svg + lab_svg + portability_svg).replace('xmlns="http://www.w3.org/2000/svg"', "")
     required_tool_terms = ("Codex", "ChatGPT", "Zed", "Devin", "Claude Code", "Cursor", "opencode", "Gemini CLI", "GitHub Copilot", "Windsurf", "Cline", "Continue", "aider", "JetBrains Junie", "Amazon Q", "Roo Code", "Kilo Code")
     source_terms = ("help.openai.com", "zed.dev", "docs.devin.ai", "docs.anthropic.com", "docs.cursor.com", "opencode.ai", "github.com/openai/codex", "google-gemini", "docs.github.com", "docs.windsurf.com", "docs.cline.bot", "docs.continue.dev", "aider.chat", "jetbrains.com/help/junie", "aws.github.io/amazon-q-developer-cli", "roocodeinc.github.io", "kilo.ai")
     return [
@@ -307,13 +317,18 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("docs:agent_adapters_tools", contains_all(docs, required_tool_terms), "agent adapter docs cover all target tools"),
         Check("docs:agent_adapters_sources", contains_all(docs, source_terms), "agent adapter docs cite current source conventions"),
         Check("docs:agent_adapter_lab", contains_all(lab, LAB_TERMS + required_tool_terms), "Agent Adapter Lab covers targets, export path, issue seed, and protocol terms"),
+        Check("docs:agent_portability_lab", contains_all(portability_lab, ("Universal Agent Bridge Lab", "Agent Portability Lab", "agent-portability-lab/v1", "agent_portability_request.yml", "unknown host", "capability-first", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary") + required_tool_terms), "Agent Portability Lab covers known and unknown hosts, capability bridge, receipts, and safety terms"),
         Check("docs:agent_adapter_issue_template", contains_all(issue_template, ("Agent adapter improvement", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "adapter issue template preserves protocol terms"),
+        Check("docs:agent_portability_issue_template", contains_all(portability_issue_template, ("Agent portability request", "unknown host", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "portability issue template preserves protocol terms"),
         Check("makefile:agent_adapter_target", "agent-adapter-audit" in makefile and "scripts/agent_adapter_audit.py" in makefile, "Makefile runs adapter audit"),
         Check("makefile:agent_pack_target", "agent-pack-export-audit" in makefile and "scripts/agent_pack_export_audit.py" in makefile, "Makefile runs pack export audit"),
         Check("makefile:agent_adapter_lab_targets", "agent-adapter-lab-sync" in makefile and "scripts/sync_agent_adapter_lab.py" in makefile and "agent-adapter-lab-audit" in makefile and "scripts/agent_adapter_lab_audit.py" in makefile, "Makefile runs Agent Adapter Lab sync and audit"),
+        Check("makefile:agent_portability_lab_targets", "agent-portability-lab-sync" in makefile and "scripts/sync_agent_portability_lab.py" in makefile and "agent-portability-lab-audit" in makefile and "scripts/agent_portability_lab_audit.py" in makefile, "Makefile runs Agent Portability Lab sync and audit"),
         Check("exporter:contract", contains_all(exporter, ("PACK_SCHEMA", "BASELINE_PATHS", "AGENT_PACK_MANIFEST.json", "destination is not empty")), "pack exporter has schema, baseline, manifest, and write guard"),
         Check("pack_audit:contract", contains_all(pack_audit, ("Agent Pack Export Audit", "dry_run", "all_export", "selective_export", "unknown_target")), "pack export audit covers dry-run, all, selective, and unknown-target flows"),
         Check("lab_audit:contract", contains_all(lab_audit, ("Agent Adapter Lab Audit", "build_lab_manifest", "extract_embedded_manifest", "agent-adapter-lab/v1")), "Agent Adapter Lab has a source-sync audit"),
+        Check("portability_sync:contract", contains_all(portability_sync, ("Agent Portability Lab Source Sync", "build_portability_manifest", "capability_axes", "agent-portability-lab/v1")), "Agent Portability Lab has a manifest source-sync script"),
+        Check("portability_audit:contract", contains_all(portability_audit, ("Agent Portability Lab Audit", "extract_embedded_manifest", "agent-portability-lab/v1", "agent_portability_request.yml")), "Agent Portability Lab has a dedicated audit"),
         Check("svg:shape", "<svg" in svg and "viewBox=" in svg, "adapter matrix is an SVG with viewBox"),
         Check("svg:accessibility", 'role="img"' in svg and "<title" in svg and "<desc" in svg, "adapter matrix has accessibility metadata"),
         Check("svg:no_remote_or_script", "<script" not in dependency_scan and "http://" not in dependency_scan and "https://" not in dependency_scan, "adapter matrix has no script or remote dependency"),
@@ -327,6 +342,9 @@ def check_docs_and_visual(root: Path) -> list[Check]:
         Check("lab_svg:shape", "<svg" in lab_svg and "viewBox=" in lab_svg, "Agent Adapter Lab flow is an SVG with viewBox"),
         Check("lab_svg:accessibility", 'role="img"' in lab_svg and "<title" in lab_svg and "<desc" in lab_svg, "Agent Adapter Lab flow has accessibility metadata"),
         Check("lab_svg:labels", contains_all(lab_svg, ("Agent Adapter Lab Flow", "agent-adapters/manifest.json", "Target selector", "Pack command", "AGENT_PACK_MANIFEST.json", "scripts/export_agent_pack.py", "scripts/agent_adapter_lab_audit.py", "agent_adapter_improvement.yml", "18 adapters", "one protocol")), "Agent Adapter Lab flow contains expected labels"),
+        Check("portability_svg:shape", "<svg" in portability_svg and "viewBox=" in portability_svg, "Universal Agent Bridge Map is an SVG with viewBox"),
+        Check("portability_svg:accessibility", 'role="img"' in portability_svg and "<title" in portability_svg and "<desc" in portability_svg, "Universal Agent Bridge Map has accessibility metadata"),
+        Check("portability_svg:labels", contains_all(portability_svg, ("Universal Agent Bridge Map", "Known host catalog", "Unknown host intake", "Agent Portability Lab", "agent-portability-lab/v1", "sync_agent_portability_lab.py", "agent_portability_lab_audit.py", "agent_portability_request.yml", "candidate set", "serious runner-up", "evidence ledger", "falsifier", "safety boundary")), "Universal Agent Bridge Map contains expected labels"),
     ]
 
 

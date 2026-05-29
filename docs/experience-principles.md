@@ -141,6 +141,20 @@ The allowed loop is:
 
 This creates distribution stickiness: people can keep using the same MBTI Typing Skill even when their preferred agent runtime changes.
 
+## Universal Agent Bridge Loop
+
+The adapter layer must not depend on guessing the exact next platform. New agent hosts appear faster than repository maintainers can write bespoke adapters, so the durable loop is capability-first.
+
+The allowed loop is:
+
+1. A visitor opens Agent Portability Lab with either a known target or an unknown host.
+2. The visitor checks only the capabilities the host can actually load: project instruction file, native `SKILL.md` directory, project rule or mode file, custom agent JSON/profile, slash command, chat project instructions, or config instruction array.
+3. The lab generates a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed.
+4. Maintainers turn repeated portability requests into new manifest targets only after source evidence confirms the host's instruction surface.
+5. `scripts/sync_agent_portability_lab.py` and `scripts/agent_portability_lab_audit.py` keep the public page source-synced, local-first, copyable, and visibly bounded.
+
+This creates generality without hand-waving: users can bring the skill to future tools because the bridge is based on instruction capabilities, while the project avoids claiming native support before a host proves it can load the canonical protocol.
+
 ## Interview Rhythm
 
 Each live round should usually contain 4-6 questions:

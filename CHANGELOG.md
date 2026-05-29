@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.23 - 2026-05-29
+
+- Added a buildless Agent Portability Lab for future or unknown agent hosts, with capability-first host intake, Universal Agent Bridge plans, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds.
+- Added `scripts/sync_agent_portability_lab.py`, `scripts/agent_portability_lab_audit.py`, and the Universal Agent Bridge Map SVG so new-host support is source-synced from `agent-adapters/manifest.json` and release-gated.
+- Expanded the agent pack baseline and public navigation to include the portability lab, raising Agent Adapter Audit to 326/326, Agent Portability Lab Audit to 92/92, and Repository UX Score to 618/618.
+
 ## 0.1.22 - 2026-05-29
 
 - Expanded the adapter surface from 11 to 18 targets: ChatGPT GPTs/Projects, Zed Agent Panel, Devin, JetBrains Junie, Amazon Q Developer CLI, Roo Code, and Kilo Code now join Codex, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, and AGENTS.md-aware agents.

@@ -12,7 +12,7 @@ The GitHub social preview asset is stored at [docs/assets/social-preview.jpg](do
 
 > MBTI can be a useful self-reflection language. It is not a clinical diagnostic instrument, not a hiring tool, and not a way to determine a person's worth or future.
 
-## Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
+## Session Lab, Question Lab, Type Duel Lab, Agent Adapter Lab, Agent Portability Lab, Benchmark Arena, Benchmark Replay Lab, Calibration Lab, Follow-Up Lab, Response Eval Lab, and Playground
 
 Open the local-first Session Lab when you want to paste messy evidence and generate a usable next round before installing anything:
 
@@ -24,6 +24,8 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [Local Type Duel Lab file](docs/type-duel-lab.html)
 - [GitHub Pages Agent Adapter Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-adapter-lab.html)
 - [Local Agent Adapter Lab file](docs/agent-adapter-lab.html)
+- [GitHub Pages Agent Portability Lab](https://zaoqu-liu.github.io/mbti-typing-skill/agent-portability-lab.html)
+- [Local Agent Portability Lab file](docs/agent-portability-lab.html)
 - [GitHub Pages Benchmark Arena](https://zaoqu-liu.github.io/mbti-typing-skill/case-gallery.html)
 - [Local case gallery file](docs/case-gallery.html)
 - [GitHub Pages Benchmark Replay Lab](https://zaoqu-liu.github.io/mbti-typing-skill/benchmark-replay-lab.html)
@@ -37,7 +39,7 @@ Open the local-first Session Lab when you want to paste messy evidence and gener
 - [GitHub Pages playground](https://zaoqu-liu.github.io/mbti-typing-skill/playground.html)
 - [Local playground file](docs/playground.html)
 
-The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
+The Session Lab turns a claim and notes into a heuristic candidate board, evidence ledger, focused duels, next-question stack, report draft, copyable Codex prompt, share link, Import JSON recovery, and session state export. The Question Lab exposes `question-bank.md` as a searchable Round Builder with source-synced probes, 4-6 question templates, copyable next-round prompts, and `question_improvement.yml` issue seeds. The Type Duel Lab exposes the full `pair-duels.md` source as a searchable adjacent-type matrix with killer questions, losing conditions, copyable duel prompts, and `type_duel_improvement.yml` issue seeds. The Agent Adapter Lab turns `agent-adapters/manifest.json` into a selectable adoption surface with pack commands, install checklists, adapter JSON receipts, and `agent_adapter_improvement.yml` issue seeds. The Agent Portability Lab turns the same manifest into a capability-first Universal Agent Bridge for unknown host support, portable install recipes, `agent-portability-lab/v1` adapter drafts, and `agent_portability_request.yml` issue seeds. The Benchmark Arena is a case gallery of adversarial traps, runner-ups, falsifiers, reusable prompts, and benchmark issue seeds. The Benchmark Replay Lab turns the same canonical cases into a blind replay surface with hidden references, leading and runner-up guesses, Replay Receipt JSON, repair prompts, and `benchmark_replay_improvement.yml` issue seeds. The Calibration Lab lets users paste a typing report and receive a visible Calibration Receipt, repair prompt, JSON receipt, and failure issue seed. The Follow-Up Lab converts delayed real-world observations into a consented, redacted, public-safe JSON packet and issue seed. The Response Eval Lab lets users paste any MBTI answer and get a local quality radar, JSON receipt, repair prompt, and `response_eval_improvement.yml` issue seed. The Interactive Playground remains a faster visual preview of the same reasoning loop.
 
 ## One-Minute Demo
 
@@ -49,6 +51,7 @@ Start here if you want to feel the product before reading the internals:
 - [Agent adapters](docs/agent-adapters.md): how the same protocol runs in Codex, ChatGPT GPTs/Projects, Zed, Devin, Claude Code, Cursor, opencode, Gemini CLI, GitHub Copilot, Windsurf, Cline, Continue, aider, JetBrains Junie, Amazon Q, Roo Code, Kilo Code, and generic AGENTS.md-aware agents.
 - [Agent pack export](agent-adapters/README.md): manifest-driven pack export for copying selected agent adapters into another repository without manual drift.
 - [Agent Adapter Lab](docs/agent-adapter-lab.html): local-first target selector for pack commands, installation checklists, adapter JSON receipts, and adapter issue seeds.
+- [Agent Portability Lab](docs/agent-portability-lab.html): capability-first Universal Agent Bridge for new or unknown agent hosts, portable install recipes, adapter JSON drafts, and `agent_portability_request.yml` issue seeds.
 - [Response evaluation fixtures](examples/response-eval-cases.json): sticky precision cases that audit live-round, duel, final-report, and anti-pattern responses.
 - [Response Eval Lab](docs/response-eval-lab.html): local-first answer quality radar with copyable repair prompts and response eval issue seeds.
 - [Question Lab](docs/question-lab.html): source-synced Round Builder for the next 4-6 questions.
@@ -158,6 +161,12 @@ The Agent Pack Export Flow turns compatibility into something a user can actuall
 ![Agent Adapter Lab Flow](docs/assets/agent-adapter-lab-flow.svg)
 
 The Agent Adapter Lab Flow turns compatibility into a first-run UX: select a tool stack, copy a pack command, inspect the generated install checklist, export an adapter JSON receipt, and open an `agent_adapter_improvement.yml` issue seed if any target is missing or stale. `scripts/sync_agent_adapter_lab.py` keeps `docs/agent-adapter-lab.html` generated from `agent-adapters/manifest.json`, while `scripts/agent_adapter_lab_audit.py` blocks manifest drift, unsafe HTML injection, missing copy outputs, and missing safety-boundary language before release.
+
+### Universal Agent Bridge Map
+
+![Universal Agent Bridge Map](docs/assets/universal-agent-bridge-map.svg)
+
+The Universal Agent Bridge Map is the generalization layer for future tools. `docs/agent-portability-lab.html` lets a user select a known target or type an unknown host, check capability evidence such as project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays, then copy a bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed. `scripts/sync_agent_portability_lab.py` keeps the page generated from `agent-adapters/manifest.json`, while `scripts/agent_portability_lab_audit.py` blocks capability drift, unsafe rendering, missing copy outputs, and missing safety-boundary language before release.
 
 ### Response Quality Radar
 
@@ -443,6 +452,8 @@ python3 -B scripts/agent_adapter_audit.py .
 python3 -B scripts/agent_pack_export_audit.py .
 python3 -B scripts/sync_agent_adapter_lab.py agent-adapters/manifest.json docs/agent-adapter-lab.html
 python3 -B scripts/agent_adapter_lab_audit.py docs/agent-adapter-lab.html agent-adapters/manifest.json
+python3 -B scripts/sync_agent_portability_lab.py agent-adapters/manifest.json docs/agent-portability-lab.html
+python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml
 python3 -B scripts/response_eval_audit.py examples/response-eval-cases.json
 python3 -B scripts/response_eval_lab_audit.py docs/response-eval-lab.html
 python3 -B scripts/sync_question_lab.py skill/mbti-typing/references/question-bank.md docs/question-lab.html
@@ -470,10 +481,12 @@ Blind Review Audit: 93/93 (100.00%)
 Blind Review Metrics: top1: 5/6 (83.33%); top2: 6/6 (100.00%)
 Consent Redaction Audit: 78/78 (100.00%)
 Consent Redaction Metrics: packets=2; observations=6; states=5; privacy_safe=2/2; feedback=2/2
-Agent Adapter Audit: 313/313 (100.00%)
+Agent Adapter Audit: 326/326 (100.00%)
 Agent Pack Export Audit: 24/24 (100.00%)
 Agent Adapter Lab Source Sync: PASS (18 targets match)
 Agent Adapter Lab Audit: 91/91 (100.00%)
+Agent Portability Lab Source Sync: PASS (18 targets, 7 capabilities match)
+Agent Portability Lab Audit: 92/92 (100.00%)
 Response Eval Audit: 45/45 (100.00%)
 Response Eval Metrics: cases=4; positive_pass: 3/3 (100.00%); negative_blocked: 1/1 (100.00%); sticky_precision: 3/3 (100.00%); next_round: 3/3 (100.00%); no_overclaim: 3/3 (100.00%)
 Response Eval Lab Audit: 69/69 (100.00%)
@@ -488,7 +501,7 @@ Benchmark Replay Lab Audit: 62/62 (100.00%)
 Calibration Lab Source Sync: PASS (16 cases match)
 Calibration Lab Audit: 53/53 (100.00%)
 Follow-Up Lab Audit: 61/61 (100.00%)
-Repository UX Score: 581/581 (100.00%)
+Repository UX Score: 618/618 (100.00%)
 ```
 
 For the full evaluation model, see [docs/evaluation.md](docs/evaluation.md).

@@ -244,6 +244,20 @@ The Agent Adapter Lab Flow makes cross-agent adoption usable from GitHub Pages:
 
 This is the adoption UX layer: users do not need to infer which hidden files belong to their agent tool.
 
+## Universal Agent Bridge Map
+
+![Universal Agent Bridge Map](assets/universal-agent-bridge-map.svg)
+
+The Universal Agent Bridge Map generalizes beyond the current 18 named targets:
+
+- `agent-adapters/manifest.json` remains the source for known targets and source-checked conventions.
+- `scripts/sync_agent_portability_lab.py` embeds known targets plus capability axes into [Agent Portability Lab](agent-portability-lab.html).
+- The lab lets users select a known target or name an unknown host, then map real loadable capabilities: project instruction files, native `SKILL.md` directories, project rules, custom agent JSON profiles, slash commands, chat project instructions, or config instruction arrays.
+- Outputs include a Universal Agent Bridge plan, portable install recipe, `agent-portability-lab/v1` adapter draft, and `agent_portability_request.yml` issue seed.
+- `scripts/agent_portability_lab_audit.py` checks source sync, local-first rendering, DOM-safe rendering, copy outputs, issue seed, capability coverage, and safety-boundary language before release.
+
+This is the future-host layer: the project can adapt to a new mainstream agent by proving what the host can actually load, not by forking the MBTI typing protocol.
+
 ## Response Quality Radar
 
 ![Response Quality Radar](assets/response-quality-radar.svg)
@@ -355,6 +369,7 @@ The buildless product pages, adapter docs, and response audit now cover the full
 - [Question Lab](question-lab.html): source-synced next-round question selection and question improvement seeds.
 - [Type Duel Lab](type-duel-lab.html): adjacent-type discriminators, losing conditions, and duel improvement seeds.
 - [Agent Adapter Lab](agent-adapter-lab.html): target selector, pack command, install checklist, adapter JSON receipt, and adapter improvement seed.
+- [Agent Portability Lab](agent-portability-lab.html): capability-first bridge plan, portable install recipe, adapter draft, and portability request seed for unknown hosts.
 - [Benchmark Arena](case-gallery.html): adversarial cases and contribution seeds.
 - [Benchmark Replay Lab](benchmark-replay-lab.html): blind prompts, top-two guesses, reference reveal, Replay Receipt, repair prompt, and replay issue seed.
 - [Calibration Lab](calibration-lab.html): report checking, repair prompt, and calibration issue seed.
@@ -399,18 +414,20 @@ flowchart TD
     S --> T[Agent Pack Export Flow]
     T --> U[Agent Adapter Lab Flow]
     U --> V[Agent Adapter Lab]
-    V --> W[Response Quality Radar]
-    W --> X[Response Eval Command Center]
-    X --> Y[Response Eval Lab Flow]
-    Y --> Z[Response Eval Lab]
-    Z --> AA[Agent adapters]
-    AA --> AB[Follow-Up Lab]
-    AB --> AC[One-minute demo]
-    AC --> AD[Demo session]
-    AD --> AE[Sample report]
-    AE --> AF[Evaluation model]
-    AF --> AG[Contribution guide]
-    AG --> AH[Benchmark cases]
+    V --> W[Universal Agent Bridge Map]
+    W --> X[Agent Portability Lab]
+    X --> Y[Response Quality Radar]
+    Y --> Z[Response Eval Command Center]
+    Z --> AA[Response Eval Lab Flow]
+    AA --> AB[Response Eval Lab]
+    AB --> AC[Agent adapters]
+    AC --> AD[Follow-Up Lab]
+    AD --> AE[One-minute demo]
+    AE --> AF[Demo session]
+    AF --> AG[Sample report]
+    AG --> AH[Evaluation model]
+    AH --> AI[Contribution guide]
+    AI --> AJ[Benchmark cases]
 ```
 
 If a visitor only reads one path, this is the intended path.

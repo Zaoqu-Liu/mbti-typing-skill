@@ -1,0 +1,76 @@
+name: Agent portability request
+description: Request support for a new or unknown agent host using the capability-first bridge protocol.
+title: "[Agent Portability]: "
+labels: ["agent-adapter", "compatibility", "portability"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when a mainstream or emerging unknown host is not yet covered by the manifest, or when a known host needs a more general capability-first adapter.
+
+  - type: input
+    id: host
+    attributes:
+      label: Agent host or workflow
+      description: Name the host, IDE, CLI, chat project, or custom agent runtime.
+      placeholder: "New agent host, IDE assistant, CLI runner, custom GPT, project-rule system..."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: capabilities
+    attributes:
+      label: Capability evidence
+      description: Check what the host can load or execute. Use sanitized links or docs in the notes below.
+      options:
+        - label: It can read a project instruction file such as AGENTS.md, CLAUDE.md, GEMINI.md, or CONVENTIONS.md.
+        - label: It supports a native skill directory or SKILL.md-style package.
+        - label: It supports project rule files, workspace rules, modes, or scoped instructions.
+        - label: It supports custom agent JSON, profile files, or named agent configs.
+        - label: It supports slash commands, command recipes, or prompt macros.
+        - label: It supports a chat project, custom GPT, or uploaded knowledge files.
+        - label: It supports a config instruction array that can aggregate multiple files.
+
+  - type: textarea
+    id: docs
+    attributes:
+      label: Source notes
+      description: Add official docs links or observed file conventions. Avoid private workspaces, tokens, and screenshots with identifiers.
+      placeholder: |
+        Official docs:
+        - ...
+        Observed entrypoint paths:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected portable behavior
+      description: Describe the install, invocation, or export path that should preserve the canonical protocol.
+      placeholder: "The adapter should preserve candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary language."
+    validations:
+      required: true
+
+  - type: textarea
+    id: receipt
+    attributes:
+      label: Agent Portability Lab receipt
+      description: Paste a sanitized `agent-portability-lab/v1` receipt or bridge plan if available.
+      placeholder: |
+        schema_version: agent-portability-lab/v1
+        host_name: ...
+        capability_flags: ...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety and privacy
+      options:
+        - label: I removed private chat logs, API keys, account ids, and personally identifying information.
+          required: true
+        - label: This request does not ask the project to provide clinical, hiring, legal, medical, financial, or deterministic personality claims.
+          required: true

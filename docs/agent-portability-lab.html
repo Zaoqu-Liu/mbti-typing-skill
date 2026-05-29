@@ -1,0 +1,1437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBTI Typing Skill Agent Portability Lab</title>
+  <meta name="description" content="Local-first capability bridge for adapting the MBTI Typing Skill to known and unknown agent hosts without forking the canonical protocol.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f6;
+      --panel: #ffffff;
+      --panel-soft: #fbfcfb;
+      --ink: #172120;
+      --muted: #63706d;
+      --line: #d9dfdd;
+      --teal: #128c82;
+      --teal-soft: #e1f3f0;
+      --amber: #c77a15;
+      --amber-soft: #fff0d7;
+      --rose: #c33461;
+      --rose-soft: #fde7ee;
+      --blue-soft: #e7f0ff;
+      --graphite: #26302f;
+      --shadow: 0 14px 34px rgba(23, 32, 31, 0.09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(18, 140, 130, 0.08), transparent 32%),
+        linear-gradient(250deg, rgba(199, 122, 21, 0.12), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    select,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1500px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 46px;
+    }
+
+    .topbar,
+    .brand,
+    .nav-actions,
+    .panel-title,
+    .action-row,
+    .chip-row,
+    .metric-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-actions {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover,
+    .button.active {
+      background: #fafeff;
+      border-color: rgba(18, 140, 130, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--graphite);
+      color: #fff;
+      border-color: var(--graphite);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(380px, 0.74fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .hero-proof,
+    .panel {
+      border: 1px solid rgba(217, 223, 221, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      min-height: 310px;
+      padding: clamp(22px, 4vw, 40px);
+      display: grid;
+      align-content: center;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      letter-spacing: 0;
+      line-height: 0.98;
+      max-width: 940px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.55;
+      max-width: 880px;
+    }
+
+    .hero-proof {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric,
+    .bridge-step,
+    .capability-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      padding: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .metric span,
+    .bridge-step span,
+    .capability-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .bridge-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      min-height: 112px;
+    }
+
+    .bridge-step {
+      background: linear-gradient(180deg, #fff, #f7fbfa);
+    }
+
+    .bridge-step strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.1fr) minmax(330px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .panel h2,
+    .panel h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .panel p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .pill,
+    .chip {
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pill {
+      background: var(--teal-soft);
+      color: #075e58;
+    }
+
+    .chip-row {
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--graphite);
+    }
+
+    .chip.teal {
+      background: var(--teal-soft);
+      border-color: #b8deda;
+      color: #075e58;
+    }
+
+    .chip.amber {
+      background: var(--amber-soft);
+      border-color: #f0c989;
+      color: #7a4708;
+    }
+
+    .chip.rose {
+      background: var(--rose-soft);
+      border-color: #efb6c7;
+      color: #8a173a;
+    }
+
+    select,
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 178px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .readonly {
+      background: #f8fbfa;
+      color: #26302f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .control-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--graphite);
+      margin-bottom: 6px;
+    }
+
+    .capability-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .capability-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .capability-card input {
+      margin-top: 4px;
+      accent-color: var(--teal);
+    }
+
+    .capability-card strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .strategy-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .strategy-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .strategy-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .strategy-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .action-row {
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .boundary {
+      margin-top: 18px;
+      border: 1px solid #f0c989;
+      border-radius: 8px;
+      background: var(--amber-soft);
+      padding: 12px;
+      color: #6f430a;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      border-radius: 8px;
+      background: var(--graphite);
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 160ms ease, transform 160ms ease;
+      pointer-events: none;
+      z-index: 10;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .layout,
+      .output-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 20px, 1500px);
+      }
+
+      .topbar,
+      .brand,
+      .nav-actions,
+      .panel-title,
+      .action-row {
+        align-items: stretch;
+      }
+
+      .topbar,
+      .nav-actions {
+        flex-direction: column;
+      }
+
+      .metric-grid,
+      .bridge-flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .panel-title {
+        align-items: flex-start;
+      }
+
+      .panel-title .pill,
+      .panel-title .button {
+        align-self: flex-start;
+        flex: 0 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">MB</div>
+        <div>
+          <div class="brand-title">MBTI Typing Skill Agent Portability Lab</div>
+          <div class="brand-subtitle">Universal Agent Bridge Lab for known and unknown hosts</div>
+        </div>
+      </div>
+      <nav class="nav-actions" aria-label="Repository pages">
+        <a class="button" href="session-lab.html">Session Lab</a>
+        <a class="button" href="agent-adapter-lab.html">Agent Lab</a>
+        <a class="button primary" href="agent-portability-lab.html">Portability Lab</a>
+        <a class="button" href="benchmark-replay-lab.html">Replay Lab</a>
+        <a class="button" href="response-eval-lab.html">Response Eval</a>
+        <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill#readme">README</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Capability-First Bridge</div>
+        <h1>Adapt the skill to the next agent before it has a named adapter.</h1>
+        <p>Pick a known target or describe an unknown host, map the capabilities it can actually load, then generate a bridge plan, portable install recipe, adapter JSON draft, and portability issue seed without forking the canonical protocol.</p>
+      </div>
+      <aside class="hero-proof" aria-label="Agent Portability Lab metrics">
+        <div class="metric-grid">
+          <div class="metric">
+            <strong id="metricTargets">18</strong>
+            <span>known adapter targets from manifest</span>
+          </div>
+          <div class="metric">
+            <strong id="metricCapabilities">7</strong>
+            <span>capability axes for unknown hosts</span>
+          </div>
+          <div class="metric">
+            <strong>1</strong>
+            <span>canonical protocol and safety contract</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>network calls or external runtime dependencies</span>
+          </div>
+        </div>
+        <div class="bridge-flow" aria-label="Agent portability workflow">
+          <div class="bridge-step">
+            <strong>01</strong>
+            <span>Select target or unknown host</span>
+          </div>
+          <div class="bridge-step">
+            <strong>02</strong>
+            <span>Name loadable capabilities</span>
+          </div>
+          <div class="bridge-step">
+            <strong>03</strong>
+            <span>Generate bridge artifacts</span>
+          </div>
+          <div class="bridge-step">
+            <strong>04</strong>
+            <span>Open portability request</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <main class="layout">
+      <section class="panel" aria-label="Agent host intake">
+        <div class="panel-title">
+          <div>
+            <h2>1. Host Intake</h2>
+            <p>Known targets prefill capability evidence. Unknown hosts start from a conservative bridge.</p>
+          </div>
+          <span class="pill">checked <span id="checkedOn">2026-05-29</span></span>
+        </div>
+        <div class="control-stack">
+          <div class="field">
+            <label for="targetSelect">Known target</label>
+            <select id="targetSelect" aria-label="Known agent target"></select>
+          </div>
+          <div class="field">
+            <label for="hostNameInput">Unknown host name</label>
+            <input id="hostNameInput" type="text" placeholder="New agent host, IDE assistant, CLI runner, custom GPT..." aria-label="Unknown host name">
+          </div>
+        </div>
+        <div id="targetChips" class="chip-row"></div>
+        <div class="boundary">Capability-first support is not a promise that every host has native skill loading. It is an adaptation path that keeps the canonical protocol, candidate set, serious runner-up, evidence ledger, falsifier, and safety boundary intact.</div>
+      </section>
+
+      <section class="panel" aria-label="Capability map">
+        <div class="panel-title">
+          <div>
+            <h2>2. Capability Map</h2>
+            <p>Select what the host can load or expose.</p>
+          </div>
+          <span class="pill"><span id="chosenCapabilityCount">0</span> selected</span>
+        </div>
+        <div id="capabilityList" class="capability-list"></div>
+      </section>
+
+      <section class="panel" aria-label="Bridge strategy">
+        <div class="panel-title">
+          <div>
+            <h2>3. Bridge Strategy</h2>
+            <p id="targetSummary">Select a target to generate a capability-first plan.</p>
+          </div>
+          <span class="pill">local-first</span>
+        </div>
+        <div id="strategyList" class="strategy-list"></div>
+      </section>
+    </main>
+
+    <section class="output-grid" aria-label="Portability outputs">
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Bridge Plan</h2>
+            <p>Human-readable strategy for a known or unknown host.</p>
+          </div>
+        </div>
+        <textarea id="bridgePlanOutput" class="readonly" readonly aria-label="Bridge plan output"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyBridgePlan" type="button">Copy Bridge Plan</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Portable Install</h2>
+            <p>Conservative install recipe that starts from the canonical pack.</p>
+          </div>
+        </div>
+        <textarea id="portableInstallOutput" class="readonly" readonly aria-label="Portable install output"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyPortableInstall" type="button">Copy Portable Install</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Adapter Draft</h2>
+            <p>Machine-readable agent-portability-lab/v1 receipt.</p>
+          </div>
+        </div>
+        <textarea id="adapterDraftOutput" class="readonly" readonly aria-label="Adapter draft JSON"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyAdapterDraft" type="button">Copy Adapter JSON</button>
+          <button class="button" id="downloadPortabilityJson" type="button">Download JSON</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Issue Seed</h2>
+            <p>Use this when a mainstream or emerging host needs a real adapter.</p>
+          </div>
+          <a class="button" href="https://github.com/Zaoqu-Liu/mbti-typing-skill/issues/new?template=agent_portability_request.yml">Open Issue</a>
+        </div>
+        <textarea id="portabilityIssueOutput" class="readonly" readonly aria-label="Agent portability issue seed"></textarea>
+        <div class="action-row">
+          <button class="button primary" id="copyPortabilityIssue" type="button">Copy Issue Seed</button>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <script>
+    const STORAGE_KEY = "mbti-typing-agent-portability-lab-state";
+
+    // BEGIN GENERATED AGENT PORTABILITY MANIFEST
+    const AGENT_PORTABILITY_MANIFEST = {
+          "schema": "mbti-typing-agent-portability-lab/v1",
+          "source_schema": "mbti-typing-agent-adapters/v1",
+          "canonical_skill": "skill/mbti-typing/SKILL.md",
+          "canonical_contract": "AGENTS.md",
+          "adapter_manifest": "agent-adapters/manifest.json",
+          "adapter_audit": "scripts/agent_adapter_audit.py",
+          "pack_exporter": "scripts/export_agent_pack.py",
+          "pack_audit": "scripts/agent_pack_export_audit.py",
+          "checked_on": "2026-05-29",
+          "capability_axes": [
+                {
+                      "id": "project_instruction",
+                      "label": "Project instruction file",
+                      "proof": "AGENTS.md, CLAUDE.md, GEMINI.md, CONVENTIONS.md, or equivalent repository context file",
+                      "entrypoint_hint": "AGENTS.md"
+                },
+                {
+                      "id": "native_skill",
+                      "label": "Native skill directory",
+                      "proof": "A directory containing SKILL.md, references, scripts, and optional metadata",
+                      "entrypoint_hint": "skill/mbti-typing/SKILL.md"
+                },
+                {
+                      "id": "project_rule",
+                      "label": "Project rule or mode file",
+                      "proof": "A checked-in rule file such as .cursor/rules, .rules, .roomodes, .continue/rules, or similar",
+                      "entrypoint_hint": ".cursor/rules/mbti-typing.mdc"
+                },
+                {
+                      "id": "custom_agent",
+                      "label": "Custom agent JSON or profile",
+                      "proof": "A named agent profile with prompt, resources, tools, or allowed tool grants",
+                      "entrypoint_hint": ".amazonq/cli-agents/mbti-typing.json"
+                },
+                {
+                      "id": "slash_command",
+                      "label": "Slash command or command recipe",
+                      "proof": "A command file that forwards user input and points to the canonical protocol",
+                      "entrypoint_hint": ".claude/commands/mbti-type.md"
+                },
+                {
+                      "id": "chat_project",
+                      "label": "Chat project or custom GPT instructions",
+                      "proof": "A hosted chat instructions field plus uploaded knowledge files",
+                      "entrypoint_hint": "gpts/mbti-typing-gpt-instructions.md"
+                },
+                {
+                      "id": "config_instruction_array",
+                      "label": "Config instruction array",
+                      "proof": "A JSON/YAML config that aggregates multiple instruction files",
+                      "entrypoint_hint": "opencode.json"
+                }
+          ],
+          "targets": [
+                {
+                      "id": "codex",
+                      "display": "OpenAI Codex",
+                      "support_level": "native-skill",
+                      "source_url": "https://github.com/openai/codex",
+                      "entrypoints": [
+                            "skill/mbti-typing/SKILL.md",
+                            "skill/mbti-typing/agents/openai.yaml",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Use $mbti-typing to run a rigorous multi-round MBTI typing interview.",
+                      "install": "cp -R skill/mbti-typing ~/.codex/skills/",
+                      "contract": "Codex skill plus repository AGENTS.md contract.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "generic-agents-md",
+                      "display": "Generic AGENTS.md-aware agents",
+                      "support_level": "project-instructions",
+                      "source_url": "https://agents.md/",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "CONVENTIONS.md"
+                      ],
+                      "invoke": "Ask the agent to follow AGENTS.md and use the MBTI Typing Skill.",
+                      "install": "Copy AGENTS.md and CONVENTIONS.md into the target repository root.",
+                      "contract": "Portable project-level instruction contract.",
+                      "capabilities": [
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "chatgpt-gpts",
+                      "display": "ChatGPT GPTs and Projects",
+                      "support_level": "custom-gpt-instructions",
+                      "source_url": "https://help.openai.com/en/articles/9358033-key-guidelines-for-writing-instructions-for-custom-gpts",
+                      "entrypoints": [
+                            "gpts/mbti-typing-gpt-instructions.md",
+                            "skill/mbti-typing/SKILL.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Create a GPT or Project with gpts/mbti-typing-gpt-instructions.md as instructions and upload the canonical skill references as knowledge.",
+                      "install": "Copy gpts/mbti-typing-gpt-instructions.md into the GPT Instructions field or ChatGPT Project instructions, then attach the listed knowledge files.",
+                      "contract": "Custom GPT and Project instructions preserve the same candidate-set, runner-up, evidence-ledger, falsifier, and safety-boundary protocol.",
+                      "capabilities": [
+                            "chat_project",
+                            "native_skill",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "zed",
+                      "display": "Zed Agent Panel",
+                      "support_level": "project-rule",
+                      "source_url": "https://zed.dev/docs/ai/rules",
+                      "entrypoints": [
+                            ".rules",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Zed Agent Panel to use the MBTI Typing Skill rule, or @-mention the saved rule when available.",
+                      "install": "Copy .rules and AGENTS.md into the target repository root, or save the same content as a Zed default rule/skill.",
+                      "contract": "Zed project rule routes back to the canonical skill and shared safety boundary.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "devin",
+                      "display": "Devin and Devin CLI",
+                      "support_level": "agents-md",
+                      "source_url": "https://docs.devin.ai/onboard-devin/agents-md",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "CLAUDE.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Devin to follow AGENTS.md and use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
+                      "install": "Keep AGENTS.md at the project root; Devin and Devin CLI can load AGENTS.md project rules automatically.",
+                      "contract": "AGENTS.md provides the portable Devin contract without creating a Devin-only protocol fork.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "claude-code",
+                      "display": "Claude Code",
+                      "support_level": "project-skill-and-command",
+                      "source_url": "https://docs.anthropic.com/en/docs/claude-code/skills",
+                      "entrypoints": [
+                            ".claude/skills/mbti-typing/SKILL.md",
+                            ".claude/commands/mbti-type.md",
+                            "CLAUDE.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "/mbti-typing or /mbti-type ENTJ vs INTJ",
+                      "install": "cp -R .claude/skills/mbti-typing ~/.claude/skills/",
+                      "contract": "Project skill and slash-command fallback for Claude Code.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "slash_command"
+                      ]
+                },
+                {
+                      "id": "cursor",
+                      "display": "Cursor",
+                      "support_level": "project-rule",
+                      "source_url": "https://docs.cursor.com/en/context/rules",
+                      "entrypoints": [
+                            ".cursor/rules/mbti-typing.mdc",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Cursor to use the MBTI Typing Skill rule, or mention @mbti-typing.",
+                      "install": "Keep .cursor/rules/mbti-typing.mdc committed in the project root.",
+                      "contract": "Project rule in MDC format plus AGENTS.md fallback.",
+                      "capabilities": [
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "opencode",
+                      "display": "opencode",
+                      "support_level": "project-instructions",
+                      "source_url": "https://opencode.ai/docs/config/",
+                      "entrypoints": [
+                            "AGENTS.md",
+                            "opencode.json"
+                      ],
+                      "invoke": "opencode run \"Use the MBTI Typing Skill to distinguish ENTJ vs INTJ\"",
+                      "install": "Keep AGENTS.md and opencode.json committed in the project root.",
+                      "contract": "AGENTS.md project rules with opencode.json instructions aggregation.",
+                      "capabilities": [
+                            "config_instruction_array",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "gemini-cli",
+                      "display": "Gemini CLI",
+                      "support_level": "context-file",
+                      "source_url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md",
+                      "entrypoints": [
+                            "GEMINI.md",
+                            ".gemini/settings.json",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "gemini \"Use the MBTI Typing Skill to run an ENTJ vs INTJ investigation\"",
+                      "install": "Copy GEMINI.md, AGENTS.md, and .gemini/settings.json into the target repository root.",
+                      "contract": "Gemini context file imports the shared contract and canonical skill.",
+                      "capabilities": [
+                            "config_instruction_array",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "github-copilot",
+                      "display": "GitHub Copilot",
+                      "support_level": "repository-instructions-and-skill",
+                      "source_url": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions",
+                      "entrypoints": [
+                            ".github/copilot-instructions.md",
+                            ".github/instructions/mbti-typing.instructions.md",
+                            ".github/skills/mbti-typing/SKILL.md",
+                            "AGENTS.md",
+                            "CLAUDE.md",
+                            "GEMINI.md"
+                      ],
+                      "invoke": "Ask Copilot to use the MBTI Typing Skill for the current type-me, duel, audit, or report-review task.",
+                      "install": "Copy .github/copilot-instructions.md, .github/instructions/mbti-typing.instructions.md, and .github/skills/mbti-typing/SKILL.md into the target repository.",
+                      "contract": "Repository custom instructions plus project skill entrypoint.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "windsurf",
+                      "display": "Windsurf",
+                      "support_level": "workspace-rule",
+                      "source_url": "https://docs.windsurf.com/windsurf/cascade/rules",
+                      "entrypoints": [
+                            ".windsurf/rules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Windsurf to apply the MBTI Typing Skill rule to a type-me, duel, transcript audit, or adapter task.",
+                      "install": "Copy .windsurf/rules/mbti-typing.md and AGENTS.md into the target repository.",
+                      "contract": "Workspace rule points back to the canonical skill and shared contract.",
+                      "capabilities": [
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "cline",
+                      "display": "Cline",
+                      "support_level": "project-skill-and-rule",
+                      "source_url": "https://docs.cline.bot/features/skills",
+                      "entrypoints": [
+                            ".cline/skills/mbti-typing/SKILL.md",
+                            ".clinerules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Cline to use the MBTI Typing Skill for the current typing task.",
+                      "install": "Copy .cline/skills/mbti-typing/SKILL.md, .clinerules/mbti-typing.md, and AGENTS.md into the target repository.",
+                      "contract": "Project skill and rule both preserve the canonical typing protocol.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "continue",
+                      "display": "Continue",
+                      "support_level": "local-rule",
+                      "source_url": "https://docs.continue.dev/customize/deep-dives/rules",
+                      "entrypoints": [
+                            ".continue/rules/mbti-typing.md",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "Ask Continue to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
+                      "install": "Copy .continue/rules/mbti-typing.md and AGENTS.md into the target repository.",
+                      "contract": "Continue local rule points back to the canonical skill and shared safety boundary.",
+                      "capabilities": [
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "aider",
+                      "display": "aider",
+                      "support_level": "conventions-file",
+                      "source_url": "https://aider.chat/docs/usage/conventions.html",
+                      "entrypoints": [
+                            "CONVENTIONS.md",
+                            ".aider.conf.yml",
+                            "AGENTS.md"
+                      ],
+                      "invoke": "aider --read CONVENTIONS.md --read AGENTS.md",
+                      "install": "Copy CONVENTIONS.md, AGENTS.md, and .aider.conf.yml into the target repository.",
+                      "contract": "Conventions file keeps the same protocol visible to aider sessions.",
+                      "capabilities": [
+                            "config_instruction_array",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "jetbrains-junie",
+                      "display": "JetBrains Junie",
+                      "support_level": "project-guidelines-and-command",
+                      "source_url": "https://www.jetbrains.com/help/junie/customize-guidelines.html",
+                      "entrypoints": [
+                            ".junie/AGENTS.md",
+                            ".junie/commands/mbti-type.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Junie to use .junie/AGENTS.md, or run the project /mbti-type command with the case material as input.",
+                      "install": "Copy .junie/AGENTS.md and .junie/commands/mbti-type.md into the target repository, or point Junie Guidelines path at AGENTS.md.",
+                      "contract": "Junie guidelines and slash command preserve the canonical typing protocol.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "slash_command"
+                      ]
+                },
+                {
+                      "id": "amazon-q",
+                      "display": "Amazon Q Developer CLI",
+                      "support_level": "custom-agent",
+                      "source_url": "https://aws.github.io/amazon-q-developer-cli/agent-format.html",
+                      "entrypoints": [
+                            ".amazonq/cli-agents/mbti-typing.json",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "q chat --agent mbti-typing",
+                      "install": "Copy .amazonq/cli-agents/mbti-typing.json into the target repository and run q chat --agent mbti-typing from that workspace.",
+                      "contract": "Amazon Q custom agent loads the canonical skill and read-only reference resources.",
+                      "capabilities": [
+                            "custom_agent",
+                            "native_skill",
+                            "project_instruction"
+                      ]
+                },
+                {
+                      "id": "roo-code",
+                      "display": "Roo Code",
+                      "support_level": "project-mode-and-rule",
+                      "source_url": "https://roocodeinc.github.io/Roo-Code/features/custom-modes/",
+                      "entrypoints": [
+                            ".roomodes",
+                            ".roo/rules-mbti-typing/mbti-typing.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Switch to the MBTI Typing custom mode, then ask Roo to run a type-me, duel, transcript audit, or report review.",
+                      "install": "Copy .roomodes and .roo/rules-mbti-typing/mbti-typing.md into the target repository.",
+                      "contract": "Roo custom mode and mode-specific rules preserve the canonical protocol.",
+                      "capabilities": [
+                            "native_skill",
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                },
+                {
+                      "id": "kilo-code",
+                      "display": "Kilo Code",
+                      "support_level": "project-rule",
+                      "source_url": "https://kilo.ai/docs/agent-behavior/custom-rules",
+                      "entrypoints": [
+                            "kilo.jsonc",
+                            ".kilo/rules/mbti-typing.md",
+                            "AGENTS.md",
+                            "skill/mbti-typing/SKILL.md"
+                      ],
+                      "invoke": "Ask Kilo Code to apply the MBTI Typing Skill rule before answering type-me or report-review prompts.",
+                      "install": "Copy kilo.jsonc and .kilo/rules/mbti-typing.md into the target repository.",
+                      "contract": "Kilo project rules point back to the canonical skill and shared safety boundary.",
+                      "capabilities": [
+                            "config_instruction_array",
+                            "custom_agent",
+                            "native_skill",
+                            "project_instruction",
+                            "project_rule"
+                      ]
+                }
+          ],
+          "safety_contract": [
+                "candidate set with serious runner-up",
+                "evidence ledger",
+                "falsifier and revision trigger",
+                "no clinical, hiring, legal, medical, financial, or deterministic use"
+          ]
+    };
+    // END GENERATED AGENT PORTABILITY MANIFEST
+
+    const els = {
+      metricTargets: document.getElementById("metricTargets"),
+      metricCapabilities: document.getElementById("metricCapabilities"),
+      checkedOn: document.getElementById("checkedOn"),
+      targetSelect: document.getElementById("targetSelect"),
+      hostNameInput: document.getElementById("hostNameInput"),
+      targetChips: document.getElementById("targetChips"),
+      capabilityList: document.getElementById("capabilityList"),
+      chosenCapabilityCount: document.getElementById("chosenCapabilityCount"),
+      targetSummary: document.getElementById("targetSummary"),
+      strategyList: document.getElementById("strategyList"),
+      bridgePlanOutput: document.getElementById("bridgePlanOutput"),
+      portableInstallOutput: document.getElementById("portableInstallOutput"),
+      adapterDraftOutput: document.getElementById("adapterDraftOutput"),
+      portabilityIssueOutput: document.getElementById("portabilityIssueOutput"),
+      copyBridgePlan: document.getElementById("copyBridgePlan"),
+      copyPortableInstall: document.getElementById("copyPortableInstall"),
+      copyAdapterDraft: document.getElementById("copyAdapterDraft"),
+      downloadPortabilityJson: document.getElementById("downloadPortabilityJson"),
+      copyPortabilityIssue: document.getElementById("copyPortabilityIssue"),
+      toast: document.getElementById("toast"),
+    };
+
+    const defaultTargetId = AGENT_PORTABILITY_MANIFEST.targets?.[0]?.id || "";
+    const state = {
+      targetId: defaultTargetId,
+      hostName: "",
+      capabilities: [],
+    };
+
+    function makeNode(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) {
+        node.className = className;
+      }
+      if (text !== undefined) {
+        node.textContent = text;
+      }
+      return node;
+    }
+
+    function getTargets() {
+      return AGENT_PORTABILITY_MANIFEST.targets || [];
+    }
+
+    function getCapabilities() {
+      return AGENT_PORTABILITY_MANIFEST.capability_axes || [];
+    }
+
+    function getSelectedTarget() {
+      return getTargets().find((target) => target.id === state.targetId) || getTargets()[0] || null;
+    }
+
+    function selectedCapabilityIds() {
+      return [...new Set(state.capabilities)].filter((id) => getCapabilities().some((axis) => axis.id === id));
+    }
+
+    function effectiveHostName() {
+      const selected = getSelectedTarget();
+      const custom = state.hostName.trim();
+      if (custom) {
+        return custom;
+      }
+      return selected ? selected.display : "Unknown host";
+    }
+
+    function resetCapabilitiesFromTarget(target) {
+      state.capabilities = [...new Set(target?.capabilities || ["project_instruction"])];
+    }
+
+    function strategyItems() {
+      const ids = selectedCapabilityIds();
+      const items = [];
+      if (ids.includes("native_skill")) {
+        items.push(["Native skill bridge", "Install or point the host at a SKILL.md directory. Keep supporting references lazy-loaded and preserve the canonical MBTI protocol."]);
+      }
+      if (ids.includes("project_instruction")) {
+        items.push(["Project instruction bridge", "Copy AGENTS.md and CONVENTIONS.md first. They are the lowest-common-denominator contract for agents that read repository context."]);
+      }
+      if (ids.includes("project_rule")) {
+        items.push(["Rule-file bridge", "Create a thin rule or mode file that routes back to skill/mbti-typing/SKILL.md instead of duplicating the full protocol."]);
+      }
+      if (ids.includes("custom_agent")) {
+        items.push(["Custom-agent bridge", "Create a named profile with the canonical skill as prompt/resource context and keep default tools read-only unless the host needs more."]);
+      }
+      if (ids.includes("slash_command")) {
+        items.push(["Command bridge", "Add a command that forwards user input, names the current task, and requires candidate set, runner-up, evidence ledger, falsifier, and safety boundary."]);
+      }
+      if (ids.includes("chat_project")) {
+        items.push(["Chat project bridge", "Use GPT/Project instructions plus uploaded knowledge files. Avoid claiming native skill loading unless the host proves it."]);
+      }
+      if (ids.includes("config_instruction_array")) {
+        items.push(["Config aggregation bridge", "Use the host config to aggregate AGENTS.md, adapter docs, and the canonical SKILL.md so updates do not drift."]);
+      }
+      if (!items.length) {
+        items.push(["Fallback bridge", "Start with AGENTS.md and a manual instruction to read skill/mbti-typing/SKILL.md before answering type-me, duel, transcript-audit, or report-review prompts."]);
+      }
+      return items;
+    }
+
+    function buildBridgePlan() {
+      const selected = getSelectedTarget();
+      const ids = selectedCapabilityIds();
+      const lines = [
+        "Universal Agent Bridge Plan",
+        "",
+        `Host: ${effectiveHostName()}`,
+        `Known target id: ${selected?.id || "(unknown)"}`,
+        `Support level: ${selected?.support_level || "capability-first unknown host"}`,
+        `Source checked on: ${AGENT_PORTABILITY_MANIFEST.checked_on || "unknown"}`,
+        "",
+        "Canonical protocol:",
+        `- ${AGENT_PORTABILITY_MANIFEST.canonical_skill || "skill/mbti-typing/SKILL.md"}`,
+        `- ${AGENT_PORTABILITY_MANIFEST.canonical_contract || "AGENTS.md"}`,
+        "",
+        "Capability evidence:",
+        ...(ids.length ? ids.map((id) => {
+          const axis = getCapabilities().find((item) => item.id === id);
+          return `- ${axis?.label || id}: ${axis?.proof || "capability selected"}`;
+        }) : ["- No capability selected; fall back to manual AGENTS.md instructions."]),
+        "",
+        "Bridge strategy:",
+        ...strategyItems().map(([title, detail]) => `- ${title}: ${detail}`),
+        "",
+        "Non-negotiable contract:",
+        ...(AGENT_PORTABILITY_MANIFEST.safety_contract || []).map((item) => `- ${item}`),
+      ];
+      return lines.join("\n");
+    }
+
+    function buildPortableInstall() {
+      const selected = getSelectedTarget();
+      const ids = selectedCapabilityIds();
+      const targetArg = selected?.id ? `--target ${selected.id}` : "--target generic-agents-md";
+      const lines = [
+        "# Portable install recipe",
+        "",
+        "python3 -B scripts/export_agent_pack.py --dest /tmp/mbti-agent-pack " + targetArg,
+        "",
+        "# For an unknown host, start from the exported pack and map files by capability:",
+        "- Project instruction file: copy AGENTS.md and CONVENTIONS.md.",
+        "- Native skill directory: copy skill/mbti-typing/ or the host-specific SKILL.md wrapper.",
+        "- Project rule or mode file: create a thin rule that points back to skill/mbti-typing/SKILL.md.",
+        "- Custom agent JSON/profile: include read-only resources for AGENTS.md and skill references.",
+        "- Slash command: forward user input and require runner-up, falsifier, and safety boundary.",
+        "- Chat project/custom GPT: paste gpts/mbti-typing-gpt-instructions.md and attach knowledge files.",
+        "",
+        `# Selected capabilities: ${ids.join(", ") || "fallback only"}`,
+        "# Validate before release:",
+        "python3 -B scripts/agent_adapter_audit.py .",
+        "python3 -B scripts/agent_portability_lab_audit.py docs/agent-portability-lab.html agent-adapters/manifest.json .github/ISSUE_TEMPLATE/agent_portability_request.yml",
+        "make test",
+      ];
+      return lines.join("\n");
+    }
+
+    function buildAdapterDraft() {
+      const selected = getSelectedTarget();
+      const ids = selectedCapabilityIds();
+      const entrypoints = ids.map((id) => getCapabilities().find((axis) => axis.id === id)?.entrypoint_hint).filter(Boolean);
+      return {
+        schema_version: "agent-portability-lab/v1",
+        host_name: effectiveHostName(),
+        known_target_id: selected?.id || null,
+        source_manifest: AGENT_PORTABILITY_MANIFEST.adapter_manifest,
+        source_checked_on: AGENT_PORTABILITY_MANIFEST.checked_on,
+        capability_flags: ids,
+        recommended_entrypoints: [...new Set(entrypoints.length ? entrypoints : ["AGENTS.md", "skill/mbti-typing/SKILL.md"])],
+        bridge_strategy: strategyItems().map(([title, detail]) => ({ title, detail })),
+        canonical_skill: AGENT_PORTABILITY_MANIFEST.canonical_skill,
+        canonical_contract: AGENT_PORTABILITY_MANIFEST.canonical_contract,
+        safety_contract: AGENT_PORTABILITY_MANIFEST.safety_contract,
+        issue_template: "agent_portability_request.yml",
+      };
+    }
+
+    function buildIssueSeed() {
+      const draft = buildAdapterDraft();
+      return [
+        "# Agent portability request",
+        "",
+        "- template: agent_portability_request.yml",
+        `- host: ${draft.host_name}`,
+        `- known target id: ${draft.known_target_id || "(new host)"}`,
+        `- schema: ${draft.schema_version}`,
+        `- capability flags: ${draft.capability_flags.join(", ") || "(none selected)"}`,
+        "",
+        "## Capability evidence",
+        ...draft.recommended_entrypoints.map((entrypoint) => `- ${entrypoint}`),
+        "",
+        "## Expected portable behavior",
+        "Preserve candidate set, serious runner-up, evidence ledger, falsifier, revision trigger, and safety boundary while adapting to this host's real instruction surface.",
+        "",
+        "## Proposed bridge",
+        ...draft.bridge_strategy.map((item) => `- ${item.title}: ${item.detail}`),
+        "",
+        "## public-safe notes",
+        "Do not include private chat logs, account ids, API keys, raw transcripts, third-party details, or high-stakes private contexts.",
+      ].join("\n");
+    }
+
+    function renderSelects() {
+      const options = getTargets().map((target) => {
+        const option = makeNode("option", "", `${target.id} - ${target.display}`);
+        option.value = target.id;
+        return option;
+      });
+      els.targetSelect.replaceChildren(...options);
+      els.targetSelect.value = state.targetId;
+    }
+
+    function renderCapabilities() {
+      const ids = selectedCapabilityIds();
+      const cards = getCapabilities().map((axis) => {
+        const label = makeNode("label", "capability-card");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = axis.id;
+        checkbox.checked = ids.includes(axis.id);
+        checkbox.addEventListener("change", () => {
+          if (checkbox.checked) {
+            state.capabilities = [...new Set([...state.capabilities, axis.id])];
+          } else {
+            state.capabilities = state.capabilities.filter((id) => id !== axis.id);
+          }
+          render();
+        });
+        const copy = makeNode("div");
+        copy.append(makeNode("strong", "", axis.label));
+        copy.append(makeNode("span", "", axis.proof));
+        label.append(checkbox);
+        label.append(copy);
+        return label;
+      });
+      els.capabilityList.replaceChildren(...cards);
+      els.chosenCapabilityCount.textContent = String(ids.length);
+    }
+
+    function renderSummary() {
+      const selected = getSelectedTarget();
+      const chips = [
+        makeNode("span", "chip teal", selected?.support_level || "unknown-host"),
+        makeNode("span", "chip", selected?.id || "new-host"),
+        makeNode("span", "chip amber", `${selectedCapabilityIds().length} capabilities`),
+      ];
+      els.targetChips.replaceChildren(...chips);
+      els.targetSummary.textContent = `${effectiveHostName()} bridges through ${selectedCapabilityIds().join(", ") || "fallback instructions"} without forking the canonical protocol.`;
+    }
+
+    function renderStrategies() {
+      const nodes = strategyItems().map(([title, detail]) => {
+        const item = makeNode("article", "strategy-item");
+        item.append(makeNode("strong", "", title));
+        item.append(makeNode("span", "", detail));
+        return item;
+      });
+      els.strategyList.replaceChildren(...nodes);
+    }
+
+    function renderOutputs() {
+      els.bridgePlanOutput.value = buildBridgePlan();
+      els.portableInstallOutput.value = buildPortableInstall();
+      els.adapterDraftOutput.value = JSON.stringify(buildAdapterDraft(), null, 2);
+      els.portabilityIssueOutput.value = buildIssueSeed();
+    }
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function render() {
+      els.metricTargets.textContent = String(getTargets().length);
+      els.metricCapabilities.textContent = String(getCapabilities().length);
+      els.checkedOn.textContent = String(AGENT_PORTABILITY_MANIFEST.checked_on || "");
+      renderSelects();
+      els.hostNameInput.value = state.hostName;
+      renderCapabilities();
+      renderSummary();
+      renderStrategies();
+      renderOutputs();
+      persist();
+    }
+
+    function loadPersisted() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (saved && typeof saved === "object") {
+          if (getTargets().some((target) => target.id === saved.targetId)) {
+            state.targetId = saved.targetId;
+          }
+          state.hostName = String(saved.hostName || "");
+          if (Array.isArray(saved.capabilities)) {
+            state.capabilities = saved.capabilities.map(String);
+          }
+        }
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+      if (!state.capabilities.length) {
+        resetCapabilitiesFromTarget(getSelectedTarget());
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      window.setTimeout(() => els.toast.classList.remove("show"), 1200);
+    }
+
+    async function copyText(value, label) {
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast(`${label} copied`);
+      } catch {
+        const scratch = document.createElement("textarea");
+        scratch.value = value;
+        scratch.setAttribute("readonly", "true");
+        scratch.style.position = "fixed";
+        scratch.style.left = "-9999px";
+        document.body.append(scratch);
+        scratch.select();
+        document.execCommand("copy");
+        scratch.remove();
+        showToast(`${label} copied`);
+      }
+    }
+
+    function downloadJson() {
+      const blob = new Blob([els.adapterDraftOutput.value], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "mbti-agent-portability-receipt.json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    els.targetSelect.addEventListener("change", () => {
+      state.targetId = els.targetSelect.value;
+      resetCapabilitiesFromTarget(getSelectedTarget());
+      render();
+    });
+
+    els.hostNameInput.addEventListener("input", () => {
+      state.hostName = els.hostNameInput.value;
+      render();
+    });
+
+    els.copyBridgePlan.addEventListener("click", () => copyText(els.bridgePlanOutput.value, "Bridge plan"));
+    els.copyPortableInstall.addEventListener("click", () => copyText(els.portableInstallOutput.value, "Portable install"));
+    els.copyAdapterDraft.addEventListener("click", () => copyText(els.adapterDraftOutput.value, "Adapter JSON"));
+    els.downloadPortabilityJson.addEventListener("click", downloadJson);
+    els.copyPortabilityIssue.addEventListener("click", () => copyText(els.portabilityIssueOutput.value, "Issue seed"));
+
+    loadPersisted();
+    render();
+  </script>
+</body>
+</html>
